@@ -1,0 +1,5 @@
+[Thu Aug 17 13:30](DEBUG: Another test log)
+[Thu Aug 17 15:51](DEBUG: Yo this is a message to all my haters)
+[Thu Aug 17 15:53](ERROR: Yo this is a message to all my haters)
+[Sun Aug 20 13:29](ERROR: 0(14) : error C1008: undefined variable "l_Position"
+)
