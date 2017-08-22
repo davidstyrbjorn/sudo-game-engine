@@ -4,38 +4,49 @@
 
 #include"GLFW\glfw3.h"
 
-// Forward decleration
+#include"sudo_system.h"
 
+
+// Forward decleration
 namespace sudo {
 	namespace math {
 		class Vector2;
 	}
 }
 
+
 namespace sudo { namespace system {
 
-	class InputSystem {
+	class InputSystem : SudoSystem {
+	private:
+		/* Private constructor since this is a singleton class */
+		InputSystem() { }
+
+		/* The Private instance */
+		static InputSystem *_instance;
+
 	public:
-		static int m_keys[1024];
-		static int m_mouseKeys[24];
-		//static sudo::math::Vector2 m_mousePos;
-		static math::Vector2 m_mousePos;
+		int m_keys[1024];
+		int m_mouseKeys[24];
+		math::Vector2 *m_mousePos;
 
 	public:
 		~InputSystem() { }
-		InputSystem() { }
 
-		static void EnableInputSystemSystem();
-		static void DisableInputSystemSystem();
+		/* Method to get pointer to _instance */
+		static InputSystem *Instance();
+
+		/* Methods from the SudoSystem base class */
+		void Enable() override;
+		void Disable() override;
 
 		/* end-user static function */
 		/* Returns true if a_keycode is down */
-		/* example: if(InputSystem::IsKeyPressed(GLFW_A)) { } */
-		static bool IsKeyPressed(int a_keycode);
+		bool IsKeyPressed(int a_keycode);
 
 		/* end-user static function */
 		/* Returns true if a_mouse_button is down */
-		static bool IsMouseButtonPressed(int a_mouse_button);
+		bool IsMouseButtonPressed(int a_mouse_button);
 
 		/* We might do a seperate function for GLFW_PRESS only */
 

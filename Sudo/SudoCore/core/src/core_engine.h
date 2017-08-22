@@ -8,9 +8,12 @@ namespace sudo {
 	namespace graphics {
 		class Window;
 	}
+	namespace system {
+		class InputSystem;
+	}
 	class SudoClass;
-	class InputSystem;
 	class CoreSettings;
+	
 	
 	class CoreEngine {
 	private:
@@ -19,7 +22,7 @@ namespace sudo {
 		/* ======================================================================= */
 		graphics::Window *m_window;
 		SudoClass *m_engineInstance;
-
+		system::InputSystem *m_inputInstance;
 
 		/* ======================================================================= */
 		/* ======================> CORE ENGINE METHODS <========================== */

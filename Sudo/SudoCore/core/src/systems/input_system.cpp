@@ -1,21 +1,28 @@
 #include "input_system.h"
-#include"../../sudo.h"
+#include"../math/vector2.h"
 
 namespace sudo { namespace system {
 
-	math::Vector2 InputSystem::m_mousePos = math::Vector2(0, 0);
-	int InputSystem::m_keys[1024] = { GLFW_RELEASE };
-	int InputSystem::m_mouseKeys[24] = { GLFW_RELEASE };
+	InputSystem* InputSystem::_instance = nullptr;
 
-	void InputSystem::EnableInputSystemSystem()
+	InputSystem * InputSystem::Instance()
+	{
+		if (_instance == nullptr)
+			_instance = new InputSystem();
+		return _instance;
+	}
+
+	void InputSystem::Enable()
 	{
 		/* Set the GLFW callbacks */
 		glfwSetCursorPosCallback(glfwGetCurrentContext(), cursor_position_callback);
 		glfwSetKeyCallback(glfwGetCurrentContext(), key_callback);
 		glfwSetMouseButtonCallback(glfwGetCurrentContext(), mouse_button_callback);
+
+		m_mousePos = new math::Vector2(0, 0);
 	}
 
-	void InputSystem::DisableInputSystemSystem()
+	void InputSystem::Disable() 
 	{
 		/* Set the GLFW callbacks */
 		glfwSetCursorPosCallback(glfwGetCurrentContext(), nullptr);
@@ -39,17 +46,21 @@ namespace sudo { namespace system {
 
 	void key_callback(GLFWwindow * window, int key, int scancode, int action, int mods)
 	{
-		InputSystem::m_keys[key] = action;
+		InputSystem* tmp = InputSystem::Instance();
+		tmp->m_keys[key] = action;
 	}
 
 	void cursor_position_callback(GLFWwindow * window, double xpos, double ypos)
 	{
-		InputSystem::m_mousePos = math::Vector2((float)xpos, (float)ypos);
+		InputSystem* tmp = InputSystem::Instance();
+		tmp->m_mousePos->setX((float)xpos);
+		tmp->m_mousePos->setY((float)ypos);
 	}
 
 	void mouse_button_callback(GLFWwindow * window, int button, int action, int mods)
 	{
-		InputSystem::m_mouseKeys[button] = action;
+		InputSystem* tmp = InputSystem::Instance();
+		tmp->m_mouseKeys[button] = action;
 	}
 
 }

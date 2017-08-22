@@ -22,7 +22,8 @@ void CoreEngine::init(const math::Vector2& a_windowSize, char* a_windowCaption, 
 	m_window = new graphics::Window(a_windowSize.getX(), a_windowSize.getY(), a_windowCaption);
 
 	/* Sets the corrent GLFW callbacks, if not done InputSystem won't trigger */
-	system::InputSystem::EnableInputSystemSystem();
+	m_inputInstance = system::InputSystem::Instance();
+	m_inputInstance->Enable();
 
 	/* ========================================= */
 

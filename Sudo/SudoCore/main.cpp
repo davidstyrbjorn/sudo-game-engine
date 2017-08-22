@@ -14,10 +14,10 @@ private:
 	uint EBO; // Inidices buffer
 	graphics::Shader *shader;
 
-	float x = (800/2)-(160/2);
-	float y = (600/2)-(160/2);
-	float width = 160;
-	float height = 160;
+	float x = (800/2)-(60/2);
+	float y = (600/2)-(60/2);
+	float width = 60;
+	float height = 60;
 
 public:
 	App() 
@@ -82,7 +82,7 @@ public:
 		glEnableVertexAttribArray(0);
 
 		// WireFrameMode
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 };
 
