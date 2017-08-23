@@ -25,7 +25,7 @@ public:
 		coreEngine = new CoreEngine(math::Vector2(800, 600), "Pong", this);
 	}
 
-	void Update() override {
+	void Update() {
 		// Draw object
 		shader->bind();
 		shader->setUniformMatrix4x4("model_matrix", math::Matrix4x4::Translation(math::Vector3(x, y, 0.0)));
@@ -35,13 +35,13 @@ public:
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 	}
-
-	void Start() override {
+							
+	void Start() {
 
 		glewInit();
 		glewExperimental = true;
 
-		shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_fragment.txt");
+		shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_fragment.txt");
 		shader->bind();
 		shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(0, 800, 600, 0,-1,1));
 		shader->setUniform3f("color", math::Vector3(0, 1, 1));
@@ -80,9 +80,6 @@ public:
 		// Linking/setting our vertex attributes
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
-
-		// WireFrameMode
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 };
 
