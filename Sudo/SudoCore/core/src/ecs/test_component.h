@@ -11,14 +11,15 @@ namespace sudo { namespace ecs {
 			m_name = "TestComponent";
 		}
 
-		int x = 10;
+		float x = 10;
 
 		void Start() {
 			std::cout << "TestComponent->Start() = called" << std::endl;
 		}
 
 		void Update() {
-
+			x += 0.1;
+			std::cout << x << std::endl;
 		}
 
 	};

@@ -6,7 +6,7 @@ namespace sudo { namespace ecs {
 	{
 	public:
 		/* Virtual Destructor */
-		virtual ~Component() { delete m_name; }
+		virtual ~Component() { }
 		
 		/* Activates the component */
 		virtual void Activate() { m_isActive = true; }
@@ -25,10 +25,17 @@ namespace sudo { namespace ecs {
 
 		/* Returns the state of the component */
 		const unsigned char IsActive() { return m_isActive; }
-		 
+		
+		/* Returns the destroy trigger */
+		const unsigned char GetDestroyTrigger() { return m_destroyTrigger; }
+
+		/* Sets the destroy trigger, used when deleting component */
+		void SetDestroyTrigger(const bool a_value) { m_destroyTrigger = a_value; }
+
 	protected:
 		unsigned char m_isActive = true; // Depending on this value update the component behaviours
 		char* m_name; // Name of the component
+		unsigned char m_destroyTrigger = false;
 	};
 
 } }
