@@ -8,6 +8,7 @@
 #include"src\math\mat4.h"
 
 #include"src\systems\input_system.h"
+#include"src\systems\world_system.h"
 
 #include"src\graphics\shader.h"
 #include"src\graphics\window.h"

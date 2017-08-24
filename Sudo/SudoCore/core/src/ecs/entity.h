@@ -11,6 +11,15 @@ namespace sudo { namespace ecs {
 		char* m_name;
 
 	public:
+		/* Entity Constructor */
+		Entity(char* a_name) : m_name(a_name) { }
+
+		/* Updates all components inside m_components list */
+		void Update();
+
+		/* Calls start on all components inside m_components list */
+		void Start();
+
 		/* Adds a_component to the components list */
 		void AddComponent(Component *a_component);
 

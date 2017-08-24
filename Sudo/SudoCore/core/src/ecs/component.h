@@ -6,8 +6,8 @@ namespace sudo { namespace ecs {
 	{
 	public:
 		/* Virtual Destructor */
-		virtual ~Component() { }
-
+		virtual ~Component() { delete m_name; }
+		
 		/* Activates the component */
 		virtual void Activate() { m_isActive = true; }
 
@@ -21,11 +21,14 @@ namespace sudo { namespace ecs {
 		virtual void Start() = 0;
 
 		/* Returns the name of the component */
-		virtual const char* GetName() { return m_name; }
+		const char* GetName() { return m_name; }
+
+		/* Returns the state of the component */
+		const unsigned char IsActive() { return m_isActive; }
 		 
 	protected:
-		unsigned char m_isActive; // Depending on this value update the component behaviours
-		const char* m_name; // Name of the component
+		unsigned char m_isActive = true; // Depending on this value update the component behaviours
+		char* m_name; // Name of the component
 	};
 
 } }

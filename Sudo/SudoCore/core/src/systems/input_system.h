@@ -31,8 +31,6 @@ namespace sudo { namespace system {
 		math::Vector2 *m_mousePos;
 
 	public:
-		~InputSystem() { }
-
 		/* Method to get pointer to _instance */
 		static InputSystem *Instance();
 

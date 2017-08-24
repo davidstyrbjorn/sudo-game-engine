@@ -3,16 +3,23 @@
 
 using namespace sudo;
 
+#include"core\src\ecs\entity.h"
+#include"core\src\ecs\component.h"
+#include"core\src\ecs\test_component.h"
+
 /* Sandbox for testing implemented features */
 class App : SudoClass {
 
 private:
 	CoreEngine *coreEngine;
+	system::WorldSystem *world = system::WorldSystem::Instance();
 
 	uint VAO;
 	uint VBO;
 	uint EBO; // Inidices buffer
 	graphics::Shader *shader;
+
+	ecs::Entity *player;
 
 	float x = (800/2)-(60/2);
 	float y = (600/2)-(60/2);
@@ -37,7 +44,6 @@ public:
 	}
 							
 	void Start() {
-
 		glewInit();
 		glewExperimental = true;
 

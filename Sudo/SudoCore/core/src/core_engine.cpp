@@ -21,9 +21,16 @@ void CoreEngine::init(const math::Vector2& a_windowSize, char* a_windowCaption, 
 	/* Create the game window */
 	m_window = new graphics::Window(a_windowSize.getX(), a_windowSize.getY(), a_windowCaption);
 
+	/* ========================================= */
+	/*               ENABLE SYSTEMS              */
+	/* ========================================= */
 	/* Sets the corrent GLFW callbacks, if not done InputSystem won't trigger */
-	m_inputInstance = system::InputSystem::Instance();
-	m_inputInstance->Enable();
+	m_inputSystem = system::InputSystem::Instance();
+	m_inputSystem->Enable();
+
+	/* WorldSystem/ECS System*/
+	m_worldSystem = system::WorldSystem::Instance();
+	m_worldSystem->Enable();
 
 	/* ========================================= */
 
@@ -32,6 +39,9 @@ void CoreEngine::init(const math::Vector2& a_windowSize, char* a_windowCaption, 
 
 	/* Call the Start method for the end-user */
 	m_engineInstance->Start();
+
+	/* Call Start on systems */
+	m_worldSystem->Start();
 
 	/* Start the game_loop; This means Start gets called before any Update calls */
 	game_loop();
@@ -51,6 +61,9 @@ void CoreEngine::game_loop()
 	while (m_window->is_open()) 
 	{
 		m_window->clear();
+
+		/* Update the WorldSystem holding all game entities */
+		m_worldSystem->Update();
 
 		/* Call the Update method for the end-user s*/
 		m_engineInstance->Update();
