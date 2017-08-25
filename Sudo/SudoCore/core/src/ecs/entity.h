@@ -12,7 +12,7 @@ namespace sudo { namespace ecs {
 
 	public:
 		/* Entity Constructor */
-		Entity(char* a_name) : m_name(a_name) { }
+		Entity(char* a_name);
 
 		/* Entity Destructor */
 		~Entity();

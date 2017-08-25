@@ -1,10 +1,17 @@
 #include"entity.h"
+#include"../systems/world_system.h"
 
 namespace sudo { namespace ecs {
 
 	Entity::~Entity()
 	{
 
+	}
+
+	Entity::Entity(char* a_name) : m_name(a_name) 
+	{
+		system::WorldSystem *world = system::WorldSystem::Instance();
+		world->AddEntity(this);
 	}
 
 	void Entity::Update()

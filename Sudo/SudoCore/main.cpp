@@ -33,7 +33,8 @@ public:
 		coreEngine = new CoreEngine(math::Vector2(800, 600), "Pong", this);
 	}
 
-	void Update() {
+	void Update()
+	{
 		// Draw object
 		shader->bind();
 		shader->setUniformMatrix4x4("model_matrix", math::Matrix4x4::Translation(math::Vector3(x, y, 0.0)));
@@ -44,7 +45,10 @@ public:
 		glBindVertexArray(0);
 	}
 							
-	void Start() {
+	void Start() 
+	{
+
+		player = new ecs::Entity("Player");
 
 		glewInit();
 		glewExperimental = true;
