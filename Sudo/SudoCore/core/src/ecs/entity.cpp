@@ -2,6 +2,8 @@
 #include"../systems/world_system.h"
 #include"../debug.h"
 
+#include"test_component.h"
+
 namespace sudo { namespace ecs {
 
 	Entity::~Entity()
@@ -72,18 +74,6 @@ namespace sudo { namespace ecs {
 				return; // We're done with the operation
 			}
 		}
-	}
-
-	Component* Entity::GetComponent(char* a_name) 
-	{
-		/* Loop through and return component with a_name */
-		for (int i = 0; i < m_components.size(); i++) { // Loop through each component 
-			if (m_components[i]->GetName() == a_name) { // Compare name
-				return m_components[i]; // Update the component 
-			}
-		}
-
-		return nullptr;
 	}
 
 	void Entity::SetName(char* a_name)

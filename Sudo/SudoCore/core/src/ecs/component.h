@@ -2,6 +2,10 @@
 
 namespace sudo { namespace ecs {
 
+	enum ComponentType {
+		TEST_COMPONENT
+	};
+
 	class Component
 	{
 	public:

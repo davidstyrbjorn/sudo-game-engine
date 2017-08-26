@@ -80,11 +80,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;D:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;D:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -102,13 +102,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;D:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;D:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

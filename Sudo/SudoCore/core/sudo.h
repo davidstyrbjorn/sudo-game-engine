@@ -7,6 +7,8 @@
 #include"src\math\vector3.h"
 #include"src\math\mat4.h"
 
+#include"src\ecs\component.h"
+
 #include"src\systems\input_system.h"
 #include"src\systems\world_system.h"
 

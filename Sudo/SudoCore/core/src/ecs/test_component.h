@@ -19,7 +19,7 @@ namespace sudo { namespace ecs {
 
 		void Update() {
 			x += 0.1;
-			std::cout << x << std::endl;
+			//std::cout << x << std::endl;
 		}
 
 	};
