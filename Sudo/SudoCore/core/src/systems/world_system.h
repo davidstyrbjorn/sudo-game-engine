@@ -40,7 +40,7 @@ namespace sudo { namespace system {
 
 		/* Removes entity with a_name */
 		/* Deletes all entites with a_name if a_deleteAll equels true */
-		void RemoveEntity(const char* a_name, unsigned char a_deleteAll);
+		//void RemoveEntity(const char* a_name, unsigned char a_deleteAll);
 	};
 
 } } 

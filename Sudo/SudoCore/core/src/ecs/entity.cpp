@@ -1,5 +1,6 @@
 #include"entity.h"
 #include"../systems/world_system.h"
+#include"../debug.h"
 
 namespace sudo { namespace ecs {
 
@@ -49,7 +50,9 @@ namespace sudo { namespace ecs {
 		/* Check if the component already exists */
 		for (int i = 0; i < m_components.size(); i++) {
 			if (m_components[i]->GetName() == a_component->GetName()) {
-				// Message that the component exists already
+				// Debug print that the component we're trying to add already exists on this entity
+				DEBUG *debug = DEBUG::getInstance();
+				debug->printMessage("Component already exists on entity");
 				return;
 			}
 		}

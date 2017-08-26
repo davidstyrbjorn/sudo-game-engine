@@ -46,9 +46,4 @@ namespace sudo { namespace system {
 	{
 		m_entityList.push_back(a_entityToAdd);
 	}
-
-	void WorldSystem::RemoveEntity(const char* a_name, unsigned char a_deleteAll) 
-	{
-		// Remove entity.a_name from the list
-	}
 } }
