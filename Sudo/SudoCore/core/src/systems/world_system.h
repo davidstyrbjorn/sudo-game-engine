@@ -12,7 +12,7 @@ namespace sudo { namespace ecs {
 
 namespace sudo { namespace system {
 
-	class WorldSystem : SudoSystem {
+	class WorldSystem : public SudoSystem {
 	private:
 		std::vector<ecs::Entity*> m_entityList; // standarized list of all the entities
 		unsigned char m_isActive;
@@ -29,11 +29,12 @@ namespace sudo { namespace system {
 		/* Base class methods */
 		void Enable() override;
 		void Disable() override;
+
 		/* Updates all entities */
 		void Update() override;
+
 		/* Calls start on entity */
 		void Start() override;
-
 
 		/* Adds a entity to entity list */
 		void AddEntity(ecs::Entity *a_entityToAdd);

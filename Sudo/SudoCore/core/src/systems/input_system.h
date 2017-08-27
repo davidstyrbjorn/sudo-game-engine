@@ -17,7 +17,7 @@ namespace sudo {
 
 namespace sudo { namespace system {
 
-	class InputSystem : SudoSystem {
+	class InputSystem : public SudoSystem {
 	private:
 		/* Private constructor since this is a singleton class */
 		InputSystem() { }

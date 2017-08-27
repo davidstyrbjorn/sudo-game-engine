@@ -12,9 +12,6 @@ namespace sudo { namespace math {
 		/* Default Constructor */
 		Vector2() : m_x(0), m_y(0) { }
 
-		/* Constructor (int) */
-		Vector2(int a_x, int a_y) : m_x(a_x), m_y(a_y) { }
-
 		/* Constructor (float) */
 		Vector2(float a_x, float a_y) : m_x(a_x), m_y(a_y) { }
 

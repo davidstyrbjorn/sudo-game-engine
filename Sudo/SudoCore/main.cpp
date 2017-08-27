@@ -1,15 +1,9 @@
 #include<iostream>
 #include"core\sudo.h"
+#include"core\src\ecs\test_component.h"
 
 using namespace sudo;
 
-#include"core\src\ecs\entity.h"
-#include"core\src\ecs\component.h"
-#include"core\src\ecs\test_component.h"
-
-class NotDerivedComponent {
-
-};
 
 /* Sandbox for testing implemented features */
 class App : SudoClass {
@@ -23,8 +17,6 @@ private:
 	uint VBO;
 	uint EBO; // Inidices buffer
 	graphics::Shader *shader;
-
-	ecs::Entity *player;
 
 	float x = (800/2)-(60/2);
 	float y = (600/2)-(60/2);
@@ -53,13 +45,6 @@ public:
 	{
 		glewInit();
 		glewExperimental = true;
-
-		player = new ecs::Entity("player");
-		player->AddComponent(new ecs::TestComponent);
-		// Goal
-		if (player->GetComponent<ecs::TestComponent>("TestComponent") != nullptr) {
-
-		}
 
 		shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_fragment.txt");
 		shader->bind();
@@ -105,6 +90,6 @@ public:
 
 int main() {
 	App *app = new App();
-
+	
 	return EXIT_SUCCESS;
 }

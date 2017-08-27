@@ -1,5 +1,7 @@
 #pragma once
 
+#define quote(x) #x
+
 namespace sudo { namespace ecs {
 
 	enum ComponentType {
@@ -25,7 +27,7 @@ namespace sudo { namespace ecs {
 		virtual void Start() = 0;
 
 		/* Returns the name of the component */
-		const char* GetName() { return m_name; }
+		const char* GetName() { return m_componentName; }
 
 		/* Returns the state of the component */
 		const unsigned char IsActive() { return m_isActive; }
@@ -38,7 +40,7 @@ namespace sudo { namespace ecs {
 
 	protected:
 		unsigned char m_isActive = true; // Depending on this value update the component behaviours
-		char* m_name; // Name of the component
+		char* m_componentName; // Name of the component
 		unsigned char m_destroyTrigger = false;
 	};
 

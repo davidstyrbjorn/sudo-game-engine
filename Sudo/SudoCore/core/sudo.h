@@ -5,9 +5,11 @@
 
 #include"src\math\vector2.h"
 #include"src\math\vector3.h"
+#include"src\math\vector4.h"
 #include"src\math\mat4.h"
 
 #include"src\ecs\component.h"
+#include"src\ecs\entity.h"
 
 #include"src\systems\input_system.h"
 #include"src\systems\world_system.h"

@@ -23,6 +23,7 @@ namespace sudo { namespace ecs {
 			if (m_components[i]->IsActive() && !m_components[i]->GetDestroyTrigger()) { // Check if the component is active
 				m_components[i]->Update();
 			}
+			// Remove component
 			else if (m_components[i]->GetDestroyTrigger()) {
 				std::vector<Component*>::iterator it;
 				for (it = m_components.begin(); it != m_components.end(); ) {
