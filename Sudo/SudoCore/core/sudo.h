@@ -8,6 +8,7 @@
 #include"src\math\vector4.h"
 #include"src\math\mat4.h"
 
+#include"src\ecs\test_component.h"
 #include"src\ecs\component.h"
 #include"src\ecs\entity.h"
 
@@ -30,8 +31,8 @@ namespace sudo {
 
 #define SUDO_FINAL_VERSION 0
 #define SUDO_MAJOR_VERSION 0
-#define SUDO_MINOR_VERSION 1
+#define SUDO_MINOR_VERSION 5
 
-static std::string GetSudoVersion() {	return "[Sudo Game Engine] \nVersion: " + std::to_string(SUDO_FINAL_VERSION) + "." + std::to_string(SUDO_MAJOR_VERSION) + "." + std::to_string(SUDO_MINOR_VERSION); }
-
+static std::string GetSudoVersion() {	
+	return "[Sudo Game Engine] \nVersion: " + std::to_string(SUDO_FINAL_VERSION) + "." + std::to_string(SUDO_MAJOR_VERSION) + "" + std::to_string(SUDO_MINOR_VERSION); }
 }

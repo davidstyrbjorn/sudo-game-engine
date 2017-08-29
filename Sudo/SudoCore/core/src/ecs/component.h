@@ -1,24 +1,26 @@
 #pragma once
 
-#define quote(x) #x
-
 namespace sudo { namespace ecs {
 
-	enum ComponentType {
-		TEST_COMPONENT
-	};
+	typedef enum {
+		ACTIVE,
+		DISABLED,
+		REMOVED
+	} ComponentState;
+
+	class Entity;
 
 	class Component
 	{
 	public:
 		/* Virtual Destructor */
-		virtual ~Component() { }
+		virtual ~Component() { delete m_entityHolder; }
 		
-		/* Activates the component */
-		virtual void Activate() { m_isActive = true; }
+		/* Sets the component state */
+		void SetComponentState(ComponentState a_newState) { m_componentState = a_newState; }
 
-		/* Disables the component */
-		virtual void Disable() { m_isActive = false; }
+		/* Returns the state of the component */
+		const ComponentState GetComponentState() { return m_componentState; }
 
 		/* Updates the component behaviour */
 		virtual void Update() = 0;
@@ -28,9 +30,6 @@ namespace sudo { namespace ecs {
 
 		/* Returns the name of the component */
 		const char* GetName() { return m_componentName; }
-
-		/* Returns the state of the component */
-		const unsigned char IsActive() { return m_isActive; }
 		
 		/* Returns the destroy trigger */
 		const unsigned char GetDestroyTrigger() { return m_destroyTrigger; }
@@ -38,10 +37,17 @@ namespace sudo { namespace ecs {
 		/* Sets the destroy trigger, used when deleting component */
 		void SetDestroyTrigger(const bool a_value) { m_destroyTrigger = a_value; }
 
+		/* Sets the entity holder */
+		void SetEntityHolder(Entity *a_newHolder) { m_entityHolder = a_newHolder; }
+
+		/* Gets entity holder */
+		Entity* GetEntityHolder() { return m_entityHolder; }
+
 	protected:
-		unsigned char m_isActive = true; // Depending on this value update the component behaviours
+		ComponentState m_componentState = ComponentState::ACTIVE; // Active by default
 		char* m_componentName; // Name of the component
 		unsigned char m_destroyTrigger = false;
+		Entity *m_entityHolder; // Pointer to the holder of this component
 	};
 
 } }

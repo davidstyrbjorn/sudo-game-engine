@@ -5,7 +5,7 @@
 
 namespace sudo{
 
-CoreEngine::CoreEngine(const math::Vector2& a_windowSize, char *a_windowCaption, SudoClass *a_engineInstance)
+SudoCore::SudoCore(const math::Vector2& a_windowSize, char *a_windowCaption, SudoClass *a_engineInstance)
 {
 	glewInit();
 	glewExperimental = true;
@@ -13,7 +13,7 @@ CoreEngine::CoreEngine(const math::Vector2& a_windowSize, char *a_windowCaption,
 	init(a_windowSize, a_windowCaption, a_engineInstance);
 }
 
-void CoreEngine::init(const math::Vector2& a_windowSize, char* a_windowCaption, SudoClass *a_engineInstance)
+void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, SudoClass *a_engineInstance)
 {
 	/* Setting the engine instance */
 	m_engineInstance = a_engineInstance;
@@ -37,17 +37,18 @@ void CoreEngine::init(const math::Vector2& a_windowSize, char* a_windowCaption, 
 	/* Print the current version of the engine */
 	std::cout << GetSudoVersion() << std::endl;
 
-	/* Call the Start method for the end-user */
-	m_engineInstance->Start();
-
 	/* Call Start on systems */
 	m_worldSystem->Start();
+
+	/* User-end stuff, important we call this last after all the init stuff is done! */
+	/* Call the Start method for the end-user */
+	m_engineInstance->Start();
 
 	/* Start the game_loop; This means Start gets called before any Update calls */
 	game_loop();
 }
 
-void CoreEngine::clean_up()
+void SudoCore::clean_up()
 {
 	/* This destroys everything related to the GLFW library */
 	glfwTerminate();
@@ -56,7 +57,7 @@ void CoreEngine::clean_up()
 	delete m_window;
 }
 
-void CoreEngine::game_loop()
+void SudoCore::game_loop()
 {
 	while (m_window->is_open()) 
 	{

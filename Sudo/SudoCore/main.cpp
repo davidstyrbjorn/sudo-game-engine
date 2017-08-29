@@ -1,16 +1,13 @@
 #include<iostream>
 #include"core\sudo.h"
-#include"core\src\ecs\test_component.h"
 
 using namespace sudo;
-
 
 /* Sandbox for testing implemented features */
 class App : SudoClass {
 
 private:
-	CoreEngine *coreEngine;
-	system::WorldSystem *world = system::WorldSystem::Instance();
+	SudoCore *coreEngine;
 	system::InputSystem *input = system::InputSystem::Instance();
 
 	uint VAO;
@@ -18,22 +15,22 @@ private:
 	uint EBO; // Inidices buffer
 	graphics::Shader *shader;
 
-	float x = (800/2)-(60/2);
-	float y = (600/2)-(60/2);
-	float width = 60;
-	float height = 60;
+	ecs::Entity *player;
+
+	float width = 120;
+	float height = 120;
 
 public:
 	App() 
 	{
-		coreEngine = new CoreEngine(math::Vector2(800, 600), "Pong", this);
+		coreEngine = new SudoCore(math::Vector2(800, 600), "SudoGameEngine", this);
 	}
 
 	void Update()
 	{
 		// Draw object
 		shader->bind();
-		shader->setUniformMatrix4x4("model_matrix", math::Matrix4x4::Translation(math::Vector3(x, y, 0.0)));
+		shader->setUniformMatrix4x4("model_matrix", math::Matrix4x4::Translation(math::Vector3(25, 25, 0.0)));
 
 		glBindVertexArray(VAO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
@@ -43,10 +40,12 @@ public:
 							
 	void Start() 
 	{
+		player = new ecs::Entity("player");
+
 		glewInit();
 		glewExperimental = true;
 
-		shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_fragment.txt");
+		shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_fragment.txt");
 		shader->bind();
 		shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(0, 800, 600, 0,-1,1));
 		shader->setUniform3f("color", math::Vector3(0, 1, 1));
@@ -89,7 +88,7 @@ public:
 };
 
 int main() {
-	App *app = new App();
-	
+	App* app = new App();
+
 	return EXIT_SUCCESS;
 }

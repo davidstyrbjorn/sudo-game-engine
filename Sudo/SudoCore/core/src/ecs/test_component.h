@@ -1,7 +1,9 @@
 #pragma once
 
-#include"component.h"
 #include<iostream>
+
+#include"component.h"
+#include"entity.h"
 
 namespace sudo { namespace ecs { 
 

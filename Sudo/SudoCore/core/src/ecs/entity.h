@@ -5,12 +5,17 @@
 
 #include<type_traits>
 
+#include"transform_component.h"
+
 namespace sudo { namespace ecs {
 
 	class Entity {
 	private:
 		std::vector<Component*> m_components;  
 		char* m_name;
+
+	public:
+		Transform *transform;
 
 	public:
 		/* Entity Constructor */
@@ -32,16 +37,16 @@ namespace sudo { namespace ecs {
 		void RemoveComponent(const char* a_name);
 
 		/* Returns the component inside the components list with a_name */
-		template<typename ComponentType>
-		ComponentType* GetComponent(const char* a_name)
+		template<typename TemplateClass>
+		TemplateClass* GetComponent(const char* a_name)
 		{
 			// Look for component
 			for (int i = 0; i < m_components.size(); ++i) {
 				if (m_components[i]->GetName() == a_name) {
 					// We found the component at index i inside the list
 					// Assert here to check if ComponentType is derived from Component base class
-					static_assert(std::is_base_of<Component, ComponentType>::value, "Get Component in-argument ERROR!");
-					return static_cast<ComponentType*>(m_components[i]);
+					static_assert(std::is_base_of<Component, TemplateClass>::value, "Get Component in-argument ERROR!");
+					return static_cast<TemplateClass*>(m_components[i]);
 				}
 			}
 

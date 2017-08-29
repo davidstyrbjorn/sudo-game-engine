@@ -2,8 +2,6 @@
 #include"../systems/world_system.h"
 #include"../debug.h"
 
-#include"test_component.h"
-
 namespace sudo { namespace ecs {
 
 	Entity::~Entity()
@@ -13,21 +11,30 @@ namespace sudo { namespace ecs {
 
 	Entity::Entity(char* a_name) : m_name(a_name) 
 	{
+		/* Adding the entity to the WorldSystem list */
 		system::WorldSystem *world = system::WorldSystem::Instance();
 		world->AddEntity(this);
+
+		
 	}
 
 	void Entity::Update()
 	{
 		for (int i = 0; i < m_components.size(); i++) {
-			if (m_components[i]->IsActive() && !m_components[i]->GetDestroyTrigger()) { // Check if the component is active
+
+			// Check if component is up for being updated
+			if (m_components[i]->GetComponentState() == ComponentState::ACTIVE) { // Check if the component is active
 				m_components[i]->Update();
 			}
+
 			// Remove component
 			else if (m_components[i]->GetDestroyTrigger()) {
+				/* Create iterator */
 				std::vector<Component*>::iterator it;
+				/* Iterate over the components list and delete */
 				for (it = m_components.begin(); it != m_components.end(); ) {
 					if ((*it)->GetDestroyTrigger()) {
+						/* Found it, now delete it */
 						delete * it;
 						it = m_components.erase(it);
 					}
@@ -41,11 +48,15 @@ namespace sudo { namespace ecs {
 
 	void Entity::Start() 
 	{
+		/* Call start on all the components */
 		for (int i = 0; i < m_components.size(); i++) {
-			if (m_components[i]->IsActive()) { // Check if the component is active
+			if (m_components[i]->GetComponentState() == ComponentState::ACTIVE) { // Check if the component is active
 				m_components[i]->Start();
 			}
 		}
+
+		/* Create the transform component */
+		transform = new Transform();
 	}
 
 	void Entity::AddComponent(Component *a_component) 
@@ -60,6 +71,8 @@ namespace sudo { namespace ecs {
 			}
 		}
 
+		a_component->SetEntityHolder(this);
+
 		/* Push back the component into the list */
 		m_components.push_back(a_component);
 	}
@@ -67,8 +80,6 @@ namespace sudo { namespace ecs {
 	void Entity::RemoveComponent(const char * a_name)
 	{
 		// Loop through the components list, look for component with a_name
-		//std::vector<Component*>::iterator iter;
-		//for (iter = m_components.begin(); iter != m_components.end(); ) {
 		for (int i = 0; i < m_components.size(); i++) {
 			if (m_components[i]->GetName() == a_name) {
 				m_components[i]->SetDestroyTrigger(true); // Set the component to be destroyed next iteration through the list

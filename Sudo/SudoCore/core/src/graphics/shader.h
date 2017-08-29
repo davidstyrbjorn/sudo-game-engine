@@ -26,7 +26,7 @@ namespace sudo { namespace graphics {
 
 	public:
 		/* Loads and compiles a shader program */
-		/* Call this->use() to install shader as part of the current rendering state*/
+		/* Call bind() to install shader as part of the current rendering state*/
 		Shader(const char* a_vertexPath, const char* a_fragmentPath);
 
 		/* Calls glUseProgram on this shader */

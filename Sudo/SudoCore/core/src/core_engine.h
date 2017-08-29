@@ -16,7 +16,7 @@ namespace sudo {
 	class CoreSettings;
 	
 	
-	class CoreEngine {
+	class SudoCore {
 	private:
 		/* ======================================================================= */
 		/* ======================> CORE ENGINE DATA <============================= */
@@ -41,10 +41,10 @@ namespace sudo {
 	
 	public:		
 		/* Destructor */
-		~CoreEngine() { clean_up(); }
+		~SudoCore() { clean_up(); }
 
 		/* Default Constructor */
-		CoreEngine(
+		SudoCore(
 			const math::Vector2& a_windowSize, 
 			char *a_windowCaption,
 			SudoClass *a_engineInstance
