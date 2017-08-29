@@ -29,6 +29,7 @@ namespace sudo { namespace system {
 		/* Base class methods */
 		void Enable() override;
 		void Disable() override;
+		void CleanUp() override;
 
 		/* Updates all entities */
 		void Update() override;

@@ -37,6 +37,7 @@ namespace sudo { namespace system {
 		/* Methods from the SudoSystem base class */
 		void Enable() override;
 		void Disable() override;
+		void CleanUp() override;
 
 		/* end-user static function */
 		/* Returns true if a_keycode is down */

@@ -53,6 +53,10 @@ void SudoCore::clean_up()
 	/* This destroys everything related to the GLFW library */
 	glfwTerminate();
 
+	/* Call CleanUp() on all systems */
+	m_inputSystem->CleanUp();
+	m_worldSystem->CleanUp();
+
 	delete m_engineInstance;
 	delete m_window;
 }
@@ -66,7 +70,7 @@ void SudoCore::game_loop()
 		/* Update the WorldSystem holding all game entities */
 		m_worldSystem->Update();
 
-		/* Call the Update method for the end-user s*/
+		/* Call the Update method for the end-user */
 		m_engineInstance->Update();
 
 		m_window->display();

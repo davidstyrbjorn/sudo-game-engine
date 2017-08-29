@@ -30,6 +30,11 @@ namespace sudo { namespace system {
 		glfwSetMouseButtonCallback(glfwGetCurrentContext(), nullptr);
 	}
 
+	void InputSystem::CleanUp() 
+	{
+
+	}
+
 	bool InputSystem::IsKeyPressed(int a_keycode)
 	{
 		if (m_keys[a_keycode] == GLFW_PRESS || m_keys[a_keycode] == GLFW_REPEAT)

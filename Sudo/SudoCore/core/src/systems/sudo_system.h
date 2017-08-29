@@ -19,6 +19,9 @@ namespace sudo { namespace {
 
 		/* Disable said system, pure virtual */
 		virtual void Disable() = 0;
+
+		/* Cleans up the necessary thing to prevent memory leaks when quitting */
+		virtual void CleanUp() = 0;
 	};
 
 } }

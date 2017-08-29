@@ -43,7 +43,6 @@ void sudo::graphics::Window::display()
 {
 	if (glfwGetCurrentContext() != nullptr)
 	{
-
 		glfwSwapBuffers(m_window);
 	}
 }

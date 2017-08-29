@@ -1,5 +1,7 @@
 #pragma once
 
+#include<iostream>
+
 namespace sudo { namespace ecs {
 
 	typedef enum {
@@ -14,7 +16,10 @@ namespace sudo { namespace ecs {
 	{
 	public:
 		/* Virtual Destructor */
-		virtual ~Component() { delete m_entityHolder; }
+		virtual ~Component() { 
+			std::cout << "Component Removed" << std::endl;
+			m_entityHolder; 
+		}
 		
 		/* Sets the component state */
 		void SetComponentState(ComponentState a_newState) { m_componentState = a_newState; }

@@ -24,6 +24,14 @@ namespace sudo { namespace system {
 		m_isActive = false;
 	}
 
+	void WorldSystem::CleanUp() 
+	{
+		for (std::vector< ecs::Entity* >::iterator it = m_entityList.begin(); it != m_entityList.end(); ++it) {
+			delete (*it);
+		}
+		m_entityList.clear();
+	}
+
 	void WorldSystem::Update()
 	{
 		if (m_isActive) {
