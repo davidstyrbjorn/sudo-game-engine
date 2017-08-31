@@ -6,7 +6,10 @@ namespace sudo { namespace ecs {
 
 	Entity::~Entity()
 	{
-
+		for (std::vector< ecs::Component* >::iterator it = m_components.begin(); it != m_components.end(); ++it) {
+			delete (*it);
+		}
+		m_components.clear();
 	}
 
 	Entity::Entity(char* a_name) : m_name(a_name) 
@@ -14,12 +17,15 @@ namespace sudo { namespace ecs {
 		/* Adding the entity to the WorldSystem list */
 		system::WorldSystem *world = system::WorldSystem::Instance();
 		world->AddEntity(this);
-
-		
 	}
 
 	void Entity::Update()
 	{
+		/* Update the transform component */
+		if (transform->GetComponentState() == ComponentState::ACTIVE) {
+			transform->Update();
+		}
+
 		for (int i = 0; i < m_components.size(); i++) {
 
 			// Check if component is up for being updated
@@ -48,15 +54,16 @@ namespace sudo { namespace ecs {
 
 	void Entity::Start() 
 	{
+		/* Create the transform component */
+		transform = new Transform();
+		transform->Start();
+
 		/* Call start on all the components */
 		for (int i = 0; i < m_components.size(); i++) {
 			if (m_components[i]->GetComponentState() == ComponentState::ACTIVE) { // Check if the component is active
 				m_components[i]->Start();
 			}
 		}
-
-		/* Create the transform component */
-		transform = new Transform();
 	}
 
 	void Entity::AddComponent(Component *a_component) 

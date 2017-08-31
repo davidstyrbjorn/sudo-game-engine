@@ -1,4 +1,4 @@
-#include "core_engine.h"
+#include "sudo_core.h"
 
 #include"../sudo.h"
 #include"../gl_include.h"
@@ -37,12 +37,12 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	/* Print the current version of the engine */
 	std::cout << GetSudoVersion() << std::endl;
 
-	/* Call Start on systems */
-	m_worldSystem->Start();
-
 	/* User-end stuff, important we call this last after all the init stuff is done! */
 	/* Call the Start method for the end-user */
 	m_engineInstance->Start();
+
+	/* Call Start on systems */
+	m_worldSystem->Start();
 
 	/* Start the game_loop; This means Start gets called before any Update calls */
 	game_loop();

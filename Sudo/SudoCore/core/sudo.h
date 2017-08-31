@@ -18,7 +18,7 @@
 #include"src\graphics\shader.h"
 #include"src\graphics\window.h"
 
-#include"src\core_engine.h"
+#include"src\sudo_core.h"
 #include"src\sudo_class.h"
 
 #include"src\utility\utility.h"

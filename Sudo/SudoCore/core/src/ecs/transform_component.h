@@ -11,7 +11,7 @@ namespace sudo { namespace math {
 
 namespace sudo { namespace ecs { 
 
-	class Transform : Component {
+	class Transform : public Component {
 	public:
 		/* Class Data */
 		math::Vector3 *position;

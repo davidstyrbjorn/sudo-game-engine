@@ -10,8 +10,6 @@ private:
 	SudoCore *coreEngine;
 	system::InputSystem *input = system::InputSystem::Instance();
 
-	ecs::Entity* yeet;
-
 	uint VAO;
 	uint VBO;
 	uint EBO; // Inidices buffer
@@ -40,16 +38,13 @@ public:
 							
 	void Start() 
 	{
-		yeet = new ecs::Entity("yeezes");
-		yeet->AddComponent(new ecs::TestComponent());
-
 		glewInit();
 		glewExperimental = true;
 
-		shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_fragment.txt");
+		shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_fragment.txt");
 		shader->bind();
 		shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(0, 800, 600, 0,-1,1));
-		shader->setUniform3f("color", math::Vector3(0, 1, 1));
+		shader->setUniform3f("color", math::Vector3(0.25f, 0.7f, 1));
 
 		// Vertex points
 		float vertices[] = {

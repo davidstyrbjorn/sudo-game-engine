@@ -14,7 +14,7 @@ namespace sudo { namespace ecs {
 		}
 
 		void Start() {
-			std::cout << "Check out my yeezes";
+
 		}
 
 		void Update() {
