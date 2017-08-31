@@ -13,6 +13,13 @@ namespace sudo { namespace system {
 	public:
 		/* Method to get pointer to system */
 		static RenderSystem *Instance();
+
+		/* Methods from the SudoSystem base class */
+		void Enable()	override;
+		void Disable()	override;
+		void CleanUp()	override;
+		void Update()	override;
+		void Start()	override;
 	};
 
 } } 

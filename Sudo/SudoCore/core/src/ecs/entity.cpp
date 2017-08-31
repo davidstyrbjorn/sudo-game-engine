@@ -17,6 +17,10 @@ namespace sudo { namespace ecs {
 		/* Adding the entity to the WorldSystem list */
 		system::WorldSystem *world = system::WorldSystem::Instance();
 		world->AddEntity(this);
+
+		/* Create the transform component */
+		transform = new Transform();
+		transform->SetEntityHolder(this);
 	}
 
 	void Entity::Update()
@@ -54,8 +58,6 @@ namespace sudo { namespace ecs {
 
 	void Entity::Start() 
 	{
-		/* Create the transform component */
-		transform = new Transform();
 		transform->Start();
 
 		/* Call start on all the components */

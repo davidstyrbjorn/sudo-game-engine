@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="core\src\ecs\rectangle_component.cpp" />
     <ClCompile Include="core\src\sudo_core.cpp" />
     <ClCompile Include="core\src\debug.cpp" />
     <ClCompile Include="core\src\ecs\entity.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="core\src\math\mat4.cpp" />
     <ClCompile Include="core\src\math\vector2.cpp" />
     <ClCompile Include="core\src\math\vector3.cpp" />
+    <ClCompile Include="core\src\systems\render_system.cpp" />
     <ClCompile Include="core\src\systems\world_system.cpp" />
     <ClCompile Include="core\src\utility\linked_list.cpp" />
     <ClCompile Include="main.cpp" />
@@ -144,8 +146,9 @@
   <ItemGroup>
     <ClInclude Include="core\src\ecs\component.h" />
     <ClInclude Include="core\src\ecs\entity.h" />
-    <ClInclude Include="core\src\ecs\test_component.h" />
+    <ClInclude Include="core\src\ecs\rectangle_component.h" />
     <ClInclude Include="core\src\ecs\transform_component.h" />
+    <ClInclude Include="core\src\graphics\renderable2d.h" />
     <ClInclude Include="core\src\math\vector4.h" />
     <ClInclude Include="core\src\sudo_class.h" />
     <ClInclude Include="core\src\core_settings.h" />

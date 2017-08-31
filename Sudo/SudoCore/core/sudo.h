@@ -8,12 +8,14 @@
 #include"src\math\vector4.h"
 #include"src\math\mat4.h"
 
-#include"src\ecs\test_component.h"
+#include"src\ecs\transform_component.h"
+#include"src\ecs\rectangle_component.h"
 #include"src\ecs\component.h"
 #include"src\ecs\entity.h"
 
 #include"src\systems\input_system.h"
 #include"src\systems\world_system.h"
+#include"src\systems\render_system.h"
 
 #include"src\graphics\shader.h"
 #include"src\graphics\window.h"

@@ -24,13 +24,18 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	/* ========================================= */
 	/*               ENABLE SYSTEMS              */
 	/* ========================================= */
-	/* Sets the corrent GLFW callbacks, if not done InputSystem won't trigger */
+
+	/* Input system */
 	m_inputSystem = system::InputSystem::Instance();
 	m_inputSystem->Enable();
 
 	/* WorldSystem/ECS System*/
 	m_worldSystem = system::WorldSystem::Instance();
 	m_worldSystem->Enable();
+
+	/* Render system */
+	m_renderSystem = system::RenderSystem::Instance();
+	m_renderSystem->Enable();
 
 	/* ========================================= */
 
