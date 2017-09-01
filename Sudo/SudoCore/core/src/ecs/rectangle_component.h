@@ -18,13 +18,14 @@ namespace sudo { namespace ecs {
 		void Update() override;
 
 		/* Renderable2D class methods */
-		void SetPosition(math::Vector2 &a_newPosition);
-		void SetScale(math::Vector2 &a_newScale);
-		void Scale(float a_magnitude);
-		void Move(math::Vector2 &a_direction, float a_magnitude);
+		void SetPosition(math::Vector3 &a_newPosition)						override;
+		void SetScale(math::Vector3 &a_newScale)							override;
+		void Scale(float a_magnitude)										override;
+		void Move(math::Vector3 &a_direction, float a_magnitude)			override;
 
 	private:
-		Transform *m_entityTransform;
+		unsigned int VBO;
+		unsigned int width, height;
 	};
 	
 } }

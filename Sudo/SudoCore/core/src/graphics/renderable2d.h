@@ -1,11 +1,14 @@
 #pragma once
 
 // Forward decleration
-namespace sudo { namespace math { 
-
-	class Vector2;
-
-} }
+namespace sudo { 
+	namespace math {
+		class Vector3;
+	}
+	namespace ecs {
+		class Transform;
+	}
+} 
 
 namespace sudo { namespace graphics { 
 
@@ -17,16 +20,18 @@ namespace sudo { namespace graphics {
 		virtual ~Renderable2D() { }
 
 		/* Sets position of the transform */
-		virtual void SetPosition(math::Vector2 &a_newPosition) = 0;
+		virtual void SetPosition(math::Vector3 &a_newPosition) = 0;
 
 		/* Sets scale of the transform */
-		virtual void SetScale(math::Vector2 &a_newScale) = 0;
+		virtual void SetScale(math::Vector3 &a_newScale) = 0;
 
 		/* Scales up transform by order of a_magnitude */
 		virtual void Scale(float a_magnitude) = 0;
 
 		/* Moves transform in a_direction at a_magnitude / frame */
-		virtual void Move(math::Vector2 &a_direction, float a_magnitude) = 0;
-	};
+		virtual void Move(math::Vector3 &a_direction, float a_magnitude) = 0;
 
+	protected:							  	
+		ecs::Transform *m_entityTransform;		
+	};
 } }
