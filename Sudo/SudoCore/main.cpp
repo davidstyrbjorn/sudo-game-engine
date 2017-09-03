@@ -9,10 +9,9 @@ class App : SudoClass {
 private:
 	SudoCore *coreEngine;
 	system::InputSystem *input = system::InputSystem::Instance();
+	system::RenderSystem *renderer = system::RenderSystem::Instance();
 
-	uint VAO;
-	uint VBO;
-	uint EBO; // Inidices buffer
+	//uint EBO; // Inidices buffer
 	graphics::Shader *shader;
 
 	ecs::Entity *player;
@@ -29,24 +28,21 @@ public:
 	void Update()
 	{
 		// Draw object
-		shader->bind();
-		shader->setUniformMatrix4x4("model_matrix", math::Matrix4x4::Translation(math::Vector3(25, 25, 0.0)));
+		//shader->bind();
 
-		glBindVertexArray(VAO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		glBindVertexArray(0);
+		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+		renderer->Draw(player->GetComponent<ecs::RectangleComponent>("RectangleComponent"));
 	}
 							
 	void Start() 
 	{
 		player = new ecs::Entity("player");
 		player->AddComponent(new ecs::RectangleComponent());
-		player->transform->position = math::Vector3(20, 20, 0);
+		
 
-		glewInit();
-		glewExperimental = true;
-
+		/*
 		shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_fragment.txt");
 		shader->bind();
 		shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(0, 800, 600, 0,-1,1));
@@ -69,12 +65,7 @@ public:
 		glGenBuffers(1, &EBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-
-		// Creating and binding the Vertex Array Object
-		glGenVertexArrays(1, &VAO);
-		glBindVertexArray(VAO);
 
 		// Creating the buffer object
 		glGenBuffers(1, &VBO);
@@ -86,6 +77,7 @@ public:
 		// Linking/setting our vertex attributes
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
+		*/
 	}
 };
 

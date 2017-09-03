@@ -39,15 +39,16 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 
 	/* ========================================= */
 
-	/* Print the current version of the engine */
-	std::cout << GetSudoVersion() << std::endl;
-
 	/* User-end stuff, important we call this last after all the init stuff is done! */
 	/* Call the Start method for the end-user */
 	m_engineInstance->Start();
 
 	/* Call Start on systems */
 	m_worldSystem->Start();
+	m_renderSystem->Start();
+
+	/* Print the current version of the engine */
+	std::cout << GetSudoVersion() << std::endl;
 
 	/* Start the game_loop; This means Start gets called before any Update calls */
 	game_loop();
@@ -77,6 +78,9 @@ void SudoCore::game_loop()
 
 		/* Call the Update method for the end-user */
 		m_engineInstance->Update();
+	
+		/* Render w/OpenGL */
+		m_renderSystem->Update();
 
 		m_window->display();
 	}

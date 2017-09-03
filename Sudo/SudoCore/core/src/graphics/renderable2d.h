@@ -28,10 +28,10 @@ namespace sudo { namespace graphics {
 		/* Scales up transform by order of a_magnitude */
 		virtual void Scale(float a_magnitude) = 0;
 
-		/* Moves transform in a_direction at a_magnitude / frame */
-		virtual void Move(math::Vector3 &a_direction, float a_magnitude) = 0;
+		virtual void bind() = 0;
+		virtual void unbind() = 0;
 
-	protected:							  	
+	public:							  	
 		ecs::Transform *m_entityTransform;		
 	};
 } }

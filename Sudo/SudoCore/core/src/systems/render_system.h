@@ -36,6 +36,7 @@ namespace sudo { namespace system {
 		graphics::Shader *m_shader;
 		unsigned char m_isActive;
 		std::deque<graphics::Renderable2D*> m_renderList;
+		unsigned int VAO;
 	};
 
 } } 

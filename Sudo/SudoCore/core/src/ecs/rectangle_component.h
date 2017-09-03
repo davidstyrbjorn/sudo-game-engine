@@ -21,10 +21,12 @@ namespace sudo { namespace ecs {
 		void SetPosition(math::Vector3 &a_newPosition)						override;
 		void SetScale(math::Vector3 &a_newScale)							override;
 		void Scale(float a_magnitude)										override;
-		void Move(math::Vector3 &a_direction, float a_magnitude)			override;
+
+		void bind()		override;
+		void unbind()	override;
 
 	private:
-		unsigned int VBO;
+		unsigned int VBO, VAO;
 		unsigned int width, height;
 	};
 	

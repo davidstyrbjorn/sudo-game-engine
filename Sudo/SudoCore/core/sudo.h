@@ -19,6 +19,7 @@
 
 #include"src\graphics\shader.h"
 #include"src\graphics\window.h"
+#include"src\graphics\renderable2d.h"
 
 #include"src\sudo_core.h"
 #include"src\sudo_class.h"

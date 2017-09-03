@@ -8,9 +8,6 @@ namespace sudo { namespace graphics {
 
 	Shader::Shader(const char* a_vertexPath, const char* a_fragmentPath) 
 	{
-		glewInit();
-		glewExperimental = true;
-
 		std::string vertex_shader_source = utility::GetFileContent(a_vertexPath);
 		std::string fragment_shader_source = utility::GetFileContent(a_fragmentPath);
 		
