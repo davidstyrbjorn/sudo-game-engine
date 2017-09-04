@@ -3,3 +3,11 @@
 [Thu Aug 17 15:53](ERROR: Yo this is a message to all my haters)
 [Sun Aug 20 13:29](ERROR: 0(14) : error C1008: undefined variable "l_Position"
 )
+[Mon Sep  4 15:23](ERROR: ERROR: 0:15: 'gl_position' : undeclared identifier 
+ERROR: 0:15: 'assign' :  cannot convert from 'attribute 3-component vector of float' to 'float'
+
+)
+[Mon Sep  4 15:23](ERROR: ERROR: 0:15: 'gl_position' : undeclared identifier 
+ERROR: 0:15: 'assign' :  cannot convert from 'attribute 3-component vector of float' to 'float'
+
+)

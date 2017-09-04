@@ -15,7 +15,6 @@ namespace sudo { namespace ecs {
 		Transform();
 
 		void Start() override;
-
 		void Update() override;
 	};
 

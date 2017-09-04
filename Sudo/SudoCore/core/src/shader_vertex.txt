@@ -12,6 +12,7 @@ out vec3 out_color;
 void main() 
 {
 	gl_Position = projection_matrix * view_matrix * model_matrix * vec4(aPos.x,aPos.y,aPos.z,1.0);
+	//gl_position = aPos;
 
 	out_color = color;
 }

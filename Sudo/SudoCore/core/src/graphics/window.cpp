@@ -35,7 +35,7 @@ void sudo::graphics::Window::clear()
 {
 	glfwPollEvents();
 
-	glClearColor(0.4f, 0.1f, 0.2f, 1.0f);
+	//glClearColor(0.4f, 0.1f, 0.2f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 

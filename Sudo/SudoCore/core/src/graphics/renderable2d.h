@@ -28,6 +28,7 @@ namespace sudo { namespace graphics {
 		/* Scales up transform by order of a_magnitude */
 		virtual void Scale(float a_magnitude) = 0;
 
+		/* Binds and unbinds the necc buffers when rendering */
 		virtual void bind() = 0;
 		virtual void unbind() = 0;
 
