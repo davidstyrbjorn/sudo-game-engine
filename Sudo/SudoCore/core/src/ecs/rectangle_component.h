@@ -11,23 +11,22 @@ namespace sudo { namespace ecs {
 	class RectangleComponent : public Component, public graphics::Renderable2D {
 	public:
 		/* Constrcutor */
-		RectangleComponent();
+		RectangleComponent(math::Vector2 &a_size);
 
 		/* Component class methods */
-		void Start() override;
-		void Update() override;
+		void Start()	override;
+		void Update()	override { }
 
 		/* Renderable2D class methods */
-		void SetPosition(math::Vector3 &a_newPosition)						override;
-		void SetScale(math::Vector3 &a_newScale)							override;
-		void Scale(float a_magnitude)										override;
+		void SetPosition(math::Vector3 &a_newPosition)	override;
+		void SetScale(math::Vector3 &a_newScale)		override;
+		void Scale(float a_magnitude)					override;
 
 		void bind()		override;
 		void unbind()	override;
 
 	private:
-		unsigned int VBO, VAO;
-		unsigned int width, height;
+		unsigned int VBO, VAO, EBO;
 	};
 	
 } }

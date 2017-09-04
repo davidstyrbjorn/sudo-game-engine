@@ -31,8 +31,8 @@ namespace sudo { namespace graphics {
 
 		/* Calls glUseProgram on this shader */
 		/* glUseProgram — Installs a program object as part of current rendering state */
-		void bind()	  const;
-		void unbind() const;
+		void enable()		const;
+		void disable()		const;
 
 		/* glUniform methods */
 		void setUniformMatrix4x4 (const GLchar *a_name, math::Matrix4x4& a_matrix);

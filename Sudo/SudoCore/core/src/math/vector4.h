@@ -6,7 +6,7 @@ namespace sudo {
 	namespace math {
 
 		class Vector4 {
-		private:
+		protected:
 			float m_x, m_y, m_z, m_w;
 
 		public:

@@ -36,12 +36,12 @@ namespace sudo { namespace graphics {
 		glDeleteShader(fragmentShader);
 	}
 
-	void Shader::bind() const
+	void Shader::enable() const
 	{
 		glUseProgram(m_shaderProgram);
 	}
 
-	void Shader::unbind() const
+	void Shader::disable() const
 	{
 		glUseProgram(0);
 	}

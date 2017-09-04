@@ -25,19 +25,20 @@ public:
 
 	void Update()
 	{
-		// Draw object
+		// Draw entity with RectangleComponent
 		renderer->Draw(shape->GetComponent<ecs::RectangleComponent>("RectangleComponent"));
-		renderer->Draw(shape2->GetComponent<ecs::RectangleComponent>("RectangleComponent"));
+		renderer->Draw(shape2->GetComponent<ecs::TriangleComponent>("TriangleComponent"));
 	}
 							
 	void Start() 
 	{
+		// Create shape entity, add rectangle component then change it's position
 		shape = new ecs::Entity("shape");
-		shape->AddComponent(new ecs::RectangleComponent());
-		shape->transform->position = math::Vector3(100, 100, 0);
+		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(70,120)));
+		shape->transform->position = math::Vector3(300, 100, 0);
 
 		shape2 = new ecs::Entity("shape2");
-		shape2->AddComponent(new ecs::RectangleComponent());
+		shape2->AddComponent(new ecs::TriangleComponent(math::Vector2(100, 100)));
 	}
 };
 

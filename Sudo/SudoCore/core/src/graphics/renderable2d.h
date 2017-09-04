@@ -1,10 +1,10 @@
 #pragma once
 
+#include"../math/vector2.h"
+#include"../math/vector3.h"
+
 // Forward decleration
 namespace sudo { 
-	namespace math {
-		class Vector3;
-	}
 	namespace ecs {
 		class Transform;
 	}
@@ -34,5 +34,6 @@ namespace sudo { namespace graphics {
 
 	public:							  	
 		ecs::Transform *m_entityTransform;		
+		math::Vector2 size;
 	};
 } }
