@@ -29,7 +29,7 @@ public:
 		renderer->Draw(shape->GetComponent<ecs::RectangleComponent>("RectangleComponent"));
 		renderer->Draw(shape2->GetComponent<ecs::TriangleComponent>("TriangleComponent"));
 	}
-							
+		
 	void Start() 
 	{
 		// Create shape entity, add rectangle component then change it's position
@@ -38,7 +38,8 @@ public:
 		shape->transform->position = math::Vector3(300, 100, 0);
 
 		shape2 = new ecs::Entity("shape2");
-		shape2->AddComponent(new ecs::TriangleComponent(math::Vector2(100, 100)));
+		shape2->AddComponent(new ecs::TriangleComponent(math::Vector2(600, 300)));
+		shape2->transform->position = math::Vector3(50, 50, 0);
 	}
 };
 

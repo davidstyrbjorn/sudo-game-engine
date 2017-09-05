@@ -27,7 +27,7 @@ namespace sudo {
 			void unbind()	override;
 
 		private:
-			unsigned int VBO, VAO, EBO;
+			unsigned int VBO, VAO, EBO, CBO;
 		};
 
 	}
