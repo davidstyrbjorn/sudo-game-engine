@@ -26,7 +26,7 @@ namespace sudo { namespace ecs {
 		void unbind()	override;
 
 	private:
-		unsigned int VBO, VAO, EBO;
+		unsigned int VBO, VAO, EBO, CBO;
 	};
 	
 } }

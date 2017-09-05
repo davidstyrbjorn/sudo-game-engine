@@ -16,6 +16,7 @@ private:
 
 	ecs::Entity *shape;
 	ecs::Entity *shape2;
+	ecs::Entity *shape3;
 
 public:
 	App() 
@@ -25,21 +26,26 @@ public:
 
 	void Update()
 	{
-		// Draw entity with RectangleComponent
+		// Draw entity with Entities
 		renderer->Draw(shape->GetComponent<ecs::RectangleComponent>("RectangleComponent"));
 		renderer->Draw(shape2->GetComponent<ecs::TriangleComponent>("TriangleComponent"));
+		renderer->Draw(shape3->GetComponent<ecs::TriangleComponent>("TriangleComponent"));
 	}
 		
 	void Start() 
 	{
 		// Create shape entity, add rectangle component then change it's position
 		shape = new ecs::Entity("shape");
-		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(70,120)));
-		shape->transform->position = math::Vector3(300, 100, 0);
+		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(150,150)));
+		shape->transform->position = math::Vector3((800/2)-(150/2), (600/2)-(150/2), 0);
 
 		shape2 = new ecs::Entity("shape2");
-		shape2->AddComponent(new ecs::TriangleComponent(math::Vector2(600, 300)));
+		shape2->AddComponent(new ecs::TriangleComponent(math::Vector2(100, 100)));
 		shape2->transform->position = math::Vector3(50, 50, 0);
+
+		shape3 = new ecs::Entity("shape2");
+		shape3->AddComponent(new ecs::TriangleComponent(math::Vector2(100, 100)));
+		shape3->transform->position = math::Vector3(650, 450, 0);
 	}
 };
 
