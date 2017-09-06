@@ -3,16 +3,14 @@
 #include"../../sudo.h"
 #include"../../gl_include.h"
 
-namespace sudo { namespace ecs { 
+namespace sudo { namespace ecs {
 
-	/* Constructor */
-	RectangleComponent::RectangleComponent(math::Vector2 & a_size)
+	RectangleComponent::RectangleComponent(math::Vector2 &a_size, math::Vector4 &a_color)
 	{
-		// Setting component name, from component base class
 		m_componentName = "RectangleComponent";
 
-		// Setting size, from Renderable2D base class
-		size = a_size;
+		m_size = a_size;
+		m_color = a_color;
 	}
 
 	void RectangleComponent::Start()
@@ -21,19 +19,19 @@ namespace sudo { namespace ecs {
 
 		float vertices[] = {
 			0, 0, 0.0f,
-			0, size.getY(), 0.0f,
-			size.getX(), size.getY(), 0.0f,
-			size.getX(), 0.0f, 0.0f
+			0, m_size.getY(), 0.0f,
+			m_size.getX(), m_size.getY(), 0.0f,
+			m_size.getX(), 0.0f, 0.0f
 		};
 		uint indices[] = {
 			0,1,2,
 			0,2,3
 		};
 		float colors[] = {
-			1, 0.0f, 0.0f,
-			0.0f, 1, 0.0f,
-			0.0f, 0.0f, 1,
-			0.0f, 1, 0.0f
+			m_color.getX(), m_color.getY(), m_color.getZ(),
+			m_color.getX(), m_color.getY(), m_color.getZ(),
+			m_color.getX(), m_color.getY(), m_color.getZ(),
+			m_color.getX(), m_color.getY(), m_color.getZ(),
 		};
 
 		glewInit();
@@ -75,25 +73,6 @@ namespace sudo { namespace ecs {
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
-	}
-
-	void RectangleComponent::SetPosition(math::Vector3 &a_newPosition)
-	{
-		m_entityTransform->position = a_newPosition;
-	}
-
-	void RectangleComponent::SetScale(math::Vector3 &a_newScale)
-	{
-		std::cout << a_newScale << " Yeet scaled up" << std::endl;
-	}
-
-	void RectangleComponent::Scale(float a_magnitude)
-	{
-		m_entityTransform->scale = math::Vector3(
-			m_entityTransform->scale.getX()*a_magnitude,
-			m_entityTransform->scale.getY()*a_magnitude,
-			m_entityTransform->scale.getZ()*a_magnitude
-		);
 	}
 
 } } 

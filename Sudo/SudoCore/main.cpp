@@ -36,16 +36,19 @@ public:
 	{
 		// Create shape entity, add rectangle component then change it's position
 		shape = new ecs::Entity("shape");
-		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(150,150)));
+		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(150,150), math::Vector4(1,0,0,1)));
 		shape->transform->position = math::Vector3((800/2)-(150/2), (600/2)-(150/2), 0);
 
 		shape2 = new ecs::Entity("shape2");
-		shape2->AddComponent(new ecs::TriangleComponent(math::Vector2(100, 100)));
+		shape2->AddComponent(new ecs::TriangleComponent(math::Vector2(100, 100), math::Vector4(0,1,0,1)));
 		shape2->transform->position = math::Vector3(50, 50, 0);
 
 		shape3 = new ecs::Entity("shape2");
-		shape3->AddComponent(new ecs::TriangleComponent(math::Vector2(100, 100)));
+		shape3->AddComponent(new ecs::TriangleComponent(math::Vector2(100, 100), math::Vector4(0,0,1,1)));
 		shape3->transform->position = math::Vector3(650, 450, 0);
+
+		// Change background color
+		coreEngine->SetBackgroundColor(math::Vector3(0.4f, 0.45f, 0.75f));
 	}
 };
 

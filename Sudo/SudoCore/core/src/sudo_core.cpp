@@ -4,13 +4,18 @@
 #include"../gl_include.h"
 
 namespace sudo{
-
 SudoCore::SudoCore(const math::Vector2& a_windowSize, char *a_windowCaption, SudoClass *a_engineInstance)
 {
 	glewInit();
 	glewExperimental = true;
 
 	init(a_windowSize, a_windowCaption, a_engineInstance);
+}
+
+void SudoCore::SetBackgroundColor(math::Vector3 & a_newColor)
+{
+	if(m_window != nullptr)
+		m_window->setBackgroundColor(a_newColor);
 }
 
 void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, SudoClass *a_engineInstance)

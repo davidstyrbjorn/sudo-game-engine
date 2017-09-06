@@ -1,6 +1,7 @@
 #pragma once
 
 #include"math\vector2.h"
+#include"math\vector3.h"
 
 namespace sudo {
 
@@ -46,6 +47,9 @@ namespace sudo {
 	public:		
 		/* Destructor */
 		~SudoCore() { clean_up(); }
+
+		/* Sets m_window/s background color */
+		void SetBackgroundColor(math::Vector3 &a_newColor);
 
 		/* Default Constructor */
 		SudoCore(

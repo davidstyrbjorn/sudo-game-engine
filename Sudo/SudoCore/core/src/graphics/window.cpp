@@ -24,6 +24,9 @@ sudo::graphics::Window::Window(uint a_width, uint a_height, char *a_caption)
 	/* Set Callbacks */
 	glfwSetWindowSizeCallback(m_window, window_size_callback);
 	glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
+
+	/* Set default window color */
+	m_backgroundColor = math::Vector3(0, 0, 0);
 }
 
 sudo::graphics::Window::~Window()
@@ -35,7 +38,7 @@ void sudo::graphics::Window::clear()
 {
 	glfwPollEvents();
 
-	glClearColor(0.4f, 0.1f, 0.2f, 1.0f);
+	glClearColor(m_backgroundColor.getX(),m_backgroundColor.getY(),m_backgroundColor.getZ(), 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 

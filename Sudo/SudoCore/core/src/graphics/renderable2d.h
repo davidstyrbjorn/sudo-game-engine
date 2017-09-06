@@ -2,6 +2,7 @@
 
 #include"../math/vector2.h"
 #include"../math/vector3.h"
+#include"../math/vector4.h"
 
 // Forward decleration
 namespace sudo { 
@@ -19,21 +20,23 @@ namespace sudo { namespace graphics {
 		/* Virtual desctructor */
 		virtual ~Renderable2D() { }
 
-		/* Sets position of the transform */
-		virtual void SetPosition(math::Vector3 &a_newPosition) = 0;
-
-		/* Sets scale of the transform */
-		virtual void SetScale(math::Vector3 &a_newScale) = 0;
-
-		/* Scales up transform by order of a_magnitude */
-		virtual void Scale(float a_magnitude) = 0;
-
-		/* Binds and unbinds the necc buffers when rendering */
+		/* Binds and unbinds the necce buffers when rendering */
 		virtual void bind() = 0;
 		virtual void unbind() = 0;
 
-	public:							  	
+		/* Getters */
+		inline const ecs::Transform *GetEntityTransform() { return m_entityTransform; }
+		inline const math::Vector2 &GetSize() { return m_size; }
+		inline const math::Vector4 &GetColor() { return m_color; }
+
+		/* Setters */
+		void SetSize(const math::Vector2 &a_newSize) { m_size = a_newSize; }
+		void SetColor(const math::Vector4 &a_newColor) { m_color = a_newColor; }
+
+	protected:	
+		/* Renderable2D shared data */
 		ecs::Transform *m_entityTransform;		
-		math::Vector2 size;
+		math::Vector2 m_size;
+		math::Vector4 m_color;
 	};
 } }
