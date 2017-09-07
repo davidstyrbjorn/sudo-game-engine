@@ -48,8 +48,8 @@ namespace sudo {
 		/* Destructor */
 		~SudoCore() { clean_up(); }
 
-		/* Sets m_window/s background color */
-		void SetBackgroundColor(math::Vector3 &a_newColor);
+		graphics::Window* GetWindow();
+		void dab() { printf("x"); }
 
 		/* Default Constructor */
 		SudoCore(

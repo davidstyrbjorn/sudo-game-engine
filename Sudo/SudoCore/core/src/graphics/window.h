@@ -21,7 +21,7 @@ namespace sudo { namespace graphics {
 		bool is_open() override;
 		void close() override;
 
-		void setBackgroundColor(const math::Vector3 &a_newColor) { m_backgroundColor = a_newColor; }
+		void SetBackgroundColor(const math::Vector3 &a_newColor);
 
 	private:
 		/* Window Private Data */

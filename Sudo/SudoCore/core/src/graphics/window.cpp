@@ -60,6 +60,11 @@ void sudo::graphics::Window::close()
 	glfwDestroyWindow(m_window);
 }
 
+void sudo::graphics::Window::SetBackgroundColor(const math::Vector3 &a_newColor) 
+{
+	m_backgroundColor = a_newColor;
+}
+
 /* GLFW Callback Functions */
 void sudo::graphics::window_size_callback(GLFWwindow * window, int width, int height)
 {

@@ -12,12 +12,6 @@ SudoCore::SudoCore(const math::Vector2& a_windowSize, char *a_windowCaption, Sud
 	init(a_windowSize, a_windowCaption, a_engineInstance);
 }
 
-void SudoCore::SetBackgroundColor(math::Vector3 & a_newColor)
-{
-	if(m_window != nullptr)
-		m_window->setBackgroundColor(a_newColor);
-}
-
 void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, SudoClass *a_engineInstance)
 {
 	/* Setting the engine instance */
@@ -47,6 +41,7 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	/* User-end stuff, important we call this last after all the init stuff is done! */
 	/* Call the Start method for the end-user */
 	m_engineInstance->Start();
+	printf("y");
 
 	/* Call Start on systems */
 	m_worldSystem->Start();
@@ -90,4 +85,10 @@ void SudoCore::game_loop()
 		m_window->display();
 	}
 }
+
+graphics::Window* SudoCore::GetWindow() 
+{
+	return m_window;
+}
+
 }

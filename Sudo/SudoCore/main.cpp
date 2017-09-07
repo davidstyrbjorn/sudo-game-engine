@@ -11,9 +11,6 @@ private:
 	system::InputSystem *input = system::InputSystem::Instance();
 	system::RenderSystem *renderer = system::RenderSystem::Instance();
 
-	//uint EBO; // Inidices buffer
-	graphics::Shader *shader;
-
 	ecs::Entity *shape;
 	ecs::Entity *shape2;
 	ecs::Entity *shape3;
@@ -48,7 +45,7 @@ public:
 		shape3->transform->position = math::Vector3(650, 450, 0);
 
 		// Change background color
-		coreEngine->SetBackgroundColor(math::Vector3(0.4f, 0.45f, 0.75f));
+		coreEngine->dab();
 	}
 };
 
