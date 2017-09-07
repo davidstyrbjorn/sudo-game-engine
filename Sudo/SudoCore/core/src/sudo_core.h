@@ -48,9 +48,6 @@ namespace sudo {
 		/* Destructor */
 		~SudoCore() { clean_up(); }
 
-		graphics::Window* GetWindow();
-		void dab() { printf("x"); }
-
 		/* Default Constructor */
 		SudoCore(
 			const math::Vector2& a_windowSize, 

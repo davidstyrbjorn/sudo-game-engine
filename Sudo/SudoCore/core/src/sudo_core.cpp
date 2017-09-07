@@ -41,7 +41,6 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	/* User-end stuff, important we call this last after all the init stuff is done! */
 	/* Call the Start method for the end-user */
 	m_engineInstance->Start();
-	printf("y");
 
 	/* Call Start on systems */
 	m_worldSystem->Start();
@@ -56,7 +55,7 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 
 void SudoCore::clean_up()
 {
-	/* This destroys everything related to the GLFW library */
+	/* This destroys  everything related to the GLFW library */
 	glfwTerminate();
 
 	/* Call CleanUp() on all systems */
@@ -69,26 +68,27 @@ void SudoCore::clean_up()
 
 void SudoCore::game_loop()
 {
+	utility::Time::ResetTime();
+
 	while (m_window->is_open()) 
 	{
-		m_window->clear();
+		if (utility::Time::GetElapsedTime() >= 0.012) {
+			m_window->clear();
 
-		/* Update the WorldSystem holding all game entities */
-		m_worldSystem->Update();
+			/* Update the WorldSystem holding all game entities */
+			m_worldSystem->Update();
 
-		/* Call the Update method for the end-user */
-		m_engineInstance->Update();
-	
-		/* Render w/OpenGL */
-		m_renderSystem->Update();
+			/* Call the Update method for the end-user */
+			m_engineInstance->Update();
 
-		m_window->display();
+			/* Render w/OpenGL */
+			m_renderSystem->Update();
+
+			m_window->display();
+
+			utility::Time::ResetTime();
+		}
 	}
-}
-
-graphics::Window* SudoCore::GetWindow() 
-{
-	return m_window;
 }
 
 }

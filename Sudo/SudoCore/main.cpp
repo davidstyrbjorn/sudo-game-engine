@@ -27,6 +27,8 @@ public:
 		renderer->Draw(shape->GetComponent<ecs::RectangleComponent>("RectangleComponent"));
 		renderer->Draw(shape2->GetComponent<ecs::TriangleComponent>("TriangleComponent"));
 		renderer->Draw(shape3->GetComponent<ecs::TriangleComponent>("TriangleComponent"));
+
+		shape->transform->position = math::Vector3(shape->transform->position.getX() + 10, 100,0);
 	}
 		
 	void Start() 
@@ -43,9 +45,6 @@ public:
 		shape3 = new ecs::Entity("shape2");
 		shape3->AddComponent(new ecs::TriangleComponent(math::Vector2(100, 100), math::Vector4(0,0,1,1)));
 		shape3->transform->position = math::Vector3(650, 450, 0);
-
-		// Change background color
-		coreEngine->dab();
 	}
 };
 
