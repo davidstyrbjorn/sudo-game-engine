@@ -12,8 +12,6 @@ private:
 	system::RenderSystem *renderer = system::RenderSystem::Instance();
 
 	ecs::Entity *shape;
-	ecs::Entity *shape2;
-	ecs::Entity *shape3;
 
 public:
 	App() 
@@ -23,12 +21,15 @@ public:
 
 	void Update()
 	{
-		// Draw entity with Entities
+		// Draw entity/s with renderer->Draw( );
 		renderer->Draw(shape->GetComponent<ecs::RectangleComponent>("RectangleComponent"));
-		renderer->Draw(shape2->GetComponent<ecs::TriangleComponent>("TriangleComponent"));
-		renderer->Draw(shape3->GetComponent<ecs::TriangleComponent>("TriangleComponent"));
 
-		shape->transform->position = math::Vector3(shape->transform->position.getX() + 10, 100,0);
+		if (input->IsKeyPressed(GLFW_KEY_S)) {
+			shape->GetComponent<ecs::RectangleComponent>("RectangleComponent")->SizeUp(15);
+		}
+		if (input->IsKeyPressed(GLFW_KEY_A)) {
+			shape->GetComponent<ecs::RectangleComponent>("RectangleComponent")->SizeDown(15);
+		}
 	}
 		
 	void Start() 
@@ -37,14 +38,6 @@ public:
 		shape = new ecs::Entity("shape");
 		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(150,150), math::Vector4(1,0,0,1)));
 		shape->transform->position = math::Vector3((800/2)-(150/2), (600/2)-(150/2), 0);
-
-		shape2 = new ecs::Entity("shape2");
-		shape2->AddComponent(new ecs::TriangleComponent(math::Vector2(100, 100), math::Vector4(0,1,0,1)));
-		shape2->transform->position = math::Vector3(50, 50, 0);
-
-		shape3 = new ecs::Entity("shape2");
-		shape3->AddComponent(new ecs::TriangleComponent(math::Vector2(100, 100), math::Vector4(0,0,1,1)));
-		shape3->transform->position = math::Vector3(650, 450, 0);
 	}
 };
 

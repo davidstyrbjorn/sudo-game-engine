@@ -14,6 +14,9 @@ namespace sudo {
 			/* Constrcutor */
 			TriangleComponent(math::Vector2 &a_size, math::Vector4 &a_color);
 
+			/* Destructor */
+			~TriangleComponent();
+
 			/* Component class methods */
 			void Start()	override;
 			void Update()	override { }
@@ -23,7 +26,11 @@ namespace sudo {
 			void unbind()	override;
 
 		private:
+			/* Data mainly different buffer handles */
 			unsigned int VBO, VAO, EBO, CBO;
+
+			/* Method from Renderable2D */
+			void resized() override;
 		};
 
 	}

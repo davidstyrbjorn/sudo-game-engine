@@ -25,18 +25,41 @@ namespace sudo { namespace graphics {
 		virtual void unbind() = 0;
 
 		/* Getters */
-		inline const ecs::Transform *GetEntityTransform() { return m_entityTransform; }
 		inline const math::Vector2 &GetSize() { return m_size; }
 		inline const math::Vector4 &GetColor() { return m_color; }
+		ecs::Transform* GetEntityTransform() { return m_entityTransform; }
 
-		/* Setters */
+		/* Sets m_size to a new specified size */
 		void SetSize(const math::Vector2 &a_newSize) { m_size = a_newSize; }
+
+		/* Sets m_color to a new color */
 		void SetColor(const math::Vector4 &a_newColor) { m_color = a_newColor; }
+
+		/* Scales up m_size by orders of magnitude */
+		void SizeUp(const float a_magnitude) 
+		{ 
+			m_sizeBeforeReisze = m_size;
+			m_size = math::Vector2(m_size.getX() + a_magnitude, m_size.getY() + a_magnitude);
+			this->resized();
+		}
+
+		/* Scales down m_size by orders of magnitude */
+		void SizeDown(const float a_magnitude) 
+		{ 
+			m_sizeBeforeReisze = m_size;
+			m_size = math::Vector2(m_size.getX() - a_magnitude, m_size.getY() - a_magnitude);
+			this->resized();
+		}
 
 	protected:	
 		/* Renderable2D shared data */
-		ecs::Transform *m_entityTransform;		
+		ecs::Transform *m_entityTransform;
 		math::Vector2 m_size;
 		math::Vector4 m_color;
+
+		math::Vector2 m_sizeBeforeReisze;
+
+		/* Private Methods */
+		virtual void resized() = 0;
 	};
 } }

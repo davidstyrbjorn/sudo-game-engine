@@ -152,6 +152,7 @@
     <ClInclude Include="core\src\ecs\triangle_component.h" />
     <ClInclude Include="core\src\graphics\renderable2d.h" />
     <ClInclude Include="core\src\math\vector4.h" />
+    <ClInclude Include="core\src\physics\bounding_box2d.h" />
     <ClInclude Include="core\src\sudo_class.h" />
     <ClInclude Include="core\src\core_settings.h" />
     <ClInclude Include="core\definitions.h" />

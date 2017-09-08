@@ -72,7 +72,7 @@ void SudoCore::game_loop()
 
 	while (m_window->is_open()) 
 	{
-		if (utility::Time::GetElapsedTime() >= 0.012) {
+		if (utility::Time::GetElapsedTime() >= 0.016) {
 			m_window->clear();
 
 			/* Update the WorldSystem holding all game entities */

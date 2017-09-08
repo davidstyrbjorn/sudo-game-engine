@@ -13,6 +13,11 @@ namespace sudo { namespace ecs {
 		m_color = a_color;
 	}
 
+	RectangleComponent::~RectangleComponent() 
+	{
+
+	}
+
 	void RectangleComponent::Start()
 	{
 		m_entityTransform = m_entityHolder->transform;
@@ -59,6 +64,31 @@ namespace sudo { namespace ecs {
 		glGenBuffers(1, &EBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	}
+
+	void RectangleComponent::resized() 
+	{
+		/* Make sure the shape stays at it's position when resizing the vertices */
+		math::Vector2 deltaChange = m_size - m_sizeBeforeReisze;
+		m_entityTransform->position = math::Vector3(m_entityTransform->position.getX() - (deltaChange.getX() / 2),
+			m_entityTransform->position.getY() - (deltaChange.getY() / 2),
+			m_entityTransform->position.getZ());
+
+		float vertices[] = {
+			0, 0, 0.0f,
+			0, m_size.getY(), 0.0f,
+			m_size.getX(), m_size.getY(), 0.0f,
+			m_size.getX(), 0.0f, 0.0f
+		};
+		uint indices[] = {
+			0,1,2,
+			0,2,3
+		};
+
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+
+
 	}
 	   
 	void RectangleComponent::bind() 
