@@ -85,7 +85,7 @@ void SudoCore::game_loop()
 			m_renderSystem->Update();
 
 			m_window->display();
-
+			
 			utility::Time::ResetTime();
 		}
 	}

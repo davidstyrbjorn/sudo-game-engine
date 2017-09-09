@@ -23,13 +23,6 @@ public:
 	{
 		// Draw entity/s with renderer->Draw( );
 		renderer->Draw(shape->GetComponent<ecs::RectangleComponent>("RectangleComponent"));
-
-		if (input->IsKeyPressed(GLFW_KEY_S)) {
-			shape->GetComponent<ecs::RectangleComponent>("RectangleComponent")->SizeUp(15);
-		}
-		if (input->IsKeyPressed(GLFW_KEY_A)) {
-			shape->GetComponent<ecs::RectangleComponent>("RectangleComponent")->SizeDown(15);
-		}
 	}
 		
 	void Start() 
@@ -38,6 +31,7 @@ public:
 		shape = new ecs::Entity("shape");
 		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(150,150), math::Vector4(1,0,0,1)));
 		shape->transform->position = math::Vector3((800/2)-(150/2), (600/2)-(150/2), 0);
+		shape->AddComponent(new ecs::BoxCollider2D());
 	}
 };
 

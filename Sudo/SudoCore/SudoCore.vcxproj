@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="core\src\ecs\box_collider2D.cpp" />
     <ClCompile Include="core\src\ecs\rectangle_component.cpp" />
     <ClCompile Include="core\src\ecs\triangle_component.cpp" />
     <ClCompile Include="core\src\sudo_core.cpp" />
@@ -145,6 +146,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="core\src\ecs\box_collider2D.h" />
     <ClInclude Include="core\src\ecs\component.h" />
     <ClInclude Include="core\src\ecs\entity.h" />
     <ClInclude Include="core\src\ecs\rectangle_component.h" />
@@ -152,7 +154,6 @@
     <ClInclude Include="core\src\ecs\triangle_component.h" />
     <ClInclude Include="core\src\graphics\renderable2d.h" />
     <ClInclude Include="core\src\math\vector4.h" />
-    <ClInclude Include="core\src\physics\bounding_box2d.h" />
     <ClInclude Include="core\src\sudo_class.h" />
     <ClInclude Include="core\src\core_settings.h" />
     <ClInclude Include="core\definitions.h" />

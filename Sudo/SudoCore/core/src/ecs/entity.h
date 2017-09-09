@@ -53,6 +53,9 @@ namespace sudo { namespace ecs {
 			return nullptr;
 		}
 
+		/* Getter for this->components */
+		const std::vector<Component*> GetComponentList() { return m_components; }
+
 		/* Sets m_name */
 		void SetName(char* a_name);
 
