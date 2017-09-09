@@ -40,6 +40,14 @@ namespace sudo { namespace ecs {
 
 	const unsigned char BoxCollider2D::IsPointInside(const math::Vector2 & a_point)
 	{
+		// Important that the box colliders data is good before we check for collisions
+		dataMatch();
+
+		if (a_point.getX() > m_origin.getX() && a_point.getX() < m_origin.getX() + m_bounds.getX()) {
+			if (a_point.getY() > m_origin.getY() && a_point.getY() < m_origin.getY() + m_bounds.getY()) {
+				return 1;
+			}
+		}
 		return 0;
 	}
 

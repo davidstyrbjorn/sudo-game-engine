@@ -13,6 +13,7 @@ namespace sudo {
 		class InputSystem;
 		class WorldSystem;
 		class RenderSystem;
+		class SettingsSystem;
 	}
 	class SudoClass;
 	class CoreSettings;
@@ -30,6 +31,7 @@ namespace sudo {
 		system::InputSystem		*m_inputSystem;
 		system::WorldSystem		*m_worldSystem;
 		system::RenderSystem	*m_renderSystem;
+		system::SettingsSystem	*m_settingsSystem;
 
 		/* ======================================================================= */
 		/* ======================> CORE ENGINE METHODS <========================== */

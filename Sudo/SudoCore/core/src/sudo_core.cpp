@@ -24,6 +24,12 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	/*               ENABLE SYSTEMS              */
 	/* ========================================= */
 
+	/* Settings system */
+	m_settingsSystem = system::SettingsSystem::Instance();
+	m_settingsSystem->Enable();
+	m_settingsSystem->SetFPS(120);
+	m_settingsSystem->SetWindowSize(a_windowSize);
+
 	/* Input system */
 	m_inputSystem = system::InputSystem::Instance();
 	m_inputSystem->Enable();
@@ -61,6 +67,8 @@ void SudoCore::clean_up()
 	/* Call CleanUp() on all systems */
 	m_inputSystem->CleanUp();
 	m_worldSystem->CleanUp();
+	m_renderSystem->CleanUp();
+	m_settingsSystem->CleanUp();
 
 	delete m_engineInstance;
 	delete m_window;
@@ -72,7 +80,7 @@ void SudoCore::game_loop()
 
 	while (m_window->is_open()) 
 	{
-		if (utility::Time::GetElapsedTime() >= 0.016) {
+		if (utility::Time::GetElapsedTime() >= m_settingsSystem->GetFPS()/1000) {
 			m_window->clear();
 
 			/* Update the WorldSystem holding all game entities */

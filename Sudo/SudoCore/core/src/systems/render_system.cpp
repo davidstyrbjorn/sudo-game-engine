@@ -28,9 +28,11 @@ namespace sudo { namespace system {
 		glewInit();
 		glewExperimental = true;
 
-		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_fragment.txt");
+		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_fragment.txt");
 		m_shader->enable();
-		m_shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(0, 800, 600, 0, -1, 1));
+
+		system::SettingsSystem* settings = system::SettingsSystem::Instance();
+		m_shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(0, settings->GetWindowSize().getX(), settings->GetWindowSize().getY(), 0, -1, 1));
 	}
 	
 	void RenderSystem::Draw(graphics::Renderable2D *a_shape)
