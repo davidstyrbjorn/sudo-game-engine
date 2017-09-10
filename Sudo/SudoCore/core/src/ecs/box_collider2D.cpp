@@ -51,14 +51,29 @@ namespace sudo { namespace ecs {
 		return 0;
 	}
 
-	const unsigned char BoxCollider2D::ContactWith(const BoxCollider2D & a_other)
+	const unsigned char BoxCollider2D::Intersects(BoxCollider2D & a_other)
 	{
-		return 0;
+		// Important that the box colliders data is good before we check for collisions
+		dataMatch();
+
+		if ((m_origin.getX() + m_bounds.getX()) >= (a_other.GetOrigin().getX())) {
+			if (m_origin.getX() <= (a_other.GetOrigin().getX() + a_other.GetBounds().getX())) {
+				if ((m_origin.getY() + m_bounds.getY()) >= (a_other.GetOrigin().getY())) {
+					if (m_origin.getY() <= (a_other.GetOrigin().getY() + a_other.GetBounds().getY())) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
-	const unsigned char BoxCollider2D::IsInside(const BoxCollider2D & a_other)
+	math::Vector2  BoxCollider2D::GetOrigin()
 	{
-		return 0;
+		return m_origin;
 	}
-
+	math::Vector2  BoxCollider2D::GetBounds()
+	{
+		return m_bounds;
+	}
 } } 

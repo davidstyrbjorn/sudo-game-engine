@@ -34,9 +34,10 @@ namespace sudo { namespace ecs {
 		const unsigned char IsPointInside(const math::Vector2 &a_point);
 
 		/* Returns true is this bounding box is in contact with a_other */
-		const unsigned char ContactWith(const BoxCollider2D &a_other);
+		const unsigned char Intersects(BoxCollider2D &a_other);
 
-		/* Returns true if this bounding box is completely inside a_other */
-		const unsigned char IsInside(const BoxCollider2D &a_other);
+		/* Getters */
+		math::Vector2 GetOrigin();
+		math::Vector2 GetBounds();
 	};
 } }

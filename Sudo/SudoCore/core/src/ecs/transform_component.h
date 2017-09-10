@@ -10,9 +10,11 @@ namespace sudo { namespace ecs {
 		/* Class Data */
 		math::Vector3 position;
 		math::Vector3 scale;
-									
-		/* Methods */
+
 		Transform();
+
+		/* Methods */
+		void Move(const math::Vector3& a_vector);
 
 		void Start() override;
 		void Update() override;

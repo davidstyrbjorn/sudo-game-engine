@@ -10,7 +10,12 @@ Transform::Transform()
 	scale = math::Vector3(1, 1, 1);
 }
 
-void Transform::Start() 
+void Transform::Move(const math::Vector3 & a_vector)
+{
+	position = math::Vector3(position.getX() + a_vector.getX(), position.getY() + a_vector.getY(), position.getZ() + a_vector.getZ());
+}
+
+void Transform::Start()
 {
 
 }
