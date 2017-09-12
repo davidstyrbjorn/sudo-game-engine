@@ -1,9 +1,9 @@
 #pragma once
 
-#include"../../gl_include.h"
+#include<map>
 
 #include"GLFW\glfw3.h"
-
+#include"../../gl_include.h"
 #include"sudo_system.h"
 
 
@@ -14,6 +14,15 @@ namespace sudo {
 	}
 }
 
+struct Key {
+	Key(int a_action, const char* a_keyName) {
+		this->m_action = a_action;
+		this->m_keyName = a_keyName;
+	}
+
+	int m_action;
+	const char* m_keyName;
+};
 
 namespace sudo { namespace system {
 
@@ -28,6 +37,7 @@ namespace sudo { namespace system {
 	public:
 		int m_keys[1024];
 		int m_mouseKeys[24];
+		Key keyList[1024];
 		math::Vector2 *m_mousePos;
 
 	public:
@@ -47,12 +57,13 @@ namespace sudo { namespace system {
 		/* Returns true if a_mouse_button is down */
 		bool IsMouseButtonPressed(int a_mouse_button);
 
-		/* We might do a seperate function for GLFW_PRESS only */
-
 		/* GLFW Callbacks */
 		friend static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 		friend static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 		friend static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+
+	private:
+		void populateKeyList();
 	};
 
 }

@@ -1,24 +1,32 @@
 #pragma once
 
+#include<ctime>
+
 /*
-* FPS <->  MS
-* 120  -  0.12
-* 60   -  0.06
-* 30   -  0.03
-* 24   -  0.024
+* Timer class used for limiting FPS in engine core loop
 */
-#include"GLFW\glfw3.h"
 
 namespace sudo { namespace utility { 
 
-	class Time {
-	public:
-		static double GetElapsedTime() {
-			return glfwGetTime();
-		}
+	class Timer {
+	private:
+		clock_t m_startedAt, m_pausedAt;
+		bool m_paused, m_started;
 
-		static void ResetTime() {
-			glfwSetTime(0);
-		}
+	public:
+		Timer();
+		bool IsStarted();
+		bool IsStopped();
+		bool IsPaused();
+		bool IsActive();
+
+		void Pause();
+		void Resume();
+		void Stop();
+		void Start();
+		void Reset();
+
+		clock_t GetTicks();
 	};
+
 }}

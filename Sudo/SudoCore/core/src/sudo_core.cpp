@@ -54,6 +54,9 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	m_worldSystem->Start();
 	m_renderSystem->Start();
 
+	timer = new utility::Timer();
+	timer->Start();
+
 	/* Print the current version of the engine */
 	std::cout << GetSudoVersion() << std::endl;
 
@@ -82,7 +85,10 @@ void SudoCore::game_loop()
 
 	while (m_window->is_open()) 
 	{
-		if (utility::Time::GetElapsedTime() >= msPerFrame) {
+		/* Limit the update rate */
+		if (timer->GetTicks() >= msPerFrame) 
+		{
+			/* Swap buffers and clear the screen */
 			m_window->clear();
 
 			/* Update the WorldSystem holding all game entities */
@@ -94,12 +100,11 @@ void SudoCore::game_loop()
 			/* Render w/OpenGL */
 			m_renderSystem->Update();
 
+			/* Display the current drawns elements */
 			m_window->display();
 
-			std::cout << utility::Time::GetElapsedTime()*100 << std::endl;
-			utility::Time::ResetTime();
+			timer->Reset();
 		}
 	}
 }
-
 }

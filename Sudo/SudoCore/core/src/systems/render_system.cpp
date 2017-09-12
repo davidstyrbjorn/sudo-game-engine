@@ -28,7 +28,7 @@ namespace sudo { namespace system {
 		glewInit();
 		glewExperimental = true;
 
-		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_fragment.txt");
+		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_fragment.txt");
 		m_shader->enable();
 
 		system::SettingsSystem* settings = system::SettingsSystem::Instance();
