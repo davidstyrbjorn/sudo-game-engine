@@ -18,7 +18,6 @@ namespace sudo { namespace ecs {
 		/* Virtual Destructor */
 		virtual ~Component() { 
 			std::cout << "Component Removed" << std::endl;
-			delete m_entityHolder; 
 		}
 		
 		/* Sets the component state */

@@ -92,6 +92,18 @@ namespace sudo { namespace ecs {
 		
 	}
 
+	void TriangleComponent::recolored()
+	{
+		float colors[] = {
+			m_color.getX(), m_color.getY(), m_color.getZ(),
+			m_color.getX(), m_color.getY(), m_color.getZ(),
+			m_color.getX(), m_color.getY(), m_color.getZ()
+		};
+
+		glBindBuffer(GL_ARRAY_BUFFER, CBO);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(colors), colors);
+	}
+
 	void TriangleComponent::bind()
 	{
 		glBindVertexArray(VAO);

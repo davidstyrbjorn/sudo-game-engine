@@ -31,6 +31,7 @@ namespace sudo {
 
 			/* Method from Renderable2D */
 			void resized() override;
+			void recolored() override;
 		};
 
 	}

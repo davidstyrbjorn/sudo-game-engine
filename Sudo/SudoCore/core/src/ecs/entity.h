@@ -41,7 +41,7 @@ namespace sudo { namespace ecs {
 		TemplateClass* GetComponent(const char* a_name)
 		{
 			// Look for component
-			for (int i = 0; i < m_components.size(); ++i) {
+			for (unsigned int i = 0; i < m_components.size(); ++i) {
 				if (m_components[i]->GetName() == a_name) {
 					// We found the component at index i inside the list
 					// Assert here to check if ComponentType is derived from Component base class

@@ -29,6 +29,7 @@ namespace sudo { namespace ecs {
 
 		/* Method from Renderable2D base */
 		void resized() override;
+		void recolored() override;
 	};
 	
 } }

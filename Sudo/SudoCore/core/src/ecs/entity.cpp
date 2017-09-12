@@ -30,7 +30,7 @@ namespace sudo { namespace ecs {
 			transform->Update();
 		}
 
-		for (int i = 0; i < m_components.size(); i++) {
+		for (unsigned int i = 0; i < m_components.size(); i++) {
 
 			// Check if component is up for being updated
 			if (m_components[i]->GetComponentState() == ComponentState::ACTIVE) { // Check if the component is active
@@ -61,7 +61,7 @@ namespace sudo { namespace ecs {
 		transform->Start();
 
 		/* Call start on all the components */
-		for (int i = 0; i < m_components.size(); i++) {
+		for (unsigned int i = 0; i < m_components.size(); i++) {
 			if (m_components[i]->GetComponentState() == ComponentState::ACTIVE) { // Check if the component is active
 				m_components[i]->Start();
 			}
@@ -71,7 +71,7 @@ namespace sudo { namespace ecs {
 	void Entity::AddComponent(Component *a_component) 
 	{
 		/* Check if the component already exists */
-		for (int i = 0; i < m_components.size(); i++) {
+		for (unsigned int i = 0; i < m_components.size(); i++) {
 			if (m_components[i]->GetName() == a_component->GetName()) {
 				// Debug print that the component we're trying to add already exists on this entity
 				DEBUG *debug = DEBUG::getInstance();
@@ -89,7 +89,7 @@ namespace sudo { namespace ecs {
 	void Entity::RemoveComponent(const char * a_name)
 	{
 		// Loop through the components list, look for component with a_name
-		for (int i = 0; i < m_components.size(); i++) {
+		for (unsigned int i = 0; i < m_components.size(); i++) {
 			if (m_components[i]->GetName() == a_name) {
 				m_components[i]->SetDestroyTrigger(true); // Set the component to be destroyed next iteration through the list
 				return; // We're done with the operation

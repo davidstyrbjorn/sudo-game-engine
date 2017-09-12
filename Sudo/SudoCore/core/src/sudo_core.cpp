@@ -3,6 +3,8 @@
 #include"../sudo.h"
 #include"../gl_include.h"
 
+#include<time.h>
+
 namespace sudo{
 SudoCore::SudoCore(const math::Vector2& a_windowSize, char *a_windowCaption, SudoClass *a_engineInstance)
 {
@@ -27,7 +29,7 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	/* Settings system */
 	m_settingsSystem = system::SettingsSystem::Instance();
 	m_settingsSystem->Enable();
-	m_settingsSystem->SetFPS(120);
+	m_settingsSystem->SetFPS(60);
 	m_settingsSystem->SetWindowSize(a_windowSize);
 
 	/* Input system */
@@ -76,11 +78,11 @@ void SudoCore::clean_up()
 
 void SudoCore::game_loop()
 {
-	utility::Time::ResetTime();
+	float msPerFrame = 1000 / m_settingsSystem->GetFPS();
 
 	while (m_window->is_open()) 
 	{
-		if (utility::Time::GetElapsedTime() >= m_settingsSystem->GetFPS()/1000) {
+		if (utility::Time::GetElapsedTime() >= msPerFrame) {
 			m_window->clear();
 
 			/* Update the WorldSystem holding all game entities */
@@ -93,7 +95,8 @@ void SudoCore::game_loop()
 			m_renderSystem->Update();
 
 			m_window->display();
-			
+
+			std::cout << utility::Time::GetElapsedTime()*100 << std::endl;
 			utility::Time::ResetTime();
 		}
 	}

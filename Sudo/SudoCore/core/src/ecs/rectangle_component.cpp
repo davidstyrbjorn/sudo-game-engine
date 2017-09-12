@@ -66,6 +66,19 @@ namespace sudo { namespace ecs {
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 	}
 
+	void RectangleComponent::recolored() 
+	{
+		float colors[] = {
+			m_color.getX(), m_color.getY(), m_color.getZ(),
+			m_color.getX(), m_color.getY(), m_color.getZ(),
+			m_color.getX(), m_color.getY(), m_color.getZ(),
+			m_color.getX(), m_color.getY(), m_color.getZ(),
+		};
+
+		glBindBuffer(GL_ARRAY_BUFFER, CBO);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(colors), colors);
+	}
+
 	void RectangleComponent::resized() 
 	{
 		/* Make sure the shape stays at it's position when resizing the vertices */
@@ -87,8 +100,6 @@ namespace sudo { namespace ecs {
 
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-
-
 	}
 	   
 	void RectangleComponent::bind() 

@@ -30,10 +30,10 @@ namespace sudo { namespace graphics {
 		ecs::Transform* GetEntityTransform() { return m_entityTransform; }
 
 		/* Sets m_size to a new specified size */
-		void SetSize(const math::Vector2 &a_newSize) { m_size = a_newSize; }
+		void SetSize(const math::Vector2 &a_newSize) { m_size = a_newSize; this->resized(); }
 
 		/* Sets m_color to a new color */
-		void SetColor(const math::Vector4 &a_newColor) { m_color = a_newColor; }
+		void SetColor(const math::Vector4 &a_newColor) { m_color = a_newColor; this->recolored(); }
 
 		/* Scales up m_size by orders of magnitude */
 		void SizeUp(const float a_magnitude) 
@@ -61,5 +61,6 @@ namespace sudo { namespace graphics {
 
 		/* Private Methods */
 		virtual void resized() = 0;
+		virtual void recolored() = 0;
 	};
 } }

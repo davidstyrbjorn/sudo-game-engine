@@ -35,7 +35,7 @@ namespace sudo { namespace system {
 	void WorldSystem::Update()
 	{
 		if (m_isActive) {
-			for (int i = 0; i < m_entityList.size(); i++) {
+			for (unsigned int i = 0; i < m_entityList.size(); i++) {
 				m_entityList[i]->Update();
 			}
 		}
@@ -44,7 +44,7 @@ namespace sudo { namespace system {
 	void WorldSystem::Start() 
 	{
 		if (m_isActive) {
-			for (int i = 0; i < m_entityList.size(); i++) {
+			for (unsigned int i = 0; i < m_entityList.size(); i++) {
 				m_entityList[i]->Start();
 			}
 		}
