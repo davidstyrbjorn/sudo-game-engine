@@ -1,11 +1,9 @@
 #pragma once
 
-#include<map>
-
-#include"GLFW\glfw3.h"
 #include"../../gl_include.h"
 #include"sudo_system.h"
 
+#include<map>
 
 // Forward decleration
 namespace sudo {
@@ -13,16 +11,6 @@ namespace sudo {
 		class Vector2;
 	}
 }
-
-struct Key {
-	Key(int a_action, const char* a_keyName) {
-		this->m_action = a_action;
-		this->m_keyName = a_keyName;
-	}
-
-	int m_action;
-	const char* m_keyName;
-};
 
 namespace sudo { namespace system {
 
@@ -34,10 +22,12 @@ namespace sudo { namespace system {
 		/* The Private instance */
 		static InputSystem *_instance;
 
+		std::map<const char*, int> keyCodeToLiteral;
+
 	public:
 		int m_keys[1024];
+
 		int m_mouseKeys[24];
-		Key keyList[1024];
 		math::Vector2 *m_mousePos;
 
 	public:
@@ -49,9 +39,10 @@ namespace sudo { namespace system {
 		void Disable() override;
 		void CleanUp() override;
 
-		/* end-user static function */
+		/* end-user methods */
 		/* Returns true if a_keycode is down */
-		bool IsKeyPressed(int a_keycode);
+		bool GetKeyDown(const char* a_key);
+		bool GetKey(const char* a_key);
 
 		/* end-user static function */
 		/* Returns true if a_mouse_button is down */
@@ -62,7 +53,7 @@ namespace sudo { namespace system {
 		friend static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 		friend static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 
-	private:
+	public:
 		void populateKeyList();
 	};
 

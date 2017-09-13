@@ -384,6 +384,7 @@ extern "C" {
 #define GLFW_KEY_F8                 297
 #define GLFW_KEY_F9                 298
 #define GLFW_KEY_F10                299
+
 #define GLFW_KEY_F11                300
 #define GLFW_KEY_F12                301
 #define GLFW_KEY_F13                302
@@ -399,6 +400,7 @@ extern "C" {
 #define GLFW_KEY_F23                312
 #define GLFW_KEY_F24                313
 #define GLFW_KEY_F25                314
+
 #define GLFW_KEY_KP_0               320
 #define GLFW_KEY_KP_1               321
 #define GLFW_KEY_KP_2               322

@@ -26,15 +26,13 @@ public:
 		renderer->Draw(leftPaddle->GetComponent<ecs::RectangleComponent>("RectangleComponent"));
 		renderer->Draw(rightPaddle->GetComponent<ecs::RectangleComponent>("RectangleComponent"));
 
-		if (input->IsKeyPressed(GLFW_KEY_W))
-			leftPaddle->transform->Move(math::Vector3(0, -4, 0));
-		if (input->IsKeyPressed(GLFW_KEY_S))
+		// Examples
+		if (input->GetKey("s")) {
 			leftPaddle->transform->Move(math::Vector3(0, 4, 0));
-
-		if (input->IsKeyPressed(GLFW_KEY_UP))
-			rightPaddle->transform->Move(math::Vector3(0, -4, 0));
-		if (input->IsKeyPressed(GLFW_KEY_DOWN))
-			rightPaddle->transform->Move(math::Vector3(0, 4, 0));
+		}
+		if (input->GetKey("w")) {
+			leftPaddle->transform->Move(math::Vector3(0, -4, 0));
+		}
 	}
 		
 	void Start() 

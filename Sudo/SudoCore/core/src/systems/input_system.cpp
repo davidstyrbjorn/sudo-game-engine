@@ -14,6 +14,8 @@ namespace sudo { namespace system {
 
 	void InputSystem::Enable()
 	{
+		populateKeyList();
+
 		/* Set the GLFW callbacks */
 		glfwSetCursorPosCallback(glfwGetCurrentContext(), cursor_position_callback);
 		glfwSetKeyCallback(glfwGetCurrentContext(), key_callback);
@@ -35,9 +37,16 @@ namespace sudo { namespace system {
 
 	}
 
-	bool InputSystem::IsKeyPressed(int a_keycode)
+	bool InputSystem::GetKeyDown(const char* a_key)
 	{
-		if (m_keys[a_keycode] == GLFW_PRESS || m_keys[a_keycode] == GLFW_REPEAT)
+		if (m_keys[keyCodeToLiteral[a_key]] == GLFW_PRESS)
+			return true;
+		return false;
+	}
+
+	bool InputSystem::GetKey(const char* a_key) 
+	{
+		if (m_keys[keyCodeToLiteral[a_key]] == GLFW_PRESS || m_keys[keyCodeToLiteral[a_key]] == GLFW_REPEAT)
 			return true;
 		return false;
 	}
@@ -66,6 +75,113 @@ namespace sudo { namespace system {
 	{
 		InputSystem* tmp = InputSystem::Instance();
 		tmp->m_mouseKeys[button] = action;
+	}
+
+	void InputSystem::populateKeyList()
+	{
+		keyCodeToLiteral["spacebar"] = 32;
+		keyCodeToLiteral[" ' "] = 39;
+		keyCodeToLiteral[","] = 44;
+		keyCodeToLiteral["-"] = 45;
+		keyCodeToLiteral["."] = 46;
+		keyCodeToLiteral["/"] = 47;
+		keyCodeToLiteral[";"] = 59;
+		keyCodeToLiteral["="] = 61;
+		keyCodeToLiteral["0"] = 48;
+		keyCodeToLiteral["1"] = 49;
+		keyCodeToLiteral["2"] = 50;
+		keyCodeToLiteral["3"] = 51;
+		keyCodeToLiteral["4"] = 52;
+		keyCodeToLiteral["5"] = 53;
+		keyCodeToLiteral["6"] = 54;
+		keyCodeToLiteral["7"] = 55;
+		keyCodeToLiteral["8"] = 56;
+		keyCodeToLiteral["9"] = 57;
+
+		keyCodeToLiteral["a"] = 65;
+		keyCodeToLiteral["b"] = 66;
+		keyCodeToLiteral["c"] = 67;
+		keyCodeToLiteral["d"] = 68;
+		keyCodeToLiteral["e"] = 69;
+		keyCodeToLiteral["f"] = 70;
+		keyCodeToLiteral["g"] = 71;
+		keyCodeToLiteral["h"] = 72;
+		keyCodeToLiteral["i"] = 73;
+		keyCodeToLiteral["j"] = 74;
+		keyCodeToLiteral["k"] = 75;
+		keyCodeToLiteral["l"] = 76;
+		keyCodeToLiteral["m"] = 77;
+		keyCodeToLiteral["n"] = 78;
+		keyCodeToLiteral["o"] = 79;
+		keyCodeToLiteral["p"] = 80;
+		keyCodeToLiteral["q"] = 81;
+		keyCodeToLiteral["r"] = 82;
+		keyCodeToLiteral["s"] = 83;
+		keyCodeToLiteral["t"] = 84;
+		keyCodeToLiteral["u"] = 85;
+		keyCodeToLiteral["v"] = 86;
+		keyCodeToLiteral["w"] = 87;
+		keyCodeToLiteral["x"] = 88;
+		keyCodeToLiteral["y"] = 89;
+		keyCodeToLiteral["z"] = 90;
+
+		keyCodeToLiteral["["] = 91;
+		keyCodeToLiteral["\\"] = 92;
+		keyCodeToLiteral["]"] = 93;
+
+		//#define GLFW_KEY_GRAVE_ACCENT       96  /* ` */
+		//#define GLFW_KEY_WORLD_1            161 /* non-US #1 */
+		//#define GLFW_KEY_WORLD_2            162 /* non-US #2 */
+
+		// Utility Keys
+		keyCodeToLiteral["escape"] = 256;
+		keyCodeToLiteral["enter"] = 257;
+		keyCodeToLiteral["tab"] = 258;
+		keyCodeToLiteral["backspace"] = 259;
+		keyCodeToLiteral["insert"] = 260;
+		keyCodeToLiteral["delete"] = 261;
+		keyCodeToLiteral["right"] = 262;
+		keyCodeToLiteral["left"] = 263;
+		keyCodeToLiteral["down"] = 264;
+		keyCodeToLiteral["up"] = 265;
+		keyCodeToLiteral["page_up"] = 266;
+		keyCodeToLiteral["page_down"] = 267;
+		keyCodeToLiteral["home"] = 268;
+		keyCodeToLiteral["end"] = 269;
+		keyCodeToLiteral["caps_lock"] = 280;
+		keyCodeToLiteral["scroll_lock"] = 281;
+		keyCodeToLiteral["num_lock"] = 282;
+		keyCodeToLiteral["print_screen"] = 283;
+		keyCodeToLiteral["pause"] = 284;
+
+		// f keys
+		keyCodeToLiteral["f1"] = 290;
+		keyCodeToLiteral["f2"] = 291;
+		keyCodeToLiteral["f3"] = 292;
+		keyCodeToLiteral["f4"] = 293;
+		keyCodeToLiteral["f5"] = 294;
+		keyCodeToLiteral["f6"] = 295;
+		keyCodeToLiteral["f7"] = 296;
+		keyCodeToLiteral["f8"] = 297;
+		keyCodeToLiteral["f9"] = 298;
+		keyCodeToLiteral["f10"] = 299;
+		keyCodeToLiteral["f11"] = 300;
+		keyCodeToLiteral["f12"] = 301;
+		keyCodeToLiteral["f13"] = 302;
+		keyCodeToLiteral["f14"] = 303;
+		keyCodeToLiteral["f15"] = 304;
+		keyCodeToLiteral["f16"] = 305;
+		keyCodeToLiteral["f17"] = 306;
+		keyCodeToLiteral["f18"] = 307;
+		keyCodeToLiteral["f19"] = 308;
+		keyCodeToLiteral["f20"] = 309;
+		keyCodeToLiteral["f21"] = 310;
+		keyCodeToLiteral["f22"] = 311;
+		keyCodeToLiteral["f23"] = 312;
+		keyCodeToLiteral["f24"] = 313;
+		keyCodeToLiteral["f25"] = 314;
+
+
 	}
 
 }
