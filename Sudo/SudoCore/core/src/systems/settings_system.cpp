@@ -16,9 +16,19 @@ namespace sudo { namespace system {
 		return m_windowSize;
 	}
 
+	const math::Vector4& SettingsSystem::GetBackgroundColor()
+	{
+		return m_backgroundColor;
+	}
+
 	unsigned int SettingsSystem::GetFPS() const
 	{
 		return m_fps;
+	}
+
+	double SettingsSystem::GetMS() const
+	{
+		return m_msPerFrame;
 	}
 
 	void SettingsSystem::SetWindowSize(const math::Vector2& a_newWindowSize) 
@@ -26,9 +36,15 @@ namespace sudo { namespace system {
 		m_windowSize = a_newWindowSize;
 	}
 
+	void SettingsSystem::SetBackgroundColor(const math::Vector4& a_newBackgroundColor)
+	{
+		m_backgroundColor = a_newBackgroundColor;
+	}
+
 	void SettingsSystem::SetFPS(const unsigned int a_newFPS) 
 	{
 		m_fps = a_newFPS;
+		this->NewFpsValue();
 	}
 
 }}

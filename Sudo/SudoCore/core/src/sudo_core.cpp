@@ -81,12 +81,10 @@ void SudoCore::clean_up()
 
 void SudoCore::game_loop()
 {
-	float msPerFrame = 1000 / m_settingsSystem->GetFPS();
-
 	while (m_window->is_open()) 
 	{
 		/* Limit the update rate */
-		if (timer->GetTicks() >= msPerFrame) 
+		if (timer->GetTicks() >= m_settingsSystem->GetMS()) 
 		{
 			/* Swap buffers and clear the screen */
 			m_window->clear();

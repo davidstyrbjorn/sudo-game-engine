@@ -2,6 +2,8 @@
 
 #include"../../sudo.h"
 
+
+
 /* Window.cpp */
 sudo::graphics::Window::Window(uint a_width, uint a_height, char *a_caption)
 {

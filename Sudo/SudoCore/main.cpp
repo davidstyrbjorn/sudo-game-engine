@@ -31,13 +31,13 @@ public:
 			leftPaddle->transform->Move(math::Vector3(0, 4, 0));
 		}
 		if (input->GetKey("w")) {
+			std::cout << settings->GetFPS() << std::endl;
 			leftPaddle->transform->Move(math::Vector3(0, -4, 0));
 		}
 	}
-		
+
 	void Start() 
 	{
-		settings->SetFPS(120);
 
 		// Create shape entity, add rectangle component then change it's position
 		leftPaddle = new ecs::Entity("left_paddle");
