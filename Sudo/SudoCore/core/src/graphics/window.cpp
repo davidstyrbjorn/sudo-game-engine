@@ -2,8 +2,6 @@
 
 #include"../../sudo.h"
 
-
-
 /* Window.cpp */
 sudo::graphics::Window::Window(uint a_width, uint a_height, char *a_caption)
 {
@@ -27,8 +25,8 @@ sudo::graphics::Window::Window(uint a_width, uint a_height, char *a_caption)
 	glfwSetWindowSizeCallback(m_window, window_size_callback);
 	glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
 
-	/* Set default window color */
-	m_backgroundColor = math::Vector3(0, 0, 0);
+	/* Initalize Settings System */
+	settings = system::SettingsSystem::Instance();
 }
 
 sudo::graphics::Window::~Window()
@@ -40,7 +38,7 @@ void sudo::graphics::Window::clear()
 {
 	glfwPollEvents();
 
-	glClearColor(m_backgroundColor.getX(),m_backgroundColor.getY(),m_backgroundColor.getZ(), 1.0f);
+	glClearColor(settings->GetBackgroundColor().getX(), settings->GetBackgroundColor().getY(), settings->GetBackgroundColor().getZ(), settings->GetBackgroundColor().getW());
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
@@ -60,11 +58,6 @@ bool sudo::graphics::Window::is_open()
 void sudo::graphics::Window::close()
 {
 	glfwDestroyWindow(m_window);
-}
-
-void sudo::graphics::Window::SetBackgroundColor(const math::Vector3 &a_newColor) 
-{
-	m_backgroundColor = a_newColor;
 }
 
 /* GLFW Callback Functions */

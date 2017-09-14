@@ -36,23 +36,6 @@ namespace sudo { namespace ecs {
 			if (m_components[i]->GetComponentState() == ComponentState::ACTIVE) { // Check if the component is active
 				m_components[i]->Update();
 			}
-
-			// Remove component
-			else if (m_components[i]->GetDestroyTrigger()) {
-				/* Create iterator */
-				std::vector<Component*>::iterator it;
-				/* Iterate over the components list and delete */
-				for (it = m_components.begin(); it != m_components.end(); ) {
-					if ((*it)->GetDestroyTrigger()) {
-						/* Found it, now delete it */
-						delete * it;
-						it = m_components.erase(it);
-					}
-					else {
-						++it;
-					}
-				}
-			}
 		}
 	}
 
@@ -84,17 +67,6 @@ namespace sudo { namespace ecs {
 
 		/* Push back the component into the list */
 		m_components.push_back(a_component);
-	}
-
-	void Entity::RemoveComponent(const char * a_name)
-	{
-		// Loop through the components list, look for component with a_name
-		for (unsigned int i = 0; i < m_components.size(); i++) {
-			if (m_components[i]->GetName() == a_name) {
-				m_components[i]->SetDestroyTrigger(true); // Set the component to be destroyed next iteration through the list
-				return; // We're done with the operation
-			}
-		}
 	}
 
 	void Entity::SetName(char* a_name)

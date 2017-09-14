@@ -31,6 +31,7 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	m_settingsSystem->Enable();
 	m_settingsSystem->SetFPS(60);
 	m_settingsSystem->SetWindowSize(a_windowSize);
+	m_settingsSystem->SetBackgroundColor(math::Vector4(0, 0, 0, 1));
 
 	/* Input system */
 	m_inputSystem = system::InputSystem::Instance();

@@ -33,9 +33,6 @@ namespace sudo { namespace ecs {
 		/* Adds a_component to the components list */
 		void AddComponent(Component *a_component);
 
-		/* Removes component with a_name from the components list */
-		void RemoveComponent(const char* a_name);
-
 		/* Returns the component inside the components list with a_name */
 		template<typename TemplateClass>
 		TemplateClass* GetComponent(const char* a_name)
