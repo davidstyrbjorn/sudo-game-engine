@@ -25,7 +25,8 @@ namespace sudo { namespace ecs {
 		void unbind()	override;
 
 	private:
-		unsigned int VBO, VAO, EBO, CBO;
+		unsigned int VBO, VAO, EBO, CBO, TCBO;
+		unsigned int texture;
 
 		/* Method from Renderable2D base */
 		void resized() override;

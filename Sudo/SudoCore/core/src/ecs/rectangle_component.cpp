@@ -3,6 +3,8 @@
 #include"../../sudo.h"
 #include"../../gl_include.h"
 
+#include"../SOIL2/SOIL2.h"
+
 namespace sudo { namespace ecs {
 
 	RectangleComponent::RectangleComponent(math::Vector2 &a_size, math::Vector4 &a_color)
@@ -27,7 +29,7 @@ namespace sudo { namespace ecs {
 			0, m_size.getY(), 0.0f,
 			m_size.getX(), m_size.getY(), 0.0f,
 			m_size.getX(), 0.0f, 0.0f
-		};
+		};	
 		uint indices[] = {
 			0,1,2,
 			0,2,3
@@ -37,6 +39,12 @@ namespace sudo { namespace ecs {
 			m_color.getX(), m_color.getY(), m_color.getZ(),
 			m_color.getX(), m_color.getY(), m_color.getZ(),
 			m_color.getX(), m_color.getY(), m_color.getZ(),
+		};
+		float textureCoords[] = {
+			0,0,
+			0,1,
+			1,1,
+			1,0,
 		};
 
 		glewInit();
@@ -60,10 +68,39 @@ namespace sudo { namespace ecs {
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 		glEnableVertexAttribArray(1);  
 
+		// Texture coords buffer object
+		glGenBuffers(1, &TCBO);
+		glBindBuffer(GL_ARRAY_BUFFER, TCBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(textureCoords), textureCoords, GL_STATIC_READ);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), nullptr);
+		glEnableVertexAttribArray(2);
+
 		// Index buffer
 		glGenBuffers(1, &EBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+		glBindVertexArray(0);
+
+		// Texture test
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_BLEND, GL_ONE_MINUS_SRC_ALPHA);
+
+		int width, height;
+		glGenTextures(1, &texture);
+		glBindTexture(GL_TEXTURE_2D, texture);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		unsigned char *image = SOIL_load_image("C://temp//sample.jpg", &width, &height, 0, SOIL_LOAD_RGBA);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+		glGenerateMipmap(GL_TEXTURE_2D);
+		SOIL_free_image_data(image);
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
 	void RectangleComponent::recolored() 
@@ -104,16 +141,19 @@ namespace sudo { namespace ecs {
 	   
 	void RectangleComponent::bind() 
 	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, texture);
+
 		glBindVertexArray(VAO);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		//glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	}
 
 	void RectangleComponent::unbind() 
 	{
 		glBindVertexArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
+		//glBindBuffer(GL_ARRAY_BUFFER, 0);
+		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
 	}
 
 } } 

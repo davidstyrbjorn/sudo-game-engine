@@ -67,6 +67,7 @@ namespace sudo { namespace graphics {
 			}
 			DEBUG *debug = DEBUG::getInstance();
 			debug->logMessage(temp.c_str(), LogType::Error);
+			debug->printMessage(temp.c_str(), LogType::Error);
 
 			// Exit with failure.
 			glDeleteShader(a_shader); // Don't leak the shader.

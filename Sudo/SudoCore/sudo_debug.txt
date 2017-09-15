@@ -11,3 +11,41 @@ ERROR: 0:15: 'assign' :  cannot convert from 'attribute 3-component vector of fl
 ERROR: 0:15: 'assign' :  cannot convert from 'attribute 3-component vector of float' to 'float'
 
 )
+[Fri Sep 15 11:32](ERROR: ERROR: 0:20: 'out_tex_coord' : undeclared identifier 
+ERROR: 0:20: 'aTexCoord' : undeclared identifier 
+
+)
+[Fri Sep 15 11:32](ERROR: ERROR: 0:20: 'out_tex_coord' : undeclared identifier 
+ERROR: 0:20: 'aTexCoord' : undeclared identifier 
+
+)
+[Fri Sep 15 11:46](ERROR: ERROR: 0:13: 'ourTexture1' : undeclared identifier 
+ERROR: 0:13: 'texture' : no matching overloaded function found (using implicit conversion) 
+ERROR: 0:13: 'assign' :  cannot convert from 'const float' to 'FragUserData 4-component vector of float'
+
+)
+[Fri Sep 15 12:02](ERROR: ERROR: 0:13: 'ourTexture1' : undeclared identifier 
+ERROR: 0:13: 'texture' : no matching overloaded function found (using implicit conversion) 
+ERROR: 0:13: 'assign' :  cannot convert from 'const float' to 'FragUserData 4-component vector of float'
+
+)
+[Fri Sep 15 12:02](ERROR: ERROR: 0:13: 'ourTexture1' : undeclared identifier 
+ERROR: 0:13: 'texture' : no matching overloaded function found (using implicit conversion) 
+ERROR: 0:13: 'assign' :  cannot convert from 'const float' to 'FragUserData 4-component vector of float'
+
+)
+[Fri Sep 15 12:07](ERROR: ERROR: 0:13: 'ourTexture1' : undeclared identifier 
+ERROR: 0:13: 'texture' : no matching overloaded function found (using implicit conversion) 
+ERROR: 0:13: 'assign' :  cannot convert from 'const float' to 'FragUserData 4-component vector of float'
+
+)
+[Fri Sep 15 12:07](ERROR: ERROR: 0:13: 'ourTexture1' : undeclared identifier 
+ERROR: 0:13: 'texture' : no matching overloaded function found (using implicit conversion) 
+ERROR: 0:13: 'assign' :  cannot convert from 'const float' to 'FragUserData 4-component vector of float'
+
+)
+[Fri Sep 15 12:08](ERROR: ERROR: 0:13: 'ourTexture1' : undeclared identifier 
+ERROR: 0:13: 'texture' : no matching overloaded function found (using implicit conversion) 
+ERROR: 0:13: 'assign' :  cannot convert from 'const float' to 'FragUserData 4-component vector of float'
+
+)
