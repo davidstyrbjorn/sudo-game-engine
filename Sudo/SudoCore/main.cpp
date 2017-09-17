@@ -30,13 +30,15 @@ public:
 		// Create shape entity, add rectangle component then change it's position
 		leftPaddle = new ecs::Entity("left_paddle");
 		leftPaddle->AddComponent(new ecs::RectangleComponent(math::Vector2(220,220), math::Vector4(1,0,0,1)));
+		leftPaddle->transform->Move(math::Vector3(25, 25, 0));
 
 		config->SetFPS(120);
 		config->SetBackgroundColor(math::Vector4(0.1, 0.1, 0.1, 1));
 	}
 };
 
-int main() {
+int main() 
+{
 	App* app = new App();
 
 	return EXIT_SUCCESS;

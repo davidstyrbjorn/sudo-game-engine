@@ -17,6 +17,7 @@ namespace sudo { namespace system {
 			renderObject->bind();
 
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+			//glDrawArrays(GL_TRIANGLES, 0, 3);
 
 			renderObject->unbind();
 			m_renderList.pop_front();
@@ -28,7 +29,7 @@ namespace sudo { namespace system {
 		glewInit();
 		glewExperimental = true;
 
-		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shader_fragment.txt");
+		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\unlit_shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\unlit_shader_fragment.txt");
 		m_shader->enable();
 		m_shader->setUniform1f("ourTexture", 0);
 
