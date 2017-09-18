@@ -130,6 +130,7 @@
     <ClCompile Include="core\src\ecs\rectangle_component.cpp" />
     <ClCompile Include="core\src\ecs\triangle_component.cpp" />
     <ClCompile Include="core\src\graphics\buffers\vertex_array_buffer.cpp" />
+    <ClCompile Include="core\src\graphics\buffers\vertex_buffer.cpp" />
     <ClCompile Include="core\src\sudo_core.cpp" />
     <ClCompile Include="core\src\debug.cpp" />
     <ClCompile Include="core\src\ecs\entity.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="core\src\ecs\transform_component.h" />
     <ClInclude Include="core\src\ecs\triangle_component.h" />
     <ClInclude Include="core\src\graphics\buffers\vertex_array_buffer.h" />
+    <ClInclude Include="core\src\graphics\buffers\vertex_buffer.h" />
     <ClInclude Include="core\src\graphics\renderable2d.h" />
     <ClInclude Include="core\src\math\vector4.h" />
     <ClInclude Include="core\src\sudo_class.h" />

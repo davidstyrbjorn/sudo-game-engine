@@ -26,6 +26,7 @@ namespace sudo { namespace ecs {
 
 	private:
 		graphics::VertexArrayBuffer *vertexArray;
+		graphics::VertexBuffer *vertexBuffer;
 
 		unsigned int VBO, EBO, CBO, TCBO;
 		unsigned int texture;

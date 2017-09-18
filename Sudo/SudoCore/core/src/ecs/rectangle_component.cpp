@@ -27,20 +27,15 @@ namespace sudo { namespace ecs {
 		m_entityTransform = m_entityHolder->transform;
 
 		float vertices[] = {
-			0, 0, 0.0f,
-			0, m_size.getY(), 0.0f,
-			m_size.getX(), m_size.getY(), 0.0f,
-			m_size.getX(), 0.0f, 0.0f
+			// Vertex data								         Color data									
+			0, 0, 0.0f,							m_color.getX(), m_color.getY(), m_color.getZ(),
+			0, m_size.getY(), 0.0f,				m_color.getX(), m_color.getY(), m_color.getZ(),
+			m_size.getX(), m_size.getY(), 0.0f,	m_color.getX(), m_color.getY(), m_color.getZ(),
+			m_size.getX(), 0.0f, 0.0f,			m_color.getX(), m_color.getY(), m_color.getZ()
 		};	
 		unsigned int indices[] = {
 			0,1,2,
 			0,2,3
-		};
-		float colors[] = {
-			m_color.getX(), m_color.getY(), m_color.getZ(),
-			m_color.getX(), m_color.getY(), m_color.getZ(),
-			m_color.getX(), m_color.getY(), m_color.getZ(),
-			m_color.getX(), m_color.getY(), m_color.getZ(),
 		};
 		float textureCoords[] = {
 			0,0,
@@ -56,19 +51,23 @@ namespace sudo { namespace ecs {
 		vertexArray = new graphics::VertexArrayBuffer();
 		vertexArray->bind();
 
+		vertexBuffer = new graphics::VertexBuffer(vertices);
+
+		/*
 		// Vertex Buffer Object
 		glGenBuffers(1, &VBO);
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+	
+		// Vertices
+		//										Stride to next element in the array
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), nullptr);
 		glEnableVertexAttribArray(0);
 
-		// Color Buffer Object
-		glGenBuffers(1, &CBO);
-		glBindBuffer(GL_ARRAY_BUFFER, CBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-		glEnableVertexAttribArray(1);  
+		// Color														Start point for the first color data
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3*sizeof(float) ));
+		glEnableVertexAttribArray(1); 
+		*/
 
 		// Index buffer
 		glGenBuffers(1, &EBO);
