@@ -11,6 +11,12 @@ namespace sudo {
 	}
 } 
 
+namespace sudo {
+	namespace graphics {
+		class VertexArrayBuffer;
+	}
+}
+
 namespace sudo { namespace graphics { 
 
 	/* Base class for 2D renderable shapes */

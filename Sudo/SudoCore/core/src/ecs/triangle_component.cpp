@@ -19,7 +19,6 @@ namespace sudo { namespace ecs {
 	{
 		glDeleteBuffers(1, &VBO);
 		glDeleteBuffers(1, &CBO);
-		glDeleteBuffers(1, &VAO);
 		glDeleteBuffers(1, &EBO);
 	}
 
@@ -45,8 +44,8 @@ namespace sudo { namespace ecs {
 		glewExperimental = true;
 
 		// Vertex Array Object
-		glGenVertexArrays(1, &VAO);
-		glBindVertexArray(VAO);
+		vertexArray = new graphics::VertexArrayBuffer();
+		vertexArray->bind();
 
 		// Vertex buffer object w/vertices
 		glGenBuffers(1, &VBO);
@@ -88,8 +87,6 @@ namespace sudo { namespace ecs {
 
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-
-		
 	}
 
 	void TriangleComponent::recolored()
@@ -106,15 +103,11 @@ namespace sudo { namespace ecs {
 
 	void TriangleComponent::bind()
 	{
-		glBindVertexArray(VAO);
-		//glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		vertexArray->bind();
 	}
 
 	void TriangleComponent::unbind()
 	{
-		glBindVertexArray(0);
-		//glBindBuffer(GL_ARRAY_BUFFER, 0);
-		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		//vertexArray->unbind();
 	}
 } }

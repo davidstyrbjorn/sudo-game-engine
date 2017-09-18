@@ -3,13 +3,6 @@
 #include"component.h"
 #include"../graphics/renderable2d.h"
 
-namespace sudo {
-	namespace graphics {
-		class VertexArrayBuffer;
-		class BufferObject;
-	}
-}
-
 namespace sudo { namespace ecs {
 
 	// Forward decleration
@@ -33,7 +26,7 @@ namespace sudo { namespace ecs {
 
 	private:
 		graphics::VertexArrayBuffer *vertexArray;
-		graphics::BufferObject *vertexBufferObject, *elementBufferObject, *colorBufferObject;
+
 		unsigned int VBO, EBO, CBO, TCBO;
 		unsigned int texture;
 

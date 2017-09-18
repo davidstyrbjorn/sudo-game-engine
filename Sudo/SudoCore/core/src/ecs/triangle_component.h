@@ -27,7 +27,9 @@ namespace sudo {
 
 		private:
 			/* Data mainly different buffer handles */
-			unsigned int VBO, VAO, EBO, CBO;
+			graphics::VertexArrayBuffer *vertexArray;
+
+			unsigned int VBO, EBO, CBO;
 
 			/* Method from Renderable2D */
 			void resized() override;

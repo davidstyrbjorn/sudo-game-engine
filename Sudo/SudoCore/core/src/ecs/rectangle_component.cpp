@@ -3,7 +3,7 @@
 #include"../../sudo.h"
 #include"../../gl_include.h"
 
-#include"../SOIL2/SOIL2.h"
+//#include"../SOIL2/SOIL2.h"
 
 namespace sudo { namespace ecs {
 
@@ -17,7 +17,9 @@ namespace sudo { namespace ecs {
 
 	RectangleComponent::~RectangleComponent() 
 	{
-
+		glDeleteBuffers(1, &VBO);
+		glDeleteBuffers(1, &CBO);
+		glDeleteBuffers(1, &EBO);
 	}
 
 	void RectangleComponent::Start()
@@ -50,24 +52,11 @@ namespace sudo { namespace ecs {
 		glewInit();
 		glewExperimental = true;
 
-		// Vertex Array Object
+		/* Vertex array object */
 		vertexArray = new graphics::VertexArrayBuffer();
 		vertexArray->bind();
 
-		// VBO (vertices)
-		vertexBufferObject = new graphics::BufferObject();
-		vertexBufferObject->init<float>(GL_ARRAY_BUFFER, vertices, 0, 3);
-
-		// CBO (colors)
-		colorBufferObject = new graphics::BufferObject();
-		colorBufferObject->init<float>(GL_ARRAY_BUFFER, colors, 1, 3);
-
-		// EBO (indices)
-		elementBufferObject = new graphics::BufferObject();
-		elementBufferObject->init<unsigned int>(GL_ELEMENT_ARRAY_BUFFER, indices, -1, 2);
-
 		// Vertex Buffer Object
-		/*
 		glGenBuffers(1, &VBO);
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -77,7 +66,7 @@ namespace sudo { namespace ecs {
 		// Color Buffer Object
 		glGenBuffers(1, &CBO);
 		glBindBuffer(GL_ARRAY_BUFFER, CBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_READ);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 		glEnableVertexAttribArray(1);  
 
@@ -86,36 +75,13 @@ namespace sudo { namespace ecs {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
+		/*
 		// Texture coords buffer object
 		glGenBuffers(1, &TCBO);
 		glBindBuffer(GL_ARRAY_BUFFER, TCBO);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(textureCoords), textureCoords, GL_STATIC_READ);
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), nullptr);
 		glEnableVertexAttribArray(2);
-		*/
-
-		//glBindVertexArray(0);
-
-		// Texture test
-		/*
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_BLEND, GL_ONE_MINUS_SRC_ALPHA);
-
-		int width, height;
-		glGenTextures(1, &texture);
-		glBindTexture(GL_TEXTURE_2D, texture);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		unsigned char *image = SOIL_load_image("D://sample.jpg", &width, &height, 0, SOIL_LOAD_RGBA);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
-		glGenerateMipmap(GL_TEXTURE_2D);
-		SOIL_free_image_data(image);
-		glBindTexture(GL_TEXTURE_2D, 0);
 		*/
 	}
 	   
@@ -125,8 +91,6 @@ namespace sudo { namespace ecs {
 		//glBindTexture(GL_TEXTURE_2D, texture);
 
 		vertexArray->bind();
-		//vertexBufferObject->bind();
-		//elementBufferObject->bind();
 	}
 
 	void RectangleComponent::unbind() 
