@@ -187,8 +187,12 @@
     <ClInclude Include="core\src\math\vector3.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="core\src\unlit_shader_fragment.txt" />
-    <None Include="core\src\unlit_shader_vertex.txt" />
+    <None Include="core\src\shaders\unlit_shader_fragment.txt" />
+    <None Include="core\src\shaders\unlit_shader_vertex.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="core\src\shaders\unlit_texture_shader_fragment.txt" />
+    <Text Include="core\src\shaders\unlit_texture_shader_vertex.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

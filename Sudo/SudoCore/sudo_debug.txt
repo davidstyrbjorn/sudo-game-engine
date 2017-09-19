@@ -49,3 +49,7 @@ ERROR: 0:13: 'texture' : no matching overloaded function found (using implicit c
 ERROR: 0:13: 'assign' :  cannot convert from 'const float' to 'FragUserData 4-component vector of float'
 
 )
+[Tue Sep 19 21:59](ERROR: 0(15) : error C1060: incompatible types in initialization
+0(15) : error C1056: invalid initialization
+0(16) : error C1035: assignment of incompatible types
+)
