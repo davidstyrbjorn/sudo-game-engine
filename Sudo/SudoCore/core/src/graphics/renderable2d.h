@@ -15,6 +15,7 @@ namespace sudo {
 	namespace graphics {
 		class VertexArrayBuffer;
 		class VertexBuffer;
+		class Buffer;
 	}
 }
 

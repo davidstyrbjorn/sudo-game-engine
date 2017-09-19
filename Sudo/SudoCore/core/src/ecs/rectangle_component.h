@@ -25,10 +25,11 @@ namespace sudo { namespace ecs {
 		void unbind()	override;
 
 	private:
-		graphics::VertexArrayBuffer *vertexArray;
-		graphics::VertexBuffer *vertexBuffer;
+		graphics::VertexArrayBuffer *m_vertexArray;
+		graphics::VertexBuffer *m_vertexBuffer;
+		graphics::Buffer *m_elementBuffer;
 
-		unsigned int VBO, EBO, CBO, TCBO;
+		unsigned int TCBO;
 		unsigned int texture;
 
 		/* Method from Renderable2D base */

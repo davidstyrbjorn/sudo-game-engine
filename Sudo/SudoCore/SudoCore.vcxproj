@@ -129,6 +129,7 @@
     <ClCompile Include="core\src\ecs\box_collider2D.cpp" />
     <ClCompile Include="core\src\ecs\rectangle_component.cpp" />
     <ClCompile Include="core\src\ecs\triangle_component.cpp" />
+    <ClCompile Include="core\src\graphics\buffers\buffer.cpp" />
     <ClCompile Include="core\src\graphics\buffers\vertex_array_buffer.cpp" />
     <ClCompile Include="core\src\graphics\buffers\vertex_buffer.cpp" />
     <ClCompile Include="core\src\sudo_core.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="core\src\ecs\rectangle_component.h" />
     <ClInclude Include="core\src\ecs\transform_component.h" />
     <ClInclude Include="core\src\ecs\triangle_component.h" />
+    <ClInclude Include="core\src\graphics\buffers\buffer.h" />
     <ClInclude Include="core\src\graphics\buffers\vertex_array_buffer.h" />
     <ClInclude Include="core\src\graphics\buffers\vertex_buffer.h" />
     <ClInclude Include="core\src\graphics\renderable2d.h" />

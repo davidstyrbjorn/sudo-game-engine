@@ -9,7 +9,7 @@ namespace sudo { namespace graphics {
 
 	public:
 		/* Constructor */
-		VertexBuffer(float a_data[24]);
+		VertexBuffer(float a_data[], unsigned int a_size);
 
 		/* Destructor */
 		virtual ~VertexBuffer();

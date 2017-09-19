@@ -17,9 +17,9 @@ namespace sudo { namespace ecs {
 
 	RectangleComponent::~RectangleComponent() 
 	{
-		glDeleteBuffers(1, &VBO);
-		glDeleteBuffers(1, &CBO);
-		glDeleteBuffers(1, &EBO);
+		delete m_vertexArray;
+		delete m_vertexBuffer;
+		delete m_elementBuffer;
 	}
 
 	void RectangleComponent::Start()
@@ -48,40 +48,14 @@ namespace sudo { namespace ecs {
 		glewExperimental = true;
 
 		/* Vertex array object */
-		vertexArray = new graphics::VertexArrayBuffer();
-		vertexArray->bind();
+		m_vertexArray = new graphics::VertexArrayBuffer();
+		m_vertexArray->bind();
 
-		vertexBuffer = new graphics::VertexBuffer(vertices);
+		/* Vertex buffer object */
+		m_vertexBuffer = new graphics::VertexBuffer(vertices, sizeof(vertices));
 
-		/*
-		// Vertex Buffer Object
-		glGenBuffers(1, &VBO);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	
-		// Vertices
-		//										Stride to next element in the array
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), nullptr);
-		glEnableVertexAttribArray(0);
-
-		// Color														Start point for the first color data
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3*sizeof(float) ));
-		glEnableVertexAttribArray(1); 
-		*/
-
-		// Index buffer
-		glGenBuffers(1, &EBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-		/*
-		// Texture coords buffer object
-		glGenBuffers(1, &TCBO);
-		glBindBuffer(GL_ARRAY_BUFFER, TCBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(textureCoords), textureCoords, GL_STATIC_READ);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), nullptr);
-		glEnableVertexAttribArray(2);
-		*/
+		/* Index buffer */
+		m_elementBuffer = new graphics::Buffer(GL_ELEMENT_ARRAY_BUFFER, indices, sizeof(indices));
 	}
 	   
 	void RectangleComponent::bind() 
@@ -89,16 +63,16 @@ namespace sudo { namespace ecs {
 		//glActiveTexture(GL_TEXTURE0);
 		//glBindTexture(GL_TEXTURE_2D, texture);
 
-		vertexArray->bind();
+		m_vertexArray->bind();
 	}
 
 	void RectangleComponent::unbind() 
 	{
-		vertexArray->unbind();
 	}
 
 	void RectangleComponent::recolored()
 	{
+		/*
 		float colors[] = {
 			m_color.getX(), m_color.getY(), m_color.getZ(),
 			m_color.getX(), m_color.getY(), m_color.getZ(),
@@ -108,6 +82,7 @@ namespace sudo { namespace ecs {
 
 		glBindBuffer(GL_ARRAY_BUFFER, CBO);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(colors), colors);
+		*/
 	}
 
 	void RectangleComponent::resized()
@@ -117,7 +92,7 @@ namespace sudo { namespace ecs {
 		m_entityTransform->position = math::Vector3(m_entityTransform->position.getX() - (deltaChange.getX() / 2),
 			m_entityTransform->position.getY() - (deltaChange.getY() / 2),
 			m_entityTransform->position.getZ());
-
+		/*
 		float vertices[] = {
 			0, 0, 0.0f,
 			0, m_size.getY(), 0.0f,
@@ -131,6 +106,7 @@ namespace sudo { namespace ecs {
 
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+		*/
 	}
 
 } } 

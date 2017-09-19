@@ -17,9 +17,9 @@ namespace sudo { namespace ecs {
 
 	TriangleComponent::~TriangleComponent() 
 	{
-		glDeleteBuffers(1, &VBO);
-		glDeleteBuffers(1, &CBO);
-		glDeleteBuffers(1, &EBO);
+		delete m_vertexArray;
+		delete m_vertexBuffer;
+		delete m_elementBuffer;
 	}
 
 	void TriangleComponent::Start()
@@ -27,45 +27,27 @@ namespace sudo { namespace ecs {
 		m_entityTransform = m_entityHolder->transform;
 
 		float vertices[] = {
-			0, 0, 0.0f,
-			0, m_size.getY(), 0.0f,
-			m_size.getX(), m_size.getY(), 0.0f,
+			// Vertex data                           Color data
+			0, 0, 0.0f,								 m_color.getX(), m_color.getY(), m_color.getZ(),
+			0, m_size.getY(), 0.0f,					 m_color.getX(), m_color.getY(), m_color.getZ(),
+			m_size.getX(), m_size.getY(), 0.0f,		 m_color.getX(), m_color.getY(), m_color.getZ()
 		};
 		uint indices[] = {
 			0,1,2,
-		};
-		float colors[] = {
-			m_color.getX(), m_color.getY(), m_color.getZ(),
-			m_color.getX(), m_color.getY(), m_color.getZ(),
-			m_color.getX(), m_color.getY(), m_color.getZ()
 		};
 
 		glewInit();
 		glewExperimental = true;
 
 		// Vertex Array Object
-		vertexArray = new graphics::VertexArrayBuffer();
-		vertexArray->bind();
+		m_vertexArray = new graphics::VertexArrayBuffer();
+		m_vertexArray->bind();
 
-		// Vertex buffer object w/vertices
-		glGenBuffers(1, &VBO);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+		// Vertex buffer and all it's data
+		m_vertexBuffer = new graphics::VertexBuffer(vertices, sizeof(vertices));
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-		glEnableVertexAttribArray(0);
-
-		// Color buffer?
-		glGenBuffers(1, &CBO);
-		glBindBuffer(GL_ARRAY_BUFFER, CBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_READ);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-		glEnableVertexAttribArray(1);
-
-		// Index buffer w/indices
-		glGenBuffers(1, &EBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+		// Element buffer
+		m_elementBuffer = new graphics::Buffer(GL_ELEMENT_ARRAY_BUFFER, indices, sizeof(indices));
 	}
 
 	void TriangleComponent::resized()
@@ -76,6 +58,7 @@ namespace sudo { namespace ecs {
 			m_entityTransform->position.getY() - (deltaChange.getY()/2),
 			m_entityTransform->position.getZ());
 
+		/*
 		float vertices[] = {
 			0, 0, 0.0f,
 			0, m_size.getY(), 0.0f,
@@ -87,10 +70,12 @@ namespace sudo { namespace ecs {
 
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+		*/
 	}
 
 	void TriangleComponent::recolored()
 	{
+		/*
 		float colors[] = {
 			m_color.getX(), m_color.getY(), m_color.getZ(),
 			m_color.getX(), m_color.getY(), m_color.getZ(),
@@ -99,15 +84,16 @@ namespace sudo { namespace ecs {
 
 		glBindBuffer(GL_ARRAY_BUFFER, CBO);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(colors), colors);
+		*/
 	}
 
 	void TriangleComponent::bind()
 	{
-		vertexArray->bind();
+		m_vertexArray->bind();
 	}
 
 	void TriangleComponent::unbind()
 	{
-		//vertexArray->unbind();
+
 	}
 } }
