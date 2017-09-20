@@ -3,8 +3,6 @@
 #include"../../sudo.h"
 #include"../../gl_include.h"
 
-//#include"../SOIL2/SOIL2.h"
-
 namespace sudo { namespace ecs {
 
 	RectangleComponent::RectangleComponent(math::Vector2 &a_size, math::Vector4 &a_color)
@@ -25,7 +23,7 @@ namespace sudo { namespace ecs {
 	void RectangleComponent::Start()
 	{
 		m_entityTransform = m_entityHolder->transform;
-
+		
 		float vertices[] = {
 			// Vertex data								         Color data									
 			0, 0, 0.0f,							m_color.getX(), m_color.getY(), m_color.getZ(),
@@ -60,9 +58,6 @@ namespace sudo { namespace ecs {
 	   
 	void RectangleComponent::bind() 
 	{
-		//glActiveTexture(GL_TEXTURE0);
-		//glBindTexture(GL_TEXTURE_2D, texture);
-
 		m_vertexArray->bind();
 	}
 

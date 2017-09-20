@@ -11,6 +11,8 @@
 #include"src\ecs\transform_component.h"
 #include"src\ecs\rectangle_component.h"
 #include"src\ecs\triangle_component.h"
+#include"src\ecs\sprite_component.h"
+
 #include"src\ecs\box_collider2D.h"
 #include"src\ecs\component.h"
 #include"src\ecs\entity.h"

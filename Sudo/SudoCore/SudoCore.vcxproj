@@ -128,6 +128,7 @@
   <ItemGroup>
     <ClCompile Include="core\src\ecs\box_collider2D.cpp" />
     <ClCompile Include="core\src\ecs\rectangle_component.cpp" />
+    <ClCompile Include="core\src\ecs\sprite_component.cpp" />
     <ClCompile Include="core\src\ecs\triangle_component.cpp" />
     <ClCompile Include="core\src\graphics\buffers\buffer.cpp" />
     <ClCompile Include="core\src\graphics\buffers\vertex_array_buffer.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="core\src\ecs\component.h" />
     <ClInclude Include="core\src\ecs\entity.h" />
     <ClInclude Include="core\src\ecs\rectangle_component.h" />
+    <ClInclude Include="core\src\ecs\sprite_component.h" />
     <ClInclude Include="core\src\ecs\transform_component.h" />
     <ClInclude Include="core\src\ecs\triangle_component.h" />
     <ClInclude Include="core\src\graphics\buffers\buffer.h" />
@@ -189,10 +191,6 @@
   <ItemGroup>
     <None Include="core\src\shaders\unlit_shader_fragment.txt" />
     <None Include="core\src\shaders\unlit_shader_vertex.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="core\src\shaders\unlit_texture_shader_fragment.txt" />
-    <Text Include="core\src\shaders\unlit_texture_shader_vertex.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

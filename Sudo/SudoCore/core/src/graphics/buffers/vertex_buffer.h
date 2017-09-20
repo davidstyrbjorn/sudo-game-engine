@@ -2,6 +2,12 @@
 
 namespace sudo { namespace graphics { 
 
+	enum SudoBuferType {
+		VERTEX_ONLY,
+		VERTEX_COLOR,
+		VERTEX_COLOR_TEXTURE
+	};
+
 	class VertexBuffer
 	{
 	private:
@@ -9,7 +15,7 @@ namespace sudo { namespace graphics {
 
 	public:
 		/* Constructor */
-		VertexBuffer(float a_data[], unsigned int a_size);
+		VertexBuffer(float a_data[], unsigned int a_size, SudoBuferType a_type);
 
 		/* Destructor */
 		virtual ~VertexBuffer();
