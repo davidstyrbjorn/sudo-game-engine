@@ -11,7 +11,7 @@ class App : SudoClass {
 private:
 	SudoCore *coreEngine;
 
-	ecs::Entity *leftPaddle, *rightPaddle, *triangle;
+	ecs::Entity *sprite;
 	
 public:
 	App() 
@@ -22,25 +22,14 @@ public:
 	void Update()
 	{
 		// Draw entity/s with renderer->Draw( );
-		renderer->Draw(leftPaddle->GetComponent<ecs::RectangleComponent>("RectangleComponent"));
-		renderer->Draw(rightPaddle->GetComponent<ecs::RectangleComponent>("RectangleComponent"));
-		renderer->Draw(triangle->GetComponent<ecs::TriangleComponent>("TriangleComponent"));
+		renderer->Draw(sprite->GetComponent<ecs::SpriteComponent>("SpriteComponent"));
 	}
 
 	void Start() 
 	{
 		// Create shape entity, add rectangle component then change it's position
-		leftPaddle = new ecs::Entity("left_paddle");
-		leftPaddle->AddComponent(new ecs::RectangleComponent(math::Vector2(220,220), math::Vector4(1,0,0,1)));
-		leftPaddle->transform->Move(math::Vector3(25, 25, 0));
-
-		rightPaddle = new ecs::Entity("right_paddle");
-		rightPaddle->AddComponent(new ecs::RectangleComponent(math::Vector2(100, 100), math::Vector4(0, 1, 1, 1)));
-		rightPaddle->transform->Move(math::Vector3(150, 150, 0));
-
-		triangle = new ecs::Entity("triangle");
-		triangle->AddComponent(new ecs::TriangleComponent(math::Vector2(150, 150), math::Vector4(1, 1, 0, 1)));
-		triangle->transform->Move(math::Vector3(370, 320, 0));
+		sprite = new ecs::Entity("sprite");
+		sprite->AddComponent(new ecs::SpriteComponent("C:\\temp\\sample.jpg", math::Vector2(300, 200)));
 
 		config->SetFPS(120);
 		config->SetBackgroundColor(math::Vector4(0.1, 0.1, 0.1, 1));

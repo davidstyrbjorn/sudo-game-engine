@@ -44,7 +44,7 @@ namespace sudo { namespace ecs {
 		m_vertexArray->bind();
 
 		// Vertex buffer and all it's data
-		m_vertexBuffer = new graphics::VertexBuffer(vertices, sizeof(vertices));
+		m_vertexBuffer = new graphics::VertexBuffer(vertices, sizeof(vertices), graphics::SudoBuferType::VERTEX_COLOR);
 
 		// Element buffer
 		m_elementBuffer = new graphics::Buffer(GL_ELEMENT_ARRAY_BUFFER, indices, sizeof(indices));

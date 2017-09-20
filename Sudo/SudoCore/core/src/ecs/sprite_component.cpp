@@ -19,11 +19,11 @@ namespace sudo { namespace ecs {
 	void SpriteComponent::Start()
 	{
 		float vertices[] = {
-			// Vertex data					  color data		         									
-			0, 0, 0.0f,						    1, 1, 1,
-			0, m_size.getY(), 0.0f,				1, 1, 1,
-			m_size.getX(), m_size.getY(), 0.0f,	1, 1, 1,
-			m_size.getX(), 0.0f, 0.0f,			1, 1, 1
+			// Vertex data					  color data	 texture coordinates	         									
+			0, 0, 0.0f,						    1, 1, 1,         0,0,
+			0, m_size.getY(), 0.0f,				1, 1, 1,         0,1,
+			m_size.getX(), m_size.getY(), 0.0f,	1, 1, 1,		 1,1,
+			m_size.getX(), 0.0f, 0.0f,			1, 1, 1,         1,0
 		};
 		unsigned int indices[] = {
 			0,1,2,
@@ -38,7 +38,7 @@ namespace sudo { namespace ecs {
 		m_vertexArray->bind();
 
 		/* Vertex buffer object */
-		m_vertexBuffer = new graphics::VertexBuffer(vertices, sizeof(vertices));
+		m_vertexBuffer = new graphics::VertexBuffer(vertices, sizeof(vertices), graphics::SudoBuferType::VERTEX_COLOR_TEXTURE);
 
 		/* Index buffer */
 		m_elementBuffer = new graphics::Buffer(GL_ELEMENT_ARRAY_BUFFER, indices, sizeof(indices));
