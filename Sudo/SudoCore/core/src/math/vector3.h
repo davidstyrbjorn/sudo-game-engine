@@ -39,6 +39,12 @@ namespace sudo { namespace math {
 		Vector3& operator-=(const Vector3& rhs);
 
 		friend std::ostream& operator<<(std::ostream &os, const Vector3 &other);
+
+		/* Static Methods */
+		inline static Vector3 Right() { return Vector3(1, 0, 0); }
+		inline static Vector3 Left()  { return Vector3(-1, 0, 0); }
+		inline static Vector3 Up()    { return Vector3(0, -1, 0); }
+		inline static Vector3 Down()  { return Vector3(0, 1, 0); }
 	};
 
 	inline bool operator==(const Vector3& lhs, const Vector3& rhs)

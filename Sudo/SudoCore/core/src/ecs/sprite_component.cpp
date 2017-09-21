@@ -7,17 +7,24 @@
 
 namespace sudo { namespace ecs { 
 
-	SpriteComponent::SpriteComponent(char* a_imagePath, math::Vector2 &a_size) 
+	SpriteComponent::SpriteComponent(char* a_imagePath) 
 	{
 		m_componentName = "SpriteComponent";
 
 		m_imagePath = a_imagePath;
 
-		m_size = a_size;
+		m_color = math::Vector4(1, 1, 1, 1);//a_color;
 	}
 
 	void SpriteComponent::Start()
 	{
+		m_entityTransform = m_entityHolder->transform;
+
+		int width, height;
+		unsigned char* image = SOIL_load_image(m_imagePath, &width, &height, 0, SOIL_LOAD_RGBA);
+
+		m_size = math::Vector2(width, height);
+
 		float vertices[] = {
 			// Vertex data					  color data	 texture coordinates	         									
 			0, 0, 0.0f,						    1, 1, 1,         0,0,
@@ -44,10 +51,10 @@ namespace sudo { namespace ecs {
 		m_elementBuffer = new graphics::Buffer(GL_ELEMENT_ARRAY_BUFFER, indices, sizeof(indices));
 
 		/* Texture loading and binding etc */
+		
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_BLEND, GL_ONE_MINUS_SRC_ALPHA);
 
-		int width, height;
 		glGenTextures(1, &texture);
 		glBindTexture(GL_TEXTURE_2D, texture);
 
@@ -57,11 +64,11 @@ namespace sudo { namespace ecs {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-		unsigned char* image = SOIL_load_image(m_imagePath, &width, &height, 0, SOIL_LOAD_RGBA);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 		glGenerateMipmap(GL_TEXTURE_2D);
 		SOIL_free_image_data(image);
 		glBindTexture(GL_TEXTURE_2D, 0);
+		
 	}
 
 	SpriteComponent::~SpriteComponent()

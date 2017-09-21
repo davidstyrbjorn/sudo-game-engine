@@ -10,8 +10,8 @@ uniform sampler2D myTexture;
 
 void main() 
 {
-	if(out_textureMode == 0)
-		FragColor = vec4(out_color,1.0f);
-	if(out_textureMode == 1)
-		FragColor = texture(myTexuture, out_texCoords);
+	//if(out_textureMode == 0)
+		//FragColor = vec4(out_color,1.0f);
+	//if(out_textureMode == 1)
+		FragColor = texture(myTexture, out_texCoords);
 }

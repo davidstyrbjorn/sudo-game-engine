@@ -53,3 +53,5 @@ ERROR: 0:13: 'assign' :  cannot convert from 'const float' to 'FragUserData 4-co
 0(15) : error C1056: invalid initialization
 0(16) : error C1035: assignment of incompatible types
 )
+[Thu Sep 21 19:26](ERROR: 0(16) : error C1008: undefined variable "myTexuture"
+)

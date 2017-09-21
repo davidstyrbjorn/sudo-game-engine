@@ -3,11 +3,6 @@
 #include"component.h"
 #include"../graphics/renderable2d.h"
 
-namespace sudo {
-	namespace math {
-		class Vector2;
-} }
-
 namespace sudo { namespace ecs {
 
 	class SpriteComponent : public Component, public graphics::Renderable2D {
@@ -27,7 +22,7 @@ namespace sudo { namespace ecs {
 
 	public:
 		/* Constructor */
-		SpriteComponent(char* a_imagePath, math::Vector2 &a_size);
+		SpriteComponent(char* a_imagePath);
 
 		/* Destructor */
 		~SpriteComponent();
