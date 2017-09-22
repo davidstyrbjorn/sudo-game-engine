@@ -1,12 +1,8 @@
 #pragma once
 
-namespace sudo { namespace graphics { 
+#include"../../../definitions.h"
 
-	enum SudoBuferType {
-		VERTEX_ONLY,
-		VERTEX_COLOR,
-		VERTEX_COLOR_TEXTURE
-	};
+namespace sudo { namespace graphics { 
 
 	class VertexBuffer
 	{
@@ -15,7 +11,7 @@ namespace sudo { namespace graphics {
 
 	public:
 		/* Constructor */
-		VertexBuffer(float a_data[], unsigned int a_size, SudoBuferType a_type);
+		VertexBuffer(float a_data[], uint a_size, SudoBufferType a_type);
 
 		/* Destructor */
 		virtual ~VertexBuffer();
@@ -25,6 +21,9 @@ namespace sudo { namespace graphics {
 
 		/* Unbinds the vertex buffer */
 		void unbind() const;
+
+		/* Data inside the buffer was modified */
+		void DataModified(float a_data[], uint a_size, SudoBufferType a_type);
 	};
 
 } }

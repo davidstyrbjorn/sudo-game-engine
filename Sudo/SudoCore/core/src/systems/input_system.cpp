@@ -180,9 +180,6 @@ namespace sudo { namespace system {
 		keyCodeToLiteral["f23"] = 312;
 		keyCodeToLiteral["f24"] = 313;
 		keyCodeToLiteral["f25"] = 314;
-
-
 	}
-
 }
 }

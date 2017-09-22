@@ -17,8 +17,8 @@ namespace sudo { namespace ecs {
 		char* m_imagePath;
 
 		/* Method from Renderable2D base */
-		void resized() override { } 
-		void recolored() override { }
+		void resized() override;
+		void recolored() override;
 
 	public:
 		/* Constructor */

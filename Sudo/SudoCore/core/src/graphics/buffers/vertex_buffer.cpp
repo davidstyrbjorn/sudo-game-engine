@@ -4,19 +4,19 @@
 
 namespace sudo { namespace graphics { 
 
-VertexBuffer::VertexBuffer(float a_data[], unsigned int a_size, SudoBuferType a_type)
+VertexBuffer::VertexBuffer(float a_data[], uint a_size, SudoBufferType a_type)
 {
 	glGenBuffers(1, &m_vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 	glBufferData(GL_ARRAY_BUFFER, a_size, a_data, GL_STATIC_DRAW);
 
 	switch(a_type){
-	case SudoBuferType::VERTEX_ONLY:
+	case SudoBufferType::VERTEX_ONLY:
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 		glEnableVertexAttribArray(0);
 		break;
 
-	case SudoBuferType::VERTEX_COLOR:
+	case SudoBufferType::VERTEX_COLOR:
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), nullptr);
 		glEnableVertexAttribArray(0);
 
@@ -24,7 +24,7 @@ VertexBuffer::VertexBuffer(float a_data[], unsigned int a_size, SudoBuferType a_
 		glEnableVertexAttribArray(1);
 		break;
 
-	case SudoBuferType::VERTEX_COLOR_TEXTURE:
+	case SudoBufferType::VERTEX_COLOR_TEXTURE:
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), nullptr);
 		glEnableVertexAttribArray(0);
 
@@ -33,6 +33,41 @@ VertexBuffer::VertexBuffer(float a_data[], unsigned int a_size, SudoBuferType a_
 
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 		glEnableVertexAttribArray(2);
+		break;
+	}
+}
+
+void VertexBuffer::DataModified(float a_data[], uint a_size, SudoBufferType a_type)
+{
+	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+	glBufferData(GL_ARRAY_BUFFER, a_size, a_data, GL_STATIC_DRAW);
+
+	switch (a_type) 
+	{
+	case SudoBufferType::VERTEX_ONLY:
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+		glEnableVertexAttribArray(0);
+		break;
+
+	case SudoBufferType::VERTEX_COLOR:
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), nullptr);
+		glEnableVertexAttribArray(0);
+
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
+		break;
+
+	case SudoBufferType::VERTEX_COLOR_TEXTURE:
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), nullptr);
+		glEnableVertexAttribArray(0);
+
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
+
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+		glEnableVertexAttribArray(2);
+		break;
+	default:
 		break;
 	}
 }

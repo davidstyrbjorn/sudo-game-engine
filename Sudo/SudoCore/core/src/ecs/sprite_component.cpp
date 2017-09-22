@@ -5,9 +5,9 @@
 
 #include"../SOIL2/SOIL2.h"
 
-namespace sudo { namespace ecs { 
+namespace sudo { namespace ecs {
 
-	SpriteComponent::SpriteComponent(char* a_imagePath) 
+	SpriteComponent::SpriteComponent(char* a_imagePath)
 	{
 		m_componentName = "SpriteComponent";
 
@@ -22,7 +22,6 @@ namespace sudo { namespace ecs {
 
 		int width, height;
 		unsigned char* image = SOIL_load_image(m_imagePath, &width, &height, 0, SOIL_LOAD_RGBA);
-
 		m_size = math::Vector2(width, height);
 
 		float vertices[] = {
@@ -45,13 +44,12 @@ namespace sudo { namespace ecs {
 		m_vertexArray->bind();
 
 		/* Vertex buffer object */
-		m_vertexBuffer = new graphics::VertexBuffer(vertices, sizeof(vertices), graphics::SudoBuferType::VERTEX_COLOR_TEXTURE);
+		m_vertexBuffer = new graphics::VertexBuffer(vertices, sizeof(vertices), SudoBufferType::VERTEX_COLOR_TEXTURE);
 
 		/* Index buffer */
 		m_elementBuffer = new graphics::Buffer(GL_ELEMENT_ARRAY_BUFFER, indices, sizeof(indices));
 
 		/* Texture loading and binding etc */
-		
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_BLEND, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -68,7 +66,6 @@ namespace sudo { namespace ecs {
 		glGenerateMipmap(GL_TEXTURE_2D);
 		SOIL_free_image_data(image);
 		glBindTexture(GL_TEXTURE_2D, 0);
-		
 	}
 
 	SpriteComponent::~SpriteComponent()
@@ -89,6 +86,39 @@ namespace sudo { namespace ecs {
 	void SpriteComponent::unbind()
 	{
 
+	}
+
+	void SpriteComponent::resized()
+	{
+		/* Make sure the shape stays at it's position when resizing the vertices */
+		math::Vector2 deltaChange = m_size - m_sizeBeforeReisze;
+		m_entityTransform->position = math::Vector3(m_entityTransform->position.getX() - (deltaChange.getX() / 2),
+			m_entityTransform->position.getY() - (deltaChange.getY() / 2),
+			m_entityTransform->position.getZ());
+
+		/* Modify the actual buffer values */
+		float vertices[] = {
+			// Vertex data					  color data	 texture coordinates	         									
+			0, 0, 0.0f,						    1, 1, 1,         0,0,
+			0, m_size.getY(), 0.0f,				1, 1, 1,         0,1,
+			m_size.getX(), m_size.getY(), 0.0f,	1, 1, 1,		 1,1,
+			m_size.getX(), 0.0f, 0.0f,			1, 1, 1,         1,0
+		};
+
+		m_vertexBuffer->DataModified(vertices, sizeof(vertices), SudoBufferType::VERTEX_COLOR);
+	}
+
+	void SpriteComponent::recolored()
+	{
+		float vertices[] = {
+			// Vertex data					  color data	 texture coordinates	         									
+			0, 0, 0.0f,						    1, 1, 1,         0,0,
+			0, m_size.getY(), 0.0f,				1, 1, 1,         0,1,
+			m_size.getX(), m_size.getY(), 0.0f,	1, 1, 1,		 1,1,
+			m_size.getX(), 0.0f, 0.0f,			1, 1, 1,         1,0
+		};
+
+		m_vertexBuffer->DataModified(vertices, sizeof(vertices), SudoBufferType::VERTEX_COLOR_TEXTURE);
 	}
 
 } }

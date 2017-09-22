@@ -29,7 +29,10 @@ namespace sudo { namespace system {
 		void Start()	override;
 
 		/* Adds a_shape to m_renderList to be rendered during next render iteration */
-		void Draw(graphics::Renderable2D *a_shape);
+		//template<class T>
+		void Draw(graphics::Renderable2D *a_shape) {
+			m_renderList.push_back((a_shape));
+		}
 
 	private:
 		/* RenderSystem data */

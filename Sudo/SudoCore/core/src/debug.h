@@ -22,5 +22,4 @@ namespace sudo {
 	private:
 		DEBUG() { }
 	};
-
 }

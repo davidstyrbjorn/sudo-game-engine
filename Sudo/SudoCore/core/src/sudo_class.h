@@ -19,5 +19,4 @@ namespace sudo {
 		virtual void Start() { };
 		virtual void Update() { };
 	};
-
 }
