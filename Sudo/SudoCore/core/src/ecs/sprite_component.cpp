@@ -96,29 +96,11 @@ namespace sudo { namespace ecs {
 			m_entityTransform->position.getY() - (deltaChange.getY() / 2),
 			m_entityTransform->position.getZ());
 
-		/* Modify the actual buffer values */
-		float vertices[] = {
-			// Vertex data					  color data	 texture coordinates	         									
-			0, 0, 0.0f,						    1, 1, 1,         0,0,
-			0, m_size.getY(), 0.0f,				1, 1, 1,         0,1,
-			m_size.getX(), m_size.getY(), 0.0f,	1, 1, 1,		 1,1,
-			m_size.getX(), 0.0f, 0.0f,			1, 1, 1,         1,0
-		};
-
-		m_vertexBuffer->DataModified(vertices, sizeof(vertices), SudoBufferType::VERTEX_COLOR);
 	}
 
 	void SpriteComponent::recolored()
 	{
-		float vertices[] = {
-			// Vertex data					  color data	 texture coordinates	         									
-			0, 0, 0.0f,						    1, 1, 1,         0,0,
-			0, m_size.getY(), 0.0f,				1, 1, 1,         0,1,
-			m_size.getX(), m_size.getY(), 0.0f,	1, 1, 1,		 1,1,
-			m_size.getX(), 0.0f, 0.0f,			1, 1, 1,         1,0
-		};
 
-		m_vertexBuffer->DataModified(vertices, sizeof(vertices), SudoBufferType::VERTEX_COLOR_TEXTURE);
 	}
 
 } }

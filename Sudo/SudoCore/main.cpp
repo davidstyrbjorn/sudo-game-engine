@@ -22,8 +22,8 @@ public:
 	void Update()
 	{
 		// Draw entity/s with renderer->Draw( );
-		renderer->Draw(sprite2->GetComponent<ecs::SpriteComponent>("SpriteComponent"));
-		//renderer->Draw(sprite->GetComponent<ecs::RectangleComponent>("RectangleComponent"));
+		//renderer->Draw(sprite2->GetComponent<ecs::SpriteComponent>("SpriteComponent"));
+		renderer->Draw(sprite->GetComponent<ecs::RectangleComponent>("RectangleComponent"));
 
 		if (input->GetKey("d"))
 			sprite->transform->Move(math::Vector3::Right()*3);
@@ -35,7 +35,7 @@ public:
 			sprite->GetComponent<ecs::RectangleComponent>("RectangleComponent")->SetColor(math::Vector4(1, 1, 0, 1));
 
 		if (input->GetKey("x"))
-			sprite2->GetComponent<ecs::SpriteComponent>("SpriteComponent")->SizeUp(2);
+			sprite->GetComponent<ecs::RectangleComponent>("RectangleComponent")->SizeUp(3);
 	}
 
 	void Start() 
@@ -46,7 +46,7 @@ public:
 		sprite->transform->Move(math::Vector3(350, 350, 0));
 
 		sprite2 = new ecs::Entity("sprite2");
-		sprite2->AddComponent(new ecs::SpriteComponent("C:\\temp\\cat.png"));
+		sprite2->AddComponent(new ecs::SpriteComponent("D:\\temp\\cat.png"));
 
 		config->SetFPS(120);
 		config->SetBackgroundColor(math::Vector4(0.1, 0.1, 0.1, 1));

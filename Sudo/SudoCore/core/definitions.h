@@ -10,4 +10,9 @@ enum SudoBufferType {
 	VERTEX_COLOR_TEXTURE
 };
 
+enum SudoBufferDataType {
+	VERTEX,
+	COLOR
+};
+
 }

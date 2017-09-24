@@ -22,8 +22,7 @@ namespace sudo { namespace graphics {
 		/* Unbinds the vertex buffer */
 		void unbind() const;
 
-		/* Data inside the buffer was modified */
-		void DataModified(float a_data[], uint a_size, SudoBufferType a_type);
+		void dataModified(float a_data[], uint a_size, SudoBufferDataType a_type);
 	};
 
 } }
