@@ -12,6 +12,14 @@ namespace sudo { namespace system {
 		while (!m_renderList.empty()) {
 			graphics::Renderable2D *renderObject = m_renderList.front();
 			
+			/* Is it a shape or a sprite using a texture? The Shader HAVE to know this */
+			if (renderObject->m_type == sudo::RenderableType::SHAPE) {
+				m_shader->setUniform1f("texture_mode", 0);
+			}
+			if (renderObject->m_type == sudo::RenderableType::SPRITE) {
+				m_shader->setUniform1f("texture_mode", 1);
+			}
+
 			// Bind stuff and set model_matrix accordingly
 			m_shader->setUniformMatrix4x4("model_matrix", math::Matrix4x4::Translation(renderObject->GetEntityTransform()->position));
 			renderObject->bind();
@@ -28,7 +36,7 @@ namespace sudo { namespace system {
 		glewInit();
 		glewExperimental = true;
 
-		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\unlit_shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\unlit_shader_fragment.txt");
+		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\unlit_shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\unlit_shader_fragment.txt");
 		m_shader->enable();
 		m_shader->setUniform1f("myTexture", 0);
 

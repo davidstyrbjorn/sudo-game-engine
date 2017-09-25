@@ -8,6 +8,7 @@ namespace sudo { namespace graphics {
 	{
 	private:
 		unsigned int m_vbo;
+		SudoBufferType m_type;
 
 	public:
 		/* Constructor */
@@ -22,7 +23,7 @@ namespace sudo { namespace graphics {
 		/* Unbinds the vertex buffer */
 		void unbind() const;
 
-		void dataModified(float a_data[], uint a_size, SudoBufferDataType a_type);
+		void dataModified(float a_data[], uint a_size);
 	};
 
 } }

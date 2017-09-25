@@ -2,10 +2,11 @@
 
 #include"component.h"
 #include"../graphics/renderable2d.h"
+#include"../graphics/mesh.h"
 
 namespace sudo { namespace ecs {
 
-	class SpriteComponent : public Component, public graphics::Renderable2D {
+	class SpriteComponent : public Component, public graphics::Renderable2D, public graphics::Mesh {
 	private:
 		graphics::VertexArrayBuffer *m_vertexArray;
 		graphics::VertexBuffer *m_vertexBuffer;

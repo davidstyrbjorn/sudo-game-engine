@@ -15,4 +15,9 @@ enum SudoBufferDataType {
 	COLOR
 };
 
+enum RenderableType {
+	SHAPE,
+	SPRITE
+};
+
 }

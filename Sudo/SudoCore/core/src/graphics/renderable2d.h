@@ -4,6 +4,8 @@
 #include"../math/vector3.h"
 #include"../math/vector4.h"
 
+#include"../../definitions.h"
+
 // Forward decleration
 namespace sudo { 
 	namespace ecs {
@@ -70,5 +72,8 @@ namespace sudo { namespace graphics {
 		/* Private Methods */
 		virtual void resized() = 0;
 		virtual void recolored() = 0;
+
+	public:
+		sudo::RenderableType m_type;
 	};
 } }

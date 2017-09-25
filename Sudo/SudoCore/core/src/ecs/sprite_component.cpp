@@ -13,7 +13,9 @@ namespace sudo { namespace ecs {
 
 		m_imagePath = a_imagePath;
 
-		m_color = math::Vector4(1, 1, 1, 1);//a_color;
+		m_color = math::Vector4(1, 1, 1, 1);
+
+		m_type = sudo::RenderableType::SPRITE;
 	}
 
 	void SpriteComponent::Start()
@@ -96,11 +98,30 @@ namespace sudo { namespace ecs {
 			m_entityTransform->position.getY() - (deltaChange.getY() / 2),
 			m_entityTransform->position.getZ());
 
+		float vertices[] = {
+			// Vertex data					  color data	 texture coordinates	         									
+			0, 0, 0.0f,						    1, 1, 1,         0,0,
+			0, m_size.getY(), 0.0f,				1, 1, 1,         0,1,
+			m_size.getX(), m_size.getY(), 0.0f,	1, 1, 1,		 1,1,
+			m_size.getX(), 0.0f, 0.0f,			1, 1, 1,         1,0
+		};
+
+		m_vertexArray->bind();
+		m_vertexBuffer->dataModified(vertices, sizeof(vertices));
 	}
 
 	void SpriteComponent::recolored()
 	{
+		float vertices[] = {
+			// Vertex data					  color data	 texture coordinates	         									
+			0, 0, 0.0f,						    1, 1, 1,         0,0,
+			0, m_size.getY(), 0.0f,				1, 1, 1,         0,1,
+			m_size.getX(), m_size.getY(), 0.0f,	1, 1, 1,		 1,1,
+			m_size.getX(), 0.0f, 0.0f,			1, 1, 1,         1,0
+		};
 
+		m_vertexArray->bind();
+		m_vertexBuffer->dataModified(vertices, sizeof(vertices));
 	}
 
 } }
