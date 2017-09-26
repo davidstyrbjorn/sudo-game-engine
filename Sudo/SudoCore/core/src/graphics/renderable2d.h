@@ -42,35 +42,16 @@ namespace sudo { namespace graphics {
 		ecs::Transform* GetEntityTransform() { return m_entityTransform; }
 
 		/* Sets m_size to a new specified size */
-		void SetSize(const math::Vector2 &a_newSize) { m_size = a_newSize; this->resized(); }
+		void SetSize(const math::Vector2 &a_newSize);
 
 		/* Sets m_color to a new color */
-		void SetColor(const math::Vector4 &a_newColor) { m_color = a_newColor; this->recolored(); }
+		void SetColor(const math::Vector4 &a_newColor);
 
 		/* Scales up m_size by orders of magnitude */
-		void SizeUp(const float a_magnitude) 
-		{ 
-			m_sizeBeforeReisze = m_size;
-			m_size = math::Vector2(m_size.getX() + a_magnitude, m_size.getY() + a_magnitude);
-			
-			/* Clamp the size of the renderable2d */
-			float x_size = m_size.getX();
-			float y_size = m_size.getY();
-			math::Math::ClampFloat(x_size, MAX_PIXEL_SIZE_X, MIN_PIXEL_SIZE_X);
-			math::Math::ClampFloat(y_size, MAX_PIXEL_SIZE_Y, MIN_PIXEL_SIZE_Y);
-
-			m_size = math::Vector2(x_size, y_size);
-
-			this->resized();
-		}
+		void SizeUp(const float a_magnitude);
 
 		/* Scales down m_size by orders of magnitude */
-		void SizeDown(const float a_magnitude) 
-		{ 
-			m_sizeBeforeReisze = m_size;
-			m_size = math::Vector2(m_size.getX() - a_magnitude, m_size.getY() - a_magnitude);
-			this->resized();
-		}
+		void SizeDown(const float a_magnitude);
 
 	protected:	
 		/* Renderable2D shared data */
@@ -81,6 +62,7 @@ namespace sudo { namespace graphics {
 		math::Vector2 m_sizeBeforeReisze;
 
 		/* Private Methods */
+		void resized_clamp();
 		virtual void resized() = 0;
 		virtual void recolored() = 0;
 

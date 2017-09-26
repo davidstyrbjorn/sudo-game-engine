@@ -5,6 +5,8 @@
 
 #include<type_traits>
 
+#include<string>
+
 #include"transform_component.h"
 
 namespace sudo { namespace ecs {
@@ -13,6 +15,7 @@ namespace sudo { namespace ecs {
 	private:
 		std::vector<Component*> m_components;  
 		char* m_name;
+		bool flag;
 
 	public:
 		Transform *transform;
@@ -33,10 +36,22 @@ namespace sudo { namespace ecs {
 		/* Adds a_component to the components list */
 		void AddComponent(Component *a_component);
 
+		// class sudo::ecs::class_name
 		/* Returns the component inside the components list with a_name */
 		template<typename TemplateClass>
 		TemplateClass* GetComponent(const char* a_name)
 		{
+			if (!flag) {
+				std::string _requestedComponentName = "";
+
+				for (int i = 0; i < strlen(typeid(TemplateClass).name()); i++) {
+					_requestedComponentName.append(std::to_string(typeid(TemplateClass).name()[i]));
+				}
+				std::cout << _requestedComponentName << std::endl;
+				flag = true;
+
+			}
+
 			// Look for component
 			for (unsigned int i = 0; i < m_components.size(); ++i) {
 				if (m_components[i]->GetName() == a_name) {
