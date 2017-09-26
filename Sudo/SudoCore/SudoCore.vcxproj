@@ -164,6 +164,7 @@
     <ClInclude Include="core\src\graphics\buffers\vertex_buffer.h" />
     <ClInclude Include="core\src\graphics\mesh.h" />
     <ClInclude Include="core\src\graphics\renderable2d.h" />
+    <ClInclude Include="core\src\math\math.h" />
     <ClInclude Include="core\src\math\vector4.h" />
     <ClInclude Include="core\src\sudo_class.h" />
     <ClInclude Include="core\src\core_settings.h" />

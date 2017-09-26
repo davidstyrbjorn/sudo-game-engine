@@ -39,12 +39,28 @@ namespace sudo { namespace math {
 		return Vector2(this->m_x*scalar, this->m_y*scalar);
 	}
 
+	unsigned char Vector2::operator>(const Vector2 & rhs)
+	{
+		if (GetMagnitude(*this) > GetMagnitude(rhs))
+			return true;
+		return false;
+	}
+
+	unsigned char Vector2::operator<(const Vector2 & rhs)
+	{
+		if (GetMagnitude(*this) < GetMagnitude(rhs))
+			return true;
+		return false;
+	}
+
 	Vector2 Vector2::operator=(const Vector2 &rhs)
 	{
 		this->m_x = rhs.m_x;
 		this->m_y = rhs.m_y;
 		return *this;
 	}
+
+	
 
 	Vector2 & Vector2::operator+=(const Vector2 & rhs)
 	{

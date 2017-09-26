@@ -3,6 +3,7 @@
 #include<iostream>
 #include<string>
 
+#include"src\math\math.h"
 #include"src\math\vector2.h"
 #include"src\math\vector3.h"
 #include"src\math\vector4.h"

@@ -4,6 +4,8 @@
 #include"../math/vector3.h"
 #include"../math/vector4.h"
 
+#include"../math/math.h"
+
 #include"../../definitions.h"
 
 // Forward decleration
@@ -50,6 +52,15 @@ namespace sudo { namespace graphics {
 		{ 
 			m_sizeBeforeReisze = m_size;
 			m_size = math::Vector2(m_size.getX() + a_magnitude, m_size.getY() + a_magnitude);
+			
+			/* Clamp the size of the renderable2d */
+			float x_size = m_size.getX();
+			float y_size = m_size.getY();
+			math::Math::ClampFloat(x_size, MAX_PIXEL_SIZE_X, MIN_PIXEL_SIZE_X);
+			math::Math::ClampFloat(y_size, MAX_PIXEL_SIZE_Y, MIN_PIXEL_SIZE_Y);
+
+			m_size = math::Vector2(x_size, y_size);
+
 			this->resized();
 		}
 

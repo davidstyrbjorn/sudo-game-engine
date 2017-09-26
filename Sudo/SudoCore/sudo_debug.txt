@@ -66,3 +66,9 @@ ERROR: 0:13: 'assign' :  cannot convert from 'const float' to 'FragUserData 4-co
 [Fri Sep 22 09:03](ERROR: )
 [Fri Sep 22 09:07](ERROR: )
 [Fri Sep 22 09:11](ERROR: )
+[Tue Sep 26 09:33](ERROR: ERROR: 0:20: 'delete' : undeclared identifier 
+
+)
+[Tue Sep 26 09:33](ERROR: ERROR: 0:20: 'delete' : undeclared identifier 
+
+)

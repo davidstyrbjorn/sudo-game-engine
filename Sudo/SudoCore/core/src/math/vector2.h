@@ -33,6 +33,9 @@ namespace sudo { namespace math {
 		Vector2 operator=(const Vector2& rhs);
 		Vector2 operator*(const float scalar);
 
+		unsigned char operator>(const Vector2 &rhs);
+		unsigned char operator<(const Vector2 &rhs);
+
 		Vector2& operator+=(const Vector2& rhs);
 		Vector2& operator-=(const Vector2& rhs);
 

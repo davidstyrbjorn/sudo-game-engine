@@ -1,8 +1,6 @@
 #include<iostream>
 #include"core\sudo.h"
 
-#include<vector>
-
 using namespace sudo;
 
 /* Sandbox for testing implemented features */
@@ -33,9 +31,11 @@ public:
 			sprite->GetComponent<ecs::RectangleComponent>("RectangleComponent")->SetColor(math::Vector4(0, 1, 1, 1));
 		if (input->GetKey("w"))
 			sprite->GetComponent<ecs::RectangleComponent>("RectangleComponent")->SetColor(math::Vector4(1, 1, 0, 1));
+		if (input->GetKey("c"))
+			sprite2->transform->Move(math::Vector3::Right() * 2);
 
-		if (input->GetKey("x"))
-			sprite->GetComponent<ecs::RectangleComponent>("RectangleComponent")->SizeUp(3);
+		printf(typeid(sprite).name);
+		//sprite->GetComponent<ecs::RectangleComponent>("")
 	}
 
 	void Start() 
