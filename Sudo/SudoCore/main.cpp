@@ -20,17 +20,17 @@ public:
 	void Update()
 	{
 		// Draw entity/s with renderer->Draw( );
-		renderer->Draw(sprite2->GetComponent<ecs::SpriteComponent>("SpriteComponent"));
-		renderer->Draw(sprite->GetComponent<ecs::RectangleComponent>("RectangleComponent"));
+		renderer->Draw(sprite2->GetComponent<ecs::SpriteComponent>() );
+		renderer->Draw(sprite->GetComponent<ecs::RectangleComponent>() );
 
 		if (input->GetKey("d"))
 			sprite->transform->Move(math::Vector3::Right() * 3);
 		if (input->GetKey("a"))
 			sprite->transform->Move(math::Vector3::Left() * 3);
 		if (input->GetKey("s"))
-			sprite->GetComponent<ecs::RectangleComponent>("RectangleComponent")->SetColor(math::Vector4(0, 1, 1, 1));
+			sprite->GetComponent<ecs::RectangleComponent>()->SetColor(math::Vector4(0, 1, 1, 1));
 		if (input->GetKey("w"))
-			sprite->GetComponent<ecs::RectangleComponent>("RectangleComponent")->SetColor(math::Vector4(1, 1, 0, 1));
+			sprite->GetComponent<ecs::RectangleComponent>()->SetColor(math::Vector4(1, 1, 0, 1));
 		if (input->GetKey("c"))
 			sprite2->transform->Move(math::Vector3::Right() * 2);
 	}
@@ -42,11 +42,8 @@ public:
 		sprite->AddComponent(new ecs::RectangleComponent(math::Vector2(200, 200), math::Vector4(1, 0, 0, 1)));
 		sprite->transform->Move(math::Vector3(350, 350, 0));
 
-		//std::cout << (typeid(*sprite->GetComponent<ecs::RectangleComponent>("RectangleComponent")).name()) << std::endl;
-		//std::cout << strlen(typeid(*sprite->GetComponent<ecs::RectangleComponent>("RectangleComponent")).name()) << std::endl;
-
 		sprite2 = new ecs::Entity("sprite2");
-		sprite2->AddComponent(new ecs::SpriteComponent("D:\\temp\\cat.png"));
+		sprite2->AddComponent(new ecs::SpriteComponent("C:\\temp\\cat.png"));
 
 		config->SetFPS(120);
 		config->SetBackgroundColor(math::Vector4(0.1, 0.1, 0.1, 1));

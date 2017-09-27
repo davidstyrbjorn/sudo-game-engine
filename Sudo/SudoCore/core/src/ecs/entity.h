@@ -15,7 +15,6 @@ namespace sudo { namespace ecs {
 	private:
 		std::vector<Component*> m_components;  
 		char* m_name;
-		bool flag;
 
 	public:
 		Transform *transform;
@@ -39,22 +38,21 @@ namespace sudo { namespace ecs {
 		// class sudo::ecs::class_name
 		/* Returns the component inside the components list with a_name */
 		template<typename TemplateClass>
-		TemplateClass* GetComponent(const char* a_name)
+		TemplateClass* GetComponent()
 		{
-			if (!flag) {
-				std::string _requestedComponentName = "";
-
-				for (int i = 0; i < strlen(typeid(TemplateClass).name()); i++) {
-					_requestedComponentName.append(std::to_string(typeid(TemplateClass).name()[i]));
+			// Getting component name from TemplateClass
+			std::string _componentName = "";
+			for (int i = 0; i < strlen(typeid(TemplateClass).name()); i++) {
+				// After 17 characters the namespace stuff is gone
+				if (i >= 17) {
+					_componentName += typeid(TemplateClass).name()[i];
 				}
-				std::cout << _requestedComponentName << std::endl;
-				flag = true;
-
 			}
 
 			// Look for component
 			for (unsigned int i = 0; i < m_components.size(); ++i) {
-				if (m_components[i]->GetName() == a_name) {
+				//std::cout << _componentName << " " << m_components[i]->GetName() << std::endl;
+				if (m_components[i]->GetName() == _componentName) {
 					// We found the component at index i inside the list
 					// Assert here to check if ComponentType is derived from Component base class
 					static_assert(std::is_base_of<Component, TemplateClass>::value, "Get Component in-argument ERROR!");
