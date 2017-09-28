@@ -7,13 +7,14 @@ namespace sudo { namespace ecs {
 
 	TriangleComponent::TriangleComponent(math::Vector2 & a_size, math::Vector4 &a_color)
 	{
-		// Setting component name, from component base class
+		// Name of the component
 		m_componentName = "TriangleComponent";
 
-		// Setting data inherited from Renderable2D base class
+		// Arbitary shape values
 		m_size = a_size;
 		m_color = a_color;
 
+		// Used when shading 
 		m_type = sudo::RenderableType::SHAPE;
 	}
 

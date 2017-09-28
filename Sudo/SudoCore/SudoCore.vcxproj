@@ -149,6 +149,7 @@
     <ClCompile Include="core\src\systems\settings_system.cpp" />
     <ClCompile Include="core\src\systems\world_system.cpp" />
     <ClCompile Include="core\src\utility\linked_list.cpp" />
+    <ClCompile Include="core\src\utility\string.cpp" />
     <ClCompile Include="core\src\utility\timer.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -177,6 +178,7 @@
     <ClInclude Include="core\src\systems\sudo_system.h" />
     <ClInclude Include="core\src\systems\world_system.h" />
     <ClInclude Include="core\src\utility\linked_list.h" />
+    <ClInclude Include="core\src\utility\string.h" />
     <ClInclude Include="src\core\core_engine_interface.h" />
     <ClInclude Include="core\src\sudo_core.h" />
     <ClInclude Include="core\src\systems\input_system.h" />

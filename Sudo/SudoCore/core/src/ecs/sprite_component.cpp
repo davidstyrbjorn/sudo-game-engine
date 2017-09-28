@@ -9,13 +9,19 @@ namespace sudo { namespace ecs {
 
 	SpriteComponent::SpriteComponent(char* a_imagePath)
 	{
+		// Name of the component
 		m_componentName = "SpriteComponent";
 
+		// Used when loading the image
 		m_imagePath = a_imagePath;
 
+		// m_size is set when loading the texture 
 		m_color = math::Vector4(1, 1, 1, 1);
 
+		// Used when shading
 		m_type = sudo::RenderableType::SPRITE;
+
+		
 	}
 
 	void SpriteComponent::Start()

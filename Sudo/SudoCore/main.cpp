@@ -2,6 +2,7 @@
 #include"core\sudo.h"
 
 using namespace sudo;
+using namespace utility;
 
 /* Sandbox for testing implemented features */
 class App : SudoClass {
@@ -37,6 +38,10 @@ public:
 
 	void Start() 
 	{
+		String tmp = "abc";
+		String tmp2 = "abc";
+		std::cout << tmp.at(3) << std::endl;
+
 		// Create shape entity, add rectangle component then change it's position
 		sprite = new ecs::Entity("sprite");
 		sprite->AddComponent(new ecs::RectangleComponent(math::Vector2(200, 200), math::Vector4(1, 0, 0, 1)));
