@@ -55,10 +55,11 @@ public:
 		std::cout << "Start done being called" << std::endl;
 	}
 };
-
+/*
 int main() 
 {
 	App* app = new App();
 
 	return EXIT_SUCCESS;
 }
+*/

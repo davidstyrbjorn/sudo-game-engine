@@ -152,6 +152,7 @@
     <ClCompile Include="core\src\utility\string.cpp" />
     <ClCompile Include="core\src\utility\timer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="pong.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\src\ecs\box_collider2D.h" />
