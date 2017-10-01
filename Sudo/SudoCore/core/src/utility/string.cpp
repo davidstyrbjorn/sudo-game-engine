@@ -38,7 +38,7 @@ namespace sudo { namespace utility {
 		m_characterData = a_characterData;
 	}
 
-	constexpr char * SudoString::get_data()
+	char * SudoString::get_data()
 	{
 		return m_characterData;
 	}

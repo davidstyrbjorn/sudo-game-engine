@@ -34,4 +34,6 @@ enum RenderableType {
 #define MAX_PIXEL_SIZE_Y 6000
 #define MIN_PIXEL_SIZE_Y 0
 
+#define DEFAULT_FPS_CAP 60
+
 }

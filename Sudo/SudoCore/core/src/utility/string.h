@@ -35,7 +35,7 @@ namespace sudo { namespace utility {
 		void assign(char* a_characterData);
 		
 		// brief\ returns the character data
-		constexpr char* get_data();
+		char* get_data();
 
 		// brief\ returns character at in-argument index
 		char at(int a_index) const;

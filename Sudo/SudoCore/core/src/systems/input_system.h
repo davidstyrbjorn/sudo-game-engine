@@ -4,6 +4,7 @@
 #include"sudo_system.h"
 
 #include<map>
+#include<memory>
 
 // Forward decleration
 namespace sudo {
@@ -22,7 +23,12 @@ namespace sudo { namespace system {
 		/* The Private instance */
 		static InputSystem *_instance;
 
+		/* Data members */
 		std::map<const char*, int> keyCodeToLiteral;
+		float m_windowShakeLength;
+		int m_windowShakeStrength;
+		int m_windowOrgX, m_windowOrgY;
+		bool m_doWindowShake;
 
 	public:
 		int m_keys[1024];
@@ -35,6 +41,7 @@ namespace sudo { namespace system {
 		static InputSystem *Instance();
 
 		/* Methods from the SudoSystem base class */
+		void Update() override;
 		void Enable() override;
 		void Disable() override;
 		void CleanUp() override;
@@ -47,6 +54,9 @@ namespace sudo { namespace system {
 		/* end-user static function */
 		/* Returns true if a_mouse_button is down */
 		bool IsMouseButtonPressed(int a_mouse_button);
+
+		/* Window shake function */
+		void WindowShake(float a_length, int a_intensity);
 
 		/* GLFW Callbacks */
 		friend static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);

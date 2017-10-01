@@ -2,24 +2,20 @@
 
 #include"../sudo.h"
 #include"../gl_include.h"
+#include"../definitions.h"
 
 namespace sudo { 
 
-graphics::Window & SudoCore::GetWindowPointer()
+SudoCore::SudoCore()
 {
-	return *m_window;
-}
 
-SudoCore::SudoCore(const math::Vector2& a_windowSize, char *a_windowCaption, SudoClass *a_engineInstance)
-{
-	glewInit();
-	glewExperimental = true;
-
-	init(a_windowSize, a_windowCaption, a_engineInstance);
 }
 
 void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, SudoClass *a_engineInstance)
 {
+	glewInit();
+	glewExperimental = true;
+
 	/* Setting the engine instance */
 	m_engineInstance = a_engineInstance;
 
@@ -33,7 +29,7 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	/* Settings system */
 	m_settingsSystem = system::SettingsSystem::Instance();
 	m_settingsSystem->Enable();
-	m_settingsSystem->SetFPS(60);
+	m_settingsSystem->SetFPS(DEFAULT_FPS_CAP);
 	m_settingsSystem->SetWindowSize(a_windowSize);
 	m_settingsSystem->SetBackgroundColor(math::Vector4(0, 0, 0, 1));
 
@@ -100,6 +96,8 @@ void SudoCore::game_loop()
 			/* Call the Update method for the end-user */
 			m_engineInstance->Update();
 
+			m_inputSystem->Update();
+
 			/* Render w/OpenGL */
 			m_renderSystem->Update();
 
@@ -110,4 +108,10 @@ void SudoCore::game_loop()
 		}
 	}
 }
+
+graphics::Window& SudoCore::GetWindow() 
+{
+	return *m_window;
+}
+
 }

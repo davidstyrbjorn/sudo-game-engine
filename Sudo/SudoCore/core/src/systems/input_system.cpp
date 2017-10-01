@@ -1,5 +1,7 @@
 #include "input_system.h"
 #include"../math/vector2.h"
+#include<time.h>
+#include<random>
 
 namespace sudo { namespace system {
 
@@ -12,8 +14,33 @@ namespace sudo { namespace system {
 		return _instance;
 	}
 
+	void InputSystem::Update()
+	{
+		/* Window Shake Code */
+		if (m_doWindowShake) {
+			// Get the window's new position values for this frame
+			std::random_device rd;
+			std::mt19937 gen(rd());
+			std::uniform_int_distribution<int> dis_x(-m_windowShakeStrength, m_windowShakeStrength);
+			std::uniform_int_distribution<int> dis_y(-m_windowShakeStrength, m_windowShakeStrength);
+			int _x = dis_x(gen);
+			int _y = dis_y(gen);
+
+			// Set the window's position accordingly
+			glfwSetWindowPos(glfwGetCurrentContext(), m_windowOrgX + _x, m_windowOrgY + _y);
+
+			// Decrease the length of the window shake (in frames) 
+			m_windowShakeLength--;
+			if (m_windowShakeLength <= 0) {
+				m_doWindowShake = false;
+				glfwSetWindowPos(glfwGetCurrentContext(), m_windowOrgX, m_windowOrgY);
+			}
+		}
+	}
+
 	void InputSystem::Enable()
 	{
+		srand(time(NULL));
 		populateKeyList();
 
 		/* Set the GLFW callbacks */
@@ -56,6 +83,14 @@ namespace sudo { namespace system {
 		if (m_mouseKeys[a_mouse_button] == GLFW_PRESS || m_mouseKeys[a_mouse_button] == GLFW_REPEAT)
 			return true;
 		return false;
+	}
+
+	void InputSystem::WindowShake(float a_length, int a_intensity)
+	{
+		m_doWindowShake = true;
+		m_windowShakeLength = a_length;
+		m_windowShakeStrength = a_intensity;
+		glfwGetWindowPos(glfwGetCurrentContext(), &m_windowOrgX, &m_windowOrgY);
 	}
 
 	void key_callback(GLFWwindow * window, int key, int scancode, int action, int mods)

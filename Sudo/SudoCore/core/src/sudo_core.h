@@ -25,8 +25,8 @@ namespace sudo {
 		/* ======================================================================= */
 		/* ======================> CORE ENGINE DATA <============================= */
 		/* ======================================================================= */
-		graphics::Window *m_window;
 		SudoClass *m_engineInstance;
+		graphics::Window *m_window;
 
 		/* Systems */
 		system::InputSystem		*m_inputSystem;
@@ -39,10 +39,6 @@ namespace sudo {
 		/* ======================================================================= */
 		/* ======================> CORE ENGINE METHODS <========================== */
 		/* ======================================================================= */
-		/* init method is called from constructor */
-		/* takes in all necc data to create a engine instance */
-		void init(const math::Vector2& a_windowSize, char* a_windowCaption, SudoClass *a_engineInstance);
-
 		/* Does the necc clean up */
 		void clean_up();
 		
@@ -53,14 +49,14 @@ namespace sudo {
 		/* Destructor */
 		~SudoCore() { clean_up(); }
 
-		/* Get Window Pointer */
-		graphics::Window& GetWindowPointer();
+		/* Returns the reference adress to the window object */
+		graphics::Window &GetWindow();
+
+		/* takes in all required data and instances the engine */
+		void init(const math::Vector2& a_windowSize, char* a_windowCaption, SudoClass *a_engineInstance);
 
 		/* Default Constructor */
 		SudoCore(
-			const math::Vector2& a_windowSize, 
-			char *a_windowCaption,
-			SudoClass *a_engineInstance
 		);
 	};
 

@@ -62,6 +62,7 @@ void sudo::graphics::Window::close()
 
 void sudo::graphics::Window::setWindowPos(const math::Vector2 & a_pos)
 {
+	std::cout << "Change Window Position" << std::endl;
 	glfwSetWindowPos(this->m_window, a_pos.getX(), a_pos.getY());
 }
 
