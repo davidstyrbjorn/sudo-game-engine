@@ -2,34 +2,48 @@
 
 namespace sudo { namespace utility {
 
-	String String::operator=(const char * rhs)
+	SudoString SudoString::operator=(const char * rhs)
 	{
-		String temp;
+		SudoString temp;
 		temp.assign((char*)rhs);
 		return temp;
 	}
 
-	String String::operator+=(const char * rhs)
+	SudoString SudoString::operator+(const char * rhs)
 	{
-		return String(this->m_characterData+rhs);
+		SudoString newString(this->m_characterData);
+
+		// Loo through rhs and add all of it's characters to the newString
+		for (int i = 0; i < strlen(rhs); i++) {
+			newString.m_characterData += rhs[i];
+		}
+
+		return newString;
 	}
 
-	String String::operator+=(const String & rhs)
+	SudoString SudoString::operator+(const SudoString &rhs)
 	{
-		return String(get_data() + rhs.get_data());
+		SudoString newString(this->m_characterData);
+
+		// Loop through rhs and add all of it's characters to the newString
+		for (int i = 0; i < rhs.length(); i++) {
+			newString.m_characterData += rhs.at(i);
+		}
+
+		return newString;
 	}
 
-	void String::assign(char * a_characterData)
+	void SudoString::assign(char * a_characterData)
 	{
 		m_characterData = a_characterData;
 	}
 
-	constexpr char * String::get_data()
+	constexpr char * SudoString::get_data()
 	{
 		return m_characterData;
 	}
 
-	char String::at(int a_index) const
+	char SudoString::at(int a_index) const
 	{
 		for (int i = 0; i < length(); i++) {
 			if (i == a_index) {
@@ -40,12 +54,12 @@ namespace sudo { namespace utility {
 		return ' ';
 	}
 
-	uint String::length() const
+	uint SudoString::length() const
 	{
 		return strlen(m_characterData);
 	}
 
-	std::ostream & utility::operator<<(std::ostream & os, String & other)
+	std::ostream & utility::operator<<(std::ostream & os, SudoString & other)
 	{
 		os << other.get_data();
 		return os;

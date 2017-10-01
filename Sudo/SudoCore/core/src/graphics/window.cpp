@@ -60,6 +60,11 @@ void sudo::graphics::Window::close()
 	glfwDestroyWindow(m_window);
 }
 
+void sudo::graphics::Window::setWindowPos(const math::Vector2 & a_pos)
+{
+	glfwSetWindowPos(this->m_window, a_pos.getX(), a_pos.getY());
+}
+
 /* GLFW Callback Functions */
 void sudo::graphics::window_size_callback(GLFWwindow * window, int width, int height)
 {

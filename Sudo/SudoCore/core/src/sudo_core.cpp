@@ -3,9 +3,13 @@
 #include"../sudo.h"
 #include"../gl_include.h"
 
-#include<time.h>
+namespace sudo { 
 
-namespace sudo{
+graphics::Window & SudoCore::GetWindowPointer()
+{
+	return *m_window;
+}
+
 SudoCore::SudoCore(const math::Vector2& a_windowSize, char *a_windowCaption, SudoClass *a_engineInstance)
 {
 	glewInit();

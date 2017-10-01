@@ -38,9 +38,7 @@ public:
 
 	void Start() 
 	{
-		String tmp = "abc";
-		String tmp2 = "abc";
-		std::cout << tmp.at(3) << std::endl;
+		coreEngine->GetWindowPointer().setWindowPos(math::Vector2(100, 100));
 
 		// Create shape entity, add rectangle component then change it's position
 		sprite = new ecs::Entity("sprite");

@@ -53,6 +53,9 @@ namespace sudo {
 		/* Destructor */
 		~SudoCore() { clean_up(); }
 
+		/* Get Window Pointer */
+		graphics::Window& GetWindowPointer();
+
 		/* Default Constructor */
 		SudoCore(
 			const math::Vector2& a_windowSize, 

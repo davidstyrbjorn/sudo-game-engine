@@ -80,18 +80,17 @@ namespace sudo { namespace math {
 		return result;
 	}
 
-	/*
-	mat4 mat4::rotation(float angle, const Vector3& axis) {
-		mat4 result(1.0f);
+	Matrix4x4 Matrix4x4::Rotation(float angle, const Vector3& axis) {
+		Matrix4x4 result(1.0f);
 
-		float r = roRadions(angle);
+		float r = (angle);
 		float c = cos(r);
 		float s = sin(r);
 		float omc = 1.0f - c;
 
-		float x = axis.x;
-		float y = axis.y;
-		float z = axis.z;
+		float x = axis.getX();
+		float y = axis.getY();
+		float z = axis.getZ();
 
 		result.elements[0 + 0 * 4] = x * omc + c;
 		result.elements[1 + 0 * 4] = y * x * omc + z * s;
@@ -107,7 +106,6 @@ namespace sudo { namespace math {
 
 		return result;
 	}
-	*/
 
 	Matrix4x4 operator*(Matrix4x4 left, const Matrix4x4& right) {
 		return left.multiply(right);

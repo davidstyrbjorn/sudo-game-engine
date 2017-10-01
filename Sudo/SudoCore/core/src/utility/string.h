@@ -5,29 +5,29 @@
 
 namespace sudo { namespace utility { 
 
-	class String {
+	class SudoString {
 	private:
 		char* m_characterData;
 
 	public:
 		/* Constructors */
-		String() { }
-		String(const char* a_characterData) : m_characterData((char*)a_characterData) { }
+		SudoString() { }
+		SudoString(const char* a_characterData) : m_characterData((char*)a_characterData) { }
 
 		/* Operator Overloading */
-		String operator=(const char* rhs);
-		inline bool operator==(String& rhs)
+		SudoString operator=(const char* rhs);
+		inline bool operator==(SudoString& rhs)
 		{
 			return (rhs.get_data() == this->get_data());
 		}
-		inline bool operator!=(String& rhs)
+		inline bool operator!=(SudoString& rhs)
 		{
 			return !operator==(rhs);
 		}
-		friend std::ostream& operator<<(std::ostream &os, String &other);
+		friend std::ostream& operator<<(std::ostream &os, SudoString &other);
 
-		String operator+=(const char* rhs);
-		String operator+=(const String &rhs);
+		SudoString operator+(const char* rhs);
+		SudoString operator+(const SudoString &rhs);
 
 		/* Public Member Functions */
 

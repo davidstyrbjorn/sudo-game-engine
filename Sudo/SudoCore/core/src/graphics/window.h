@@ -4,6 +4,7 @@
 #include"graphics_framework.h"   
 
 #include"../math/vector3.h"
+#include"../math/vector2.h"
 
 namespace sudo {
 	namespace system {
@@ -26,6 +27,8 @@ namespace sudo { namespace graphics {
 
 		bool is_open() override;
 		void close() override;
+
+		void setWindowPos(const math::Vector2& a_pos);
 
 	private:
 		/* Window Private Data */
