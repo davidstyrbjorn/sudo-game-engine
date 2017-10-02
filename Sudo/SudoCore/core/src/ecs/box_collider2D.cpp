@@ -6,12 +6,36 @@ namespace sudo { namespace ecs {
 	BoxCollider2D::BoxCollider2D()
 	{
 		m_componentName = "BoxCollider2D";
+
+		// Default box collider values 
+		m_keepInBounds = false;
 	}
 	
-	void BoxCollider2D::Update() { }
+	void BoxCollider2D::Update() 
+	{
+		// Should the box collider be kept inside the bounds of the screen?
+		if (m_keepInBounds) {
+			// X
+			if (m_entityHolder->transform->position.getX() + m_bounds.getX() >= m_settingsSystem->GetWindowSize().getX()) {
+				m_entityHolder->transform->position.setX(m_settingsSystem->GetWindowSize().getX() - m_bounds.getX());
+			}
+			if (m_entityHolder->transform->position.getX() <= 0) {
+				m_entityHolder->transform->position.setX(0);
+			}
+			// Y
+			if (m_entityHolder->transform->position.getY() + m_bounds.getY() >= m_settingsSystem->GetWindowSize().getY()) {
+				m_entityHolder->transform->position.setY(m_settingsSystem->GetWindowSize().getY() - m_bounds.getY());
+			}
+			if (m_entityHolder->transform->position.getY() <= 0) {
+				m_entityHolder->transform->position.setY(0);
+			}
+		}
+	}
 
 	void BoxCollider2D::Start() 
 	{
+		m_settingsSystem = system::SettingsSystem::Instance();
+
 		/* Get the Renderable2D component attatched to m_entityHolder */
 		for (int i = 0; i < m_entityHolder->GetComponentList().size(); i++) {
 			if (dynamic_cast<graphics::Renderable2D*>(m_entityHolder->GetComponentList()[i]) != nullptr) {
@@ -55,6 +79,7 @@ namespace sudo { namespace ecs {
 	{
 		// Important that the box colliders data is good before we check for collisions
 		dataMatch();
+		a_other.dataMatch();
 
 		if ((m_origin.getX() + m_bounds.getX()) >= (a_other.GetOrigin().getX())) {
 			if (m_origin.getX() <= (a_other.GetOrigin().getX() + a_other.GetBounds().getX())) {
@@ -66,6 +91,11 @@ namespace sudo { namespace ecs {
 			}
 		}
 		return false;
+	}
+
+	void BoxCollider2D::SetKeepInBounds(const bool a_value)
+	{
+		m_keepInBounds = a_value;
 	}
 
 	math::Vector2  BoxCollider2D::GetOrigin()

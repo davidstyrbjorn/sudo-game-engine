@@ -9,6 +9,9 @@ namespace sudo {
 	namespace graphics {
 		class Renderable2D;
 	}
+	namespace system {
+		class SettingsSystem;
+	}
 }
 
 namespace sudo { namespace ecs {
@@ -18,6 +21,9 @@ namespace sudo { namespace ecs {
 		// <===========> PRIVATE DATA <===========> //
 		math::Vector2 m_origin, m_bounds;
 		graphics::Renderable2D *m_entityRenderableComponent;
+
+		bool m_keepInBounds;
+		system::SettingsSystem *m_settingsSystem;
 
 		void dataMatch();
 
@@ -35,6 +41,9 @@ namespace sudo { namespace ecs {
 
 		/* Returns true is this bounding box is in contact with a_other */
 		const unsigned char Intersects(BoxCollider2D &a_other);
+
+		/* Sets m_keepInBounds */
+		void SetKeepInBounds(const bool a_value);
 
 		/* Getters */
 		math::Vector2 GetOrigin();
