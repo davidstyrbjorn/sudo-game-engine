@@ -54,7 +54,7 @@ private:
 	ecs::BoxCollider2D *left, *right, *ball;
 
 	float ball_x_change, ball_y_change;
-	const float BALL_SPEED = 7.5f;
+	const float BALL_SPEED = 5.0f;
 
 	const int WIDTH = 800;
 	const int HEIGHT = 600;
@@ -70,7 +70,7 @@ public:
 		state = GameStates::MENU;
 
 		backgroundMenu = new ecs::Entity("backgroundMenu");
-		backgroundMenu->AddComponent(new ecs::SpriteComponent("C:\\SudoGameEngine\\images\\_pong_assets\\title_screen_texture.png"));
+		backgroundMenu->AddComponent(new ecs::SpriteComponent("D:\\SudoGameEngine\\images\\_pong_assets\\title_screen_texture.png"));
 		
 		// Left Paddle
 		leftPaddle = new ecs::Entity("leftPaddle");
@@ -147,6 +147,10 @@ public:
 
 			// Shake window
 			input->WindowShake(30, 4);
+
+			// Change background color
+			srand(time(NULL));
+			config->SetBackgroundColor(math::Vector4(rand() & 1 + 1, rand() & 1 + 1, rand() & 1 + 1, 0));
 		}
 
 		// Vertical walls collision
