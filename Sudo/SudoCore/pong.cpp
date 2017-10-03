@@ -59,6 +59,9 @@ private:
 	const int WIDTH = 800;
 	const int HEIGHT = 600;
 
+	int leftScore, rightScore;
+	utility::Timer gameClock;
+
 public:
 	Game()
 	{
@@ -70,7 +73,7 @@ public:
 		state = GameStates::MENU;
 
 		backgroundMenu = new ecs::Entity("backgroundMenu");
-		backgroundMenu->AddComponent(new ecs::SpriteComponent("D:\\SudoGameEngine\\images\\_pong_assets\\title_screen_texture.png"));
+		backgroundMenu->AddComponent(new ecs::SpriteComponent("C:\\SudoGameEngine\\images\\_pong_assets\\title_screen_texture.png"));
 		
 		// Left Paddle
 		leftPaddle = new ecs::Entity("leftPaddle");
@@ -93,7 +96,7 @@ public:
 		// Ball
 		ballEntity = new ecs::Entity("ball");
 		ballEntity->AddComponent(new ecs::RectangleComponent(math::Vector2(20, 20), math::Vector4(1, 1, 0, 1)));
-		ballEntity->transform->position = math::Vector3((800 / 2) - 10, 10, 0);
+		ballEntity->transform->position = math::Vector3((800 / 2) - 10, (600/2) - 10, 0);
 		ballEntity->AddComponent(new ecs::BoxCollider2D());
 		ball = ballEntity->GetComponent<ecs::BoxCollider2D>();
 
@@ -106,8 +109,9 @@ public:
 		if (state == GameStates::MENU) 
 		{
 			// Input for start
-			if (input->GetKeyDown("x"))
-				state = GameStates::PLAYING;
+			if (input->GetKeyDown("x")) {
+				this->StartGame();
+			}
 
 			// Draw stuff
 			renderer->Draw(backgroundMenu->GetComponent<ecs::SpriteComponent>());
@@ -136,9 +140,22 @@ public:
 		leftPaddle->transform->position = math::Vector3(30, 0, 0);
 	}
 
+	void StartGame()
+	{
+		state = GameStates::PLAYING;
+
+		// Reset and start game clock
+		gameClock.Reset();
+		gameClock.Start();
+
+		// Ball Position
+		ballEntity->transform->position = math::Vector3((800 / 2) - 10, 10, 0);
+	}
+
 	void BallLogic() 
 	{
-		ballEntity->transform->Move(math::Vector3(ball_x_change, ball_y_change, 0));
+		if(gameClock.GetTicks() >= 1000)
+			ballEntity->transform->Move(math::Vector3(ball_x_change, ball_y_change, 0));
 
 		// Ball to paddle 
 		if (ball->Intersects(*right) || ball->Intersects(*left)) {
@@ -150,7 +167,7 @@ public:
 
 			// Change background color
 			srand(time(NULL));
-			config->SetBackgroundColor(math::Vector4(rand() & 1 + 1, rand() & 1 + 1, rand() & 1 + 1, 0));
+			config->SetBackgroundColor(0);
 		}
 
 		// Vertical walls collision
@@ -163,9 +180,11 @@ public:
 	}
 };
 
+/*
 int main()
 {
 	Game* game = new Game();
 
 	return 0;
 }
+*/

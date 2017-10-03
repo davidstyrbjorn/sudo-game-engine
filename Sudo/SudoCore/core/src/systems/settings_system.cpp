@@ -41,6 +41,11 @@ namespace sudo { namespace system {
 		m_backgroundColor = a_newBackgroundColor;
 	}
 
+	void SettingsSystem::SetBackgroundColor(const double a_newBackgroundColor)
+	{
+		m_backgroundColor = math::Vector4(a_newBackgroundColor, a_newBackgroundColor,a_newBackgroundColor,1);
+	}
+
 	void SettingsSystem::SetFPS(const unsigned int a_newFPS) 
 	{
 		m_fps = a_newFPS;

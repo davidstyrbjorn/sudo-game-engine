@@ -41,25 +41,25 @@ public:
 
 	void Start() override
 	{
+		SudoString temp = "Hello String";
+		std::cout << (temp + "dw") << std::endl;
+
 		// Create shape entity, add rectangle component then change it's position
 		sprite = new ecs::Entity("sprite");
 		sprite->AddComponent(new ecs::RectangleComponent(math::Vector2(200, 200), math::Vector4(1, 0, 0, 1)));
 		sprite->transform->Move(math::Vector3(350, 350, 0));
 
 		sprite2 = new ecs::Entity("sprite2");
-		sprite2->AddComponent(new ecs::SpriteComponent("D:\\temp\\sample.jpg"));
+		sprite2->AddComponent(new ecs::SpriteComponent("C:\\temp\\cat.png"));
 
 		config->SetFPS(120);
 		config->SetBackgroundColor(math::Vector4(0.1, 0.1, 0.1, 1));
-
-		std::cout << "Start done being called" << std::endl;
 	}
 };
-/*
+
 int main() 
 {
 	App* app = new App();
 
 	return EXIT_SUCCESS;
 }
-*/
