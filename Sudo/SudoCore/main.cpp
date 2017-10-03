@@ -57,7 +57,7 @@ public:
 	}
 };
 
-int main() 
+int _main() 
 {
 	App* app = new App();
 

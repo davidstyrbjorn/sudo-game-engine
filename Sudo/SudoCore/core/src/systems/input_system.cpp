@@ -1,7 +1,6 @@
 #include "input_system.h"
-#include"../math/vector2.h"
+#include"../../sudo.h"
 #include<time.h>
-#include<random>
 
 namespace sudo { namespace system {
 
@@ -19,12 +18,8 @@ namespace sudo { namespace system {
 		/* Window Shake Code */
 		if (m_doWindowShake) {
 			// Get the window's new position values for this frame
-			std::random_device rd;
-			std::mt19937 gen(rd());
-			std::uniform_int_distribution<int> dis_x(-m_windowShakeStrength, m_windowShakeStrength);
-			std::uniform_int_distribution<int> dis_y(-m_windowShakeStrength, m_windowShakeStrength);
-			int _x = dis_x(gen);
-			int _y = dis_y(gen);
+			int _x = utility::SudoRandomNumber::GetRandomNumber<int>(-m_windowShakeStrength, m_windowShakeStrength);
+			int _y = utility::SudoRandomNumber::GetRandomNumber<int>(-m_windowShakeStrength, m_windowShakeStrength);
 
 			// Set the window's position accordingly
 			glfwSetWindowPos(glfwGetCurrentContext(), m_windowOrgX + _x, m_windowOrgY + _y);

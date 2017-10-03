@@ -73,7 +73,7 @@ public:
 		state = GameStates::MENU;
 
 		backgroundMenu = new ecs::Entity("backgroundMenu");
-		backgroundMenu->AddComponent(new ecs::SpriteComponent("C:\\SudoGameEngine\\images\\_pong_assets\\title_screen_texture.png"));
+		backgroundMenu->AddComponent(new ecs::SpriteComponent("D:\\SudoGameEngine\\images\\_pong_assets\\title_screen_texture.png"));
 		
 		// Left Paddle
 		leftPaddle = new ecs::Entity("leftPaddle");
@@ -88,14 +88,14 @@ public:
 		rightPaddle = new ecs::Entity("rightPaddle");
 		rightPaddle->transform->position = math::Vector3(800 - 25 - 30, 0, 0);
 		rightPaddle->AddComponent(new PaddleComponent("up", "down"));
-		rightPaddle->AddComponent(new ecs::RectangleComponent(math::Vector2(10, 100), math::Vector4(0, 1, 1, 1)));
+		rightPaddle->AddComponent(new ecs::RectangleComponent(math::Vector2(10, 100), math::Vector4(0, 1, 0, 1)));
 		rightPaddle->AddComponent(new ecs::BoxCollider2D());
 		rightPaddle->GetComponent<ecs::BoxCollider2D>()->SetKeepInBounds(true);
 		right = rightPaddle->GetComponent<ecs::BoxCollider2D>();
 
 		// Ball
 		ballEntity = new ecs::Entity("ball");
-		ballEntity->AddComponent(new ecs::RectangleComponent(math::Vector2(20, 20), math::Vector4(1, 1, 0, 1)));
+		ballEntity->AddComponent(new ecs::RectangleComponent(math::Vector2(20, 20), math::Vector4(0, 0, 1, 1)));
 		ballEntity->transform->position = math::Vector3((800 / 2) - 10, (600/2) - 10, 0);
 		ballEntity->AddComponent(new ecs::BoxCollider2D());
 		ball = ballEntity->GetComponent<ecs::BoxCollider2D>();
@@ -127,6 +127,10 @@ public:
 			// Ball Logic
 			this->BallLogic();
 
+			config->SetBackgroundColor(
+				math::Vector4(sinf(gameClock.GetTicks()*0.001f), sinf(gameClock.GetTicks() * 0.0005f), 0, 1)
+			);
+
 			// Draw stuff
 			renderer->Draw(leftPaddle->GetComponent<ecs::RectangleComponent>());
 			renderer->Draw(rightPaddle->GetComponent<ecs::RectangleComponent>());			
@@ -149,7 +153,7 @@ public:
 		gameClock.Start();
 
 		// Ball Position
-		ballEntity->transform->position = math::Vector3((800 / 2) - 10, 10, 0);
+		ballEntity->transform->position = math::Vector3((800 / 2) - 10, (600 / 2) - 10, 0);
 	}
 
 	void BallLogic() 
@@ -164,10 +168,6 @@ public:
 
 			// Shake window
 			input->WindowShake(30, 4);
-
-			// Change background color
-			srand(time(NULL));
-			config->SetBackgroundColor(0);
 		}
 
 		// Vertical walls collision
@@ -180,11 +180,9 @@ public:
 	}
 };
 
-/*
 int main()
 {
 	Game* game = new Game();
 
 	return 0;
 }
-*/
