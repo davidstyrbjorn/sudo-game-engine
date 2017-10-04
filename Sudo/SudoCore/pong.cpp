@@ -1,4 +1,5 @@
 #include"core\sudo.h"
+#include<process.h>
 
 using namespace sudo;
 
@@ -59,7 +60,7 @@ private:
 	const int WIDTH = 800;
 	const int HEIGHT = 600;
 
-	int leftScore, rightScore;
+	int leftScore = 0, rightScore = 0;
 	utility::Timer gameClock;
 
 public:
@@ -73,7 +74,7 @@ public:
 		state = GameStates::MENU;
 
 		backgroundMenu = new ecs::Entity("backgroundMenu");
-		backgroundMenu->AddComponent(new ecs::SpriteComponent("D:\\SudoGameEngine\\images\\_pong_assets\\title_screen_texture.png"));
+		backgroundMenu->AddComponent(new ecs::SpriteComponent("C:\\SudoGameEngine\\images\\_pong_assets\\title_screen_texture.png"));
 		
 		// Left Paddle
 		leftPaddle = new ecs::Entity("leftPaddle");
@@ -176,6 +177,35 @@ public:
 		}
 		if (ballEntity->transform->position.getY() + 20 > HEIGHT) {
 			ball_y_change *= -1;
+		}
+
+		// Horizontal wall out of bounds
+		if (ballEntity->transform->position.getX() > WIDTH) {
+			// Left Score
+			leftScore++;
+
+			// Reset game clock and ball position
+			gameClock.Reset();
+			ballEntity->transform->position = math::Vector3((800 / 2) - 10, (600 / 2) - 10, 0);
+
+			// Print score
+			std::cout << "<=== SCORE ===>" << std::endl;
+			std::cout << "Left: " << leftScore << std::endl;
+			std::cout << "Right: " << rightScore << std::endl;
+		}
+		if (ballEntity->transform->position.getX() < -10) {
+			// Right Score
+			rightScore++;
+
+			// Reset game clock and ball position
+			gameClock.Reset();
+			ballEntity->transform->position = math::Vector3((800 / 2) - 10, (600 / 2) - 10, 0);
+
+			// Print score
+			_wsystem("cls");
+			std::cout << "<=== SCORE ===>" << std::endl;
+			std::cout << "Left: " << leftScore << std::endl;
+			std::cout << "Right: " << rightScore << std::endl;
 		}
 	}
 };
