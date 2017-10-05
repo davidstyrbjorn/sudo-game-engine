@@ -1,4 +1,6 @@
 #include "settings_system.h"
+#include"../../gl_include.h"
+#include"../../sudo.h"
 
 namespace sudo { namespace sudo_system {
 
@@ -44,6 +46,11 @@ namespace sudo { namespace sudo_system {
 	void SettingsSystem::SetBackgroundColor(const double a_newBackgroundColor)
 	{
 		m_backgroundColor = math::Vector4(a_newBackgroundColor, a_newBackgroundColor,a_newBackgroundColor,1);
+	}
+
+	void SettingsSystem::SetWindowCaption(const char* a_newCaption)
+	{
+		glfwSetWindowTitle(glfwGetCurrentContext(), a_newCaption);
 	}
 
 	void SettingsSystem::SetFPS(const unsigned int a_newFPS) 

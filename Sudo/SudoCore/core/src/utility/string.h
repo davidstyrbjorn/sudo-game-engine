@@ -20,6 +20,10 @@ namespace sudo { namespace utility {
 		{
 			return (rhs.get_data() == this->get_data());
 		}
+		inline bool operator==(const char* rhs) 
+		{
+			return (rhs == this->get_data());
+		}
 		inline bool operator!=(SudoString& rhs)
 		{
 			return !operator==(rhs);

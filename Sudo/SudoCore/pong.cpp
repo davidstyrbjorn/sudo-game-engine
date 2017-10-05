@@ -8,7 +8,7 @@ private:
 	char *upKey, *downKey;
 	sudo_system::InputSystem *input;
 
-	const int SPEED = 10;
+	const int SPEED = 13;
 
 public:
 	PaddleComponent(char* _upKey, char* _downKey) {
@@ -58,6 +58,7 @@ private:
 
 	const int WIDTH = 800;
 	const int HEIGHT = 600;
+	const float SPEED_INCREASE = 0.5f;
 
 	int leftScore = 0, rightScore = 0;
 	utility::Timer gameClock;
@@ -73,7 +74,7 @@ public:
 		state = GameStates::MENU;
 
 		backgroundMenu = new ecs::Entity("backgroundMenu");
-		backgroundMenu->AddComponent(new ecs::SpriteComponent("C:\\SudoGameEngine\\images\\_pong_assets\\title_screen_texture.png"));
+		backgroundMenu->AddComponent(new ecs::SpriteComponent("D:\\SudoGameEngine\\images\\_pong_assets\\title_screen_texture.png"));
 		
 		// Left Paddle
 		leftPaddle = new ecs::Entity("leftPaddle");
@@ -102,6 +103,8 @@ public:
 
 		ball_x_change = BALL_SPEED;
 		ball_y_change = BALL_SPEED;
+
+		config->SetFPS(120);
 	}
 
 	void Update()
@@ -127,9 +130,7 @@ public:
 			// Ball Logic
 			this->BallLogic();
 
-			config->SetBackgroundColor(
-				math::Vector4(sinf(gameClock.GetTicks()*0.001f), sinf(gameClock.GetTicks() * 0.0005f), 0, 1)
-			);
+			config->SetBackgroundColor(math::Vector4(sinf(gameClock.GetTicks()*0.0005f), sinf(gameClock.GetTicks() * 0.0005f), 0, 1));
 
 			// Draw stuff
 			renderer->Draw(leftPaddle->GetComponent<ecs::RectangleComponent>());
@@ -140,8 +141,16 @@ public:
 
 	void ResetAfterGame() 
 	{
+		gameClock.Stop();
+
 		rightPaddle->transform->position = math::Vector3(800 - 25 - 30, 0, 0);
 		leftPaddle->transform->position = math::Vector3(30, 0, 0);
+
+		leftScore = 0;
+		rightScore = 0;
+
+		ball_x_change = BALL_SPEED;
+		ball_y_change = BALL_SPEED;
 	}
 
 	void StartGame()
@@ -162,12 +171,11 @@ public:
 			ballEntity->transform->Move(math::Vector3(ball_x_change, ball_y_change, 0));
 
 		// Ball to paddle 
-		if (ball->Intersects(*right) || ball->Intersects(*left)) {
-			// Make the ball bounce
-			ball_x_change *= -1;
-
-			// Shake window
-			input->WindowShake(30, 4);
+		if (ball->Intersects(*right)) {
+			BallPaddleCollision("right");
+		}
+		if (ball->Intersects(*left)) {
+			BallPaddleCollision("left");
 		}
 
 		// Vertical walls collision
@@ -187,11 +195,18 @@ public:
 			gameClock.Reset();
 			ballEntity->transform->position = math::Vector3((800 / 2) - 10, (600 / 2) - 10, 0);
 
-			// Print score
-			system("cls");
-			std::cout << "<=== SCORE ===>" << std::endl;
-			std::cout << "Left: " << leftScore << std::endl;
-			std::cout << "Right: " << rightScore << std::endl;
+			// Reset ball 
+			ball_x_change = BALL_SPEED;
+			ball_y_change = BALL_SPEED;
+
+			// Score
+			std::string temp = std::string("Left: ") + std::string(std::to_string(leftScore)) + std::string(" Right: " ) + std::string(std::to_string(rightScore));
+			config->SetWindowCaption(temp.c_str());
+
+			if (leftScore == 5 || rightScore == 5) {
+				state = GameStates::MENU;
+				ResetAfterGame();
+			}
 		}
 		if (ballEntity->transform->position.getX() < -10) {
 			// Right Score
@@ -201,11 +216,46 @@ public:
 			gameClock.Reset();
 			ballEntity->transform->position = math::Vector3((800 / 2) - 10, (600 / 2) - 10, 0);
 
+			// Reset ball 
+			ball_x_change = BALL_SPEED;
+			ball_y_change = BALL_SPEED;
+
 			// Print score
 			system("cls");
 			std::cout << "<=== SCORE ===>" << std::endl;
 			std::cout << "Left: " << leftScore << std::endl;
 			std::cout << "Right: " << rightScore << std::endl;
+
+			if (leftScore == 5 || rightScore == 5) {
+				state = GameStates::MENU;
+				ResetAfterGame();
+			}
+		}
+	}
+
+	void BallPaddleCollision(utility::SudoString paddle) 
+	{
+		// Shake window
+		input->WindowShake(30, 4);
+
+		// Make the ball bounce
+		ball_x_change *= -1;
+
+		if (paddle == "left") 
+		{
+			// Increase ball speed
+			ball_x_change += SPEED_INCREASE;
+
+			float distanceToMiddle = ((leftPaddle->transform->position.getY()+50) - (ballEntity->transform->position.getY()+10));
+			ball_y_change += (distanceToMiddle/10)*-1;
+		}
+		if (paddle == "right") 
+		{
+			// Increase ball speed
+			ball_x_change -= SPEED_INCREASE;
+
+			float distanceToMiddle = ((rightPaddle->transform->position.getY()+50) - (ballEntity->transform->position.getY()+10));
+			ball_y_change += (distanceToMiddle/10)*-1;
 		}
 	}
 };

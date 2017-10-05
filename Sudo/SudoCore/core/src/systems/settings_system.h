@@ -5,6 +5,11 @@
 #include"../math/vector2.h"
 #include"../math/vector4.h"
 
+namespace sudo {
+	namespace utility {
+		class SudoString;
+} }
+
 namespace sudo { namespace sudo_system {
 
 	class SettingsSystem : SudoSystem {
@@ -47,6 +52,8 @@ namespace sudo { namespace sudo_system {
 		/* Sets window background color */
 		void SetBackgroundColor(const math::Vector4& a_newBackgroundColor);
 		void SetBackgroundColor(const double a_newBackgroundColor);
+
+		void SetWindowCaption(const char* a_newCaption);
 
 		/* Sets m_fps to a new value */
 		void SetFPS(const unsigned int a_newFPS);
