@@ -1,5 +1,4 @@
 #include"core\sudo.h"
-#include<process.h>
 
 using namespace sudo;
 
@@ -7,7 +6,7 @@ using namespace sudo;
 class PaddleComponent : public ecs::Component {
 private:
 	char *upKey, *downKey;
-	system::InputSystem *input;
+	sudo_system::InputSystem *input;
 
 	const int SPEED = 10;
 
@@ -18,7 +17,7 @@ public:
 		upKey = _upKey;
 		downKey = _downKey;
 
-		input = system::InputSystem::Instance();
+		input = sudo_system::InputSystem::Instance();
 	}
 
 	~PaddleComponent() {
@@ -189,6 +188,7 @@ public:
 			ballEntity->transform->position = math::Vector3((800 / 2) - 10, (600 / 2) - 10, 0);
 
 			// Print score
+			system("cls");
 			std::cout << "<=== SCORE ===>" << std::endl;
 			std::cout << "Left: " << leftScore << std::endl;
 			std::cout << "Right: " << rightScore << std::endl;
@@ -202,7 +202,7 @@ public:
 			ballEntity->transform->position = math::Vector3((800 / 2) - 10, (600 / 2) - 10, 0);
 
 			// Print score
-			_wsystem("cls");
+			system("cls");
 			std::cout << "<=== SCORE ===>" << std::endl;
 			std::cout << "Left: " << leftScore << std::endl;
 			std::cout << "Right: " << rightScore << std::endl;

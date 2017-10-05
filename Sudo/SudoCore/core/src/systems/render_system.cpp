@@ -2,7 +2,7 @@
 #include"../../sudo.h"
 #include"../../gl_include.h"
 
-namespace sudo { namespace system {
+namespace sudo { namespace sudo_system {
 
 	RenderSystem* RenderSystem::_instance = nullptr;
 
@@ -40,7 +40,7 @@ namespace sudo { namespace system {
 		m_shader->enable();
 		m_shader->setUniform1f("myTexture", 0);
 
-		system::SettingsSystem* settings = system::SettingsSystem::Instance();
+		sudo_system::SettingsSystem* settings = sudo_system::SettingsSystem::Instance();
 		m_shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(0, settings->GetWindowSize().getX(), settings->GetWindowSize().getY(), 0, -1, 1));
 	}
 
@@ -49,7 +49,7 @@ namespace sudo { namespace system {
 		//m_renderList.clear();
 	}
 
-	RenderSystem * sudo::system::RenderSystem::Instance()
+	RenderSystem * sudo::sudo_system::RenderSystem::Instance()
 	{
 		if (_instance == nullptr)
 			_instance = new RenderSystem();

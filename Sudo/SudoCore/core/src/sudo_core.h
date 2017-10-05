@@ -10,7 +10,7 @@ namespace sudo {
 	namespace graphics {
 		class Window;
 	}
-	namespace system {
+	namespace sudo_system {
 		class InputSystem;
 		class WorldSystem;
 		class RenderSystem;
@@ -29,10 +29,10 @@ namespace sudo {
 		graphics::Window *m_window;
 
 		/* Systems */
-		system::InputSystem		*m_inputSystem;
-		system::WorldSystem		*m_worldSystem;
-		system::RenderSystem	*m_renderSystem;
-		system::SettingsSystem	*m_settingsSystem;
+		sudo_system::InputSystem		*m_inputSystem;
+		sudo_system::WorldSystem		*m_worldSystem;
+		sudo_system::RenderSystem	*m_renderSystem;
+		sudo_system::SettingsSystem	*m_settingsSystem;
 
 		utility::Timer *timer;
 

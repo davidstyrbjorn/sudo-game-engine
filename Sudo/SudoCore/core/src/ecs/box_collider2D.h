@@ -9,7 +9,7 @@ namespace sudo {
 	namespace graphics {
 		class Renderable2D;
 	}
-	namespace system {
+	namespace sudo_system {
 		class SettingsSystem;
 	}
 }
@@ -23,7 +23,7 @@ namespace sudo { namespace ecs {
 		graphics::Renderable2D *m_entityRenderableComponent;
 
 		bool m_keepInBounds;
-		system::SettingsSystem *m_settingsSystem;
+		sudo_system::SettingsSystem *m_settingsSystem;
 
 		void dataMatch();
 

@@ -2,7 +2,7 @@
 #include"../../sudo.h"
 #include<time.h>
 
-namespace sudo { namespace system {
+namespace sudo { namespace sudo_system {
 
 	InputSystem* InputSystem::_instance = nullptr;
 

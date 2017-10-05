@@ -1,6 +1,6 @@
 #pragma once
 
-namespace sudo { namespace {
+namespace sudo { namespace sudo_system {
 
 	/* Base Class for all system classes */
 	class SudoSystem {

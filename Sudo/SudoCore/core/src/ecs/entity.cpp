@@ -15,7 +15,7 @@ namespace sudo { namespace ecs {
 	Entity::Entity(char* a_name) : m_name(a_name) 
 	{
 		/* Adding the entity to the WorldSystem list */
-		system::WorldSystem *world = system::WorldSystem::Instance();
+		sudo_system::WorldSystem *world = sudo_system::WorldSystem::Instance();
 		world->AddEntity(this);
 
 		/* Create the transform component */

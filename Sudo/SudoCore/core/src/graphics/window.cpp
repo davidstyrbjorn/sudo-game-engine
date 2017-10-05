@@ -26,7 +26,7 @@ sudo::graphics::Window::Window(uint a_width, uint a_height, char *a_caption)
 	glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
 
 	/* Initalize Settings System */
-	settings = system::SettingsSystem::Instance();
+	settings = sudo_system::SettingsSystem::Instance();
 }
 
 sudo::graphics::Window::~Window()

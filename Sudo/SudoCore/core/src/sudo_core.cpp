@@ -27,22 +27,22 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	/* ========================================= */
 
 	/* Settings system */
-	m_settingsSystem = system::SettingsSystem::Instance();
+	m_settingsSystem = sudo_system::SettingsSystem::Instance();
 	m_settingsSystem->Enable();
 	m_settingsSystem->SetFPS(DEFAULT_FPS_CAP);
 	m_settingsSystem->SetWindowSize(a_windowSize);
 	m_settingsSystem->SetBackgroundColor(math::Vector4(0, 0, 0, 1));
 
 	/* Input system */
-	m_inputSystem = system::InputSystem::Instance();
+	m_inputSystem = sudo_system::InputSystem::Instance();
 	m_inputSystem->Enable();
 
 	/* WorldSystem/ECS System*/
-	m_worldSystem = system::WorldSystem::Instance();
+	m_worldSystem = sudo_system::WorldSystem::Instance();
 	m_worldSystem->Enable();
 
 	/* Render system */
-	m_renderSystem = system::RenderSystem::Instance();
+	m_renderSystem = sudo_system::RenderSystem::Instance();
 	m_renderSystem->Enable();
 
 	/* ========================================= */

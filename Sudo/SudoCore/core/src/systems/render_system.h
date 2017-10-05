@@ -9,7 +9,7 @@ namespace sudo {
 		class Shader;
 } }
 
-namespace sudo { namespace system { 
+namespace sudo { namespace sudo_system { 
 
 	class RenderSystem : public SudoSystem {
 	private:

@@ -10,7 +10,7 @@ namespace sudo { namespace ecs {
 
 } }
 
-namespace sudo { namespace system {
+namespace sudo { namespace sudo_system {
 
 	class WorldSystem : public SudoSystem {
 	private:

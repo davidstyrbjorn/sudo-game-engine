@@ -34,7 +34,7 @@ namespace sudo { namespace ecs {
 
 	void BoxCollider2D::Start() 
 	{
-		m_settingsSystem = system::SettingsSystem::Instance();
+		m_settingsSystem = sudo_system::SettingsSystem::Instance();
 
 		/* Get the Renderable2D component attatched to m_entityHolder */
 		for (int i = 0; i < m_entityHolder->GetComponentList().size(); i++) {

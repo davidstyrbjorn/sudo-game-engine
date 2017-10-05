@@ -5,7 +5,7 @@
 #include"../math/vector2.h"
 #include"../math/vector4.h"
 
-namespace sudo { namespace system {
+namespace sudo { namespace sudo_system {
 
 	class SettingsSystem : SudoSystem {
 	private:

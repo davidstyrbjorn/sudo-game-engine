@@ -7,7 +7,7 @@
 #include"../math/vector2.h"
 
 namespace sudo {
-	namespace system {
+	namespace sudo_system {
 		class SettingsSystem;
 	}
 }
@@ -35,7 +35,7 @@ namespace sudo { namespace graphics {
 		// Window data
 		GLFWwindow *m_window;
 		uint m_width, m_height;
-		system::SettingsSystem *settings;
+		sudo_system::SettingsSystem *settings;
 
 		/* GLFW Callback functions */
 		friend static void window_size_callback(GLFWwindow* window, int width, int height);

@@ -2,7 +2,7 @@
 
 #include"../ecs/entity.h"
 
-namespace sudo { namespace system { 
+namespace sudo { namespace sudo_system { 
 
 	WorldSystem* WorldSystem::_instance = nullptr;
 

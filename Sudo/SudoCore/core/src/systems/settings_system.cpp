@@ -1,10 +1,10 @@
 #include "settings_system.h"
 
-namespace sudo { namespace system {
+namespace sudo { namespace sudo_system {
 
 	SettingsSystem* SettingsSystem::_instance = nullptr;
 
-	SettingsSystem * sudo::system::SettingsSystem::Instance()
+	SettingsSystem * sudo::sudo_system::SettingsSystem::Instance()
 	{
 		if (_instance == nullptr)
 			_instance = new SettingsSystem();

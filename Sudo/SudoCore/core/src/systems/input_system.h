@@ -13,7 +13,7 @@ namespace sudo {
 	}
 }
 
-namespace sudo { namespace system {
+namespace sudo { namespace sudo_system {
 
 	class InputSystem : public SudoSystem {
 	private:
