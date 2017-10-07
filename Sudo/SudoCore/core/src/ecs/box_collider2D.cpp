@@ -5,8 +5,6 @@ namespace sudo { namespace ecs {
 
 	BoxCollider2D::BoxCollider2D()
 	{
-		m_componentName = "BoxCollider2D";
-
 		// Default box collider values 
 		m_keepInBounds = false;
 	}

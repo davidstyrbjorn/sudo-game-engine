@@ -53,16 +53,7 @@ namespace sudo { namespace ecs {
 
 	void Entity::AddComponent(Component *a_component) 
 	{
-		/* Check if the component already exists */
-		for (unsigned int i = 0; i < m_components.size(); i++) {
-			if (m_components[i]->GetName() == a_component->GetName()) {
-				// Debug print that the component we're trying to add already exists on this entity
-				DEBUG *debug = DEBUG::getInstance();
-				debug->printMessage("Component already exists on entity");
-				return;
-			}
-		}
-
+		/* Set the components entity holder */
 		a_component->SetEntityHolder(this);
 
 		/* Push back the component into the list */

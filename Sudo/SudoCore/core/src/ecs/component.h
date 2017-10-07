@@ -31,9 +31,6 @@ namespace sudo { namespace ecs {
 		/* Returns the state of the component */
 		const ComponentState GetComponentState() { return m_componentState; }
 
-		/* Returns the name of the component */
-		const char* GetName() { return m_componentName; }
-
 		/* Sets the entity holder */
 		void SetEntityHolder(Entity *a_newHolder) { m_entityHolder = a_newHolder; }
 
@@ -42,7 +39,6 @@ namespace sudo { namespace ecs {
 
 	protected:
 		ComponentState m_componentState = ComponentState::ACTIVE; // Active by default
-		char* m_componentName; // Name of the component
 		Entity *m_entityHolder; // Pointer to the holder of this component
 	};
 

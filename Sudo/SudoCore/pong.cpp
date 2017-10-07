@@ -11,9 +11,8 @@ private:
 	const int SPEED = 8;
 
 public:
-	PaddleComponent(char* _upKey, char* _downKey) {
-		m_componentName = "PaddleComponent";
-
+	PaddleComponent(char* _upKey, char* _downKey) 
+	{
 		upKey = _upKey;
 		downKey = _downKey;
 
@@ -74,7 +73,7 @@ public:
 		state = GameStates::MENU;
 
 		backgroundMenu = new ecs::Entity("backgroundMenu");
-		backgroundMenu->AddComponent(new ecs::SpriteComponent("C:\\SudoGameEngine\\images\\_pong_assets\\title_screen_texture.png"));
+		backgroundMenu->AddComponent(new ecs::SpriteComponent("D:\\SudoGameEngine\\images\\_pong_assets\\title_screen_texture.png"));
 		
 		// Left Paddle
 		leftPaddle = new ecs::Entity("leftPaddle");

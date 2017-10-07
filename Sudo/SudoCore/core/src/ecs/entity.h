@@ -39,23 +39,13 @@ namespace sudo { namespace ecs {
 		/* Returns the component inside the components list with a_name */
 		template<typename TemplateClass>
 		TemplateClass* GetComponent()
-		{
-			// Getting component name from TemplateClass
-			std::string _componentName = "";
-			for (int i = 0; i < strlen(typeid(TemplateClass).name()); i++) {
-				// After 17 characters the namespace stuff is gone
-				if (i >= 17) {
-					_componentName += typeid(TemplateClass).name()[i];
-				}
-			}
-
+		{			
 			// Look for component
-			for (unsigned int i = 0; i < m_components.size(); ++i) {
-				//std::cout << _componentName << " " << m_components[i]->GetName() << std::endl;
-				if (m_components[i]->GetName() == _componentName) {
+			for (unsigned int i = 0; i < m_components.size(); ++i) 
+			{
+				if (typeid(*m_components[i]).name() == typeid(TemplateClass).name())
+				{
 					// We found the component at index i inside the list
-					// Assert here to check if ComponentType is derived from Component base class
-					static_assert(std::is_base_of<Component, TemplateClass>::value, "Get Component in-argument ERROR!");
 					return static_cast<TemplateClass*>(m_components[i]);
 				}
 			}
