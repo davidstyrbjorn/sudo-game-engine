@@ -8,7 +8,7 @@ private:
 	char *upKey, *downKey;
 	sudo_system::InputSystem *input;
 
-	const int SPEED = 13;
+	const int SPEED = 8;
 
 public:
 	PaddleComponent(char* _upKey, char* _downKey) {
@@ -74,7 +74,7 @@ public:
 		state = GameStates::MENU;
 
 		backgroundMenu = new ecs::Entity("backgroundMenu");
-		backgroundMenu->AddComponent(new ecs::SpriteComponent("D:\\SudoGameEngine\\images\\_pong_assets\\title_screen_texture.png"));
+		backgroundMenu->AddComponent(new ecs::SpriteComponent("C:\\SudoGameEngine\\images\\_pong_assets\\title_screen_texture.png"));
 		
 		// Left Paddle
 		leftPaddle = new ecs::Entity("leftPaddle");
@@ -104,7 +104,7 @@ public:
 		ball_x_change = BALL_SPEED;
 		ball_y_change = BALL_SPEED;
 
-		config->SetFPS(120);
+		config->SetFPS(80);
 	}
 
 	void Update()
@@ -202,11 +202,6 @@ public:
 			// Score
 			std::string temp = std::string("Left: ") + std::string(std::to_string(leftScore)) + std::string(" Right: " ) + std::string(std::to_string(rightScore));
 			config->SetWindowCaption(temp.c_str());
-
-			if (leftScore == 5 || rightScore == 5) {
-				state = GameStates::MENU;
-				ResetAfterGame();
-			}
 		}
 		if (ballEntity->transform->position.getX() < -10) {
 			// Right Score
@@ -225,11 +220,11 @@ public:
 			std::cout << "<=== SCORE ===>" << std::endl;
 			std::cout << "Left: " << leftScore << std::endl;
 			std::cout << "Right: " << rightScore << std::endl;
+		}
 
-			if (leftScore == 5 || rightScore == 5) {
-				state = GameStates::MENU;
-				ResetAfterGame();
-			}
+		if (leftScore == 5 || rightScore == 5) {
+			state = GameStates::MENU;
+			ResetAfterGame();
 		}
 	}
 
