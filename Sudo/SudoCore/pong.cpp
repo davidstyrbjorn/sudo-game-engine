@@ -1,5 +1,9 @@
 #include"core\sudo.h"
 
+#include"al.h"
+#include"alc.h"
+#include"alut.h"
+
 using namespace sudo;
 
 // User end componet
@@ -15,7 +19,7 @@ public:
 	{
 		upKey = _upKey;
 		downKey = _downKey;
-
+		
 		input = sudo_system::InputSystem::Instance();
 	}
 
@@ -70,10 +74,12 @@ public:
 
 	void Start()
 	{
+		alGetError();
+
 		state = GameStates::MENU;
 
 		backgroundMenu = new ecs::Entity("backgroundMenu");
-		backgroundMenu->AddComponent(new ecs::SpriteComponent("D:\\SudoGameEngine\\images\\_pong_assets\\title_screen_texture.png"));
+		backgroundMenu->AddComponent(new ecs::SpriteComponent("C:\\SudoGameEngine\\images\\_pong_assets\\title_screen_texture.png"));
 		
 		// Left Paddle
 		leftPaddle = new ecs::Entity("leftPaddle");
@@ -103,7 +109,7 @@ public:
 		ball_x_change = BALL_SPEED;
 		ball_y_change = BALL_SPEED;
 
-		config->SetFPS(80);
+		config->SetFPS(60);
 	}
 
 	void Update()
