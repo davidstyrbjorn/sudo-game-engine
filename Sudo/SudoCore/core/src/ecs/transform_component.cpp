@@ -10,7 +10,7 @@ Transform::Transform()
 
 void Transform::Move(const math::Vector3 & a_vector)
 {
-	position = math::Vector3(position.getX() + a_vector.getX(), position.getY() + a_vector.getY(), position.getZ() + a_vector.getZ());
+	position = math::Vector3(position.x + a_vector.x, position.y + a_vector.y, position.z + a_vector.z);
 }
 
 void Transform::Start()

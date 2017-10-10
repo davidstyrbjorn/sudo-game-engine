@@ -14,17 +14,17 @@ namespace sudo { namespace ecs {
 		// Should the box collider be kept inside the bounds of the screen?
 		if (m_keepInBounds) {
 			// X
-			if (m_entityHolder->transform->position.getX() + m_bounds.getX() >= m_settingsSystem->GetWindowSize().getX()) {
-				m_entityHolder->transform->position.setX(m_settingsSystem->GetWindowSize().getX() - m_bounds.getX());
+			if (m_entityHolder->transform->position.x + m_bounds.x >= m_settingsSystem->GetWindowSize().x) {
+				m_entityHolder->transform->position.setX(m_settingsSystem->GetWindowSize().x - m_bounds.x);
 			}
-			if (m_entityHolder->transform->position.getX() <= 0) {
+			if (m_entityHolder->transform->position.x <= 0) {
 				m_entityHolder->transform->position.setX(0);
 			}
 			// Y
-			if (m_entityHolder->transform->position.getY() + m_bounds.getY() >= m_settingsSystem->GetWindowSize().getY()) {
-				m_entityHolder->transform->position.setY(m_settingsSystem->GetWindowSize().getY() - m_bounds.getY());
+			if (m_entityHolder->transform->position.y + m_bounds.y >= m_settingsSystem->GetWindowSize().y) {
+				m_entityHolder->transform->position.setY(m_settingsSystem->GetWindowSize().y - m_bounds.y);
 			}
-			if (m_entityHolder->transform->position.getY() <= 0) {
+			if (m_entityHolder->transform->position.y <= 0) {
 				m_entityHolder->transform->position.setY(0);
 			}
 		}
@@ -39,7 +39,7 @@ namespace sudo { namespace ecs {
 			if (dynamic_cast<graphics::Renderable2D*>(m_entityHolder->GetComponentList()[i]) != nullptr) {
 				m_entityRenderableComponent = dynamic_cast<graphics::Renderable2D*>(m_entityHolder->GetComponentList()[i]);
 
-				m_origin = math::Vector2(m_entityHolder->transform->position.getX(), m_entityHolder->transform->position.getY());
+				m_origin = math::Vector2(m_entityHolder->transform->position.x, m_entityHolder->transform->position.y);
 				m_bounds = m_entityRenderableComponent->GetSize();
 			}
 		}
@@ -52,8 +52,8 @@ namespace sudo { namespace ecs {
 
 	void BoxCollider2D::dataMatch()
 	{
-		if (m_origin != math::Vector2(m_entityHolder->transform->position.getX(), m_entityHolder->transform->position.getY())) {
-			m_origin = math::Vector2(m_entityHolder->transform->position.getX(), m_entityHolder->transform->position.getY());
+		if (m_origin != math::Vector2(m_entityHolder->transform->position.x, m_entityHolder->transform->position.y)) {
+			m_origin = math::Vector2(m_entityHolder->transform->position.x, m_entityHolder->transform->position.y);
 		}
 		if (m_bounds != m_entityRenderableComponent->GetSize()) {
 			m_bounds = m_entityRenderableComponent->GetSize();
@@ -65,8 +65,8 @@ namespace sudo { namespace ecs {
 		// Important that the box colliders data is good before we check for collisions
 		dataMatch();
 
-		if (a_point.getX() > m_origin.getX() && a_point.getX() < m_origin.getX() + m_bounds.getX()) {
-			if (a_point.getY() > m_origin.getY() && a_point.getY() < m_origin.getY() + m_bounds.getY()) {
+		if (a_point.x > m_origin.x && a_point.x < m_origin.x + m_bounds.x) {
+			if (a_point.y > m_origin.y && a_point.y < m_origin.y + m_bounds.y) {
 				return 1;
 			}
 		}
@@ -79,10 +79,10 @@ namespace sudo { namespace ecs {
 		dataMatch();
 		a_other.dataMatch();
 
-		if ((m_origin.getX() + m_bounds.getX()) >= (a_other.GetOrigin().getX())) {
-			if (m_origin.getX() <= (a_other.GetOrigin().getX() + a_other.GetBounds().getX())) {
-				if ((m_origin.getY() + m_bounds.getY()) >= (a_other.GetOrigin().getY())) {
-					if (m_origin.getY() <= (a_other.GetOrigin().getY() + a_other.GetBounds().getY())) {
+		if ((m_origin.x + m_bounds.x) >= (a_other.GetOrigin().x)) {
+			if (m_origin.x <= (a_other.GetOrigin().x + a_other.GetBounds().x)) {
+				if ((m_origin.y + m_bounds.y) >= (a_other.GetOrigin().y)) {
+					if (m_origin.y <= (a_other.GetOrigin().y + a_other.GetBounds().y)) {
 						return true;
 					}
 				}

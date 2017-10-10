@@ -6,77 +6,62 @@ namespace sudo {
 		// Vector normal methods
 		void Vector3::setX(float a_x)
 		{
-			this->m_x = a_x;
+			this->x = a_x;
 		}
 
 		void Vector3::setY(float a_y)
 		{
-			this->m_y = a_y;
+			this->y = a_y;
 		}
 
 		void Vector3::setZ(float a_z) 
 		{
-			this->m_z = a_z;
-		}
-
-		float Vector3::getX() const
-		{
-			return m_x;
-		}
-
-		float Vector3::getY() const
-		{
-			return m_y;
-		}
-
-		float Vector3::getZ() const
-		{
-			return m_z;
+			this->z = a_z;
 		}
 
 		/* Operator overloaded functions */
 		Vector3 Vector3::operator+(const Vector3 rhs)
 		{
-			return Vector3(this->m_x + rhs.m_x, this->m_y + rhs.m_y, this->m_z + rhs.m_z);
+			return Vector3(this->x + rhs.x, this->y + rhs.y, this->z + rhs.z);
 		}
 
 		Vector3 Vector3::operator-(const Vector3 rhs)
 		{
-			return Vector3(this->m_x - rhs.m_x, this->m_y - rhs.m_y, this->m_z - rhs.m_z);
+			return Vector3(this->x - rhs.x, this->y - rhs.y, this->z - rhs.z);
 		}
 
 		Vector3 Vector3::operator=(const Vector3 &rhs)
 		{
-			this->m_x = rhs.m_x;
-			this->m_y = rhs.m_y;
-			this->m_z = rhs.m_z;
+			this->x = rhs.x;
+			this->y = rhs.y;
+			this->z = rhs.z;
 			return *this;
 		}
 
 		Vector3 Vector3::operator*(const float scalar)
 		{
-			return Vector3(this->m_x*scalar,this->m_y*scalar, this->m_z*scalar);
+			return Vector3(this->x*scalar,this->y*scalar, this->z*scalar);
 		}
 
 		Vector3 & Vector3::operator+=(const Vector3 & rhs)
 		{
-			this->m_x = this->m_x + rhs.m_x;
-			this->m_y = this->m_y + rhs.m_y;
-			this->m_z = this->m_z + rhs.m_z;
+			this->x = this->x + rhs.x;
+			this->y = this->y + rhs.y;
+			this->z = this->z + rhs.z;
 			return *this;
 		}
 
 		Vector3 & Vector3::operator-=(const Vector3 & rhs)
 		{
-			this->m_x = this->m_x - rhs.m_x;
-			this->m_y = this->m_y - rhs.m_y;
-			this->m_z = this->m_z - rhs.m_z;
+			this->x = this->x - rhs.x;
+			this->y = this->y - rhs.y;
+			this->z = this->z - rhs.z;
 			return *this;
 		}
 
 		std::ostream & math::operator<<(std::ostream & os, const Vector3 & other)
 		{
-			os << "(" << other.m_x << ", " << other.m_y << ", " << other.m_z << ")";
+			os << "(" << other.x << ", " << other.y << ", " << other.z << ")";
 			return os;
 		}
 	}

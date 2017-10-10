@@ -4,29 +4,23 @@
 
 namespace sudo { namespace math {
 
-	class Vector3 {
-	protected:
-		float m_x, m_y, m_z;
+	struct Vector3 {
+		float x, y, z;
 
-	public:
 		/* Default Constructor */
-		Vector3() : m_x(0), m_y(0), m_z(0) { }
+		Vector3() : x(0), y(0), z(0) { }
 
 		/* Constructor (float) */
-		Vector3(float a_x, float a_y, float a_z) : m_x(a_x), m_y(a_y), m_z(a_z) { }
+		Vector3(float a_x, float a_y, float a_z) : x(a_x), y(a_y), z(a_z) { }
 
 		/* Data Methods */
 		void setX(float a_x);
 		void setY(float a_y);
 		void setZ(float a_z);
 
-		float getX() const;
-		float getY() const;
-		float getZ() const;
-
 		inline static float GetMagnitude(const Vector3& vec) {
 			// Return the magnitude of other
-			return sqrt(pow(vec.getX(), 2) + pow(vec.getY(), 2) + pow(vec.getZ(), 2));
+			return sqrt(pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.z, 2));
 		}
 
 		/* Operator Overloading Methods */
@@ -49,7 +43,7 @@ namespace sudo { namespace math {
 
 	inline bool operator==(const Vector3& lhs, const Vector3& rhs)
 	{
-		return (lhs.getX() == rhs.getX() && lhs.getY() == rhs.getY() && lhs.getZ() == rhs.getZ());
+		return (lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z);
 	}
 	inline bool operator!=(const Vector3& lhs, const Vector3& rhs) { return !operator==(lhs, rhs); }
 

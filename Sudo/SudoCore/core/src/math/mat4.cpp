@@ -63,9 +63,9 @@ namespace sudo { namespace math {
 	Matrix4x4 Matrix4x4::Translation(const Vector3& translation) {
 		Matrix4x4 result(1.0f);
 
-		result.elements[0 + 3 * 4] = translation.getX();
-		result.elements[1 + 3 * 4] = translation.getY();
-		result.elements[2 + 3 * 4] = translation.getZ();
+		result.elements[0 + 3 * 4] = translation.x;
+		result.elements[1 + 3 * 4] = translation.y;
+		result.elements[2 + 3 * 4] = translation.z;
 
 		return result;
 	}
@@ -73,9 +73,9 @@ namespace sudo { namespace math {
 	Matrix4x4 Matrix4x4::Scale(const Vector3& scale) {
 		Matrix4x4 result(1.0f);
 
-		result.elements[0 + 0 * 4] = scale.getX();
-		result.elements[1 + 1 * 4] = scale.getY();
-		result.elements[2 + 2 * 4] = scale.getZ();
+		result.elements[0 + 0 * 4] = scale.x;
+		result.elements[1 + 1 * 4] = scale.y;
+		result.elements[2 + 2 * 4] = scale.z;
 
 		return result;
 	}
@@ -88,9 +88,9 @@ namespace sudo { namespace math {
 		float s = sin(r);
 		float omc = 1.0f - c;
 
-		float x = axis.getX();
-		float y = axis.getY();
-		float z = axis.getZ();
+		float x = axis.x;
+		float y = axis.y;
+		float z = axis.z;
 
 		result.elements[0 + 0 * 4] = x * omc + c;
 		result.elements[1 + 0 * 4] = y * x * omc + z * s;

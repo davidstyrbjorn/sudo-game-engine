@@ -20,7 +20,7 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	m_engineInstance = a_engineInstance;
 
 	/* Create the game window */
-	m_window = new graphics::Window(a_windowSize.getX(), a_windowSize.getY(), a_windowCaption);
+	m_window = new graphics::Window(a_windowSize.x, a_windowSize.y, a_windowCaption);
 
 	/* ========================================= */
 	/*               ENABLE SYSTEMS              */

@@ -88,12 +88,12 @@ namespace sudo { namespace graphics {
 
 	void Shader::setUniform2f(const GLchar* a_name, const math::Vector2& vec) 
 	{
-		glUniform2f(getUniformLocation(a_name), vec.getX(), vec.getY());
+		glUniform2f(getUniformLocation(a_name), vec.x, vec.y);
 	}
 
 	void Shader::setUniform3f(const GLchar* a_name, const math::Vector3& vec) 
 	{
-		glUniform3f(getUniformLocation(a_name), vec.getX(), vec.getY(), vec.getZ());
+		glUniform3f(getUniformLocation(a_name), vec.x, vec.y, vec.z);
 	}
 
 	uint Shader::getUniformLocation(const char* a_name) 

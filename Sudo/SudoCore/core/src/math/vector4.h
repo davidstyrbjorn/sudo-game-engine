@@ -5,16 +5,14 @@
 namespace sudo {
 	namespace math {
 
-		class Vector4 {
-		protected:
-			float m_x, m_y, m_z, m_w;
+		struct Vector4 {
+			float x, y, z, w;
 
-		public:
 			/* Default Constructor */
-			Vector4() : m_x(0), m_y(0), m_z(0), m_w(0) { }
+			Vector4() : x(0), y(0), z(0), w(0) { }
 
 			/* Constructor (float) */
-			Vector4(float a_x, float a_y, float a_z, float a_w) : m_x(a_x), m_y(a_y), m_z(a_z), m_w(a_w) { }
+			Vector4(float a_x, float a_y, float a_z, float a_w) : x(a_x), y(a_y), z(a_z), w(a_w) { }
 
 			/* Data Methods */
 			void setX(float a_x);
@@ -22,14 +20,9 @@ namespace sudo {
 			void setZ(float a_z);
 			void setW(float a_w);
 
-			float getX() const;
-			float getY() const;
-			float getZ() const;
-			float getW() const;
-
 			inline static float GetMagnitude(const Vector4& vec) {
 				// Return the magnitude of other
-				return sqrt(pow(vec.getX(), 2) + pow(vec.getY(), 2) + pow(vec.getZ(), 2) + pow(vec.getW(), 2));
+				return sqrt(pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.z, 2) + pow(vec.w, 2));
 			}
 
 			/* Operator Overloading Methods */
@@ -44,7 +37,7 @@ namespace sudo {
 			friend std::ostream& operator<<(std::ostream &os, const Vector4 &other);
 		};
 
-		inline bool operator==(const Vector4& lhs, const Vector4& rhs) { return (lhs.getX() == rhs.getX() && lhs.getY() == rhs.getY() && lhs.getZ() == rhs.getZ() && lhs.getW() == rhs.getW()); }
+		inline bool operator==(const Vector4& lhs, const Vector4& rhs) { return (lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z && lhs.w == rhs.w); }
 		inline bool operator!=(const Vector4& lhs, const Vector4& rhs) { return !operator==(lhs, rhs); }
 
 	}

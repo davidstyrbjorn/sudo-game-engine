@@ -38,7 +38,7 @@ void sudo::graphics::Window::clear()
 {
 	glfwPollEvents();
 
-	glClearColor(settings->GetBackgroundColor().getX(), settings->GetBackgroundColor().getY(), settings->GetBackgroundColor().getZ(), settings->GetBackgroundColor().getW());
+	glClearColor(settings->GetBackgroundColor().x, settings->GetBackgroundColor().y, settings->GetBackgroundColor().z, settings->GetBackgroundColor().w);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
@@ -63,7 +63,7 @@ void sudo::graphics::Window::close()
 void sudo::graphics::Window::setWindowPos(const math::Vector2 & a_pos)
 {
 	std::cout << "Change Window Position" << std::endl;
-	glfwSetWindowPos(this->m_window, a_pos.getX(), a_pos.getY());
+	glfwSetWindowPos(this->m_window, a_pos.x, a_pos.y);
 }
 
 /* GLFW Callback Functions */

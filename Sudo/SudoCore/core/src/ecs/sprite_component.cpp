@@ -32,9 +32,9 @@ namespace sudo { namespace ecs {
 		float vertices[] = {
 			// Vertex data					  color data	 texture coordinates	         									
 			0, 0, 0.0f,						    1, 1, 1,         0,0,
-			0, m_size.getY(), 0.0f,				1, 1, 1,         0,1,
-			m_size.getX(), m_size.getY(), 0.0f,	1, 1, 1,		 1,1,
-			m_size.getX(), 0.0f, 0.0f,			1, 1, 1,         1,0
+			0, m_size.y, 0.0f,				1, 1, 1,         0,1,
+			m_size.x, m_size.y, 0.0f,	1, 1, 1,		 1,1,
+			m_size.x, 0.0f, 0.0f,			1, 1, 1,         1,0
 		};
 		unsigned int indices[] = {
 			0,1,2,
@@ -97,16 +97,16 @@ namespace sudo { namespace ecs {
 	{
 		/* Make sure the shape stays at it's position when resizing the vertices */
 		math::Vector2 deltaChange = m_size - m_sizeBeforeReisze;
-		m_entityTransform->position = math::Vector3(m_entityTransform->position.getX() - (deltaChange.getX() / 2),
-			m_entityTransform->position.getY() - (deltaChange.getY() / 2),
-			m_entityTransform->position.getZ());
+		m_entityTransform->position = math::Vector3(m_entityTransform->position.x - (deltaChange.x / 2),
+			m_entityTransform->position.y - (deltaChange.y / 2),
+			m_entityTransform->position.z);
 
 		float vertices[] = {
 			// Vertex data					  color data	 texture coordinates	         									
 			0, 0, 0.0f,						    1, 1, 1,         0,0,
-			0, m_size.getY(), 0.0f,				1, 1, 1,         0,1,
-			m_size.getX(), m_size.getY(), 0.0f,	1, 1, 1,		 1,1,
-			m_size.getX(), 0.0f, 0.0f,			1, 1, 1,         1,0
+			0, m_size.y, 0.0f,				1, 1, 1,         0,1,
+			m_size.x, m_size.y, 0.0f,	1, 1, 1,		 1,1,
+			m_size.x, 0.0f, 0.0f,			1, 1, 1,         1,0
 		};
 
 		m_vertexArray->bind();
@@ -118,9 +118,9 @@ namespace sudo { namespace ecs {
 		float vertices[] = {
 			// Vertex data					  color data	 texture coordinates	         									
 			0, 0, 0.0f,						    1, 1, 1,         0,0,
-			0, m_size.getY(), 0.0f,				1, 1, 1,         0,1,
-			m_size.getX(), m_size.getY(), 0.0f,	1, 1, 1,		 1,1,
-			m_size.getX(), 0.0f, 0.0f,			1, 1, 1,         1,0
+			0, m_size.y, 0.0f,				1, 1, 1,         0,1,
+			m_size.x, m_size.y, 0.0f,	1, 1, 1,		 1,1,
+			m_size.x, 0.0f, 0.0f,			1, 1, 1,         1,0
 		};
 
 		m_vertexArray->bind();

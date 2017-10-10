@@ -41,7 +41,7 @@ namespace sudo { namespace sudo_system {
 		m_shader->setUniform1f("myTexture", 0);
 
 		sudo_system::SettingsSystem* settings = sudo_system::SettingsSystem::Instance();
-		m_shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(0, settings->GetWindowSize().getX(), settings->GetWindowSize().getY(), 0, -1, 1));
+		m_shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(0, settings->GetWindowSize().x, settings->GetWindowSize().y, 0, -1, 1));
 	}
 
 	void RenderSystem::CleanUp()

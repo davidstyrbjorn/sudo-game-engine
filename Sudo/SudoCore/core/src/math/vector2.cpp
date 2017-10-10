@@ -5,38 +5,28 @@ namespace sudo { namespace math {
 	// Vector normal methods
 	void Vector2::setX(float a_x)
 	{
-		this->m_x = a_x;
+		this->x = a_x;
 	}
 
 	void Vector2::setY(float a_y)
 	{
-		this->m_y = a_y;
-	}
-
-	float Vector2::getX() const
-	{
-		return m_x;
-	}
-
-	float Vector2::getY() const
-	{
-		return m_y;
+		this->y = a_y;
 	}
 
 	/* Operator overloaded functions */
 	Vector2 Vector2::operator+(const Vector2 rhs)
 	{
-		return Vector2(this->m_x+rhs.m_x,this->m_y+rhs.m_y);
+		return Vector2(this->x+rhs.x,this->y+rhs.y);
 	}
 
 	Vector2 Vector2::operator-(const Vector2 rhs)
 	{
-		return Vector2(this->m_x-rhs.m_x,this->m_y-rhs.m_y);
+		return Vector2(this->x-rhs.x,this->y-rhs.y);
 	}
 
 	Vector2 Vector2::operator*(const float scalar)
 	{
-		return Vector2(this->m_x*scalar, this->m_y*scalar);
+		return Vector2(this->x * scalar, this->y * scalar);
 	}
 
 	unsigned char Vector2::operator>(const Vector2 & rhs)
@@ -55,30 +45,28 @@ namespace sudo { namespace math {
 
 	Vector2 Vector2::operator=(const Vector2 &rhs)
 	{
-		this->m_x = rhs.m_x;
-		this->m_y = rhs.m_y;
+		this->x = rhs.x;
+		this->y = rhs.y;
 		return *this;
 	}
 
-	
-
 	Vector2 & Vector2::operator+=(const Vector2 & rhs)
 	{
-		this->m_x = this->m_x + rhs.m_x;
-		this->m_y = this->m_y + rhs.m_y;
+		this->x = this->x + rhs.x;
+		this->y = this->y + rhs.y;
 		return *this;
 	}
 
 	Vector2 & Vector2::operator-=(const Vector2 & rhs)
 	{
-		this->m_x = this->m_x - rhs.m_x;
-		this->m_y = this->m_y - rhs.m_y;
+		this->x = this->x - rhs.x;
+		this->y = this->y - rhs.y;
 		return *this;
 	}
 
 	std::ostream & math::operator<<(std::ostream & os, const Vector2 & other)
 	{
-		os << "(" << other.m_x << ", " << other.m_y << ")";
+		os << "(" << other.x << ", " << other.y << ")";
 		return os;
 	}
 }

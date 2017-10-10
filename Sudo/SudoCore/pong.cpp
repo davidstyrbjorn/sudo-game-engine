@@ -1,9 +1,5 @@
 #include"core\sudo.h"
 
-#include"al.h"
-#include"alc.h"
-#include"alut.h"
-
 using namespace sudo;
 
 // User end componet
@@ -74,8 +70,6 @@ public:
 
 	void Start()
 	{
-		alGetError();
-
 		state = GameStates::MENU;
 
 		backgroundMenu = new ecs::Entity("backgroundMenu");
@@ -184,15 +178,15 @@ public:
 		}
 
 		// Vertical walls collision
-		if (ballEntity->transform->position.getY() <= 0) {
+		if (ballEntity->transform->position.y <= 0) {
 			ball_y_change *= -1;
 		}
-		if (ballEntity->transform->position.getY() + 20 > HEIGHT) {
+		if (ballEntity->transform->position.y + 20 > HEIGHT) {
 			ball_y_change *= -1;
 		}
 
 		// Horizontal wall out of bounds
-		if (ballEntity->transform->position.getX() > WIDTH) {
+		if (ballEntity->transform->position.x > WIDTH) {
 			// Left Score
 			leftScore++;
 
@@ -208,7 +202,7 @@ public:
 			std::string temp = std::string("Left: ") + std::string(std::to_string(leftScore)) + std::string(" Right: " ) + std::string(std::to_string(rightScore));
 			config->SetWindowCaption(temp.c_str());
 		}
-		if (ballEntity->transform->position.getX() < -10) {
+		if (ballEntity->transform->position.x < -10) {
 			// Right Score
 			rightScore++;
 
@@ -246,7 +240,7 @@ public:
 			// Increase ball speed
 			ball_x_change += SPEED_INCREASE;
 
-			float distanceToMiddle = ((leftPaddle->transform->position.getY()+50) - (ballEntity->transform->position.getY()+10));
+			float distanceToMiddle = ((leftPaddle->transform->position.y+50) - (ballEntity->transform->position.y+10));
 			ball_y_change += (distanceToMiddle/10)*-1;
 		}
 		if (paddle == "right") 
@@ -254,7 +248,7 @@ public:
 			// Increase ball speed
 			ball_x_change -= SPEED_INCREASE;
 
-			float distanceToMiddle = ((rightPaddle->transform->position.getY()+50) - (ballEntity->transform->position.getY()+10));
+			float distanceToMiddle = ((rightPaddle->transform->position.y+50) - (ballEntity->transform->position.y+10));
 			ball_y_change += (distanceToMiddle/10)*-1;
 		}
 	}

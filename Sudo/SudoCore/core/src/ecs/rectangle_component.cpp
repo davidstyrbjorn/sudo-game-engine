@@ -29,10 +29,10 @@ namespace sudo { namespace ecs {
 		
 		float vertices[] = {
 			// Vertex data								         Color data									
-			0, 0, 0.0f,							m_color.getX(), m_color.getY(), m_color.getZ(),
-			0, m_size.getY(), 0.0f,				m_color.getX(), m_color.getY(), m_color.getZ(),
-			m_size.getX(), m_size.getY(), 0.0f,	m_color.getX(), m_color.getY(), m_color.getZ(),
-			m_size.getX(), 0.0f, 0.0f,			m_color.getX(), m_color.getY(), m_color.getZ()
+			0, 0, 0.0f,							m_color.x, m_color.y, m_color.z,
+			0, m_size.y, 0.0f,				m_color.x, m_color.y, m_color.z,
+			m_size.x, m_size.y, 0.0f,	m_color.x, m_color.y, m_color.z,
+			m_size.x, 0.0f, 0.0f,			m_color.x, m_color.y, m_color.z
 		};										
 		unsigned int indices[] = {
 			0,1,2,
@@ -67,10 +67,10 @@ namespace sudo { namespace ecs {
 	{
 		float vertices[] = {
 			// Vertex data								         Color data									
-			0, 0, 0.0f,							m_color.getX(), m_color.getY(), m_color.getZ(),
-			0, m_size.getY(), 0.0f,				m_color.getX(), m_color.getY(), m_color.getZ(),
-			m_size.getX(), m_size.getY(), 0.0f,	m_color.getX(), m_color.getY(), m_color.getZ(),
-			m_size.getX(), 0.0f, 0.0f,			m_color.getX(), m_color.getY(), m_color.getZ()
+			0, 0, 0.0f,							m_color.x, m_color.y, m_color.z,
+			0, m_size.y, 0.0f,				m_color.x, m_color.y, m_color.z,
+			m_size.x, m_size.y, 0.0f,	m_color.x, m_color.y, m_color.z,
+			m_size.x, 0.0f, 0.0f,			m_color.x, m_color.y, m_color.z
 		};
 
 		m_vertexArray->bind();
@@ -81,16 +81,17 @@ namespace sudo { namespace ecs {
 	{
 		/* Make sure the shape stays at it's position when resizing the vertices */
 		math::Vector2 deltaChange = m_size - m_sizeBeforeReisze;
-		m_entityTransform->position = math::Vector3(m_entityTransform->position.getX() - (deltaChange.getX() / 2),
-			m_entityTransform->position.getY() - (deltaChange.getY() / 2),
-			m_entityTransform->position.getZ());
+		m_entityTransform->position = math::Vector3(m_entityTransform->position.x - (deltaChange.x / 2),
+			m_entityTransform->position.y - (deltaChange.y / 2),
+			m_entityTransform->position.z);
 
 		float vertices[] = {
 			// Vertex data								         Color data									
-			0, 0, 0.0f,							m_color.getX(), m_color.getY(), m_color.getZ(),
-			0, m_size.getY(), 0.0f,				m_color.getX(), m_color.getY(), m_color.getZ(),
-			m_size.getX(), m_size.getY(), 0.0f,	m_color.getX(), m_color.getY(), m_color.getZ(),
-			m_size.getX(), 0.0f, 0.0f,			m_color.getX(), m_color.getY(), m_color.getZ()
+			0, 0, 0.0f,							m_color.x, m_color.y, m_color.z,
+			0, m_size.y, 0.0f,				m_color.x, m_color.y, m_color.z,
+			m_size.x, m_size.y, 0.0f,	m_color.x, m_color.y, m_color.z,
+			m_size.x, 0.0f, 0.0f,			m_color.x, m_color.y, m_color.z,
+
 		};
 
 		m_vertexArray->bind();
