@@ -2,7 +2,6 @@
 
 namespace sudo { namespace math {
 
-	// Vector normal methods
 	void Vector2::setX(float a_x)
 	{
 		this->x = a_x;
@@ -13,7 +12,11 @@ namespace sudo { namespace math {
 		this->y = a_y;
 	}
 
-	/* Operator overloaded functions */
+	const float Vector2::getMagnitude() const
+	{
+		return sqrt(powf(this->x, 2) + powf(this->y, 2));
+	}
+
 	Vector2 Vector2::operator+(const Vector2 rhs)
 	{
 		return Vector2(this->x+rhs.x,this->y+rhs.y);
@@ -31,16 +34,12 @@ namespace sudo { namespace math {
 
 	unsigned char Vector2::operator>(const Vector2 & rhs)
 	{
-		if (GetMagnitude(*this) > GetMagnitude(rhs))
-			return true;
-		return false;
+		return this->getMagnitude() > rhs.getMagnitude();
 	}
 
 	unsigned char Vector2::operator<(const Vector2 & rhs)
 	{
-		if (GetMagnitude(*this) < GetMagnitude(rhs))
-			return true;
-		return false;
+		return !operator>(rhs);
 	}
 
 	Vector2 Vector2::operator=(const Vector2 &rhs)
@@ -62,6 +61,11 @@ namespace sudo { namespace math {
 		this->x = this->x - rhs.x;
 		this->y = this->y - rhs.y;
 		return *this;
+	}
+
+	Vector2 & Vector2::operator*=(const float scalar)
+	{
+		return Vector2(this->x*scalar, this->y*scalar);
 	}
 
 	std::ostream & math::operator<<(std::ostream & os, const Vector2 & other)

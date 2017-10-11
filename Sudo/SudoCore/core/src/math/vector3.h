@@ -17,30 +17,33 @@ namespace sudo { namespace math {
 		void setX(float a_x);
 		void setY(float a_y);
 		void setZ(float a_z);
-
-		inline static float GetMagnitude(const Vector3& vec) {
-			// Return the magnitude of other
-			return sqrt(pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.z, 2));
-		}
+		const float getMagnitude() const;
 
 		/* Operator Overloading Methods */
+		/* Arithmetic Operators */
 		Vector3 operator+(const Vector3 rhs);
 		Vector3 operator-(const Vector3 rhs);
 		Vector3 operator=(const Vector3 &rhs);
 		Vector3 operator*(const float scalar);
-
 		Vector3& operator+=(const Vector3& rhs);
 		Vector3& operator-=(const Vector3& rhs);
+		Vector3& operator*=(const float scalar);
 
+		/* Comperative Operators */
+		unsigned char operator>(const Vector3 &rhs);
+		unsigned char operator<(const Vector3 &rhs);
 		friend std::ostream& operator<<(std::ostream &os, const Vector3 &other);
 
 		/* Static Methods */
-		inline static Vector3 Right() { return Vector3(1, 0, 0); }
-		inline static Vector3 Left()  { return Vector3(-1, 0, 0); }
-		inline static Vector3 Up()    { return Vector3(0, -1, 0); }
-		inline static Vector3 Down()  { return Vector3(0, 1, 0); }
+		inline static Vector3 Right()		{ return Vector3(1, 0, 0); }
+		inline static Vector3 Left()		{ return Vector3(-1, 0, 0); }
+		inline static Vector3 Up()			{ return Vector3(0, -1, 0); }
+		inline static Vector3 Down()		{ return Vector3(0, 1, 0); }
+		inline static Vector3 Forward()		{ return Vector3(0, 0, 1); }
+		inline static Vector3 Backwards()	{ return Vector3(0, 0, -1); }
 	};
 
+	// I have to do this here for some reason, don't ask me why though.
 	inline bool operator==(const Vector3& lhs, const Vector3& rhs)
 	{
 		return (lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z);

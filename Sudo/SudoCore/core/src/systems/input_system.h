@@ -9,7 +9,7 @@
 // Forward decleration
 namespace sudo {
 	namespace math {
-		class Vector2;
+		struct Vector2;
 	}
 }
 

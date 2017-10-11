@@ -9,55 +9,36 @@ class App : SudoClass {
 
 private:
 	SudoCore coreEngine;
-	ecs::Entity *sprite, *sprite2;
+
+	ecs::Entity *entity, *entity2;
 	
 public:
 	App() 
 	{
-		coreEngine.init(math::Vector2(800, 600), "SudoGameEngine", this);
+		coreEngine.init(math::Vector2(800, 600), "Sudo Game Engine", this);
 	}
 
 	void Update()
 	{
-		// Draw entity/s with renderer->Draw( );
-		renderer->Draw(sprite2->GetComponent<ecs::SpriteComponent>() );
-		renderer->Draw(sprite->GetComponent<ecs::RectangleComponent>() );
-
-		if (input->GetKey("d"))
-			sprite->transform->Move(math::Vector3::Right() * 3);
-		if (input->GetKey("a"))
-			sprite->transform->Move(math::Vector3::Left() * 3);
-		if (input->GetKey("s"))
-			sprite->GetComponent<ecs::RectangleComponent>()->SetColor(math::Vector4(0, 1, 1, 1));
-		if (input->GetKey("w"))
-			sprite->GetComponent<ecs::RectangleComponent>()->SetColor(math::Vector4(1, 1, 0, 1));
-		if (input->GetKey("c"))
-			sprite2->transform->Move(math::Vector3::Right() * 2);
-
-		if (input->GetKey("f")) {
-			input->WindowShake(120, 12);
-		}
+		renderer->Draw(entity2->GetComponent<ecs::SpriteComponent>());
+		renderer->Draw(entity->GetComponent<ecs::SpriteComponent>());
 	}
 
 	void Start() override
 	{
-		SudoString temp = "Hello String";
-		std::cout << (temp + "dw") << std::endl;
+		entity = new ecs::Entity("image");
+		entity->AddComponent(new ecs::SpriteComponent("D:\\temp\\sqyare.png"));
+		entity->GetComponent<ecs::SpriteComponent>()->SetColor(math::Vector4(1, 1, 1, 0.5f));
 
-		// Create shape entity, add rectangle component then change it's position
-		sprite = new ecs::Entity("sprite");
-		sprite->AddComponent(new ecs::RectangleComponent(math::Vector2(200, 200), math::Vector4(1, 0, 0, 1)));
-		sprite->transform->Move(math::Vector3(350, 350, 0));
-
-		sprite2 = new ecs::Entity("sprite2");
-		sprite2->AddComponent(new ecs::SpriteComponent("C:\\temp\\cat.png"));
+		entity2 = new ecs::Entity("image2");
+		entity2->AddComponent(new ecs::SpriteComponent("D:\\temp\\square.png"));
 
 		config->SetFPS(120);
 		config->SetBackgroundColor(math::Vector4(0.1, 0.1, 0.1, 1));
 	}
 };
 
-int _main() 
+int main() 
 {
 	App* app = new App();
 

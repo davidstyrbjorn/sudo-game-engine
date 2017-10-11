@@ -7,9 +7,9 @@
 namespace sudo {
 	namespace math {
 		class Matrix4x4;
-		class Vector2;
-		class Vector3;
-		class Vector4;
+		struct Vector2;
+		struct Vector3;
+		struct Vector4;
 } }
 
 namespace sudo { namespace graphics {

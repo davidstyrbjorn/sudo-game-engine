@@ -3,7 +3,6 @@
 namespace sudo {
 	namespace math {
 
-		// Vector normal methods
 		void Vector4::setX(float a_x)
 		{
 			this->x = a_x;
@@ -24,7 +23,11 @@ namespace sudo {
 			this->w = a_w;
 		}
 
-		/* Operator overloaded functions */
+		const float Vector4::getMagnitude() const
+		{
+			return sqrt(powf(this->x, 2) + powf(this->y, 2) + powf(this->z, 2) + powf(this->w, 2));
+		}
+
 		Vector4 Vector4::operator+(const Vector4 rhs)
 		{
 			return Vector4(this->x + rhs.x, this->y + rhs.y, this->z + rhs.z, this->w + rhs.w);
@@ -65,6 +68,21 @@ namespace sudo {
 			this->z = this->z - rhs.z;
 			this->w = this->w - rhs.w;
 			return *this;
+		}
+
+		Vector4 & Vector4::operator*=(const float scalar)
+		{
+			return Vector4(this->x*scalar, this->y*scalar, this->z*scalar, this->w*scalar);
+		}
+
+		unsigned char Vector4::operator>(const Vector4 & rhs)
+		{
+			return this->getMagnitude() > rhs.getMagnitude();
+		}
+
+		unsigned char Vector4::operator<(const Vector4 & rhs)
+		{
+			return !operator>(rhs);
 		}
 
 		std::ostream & math::operator<<(std::ostream & os, const Vector4 & other)

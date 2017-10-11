@@ -2,11 +2,11 @@
 
 namespace sudo { namespace math {
 
-	class Vector3;
+	struct Vector3;
 
 	class Matrix4x4 {
 	public:
-		float elements[4 * 4]; // 4*4
+		float elements[4 * 4]; 
 
 		Matrix4x4();
 		Matrix4x4(float diagonal);
@@ -20,7 +20,7 @@ namespace sudo { namespace math {
 		friend Matrix4x4 operator*(Matrix4x4 left, const Matrix4x4& right);
 		Matrix4x4& operator*=(const Matrix4x4& other);
 
-		/* Projection matrix */
+		/* Projection matrices */
 		static Matrix4x4 Orthographic(float left, float right, float bottom, float top, float near, float far);
 
 	};

@@ -19,21 +19,21 @@ namespace sudo {
 			void setY(float a_y);
 			void setZ(float a_z);
 			void setW(float a_w);
-
-			inline static float GetMagnitude(const Vector4& vec) {
-				// Return the magnitude of other
-				return sqrt(pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.z, 2) + pow(vec.w, 2));
-			}
+			const float getMagnitude() const;
 
 			/* Operator Overloading Methods */
+			/* Arithmetic Operators */
 			Vector4 operator+(const Vector4 rhs);
 			Vector4 operator-(const Vector4 rhs);
 			Vector4 operator=(const Vector4 &rhs);
 			Vector4 operator*(const float scalar);
+			Vector4& operator+=(const Vector4 &rhs);
+			Vector4& operator-=(const Vector4 &rhs);
+			Vector4& operator*=(const float scalar);
 
-			Vector4& operator+=(const Vector4& rhs);
-			Vector4& operator-=(const Vector4& rhs);
-
+			/* Comperative Operators */
+			unsigned char operator>(const Vector4 &rhs);
+			unsigned char operator<(const Vector4 &rhs);
 			friend std::ostream& operator<<(std::ostream &os, const Vector4 &other);
 		};
 

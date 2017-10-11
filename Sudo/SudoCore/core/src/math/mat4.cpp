@@ -11,14 +11,14 @@ namespace sudo { namespace math {
 	}
 
 	Matrix4x4::Matrix4x4(float diagonal) {
-		for (int i = 0; i < 4 * 4; i++) {
+		for (int i = 0; i < 16; i++) {
 			elements[i] = 0.0f;
 		}
 
-		elements[0 + 0 * 4] = diagonal;
-		elements[1 + 1 * 4] = diagonal;
-		elements[2 + 2 * 4] = diagonal;
-		elements[3 + 3 * 4] = diagonal;
+		elements[0 + (0 * 4)] = diagonal;
+		elements[1 + (1 * 4)] = diagonal;
+		elements[2 + (2 * 4)] = diagonal;
+		elements[3 + (3 * 4)] = diagonal;
 	}
 
 	Matrix4x4 Matrix4x4::identity() {
