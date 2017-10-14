@@ -21,6 +21,7 @@ namespace sudo { namespace sudo_system {
 			}
 
 			// Bind stuff and set model_matrix accordingly
+			m_shader->setUniformMatrix4x4("view_matrix", math::Matrix4x4::Rotation(renderObject->GetEntityTransform()->angle, math::Vector3::Forward()));
 			m_shader->setUniformMatrix4x4("model_matrix", math::Matrix4x4::Translation(renderObject->GetEntityTransform()->position));
 			renderObject->bind();
 
@@ -36,7 +37,7 @@ namespace sudo { namespace sudo_system {
 		glewInit();
 		glewExperimental = true;
 
-		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\unlit_shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\unlit_shader_fragment.txt");
+		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\unlit_shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\unlit_shader_fragment.txt");
 		m_shader->enable();
 		m_shader->setUniform1f("myTexture", 0);
 

@@ -15,7 +15,7 @@ out float out_textureMode;
 
 void main() 
 {
-	// Model * View * Projection -> Matrix
+	// Model * View * Projection -> MVP-matrix
 	gl_Position = projection_matrix * view_matrix * model_matrix * vec4(in_pos.x, in_pos.y, in_pos.z, 1.0);
 
 	out_texCoords = in_texCoords;

@@ -10,30 +10,28 @@ class App : SudoClass {
 private:
 	SudoCore coreEngine;
 
-	ecs::Entity *entity, *entity2;
+	ecs::Entity *entity;
 	
 public:
 	App() 
 	{
-		coreEngine.init(math::Vector2(800, 600), "Sudo Game Engine", this);
+		coreEngine.init(math::Vector2(600, 400), "Sudo Game Engine", this);
 	}
 
-	void Update()
+	void Update() override
 	{
-		renderer->Draw(entity2->GetComponent<ecs::SpriteComponent>());
 		renderer->Draw(entity->GetComponent<ecs::SpriteComponent>());
+		if (input->GetKey("x"))
+			entity->transform->angle += 0.5f;
 	}
 
 	void Start() override
 	{
 		entity = new ecs::Entity("image");
-		entity->AddComponent(new ecs::SpriteComponent("D:\\temp\\sqyare.png"));
-		entity->GetComponent<ecs::SpriteComponent>()->SetColor(math::Vector4(1, 1, 1, 0.5f));
+		entity->AddComponent(new ecs::SpriteComponent("C:\\temp\\cat.png"));
+		//entity->GetComponent<ecs::SpriteComponent>()->SetColor(math::Vector4(1, 1, 1, 0.5f));
 
-		entity2 = new ecs::Entity("image2");
-		entity2->AddComponent(new ecs::SpriteComponent("D:\\temp\\square.png"));
-
-		config->SetFPS(120);
+		config->SetFPS(60);
 		config->SetBackgroundColor(math::Vector4(0.1, 0.1, 0.1, 1));
 	}
 };

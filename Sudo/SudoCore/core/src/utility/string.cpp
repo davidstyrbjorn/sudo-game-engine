@@ -33,6 +33,17 @@ namespace sudo { namespace utility {
 		return newString;
 	}
 
+	SudoString SudoString::operator+(const std::string & rhs)
+	{
+		SudoString newString(this->m_characterData);
+
+		for (int i = 0; i < rhs.length(); i++) {
+			newString.m_characterData += rhs.at(i);
+		}
+
+		return newString;
+	}
+
 	void SudoString::assign(char * a_characterData)
 	{
 		m_characterData = a_characterData;

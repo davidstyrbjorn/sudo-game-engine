@@ -13,6 +13,9 @@ SudoCore::SudoCore()
 
 void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, SudoClass *a_engineInstance)
 {
+	/* Print the current version of the engine */
+	std::cout << GetSudoVersion() << std::endl;
+
 	glewInit();
 	glewExperimental = true;
 
@@ -57,9 +60,6 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 
 	timer = new utility::Timer();
 	timer->Start();
-
-	/* Print the current version of the engine */
-	std::cout << GetSudoVersion() << std::endl;
 
 	/* Start the game_loop; This means Start gets called before any Update calls */
 	game_loop();

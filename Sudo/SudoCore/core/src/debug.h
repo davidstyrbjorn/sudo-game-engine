@@ -1,5 +1,7 @@
 #pragma once
 
+#include"utility\string.h"
+
 namespace sudo {
 
 	enum LogType {
@@ -16,8 +18,12 @@ namespace sudo {
 			return &instance;
 		}
 
+		/* Logs message to a text file used only for bad breaks */
 		void logMessage(const char* a_message, LogType a_type = LogType::Debug);
+
+		/* Prints the error message to the console */
 		void printMessage(const char* a_message, LogType a_type = LogType::Debug);
+		void printMessage(utility::SudoString a_message, LogType a_type = LogType::Debug);
 
 	private:
 		DEBUG() { }

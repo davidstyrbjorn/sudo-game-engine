@@ -32,6 +32,7 @@ namespace sudo { namespace utility {
 
 		SudoString operator+(const char* rhs);
 		SudoString operator+(const SudoString &rhs);
+		SudoString operator+(const std::string &rhs);
 
 		/* Public Member Functions */
 

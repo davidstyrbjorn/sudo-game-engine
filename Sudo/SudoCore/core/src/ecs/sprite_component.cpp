@@ -17,8 +17,6 @@ namespace sudo { namespace ecs {
 
 		// Used when shading
 		m_type = sudo::RenderableType::SPRITE;
-
-		
 	}
 
 	void SpriteComponent::Start()
@@ -28,12 +26,16 @@ namespace sudo { namespace ecs {
 		int width, height;
 		unsigned char* image = SOIL_load_image(m_imagePath, &width, &height, 0, SOIL_LOAD_RGBA);
 		m_size = math::Vector2(width, height);
+		if (image == nullptr) 
+		{	
+			DEBUG::getInstance()->printMessage( (std::string("Failed to load image at path: \"") + std::string(m_imagePath)).c_str(), sudo::LogType::Error);
+		}
 
 		float vertices[] = {
-			// Vertex data					  color data	 texture coordinates	         									
-			0, 0, 0.0f,						    1, 1, 1,         0,0,
+			// Vertex data				  color data	 texture coordinates	         									
+			0, 0, 0.0f,						1, 1, 1,         0,0,
 			0, m_size.y, 0.0f,				1, 1, 1,         0,1,
-			m_size.x, m_size.y, 0.0f,	1, 1, 1,		 1,1,
+			m_size.x, m_size.y, 0.0f,		1, 1, 1,		 1,1,
 			m_size.x, 0.0f, 0.0f,			1, 1, 1,         1,0
 		};
 		unsigned int indices[] = {

@@ -10,7 +10,8 @@ namespace sudo { namespace ecs {
 		/* Class Data */
 		math::Vector3 position;
 		math::Vector3 scale;
-
+		float angle;
+			 
 		Transform();
 
 		/* Methods */

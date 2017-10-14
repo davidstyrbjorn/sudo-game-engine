@@ -77,5 +77,4 @@ namespace sudo {
 		/* Deliver the log message to the file then close it */
 		std::cout << finalMessage << std::endl;
 	}
-
 }
