@@ -22,6 +22,7 @@
 #include"src\systems\world_system.h"
 #include"src\systems\render_system.h"
 #include"src\systems\settings_system.h"
+#include"src\systems\sound_system.h"
 
 #include"src\graphics\shader.h"
 #include"src\graphics\window.h"

@@ -27,7 +27,7 @@ public:
 
 	void Start() override
 	{
-		entity = new ecs::Entity("image");
+		entity = new ecs::Entity("image");     
 		entity->AddComponent(new ecs::SpriteComponent("C:\\temp\\cat.png"));
 		//entity->GetComponent<ecs::SpriteComponent>()->SetColor(math::Vector4(1, 1, 1, 0.5f));
 

@@ -149,6 +149,7 @@
     <ClCompile Include="core\src\math\vector3.cpp" />
     <ClCompile Include="core\src\systems\render_system.cpp" />
     <ClCompile Include="core\src\systems\settings_system.cpp" />
+    <ClCompile Include="core\src\systems\sound_system.cpp" />
     <ClCompile Include="core\src\systems\world_system.cpp" />
     <ClCompile Include="core\src\utility\linked_list.cpp" />
     <ClCompile Include="core\src\utility\string.cpp" />

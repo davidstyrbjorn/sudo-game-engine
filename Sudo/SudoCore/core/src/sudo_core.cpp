@@ -44,9 +44,13 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	m_worldSystem = sudo_system::WorldSystem::Instance();
 	m_worldSystem->Enable();
 
-	/* Render system */
+	/* Render System */
 	m_renderSystem = sudo_system::RenderSystem::Instance();
 	m_renderSystem->Enable();
+
+	/* Sound System */
+	m_soundSystem = sudo_system::SoundSystem::Instance();
+	m_soundSystem->Enable();
 
 	/* ========================================= */
 
@@ -57,6 +61,7 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	/* Call Start on systems */
 	m_worldSystem->Start();
 	m_renderSystem->Start();
+	m_soundSystem->Start();
 
 	timer = new utility::Timer();
 	timer->Start();
@@ -75,6 +80,7 @@ void SudoCore::clean_up()
 	m_worldSystem->CleanUp();
 	m_renderSystem->CleanUp();
 	m_settingsSystem->CleanUp();
+	m_soundSystem->CleanUp();
 
 	delete m_engineInstance;
 	delete m_window;
