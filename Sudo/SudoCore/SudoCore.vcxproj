@@ -130,12 +130,15 @@
   <ItemGroup>
     <ClCompile Include="core\src\ecs\box_collider2D.cpp" />
     <ClCompile Include="core\src\ecs\rectangle_component.cpp" />
+    <ClCompile Include="core\src\ecs\sound_component.cpp" />
     <ClCompile Include="core\src\ecs\sprite_component.cpp" />
     <ClCompile Include="core\src\ecs\triangle_component.cpp" />
     <ClCompile Include="core\src\graphics\buffers\buffer.cpp" />
     <ClCompile Include="core\src\graphics\buffers\vertex_array_buffer.cpp" />
     <ClCompile Include="core\src\graphics\buffers\vertex_buffer.cpp" />
     <ClCompile Include="core\src\graphics\renderable2d.cpp" />
+    <ClCompile Include="core\src\sound\sound_buffer.cpp" />
+    <ClCompile Include="core\src\sound\sound_source.cpp" />
     <ClCompile Include="core\src\sudo_core.cpp" />
     <ClCompile Include="core\src\debug.cpp" />
     <ClCompile Include="core\src\ecs\entity.cpp" />
@@ -163,6 +166,7 @@
     <ClInclude Include="core\src\ecs\component.h" />
     <ClInclude Include="core\src\ecs\entity.h" />
     <ClInclude Include="core\src\ecs\rectangle_component.h" />
+    <ClInclude Include="core\src\ecs\sound_component.h" />
     <ClInclude Include="core\src\ecs\sprite_component.h" />
     <ClInclude Include="core\src\ecs\transform_component.h" />
     <ClInclude Include="core\src\ecs\triangle_component.h" />
@@ -173,6 +177,9 @@
     <ClInclude Include="core\src\graphics\renderable2d.h" />
     <ClInclude Include="core\src\math\math.h" />
     <ClInclude Include="core\src\math\vector4.h" />
+    <ClInclude Include="core\src\sound\sound_buffer.h" />
+    <ClInclude Include="core\src\sound\sound_include.h" />
+    <ClInclude Include="core\src\sound\sound_source.h" />
     <ClInclude Include="core\src\sudo_class.h" />
     <ClInclude Include="core\src\core_settings.h" />
     <ClInclude Include="core\definitions.h" />

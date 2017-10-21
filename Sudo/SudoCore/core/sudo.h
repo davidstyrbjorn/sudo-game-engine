@@ -13,6 +13,7 @@
 #include"src\ecs\rectangle_component.h"
 #include"src\ecs\triangle_component.h"
 #include"src\ecs\sprite_component.h"
+#include"src\ecs\sound_component.h"
 
 #include"src\ecs\box_collider2D.h"
 #include"src\ecs\component.h"
@@ -40,6 +41,9 @@
 #include"src\utility\linked_list.h"
 #include"src\utility\string.h"
 #include"src\utility\sudo_random.h"
+
+#include"src\sound\sound_buffer.h"
+#include"src\sound\sound_source.h"
 
 #include"src\debug.h"
 

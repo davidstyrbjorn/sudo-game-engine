@@ -21,15 +21,21 @@ public:
 	void Update() override
 	{
 		renderer->Draw(entity->GetComponent<ecs::SpriteComponent>());
+
 		if (input->GetKey("x"))
 			entity->transform->angle += 0.5f;
+
+		if (input->GetKey("f"))
+			entity->GetComponent<ecs::SoundComponent>()->GetSoundSource()->play();
 	}
 
 	void Start() override
-	{
+	{	
 		entity = new ecs::Entity("image");     
 		entity->AddComponent(new ecs::SpriteComponent("C:\\temp\\cat.png"));
-		//entity->GetComponent<ecs::SpriteComponent>()->SetColor(math::Vector4(1, 1, 1, 0.5f));
+		entity->AddComponent(new ecs::SoundComponent("C:\\temp\\sound.wav"));
+
+		entity->GetComponent<ecs::SoundComponent>()->GetSoundSource()->play();
 
 		config->SetFPS(60);
 		config->SetBackgroundColor(math::Vector4(0.1, 0.1, 0.1, 1));
