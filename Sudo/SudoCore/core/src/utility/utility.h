@@ -3,6 +3,8 @@
 #include"../../sudo.h"
 #include<fstream>
 
+#include"../debug.h"
+
 namespace sudo { namespace utility {
 
 	static std::string GetFileContent(const char* a_fileName) {
@@ -12,7 +14,7 @@ namespace sudo { namespace utility {
 			(std::istreambuf_iterator<char>()));
 
 		if (!file.is_open()) {
-			std::cout << "Could not open " << a_fileName << std::endl;
+			DEBUG::getInstance()->printMessage(a_fileName, LogType::Error);
 		}
 
 		return content;

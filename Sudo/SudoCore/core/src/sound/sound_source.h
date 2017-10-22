@@ -16,10 +16,15 @@ namespace sudo { namespace sound {
 		/* Default constructor */
 		SoundSource(ALuint a_buffer);
 
+		/* Destructor */
+		~SoundSource();
+
 		/* Property functions */
 		const math::Vector3& getPosition() { return m_position; }
 		void setPosition(const math::Vector3& a_position);
 		void setVolume(const float a_gain);
+		void setLooping(unsigned char a_loop);
+		void setPitch(const float a_pitch);
 
 		/* State modify methods */
 		void play();

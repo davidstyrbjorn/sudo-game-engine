@@ -12,6 +12,9 @@ namespace sudo { namespace sound {
 	public:
 		/* Default constructor */
 		SoundBuffer();
+		
+		/* Destructor */
+		~SoundBuffer();
 
 		/* Sets the sound buffers data */
 		void setData(int a_format, char* a_data, int a_size, int a_sampleRate);

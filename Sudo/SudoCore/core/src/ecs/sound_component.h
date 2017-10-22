@@ -15,6 +15,8 @@ namespace sudo { namespace ecs {
 		sound::SoundBuffer *soundBuffer;
 		sound::SoundSource *soundSource;
 
+		const char* m_soundPath;
+
 	public:
 		/* Default constructor takes in path to .wav file for initalizing */
 		SoundComponent(const char* a_soundPath);
@@ -24,7 +26,7 @@ namespace sudo { namespace ecs {
 
 		/* Component base methods */
 		void Update() override;
-		void Start() override { } 
+		void Start() override;
 	};
 
 } } 

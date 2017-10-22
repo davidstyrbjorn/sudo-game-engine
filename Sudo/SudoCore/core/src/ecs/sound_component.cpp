@@ -7,6 +7,8 @@
 
 #include"entity.h"
 
+#include"../debug.h"
+
 namespace sudo { namespace ecs {
 
 bool isBigEndian()
@@ -85,9 +87,11 @@ char* loadWAV(const char* fn, int& chan, int& samplerate, int& bps, int& size, i
 
 SoundComponent::SoundComponent(const char * a_soundPath)
 {
+	m_soundPath = a_soundPath;
+
 	// Loading .wav file
 	int format, size, sampleRate, channel, bps;
-	char* data = loadWAV(a_soundPath, channel, sampleRate, bps, size, format);
+	char* data = loadWAV(m_soundPath, channel, sampleRate, bps, size, format);
 
 	// Creating the sound buffer
 	soundBuffer = new sound::SoundBuffer();
@@ -97,12 +101,18 @@ SoundComponent::SoundComponent(const char * a_soundPath)
 	soundSource = new sound::SoundSource(soundBuffer->getBufferId());
 }
 
+void SoundComponent::Start() 
+{
+
+}
+
 void SoundComponent::Update() 
 {
 	// Update the source's position to be identical to the m_entityHolder-transform->position! 
-	// Important for the dynamic sound thing
-	//if(soundSource->getPosition() != m_entityHolder->transform->position)
+	// Important for the dynamic sound OpenAL provides
+	if (soundSource->getPosition() != m_entityHolder->transform->position) {
 		//soundSource->setPosition(m_entityHolder->transform->position);
+	}
 }
 
 sound::SoundSource *SoundComponent::GetSoundSource() 

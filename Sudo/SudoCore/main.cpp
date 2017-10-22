@@ -20,10 +20,7 @@ public:
 
 	void Update() override
 	{
-		renderer->Draw(entity->GetComponent<ecs::SpriteComponent>());
-
-		if (input->GetKey("x"))
-			entity->transform->angle += 0.5f;
+		renderer->Draw(entity->GetComponent<ecs::RectangleComponent>());
 
 		if (input->GetKey("f"))
 			entity->GetComponent<ecs::SoundComponent>()->GetSoundSource()->play();
@@ -32,10 +29,8 @@ public:
 	void Start() override
 	{	
 		entity = new ecs::Entity("image");     
-		entity->AddComponent(new ecs::SpriteComponent("C:\\temp\\cat.png"));
-		entity->AddComponent(new ecs::SoundComponent("C:\\temp\\sound.wav"));
-
-		entity->GetComponent<ecs::SoundComponent>()->GetSoundSource()->play();
+		entity->AddComponent(new ecs::RectangleComponent(math::Vector2(40, 40), math::Vector4(1, 1, 0, 1)));
+		entity->AddComponent(new ecs::SoundComponent("D:\\temp\\sound.wav"));
 
 		config->SetFPS(60);
 		config->SetBackgroundColor(math::Vector4(0.1, 0.1, 0.1, 1));
