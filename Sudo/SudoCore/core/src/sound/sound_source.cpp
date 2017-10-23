@@ -46,7 +46,10 @@ void SoundSource::setPitch(const float a_pitch)
 
 void SoundSource::play()
 {
-	alSourcePlay(source);
+	ALint state;
+	alGetSourcei(source, AL_SOURCE_STATE, &state);
+	if(state != AL_PLAYING)
+		alSourcePlay(source);
 }
 
 void SoundSource::pause() 

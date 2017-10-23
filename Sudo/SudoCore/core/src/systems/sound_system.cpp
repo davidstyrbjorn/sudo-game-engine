@@ -10,7 +10,7 @@ namespace sudo { namespace sudo_system {
 
 	SoundSystem* SoundSystem::_instance = nullptr;
 
-	void SoundSystem::Start()
+	SoundSystem::SoundSystem()
 	{
 		// Open the soundcard device
 		m_device = alcOpenDevice(NULL);
@@ -28,7 +28,13 @@ namespace sudo { namespace sudo_system {
 		}
 
 		alListenerf(AL_GAIN, 1);
-		alListener3f(AL_POSITION, 0, 0, 0);
+		//alListener3f(AL_POSITION, 0, 0, 0);
+		this->SetListenerPosition(math::Vector3(0, 0, 0));
+	}
+
+	void SoundSystem::Start()
+	{
+
 	}
 
 	void SoundSystem::CleanUp()

@@ -15,7 +15,7 @@ namespace sudo { namespace sudo_system {
 
 	class SoundSystem : public SudoSystem {
 	private:
-		SoundSystem() { }
+		SoundSystem();
 		static SoundSystem *_instance;
 
 	public:

@@ -36,6 +36,16 @@ namespace sudo { namespace sudo_system {
 	void SettingsSystem::SetWindowSize(const math::Vector2& a_newWindowSize) 
 	{
 		m_windowSize = a_newWindowSize;
+
+		// Audio Listener should be in the middle of the screen
+		/*
+		This throws unresolved external error, why the fuck does it do that!?
+		SoundSystem *temp = SoundSystem::Instance();
+		temp->SetListenerPosition(math::Vector3(a_newWindowSize.x / 2, a_newWindowSize.y / 2, 0));
+		*/
+
+		// This is not what I want to do 
+		alListener3f(AL_POSITION, a_newWindowSize.x/2, a_newWindowSize.y/2, -1);
 	}
 
 	void SettingsSystem::SetBackgroundColor(const math::Vector4& a_newBackgroundColor)

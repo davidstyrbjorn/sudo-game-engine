@@ -29,6 +29,10 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	/*               ENABLE SYSTEMS              */
 	/* ========================================= */
 
+	/* Sound System */
+	m_soundSystem = sudo_system::SoundSystem::Instance();
+	m_soundSystem->Enable();
+
 	/* Settings system */
 	m_settingsSystem = sudo_system::SettingsSystem::Instance();
 	m_settingsSystem->Enable();
@@ -48,14 +52,7 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	m_renderSystem = sudo_system::RenderSystem::Instance();
 	m_renderSystem->Enable();
 
-	/* Sound System */
-	m_soundSystem = sudo_system::SoundSystem::Instance();
-	m_soundSystem->Enable();
-
 	/* ========================================= */
-
-	// Special case
-	m_soundSystem->Start();
 
 	/* User-end stuff, important we call this last after all the init stuff is done! */
 	/* Call the Start method for the end-user */
