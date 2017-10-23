@@ -31,7 +31,7 @@ void SoundSource::setPosition(const math::Vector3 & a_position)
 
 void SoundSource::setVolume(const float a_gain)
 {
-	alSourcef(source, AL_GAIN, (a_gain));
+	alSourcef(source, AL_GAIN, a_gain);
 }
 
 void SoundSource::setLooping(unsigned char a_loop) 

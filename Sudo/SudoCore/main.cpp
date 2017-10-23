@@ -21,9 +21,6 @@ public:
 	void Update() override
 	{
 		renderer->Draw(entity->GetComponent<ecs::RectangleComponent>());
-
-		if (input->GetKey("f"))
-			entity->GetComponent<ecs::SoundComponent>()->GetSoundSource()->play();
 	}
 
 	void Start() override
@@ -37,9 +34,11 @@ public:
 	}
 };
 
+/*
 int main() 
 {
 	App* app = new App();
 
 	return EXIT_SUCCESS;
 }
+*/

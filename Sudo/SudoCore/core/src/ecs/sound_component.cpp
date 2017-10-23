@@ -111,7 +111,7 @@ void SoundComponent::Update()
 	// Update the source's position to be identical to the m_entityHolder-transform->position! 
 	// Important for the dynamic sound OpenAL provides
 	if (soundSource->getPosition() != m_entityHolder->transform->position) {
-		//soundSource->setPosition(m_entityHolder->transform->position);
+		soundSource->setPosition(m_entityHolder->transform->position);
 	}
 }
 
