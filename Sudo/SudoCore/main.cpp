@@ -44,7 +44,7 @@ public:
 	{	
 		entity = new ecs::Entity("image");     
 		entity->AddComponent(new ecs::RectangleComponent(math::Vector2(40, 40), math::Vector4(1, 1, 0, 1)));
-		entity->AddComponent(new ecs::SoundComponent("C:\\temp\\sound.wav"));
+		entity->AddComponent(new ecs::SoundComponent("D:\\temp\\sound.wav"));
 
 		config->SetFPS(60);
 		config->SetBackgroundColor(math::Vector4(0.1, 0.1, 0.1, 1));

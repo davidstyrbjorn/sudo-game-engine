@@ -1,12 +1,14 @@
 #pragma once
 
-namespace sudo { namespace graphics { 
-
-	class Renderable2D;
-
-} } 
+#include"../graphics/renderable2d_temp.h"
 
 namespace sudo { namespace sudo_system {
+
+#define RENDERER_MAX_SPRITES 10000;
+#define RENDERER_VERTEX_SIZE sizeof(graphics::VertexData)
+#define RENDERER_SPRITE_SIZE RENDERER_VERTEX_SIZE * 4
+#define RENDERER_BUFFER_SIZE RENDERER_SPRITE_SIZE * RENDERER_MAX_SPRITES
+#define RENDERER_INDICIES_SIZE RENDERER_MAX_SPRITES * 6
 
 	class BatchRenderSystem {
 	private:
@@ -14,6 +16,9 @@ namespace sudo { namespace sudo_system {
 		BatchRenderSystem();
 		// Destructor 
 		~BatchRenderSystem();
+
+		unsigned int m_VBO;
+		unsigned int m_VAO;
 
 	public:
 		// Renders the current buffer
