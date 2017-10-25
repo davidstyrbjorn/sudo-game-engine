@@ -6,7 +6,11 @@ namespace sudo {
 	namespace sound {
 		class SoundBuffer;
 		class SoundSource;
-} }
+	} 
+	namespace graphics {
+		class Renderable2D;
+	}
+}
 
 namespace sudo { namespace ecs { 
 
@@ -14,6 +18,8 @@ namespace sudo { namespace ecs {
 	private:
 		sound::SoundBuffer *soundBuffer;
 		sound::SoundSource *soundSource;
+
+		graphics::Renderable2D *m_entityRenderableComponent;
 
 		const char* m_soundPath;
 

@@ -33,6 +33,7 @@ public:
 		
 		if (input->GetKey("f")) {
 			entity->GetComponent<ecs::SoundComponent>()->GetSoundSource()->play();
+			entity->GetComponent<ecs::RectangleComponent>()->SizeUp(5);
 		}
 		if (input->GetKey("x")) {
 			entity->GetComponent<ecs::SoundComponent>()->GetSoundSource()->stop();
@@ -43,7 +44,7 @@ public:
 	{	
 		entity = new ecs::Entity("image");     
 		entity->AddComponent(new ecs::RectangleComponent(math::Vector2(40, 40), math::Vector4(1, 1, 0, 1)));
-		entity->AddComponent(new ecs::SoundComponent("D:\\temp\\door_creak.wav"));
+		entity->AddComponent(new ecs::SoundComponent("C:\\temp\\sound.wav"));
 
 		config->SetFPS(60);
 		config->SetBackgroundColor(math::Vector4(0.1, 0.1, 0.1, 1));
