@@ -34,6 +34,7 @@ namespace sudo { namespace sudo_system {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		GLushort indicies[RENDERER_INDICIES_SIZE];
+			
 	}
 
 	void BatchRenderSystem::flush()
