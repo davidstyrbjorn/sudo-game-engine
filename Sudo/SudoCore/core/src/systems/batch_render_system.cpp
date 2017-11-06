@@ -39,12 +39,15 @@ namespace sudo { namespace sudo_system {
 
 	void BatchRenderSystem::flush()
 	{
-
+		m_primitiveCount = 0;
 	}
 
 	void BatchRenderSystem::submit(const graphics::Renderable2D &a_other)
 	{
+		m_primitiveCount += 1;
 
+		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+		glBufferSubData(GL_ARRAY_BUFFER, sizeof(graphics::VertexData)*m_primitiveCount, sizeof(graphics::VertexData), );
 	}
 
 } } 

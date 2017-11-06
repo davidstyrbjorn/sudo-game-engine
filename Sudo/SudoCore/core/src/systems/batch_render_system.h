@@ -21,6 +21,8 @@ namespace sudo { namespace sudo_system {
 		unsigned int m_VBO;
 		unsigned int m_VAO;
 
+		unsigned short int m_primitiveCount;
+
 	public:
 		// Renders the current buffer
 		void flush();
