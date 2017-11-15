@@ -1,37 +1,51 @@
 #pragma once
 
-#include"../graphics/renderable2d_temp.h"
+#include"sudo_system.h"
+#include"../graphics/renderable2d.h"
 
-namespace sudo { namespace sudo_system {
 
-#define RENDERER_MAX_SPRITES 10000
-#define RENDERER_VERTEX_SIZE sizeof(graphics::VertexData)
+namespace sudo {
+	namespace graphics {
+		class Shader;
+	}
+}
 
-#define RENDERER_SPRITE_SIZE RENDERER_VERTEX_SIZE * 4
-#define RENDERER_BUFFER_SIZE RENDERER_SPRITE_SIZE * RENDERER_MAX_SPRITES
-#define RENDERER_INDICIES_SIZE RENDERER_MAX_SPRITES * 6
+namespace sudo { namespace sudo_system { 
 
-	class BatchRenderSystem {
+// Renderer only takes in triangles for the moment so primitive = 3 vertices
+#define MAX_PRIMITIVES 20000
+#define VERTEX_SIZE sizeof(graphics::VertexData)
+#define PRIMITIVE_SIZE VERTEX_SIZE * 3
+#define BUFFER_SIZE PRIMITIVE_SIZE * MAX_PRIMITIVES
+
+	class BatchRendererSystem : public SudoSystem {
 	private:
-		// Constructor 
-		BatchRenderSystem();
-		// Destructor 
-		~BatchRenderSystem();
-
-		unsigned int m_VBO;
-		unsigned int m_VAO;
-
-		unsigned short int m_primitiveCount;
+		/* Private constructor, singleton class */
+		BatchRendererSystem();
+		static BatchRendererSystem *_instance;
 
 	public:
-		// Renders the current buffer
-		void flush();
+		/* Method to get pointer to system */
+		static BatchRendererSystem *Instance();
 
-		// Inits the neccesary OpenGL stuff
-		void init();
+		/* Method from SudoSystem base class */
+		void Enable() { m_isActive = true; }
+		void Disable() { m_isActive = false; }
+		void CleanUp() override;
+		void Update() override { }
+		void Start() override;
+			
+		// Renderer routines
+		void Begin();
+		void Submit(graphics::VertexData *a_vertices);
+		void Flush();
 
-		// Submits to the current buffer
-		void submit(const graphics::Renderable2D &a_other);
+	private:
+		/* Batch Renderer data */
+		graphics::Shader *m_shader;
+		bool m_isActive;
+		unsigned int m_buffer;
+		unsigned short int m_primitiveCount; // 16-bit integer (65,536)
 	};
 
-} }
+} } 

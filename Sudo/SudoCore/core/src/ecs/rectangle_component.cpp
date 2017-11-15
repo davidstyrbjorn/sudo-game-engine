@@ -25,15 +25,15 @@ namespace sudo { namespace ecs {
 
 	void RectangleComponent::Start()
 	{
-		m_entityTransform = m_entityHolder->transform;
-		
-		float vertices[] = {
-			// Vertex data								         Color data									
-			0, 0, 0.0f,							m_color.x, m_color.y, m_color.z,
-			0, m_size.y, 0.0f,				m_color.x, m_color.y, m_color.z,
-			m_size.x, m_size.y, 0.0f,	m_color.x, m_color.y, m_color.z,
-			m_size.x, 0.0f, 0.0f,			m_color.x, m_color.y, m_color.z
-		};										
+		m_entityTransform = m_entityHolder->transform;	
+
+		math::Vector4 colorVector = math::Vector4(m_color.x, m_color.y, m_color.z, m_color.w);
+		graphics::VertexData vertices_[] = {
+			graphics::VertexData(math::Vector3(0.0f,0.0f,0.0f),			colorVector, math::Vector2(0,0)),
+			graphics::VertexData(math::Vector3(0.0f,m_size.y,0.0f),		colorVector, math::Vector2(0,0)),
+			graphics::VertexData(math::Vector3(m_size.x,m_size.y,0.0f), colorVector, math::Vector2(0,0)),
+			graphics::VertexData(math::Vector3(m_size.x,0.0f,0.0f),		colorVector, math::Vector2(0,0))
+		};
 		unsigned int indices[] = {
 			0,1,2,
 			0,2,3
@@ -47,7 +47,7 @@ namespace sudo { namespace ecs {
 		m_vertexArray->bind();
 
 		/* Vertex buffer object */
-		m_vertexBuffer = new graphics::VertexBuffer(vertices, sizeof(vertices), SudoBufferType::VERTEX_COLOR);
+		m_vertexBuffer = new graphics::VertexBuffer(vertices_, sizeof(vertices_));
 
 		/* Index buffer */
 		m_elementBuffer = new graphics::Buffer(GL_ELEMENT_ARRAY_BUFFER, indices, sizeof(indices));
@@ -65,16 +65,8 @@ namespace sudo { namespace ecs {
 
 	void RectangleComponent::recolored()
 	{
-		float vertices[] = {
-			// Vertex data								         Color data									
-			0, 0, 0.0f,							m_color.x, m_color.y, m_color.z,
-			0, m_size.y, 0.0f,				m_color.x, m_color.y, m_color.z,
-			m_size.x, m_size.y, 0.0f,	m_color.x, m_color.y, m_color.z,
-			m_size.x, 0.0f, 0.0f,			m_color.x, m_color.y, m_color.z
-		};
-
 		m_vertexArray->bind();
-		m_vertexBuffer->dataModified(vertices, sizeof(vertices));
+		m_vertexBuffer->dataModified(m_color);
 	}
 
 	void RectangleComponent::resized()

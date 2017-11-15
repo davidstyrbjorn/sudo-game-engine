@@ -31,12 +31,12 @@ namespace sudo { namespace ecs {
 			DEBUG::getInstance()->printMessage( (std::string("Failed to load image at path: \"") + std::string(m_imagePath)).c_str(), sudo::LogType::Error);
 		}
 
-		float vertices[] = {
-			// Vertex data				  color data	 texture coordinates	         									
-			0, 0, 0.0f,						1, 1, 1,         0,0,
-			0, m_size.y, 0.0f,				1, 1, 1,         0,1,
-			m_size.x, m_size.y, 0.0f,		1, 1, 1,		 1,1,
-			m_size.x, 0.0f, 0.0f,			1, 1, 1,         1,0
+		math::Vector4 colorVector = math::Vector4(m_color.x, m_color.y, m_color.z, m_color.w);
+		graphics::VertexData vertices_[] = {
+			graphics::VertexData(math::Vector3(0.0f,0.0f,0.0f),			colorVector, math::Vector2(0,0)),
+			graphics::VertexData(math::Vector3(0.0f,m_size.y,0.0f),		colorVector, math::Vector2(0,1)),
+			graphics::VertexData(math::Vector3(m_size.x,m_size.y,0.0f), colorVector, math::Vector2(1,1)),
+			graphics::VertexData(math::Vector3(m_size.x,0.0f,0.0f),		colorVector, math::Vector2(1,0))
 		};
 		unsigned int indices[] = {
 			0,1,2,
@@ -51,7 +51,7 @@ namespace sudo { namespace ecs {
 		m_vertexArray->bind();
 
 		/* Vertex buffer object */
-		m_vertexBuffer = new graphics::VertexBuffer(vertices, sizeof(vertices), SudoBufferType::VERTEX_COLOR_TEXTURE);
+		m_vertexBuffer = new graphics::VertexBuffer(vertices_, sizeof(vertices_));
 
 		/* Index buffer */
 		m_elementBuffer = new graphics::Buffer(GL_ELEMENT_ARRAY_BUFFER, indices, sizeof(indices));

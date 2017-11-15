@@ -29,9 +29,6 @@ namespace sudo { namespace ecs {
 		graphics::VertexBuffer *m_vertexBuffer;
 		graphics::Buffer *m_elementBuffer;
 
-		unsigned int TCBO;
-		unsigned int texture;
-
 		/* Method from Renderable2D base */
 		void resized() override;
 		void recolored() override;

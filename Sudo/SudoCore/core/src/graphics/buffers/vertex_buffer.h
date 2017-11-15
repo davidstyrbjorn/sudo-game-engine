@@ -2,6 +2,8 @@
 
 #include"../../../definitions.h"
 
+#include"../renderable2d.h"
+
 namespace sudo { namespace graphics { 
 
 	class VertexBuffer
@@ -12,7 +14,7 @@ namespace sudo { namespace graphics {
 
 	public:
 		/* Constructor */
-		VertexBuffer(float a_data[], uint a_size, SudoBufferType a_type);
+		VertexBuffer(VertexData* a_data, uint a_size);
 
 		/* Destructor */
 		virtual ~VertexBuffer();
@@ -24,6 +26,7 @@ namespace sudo { namespace graphics {
 		void unbind() const;
 
 		void dataModified(float a_data[], uint a_size);
+		void dataModified(const math::Vector4 &a_color);
 	};
 
 } }

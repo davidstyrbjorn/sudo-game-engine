@@ -16,6 +16,7 @@ namespace sudo {
 		class RenderSystem;
 		class SettingsSystem;
 		class SoundSystem;
+		class BatchRendererSystem;
 	}
 	class SudoClass;
 	class CoreSettings;
@@ -35,6 +36,7 @@ namespace sudo {
 		sudo_system::RenderSystem		*m_renderSystem;
 		sudo_system::SettingsSystem		*m_settingsSystem;
 		sudo_system::SoundSystem		*m_soundSystem;
+		sudo_system::BatchRendererSystem *m_batchRenderer;
 
 		utility::Timer *timer;
 
