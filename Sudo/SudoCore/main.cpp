@@ -7,8 +7,8 @@ using namespace utility;
 math::Vector4 colorVector = math::Vector4(1, 0, 0, 1);
 graphics::VertexData vertices[] = {
 	graphics::VertexData(math::Vector3(0,0,0),			colorVector, math::Vector2(0,0)),
-	graphics::VertexData(math::Vector3(0,40,0),			colorVector, math::Vector2(0,0)),
-	graphics::VertexData(math::Vector3(40,40,0),		colorVector, math::Vector2(0,0))
+	graphics::VertexData(math::Vector3(0,120,0),			colorVector, math::Vector2(0,0)),
+	graphics::VertexData(math::Vector3(120,120,0),		colorVector, math::Vector2(0,0))
 };
 
 /* Sandbox for testing implemented features */
@@ -18,7 +18,10 @@ private:
 	SudoCore coreEngine;
 
 	sudo_system::BatchRendererSystem *m_batchRenderer = sudo_system::BatchRendererSystem::Instance();
-	
+
+	int triangleWidth = 10;
+	int offset = 11;
+
 public:
 	App() 
 	{
@@ -27,7 +30,17 @@ public:
 
 	void Update() override
 	{
-		m_batchRenderer->Submit(vertices);
+		for (int x = 0; x < 64; x++) {
+			for (int y = 0; y < 48; y++) {
+				math::Vector4 colorVector = math::Vector4(1, 0, 0, 1);
+				graphics::VertexData vertices[] = {
+					graphics::VertexData(math::Vector3((offset*x),(offset*y),0),										colorVector, math::Vector2(0,0)), // Top left
+					graphics::VertexData(math::Vector3((offset*x),(offset*y) + triangleWidth,0),						colorVector, math::Vector2(0,0)), // Bottom left
+					graphics::VertexData(math::Vector3((offset*x) + triangleWidth,(offset*y) + triangleWidth,0),		colorVector, math::Vector2(0,0))  // Bottom right
+				};
+				m_batchRenderer->Submit(vertices);
+			}
+		}
 	}
 
 	void Start() override
