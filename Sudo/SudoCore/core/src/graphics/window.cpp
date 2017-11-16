@@ -69,7 +69,7 @@ void sudo::graphics::Window::setWindowPos(const math::Vector2 & a_pos)
 /* GLFW Callback Functions */
 void sudo::graphics::window_size_callback(GLFWwindow * window, int width, int height)
 {
-	std::memcpy((void*)nullptr, (void*)nullptr, sizeof(nullptr));
+
 }
 
 void sudo::graphics::framebuffer_size_callback(GLFWwindow * window, int width, int height)

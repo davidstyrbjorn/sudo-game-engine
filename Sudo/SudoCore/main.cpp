@@ -18,21 +18,23 @@ private:
 	SudoCore coreEngine;
 
 	sudo_system::BatchRendererSystem *m_batchRenderer = sudo_system::BatchRendererSystem::Instance();
+	utility::Timer clock;
 
-	int triangleWidth = 10;
-	int offset = 11;
+	int triangleWidth = 13;
+	int offset = 14;
 
 public:
 	App() 
 	{
-		coreEngine.init(math::Vector2(800, 600), "Sudo Game Engine", this);
+		coreEngine.init(math::Vector2(1200, 700), "Sudo Game Engine", this);
 	}
 
 	void Update() override
 	{
-		for (int x = 0; x < 64; x++) {
-			for (int y = 0; y < 48; y++) {
-				math::Vector4 colorVector = math::Vector4(1, 0, 0, 1);
+		// 3072 triangles with the batch renderer
+		for (int x = 0; x < 86; x++) {
+			for (int y = 0; y < 52; y++) {
+				math::Vector4 colorVector = math::Vector4(sin(clock.GetTicks()*0.005f), cos(clock.GetTicks()*0.005f), 0.5f, 1);
 				graphics::VertexData vertices[] = {
 					graphics::VertexData(math::Vector3((offset*x),(offset*y),0),										colorVector, math::Vector2(0,0)), // Top left
 					graphics::VertexData(math::Vector3((offset*x),(offset*y) + triangleWidth,0),						colorVector, math::Vector2(0,0)), // Bottom left
@@ -45,9 +47,10 @@ public:
 
 	void Start() override
 	{		   
-
 		config->SetFPS(60);
 		config->SetBackgroundColor(math::Vector4(0.1, 0.1, 0.1, 1));
+
+		clock.Start();
 	}
 };
 
