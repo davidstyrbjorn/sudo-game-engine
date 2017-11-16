@@ -45,30 +45,33 @@ namespace sudo { namespace sudo_system {
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(graphics::VertexData), reinterpret_cast<void*>(offsetof(graphics::VertexData, uvCoord))); // Vertex texture coordinates
 		glEnableVertexAttribArray(2);
 
-		GLuint indices[INDICES_COUNT];
+		m_indices.resize(INDICES_COUNT);
 		int offset = 0;
 		for (int i = 0; i < INDICES_COUNT; i += 6) 
 		{
-			indices[i + 0] = offset + 0;
-			indices[i + 1] = offset + 1;
-			indices[i + 2] = offset + 2;
+			m_indices[i + 0] = offset + 0;
+			m_indices[i + 1] = offset + 1;
+			m_indices[i + 2] = offset + 2;
 
-			indices[i + 3] = offset + 2;
-			indices[i + 4] = offset + 3;
-			indices[i + 5] = offset + 0;
+			m_indices[i + 3] = offset + 2;
+			m_indices[i + 4] = offset + 3;
+			m_indices[i + 5] = offset + 0;
 
 			offset += 4;
 		}
 
-		m_indexBuffer = new graphics::IndexBuffer(indices, sizeof(indices));
+		m_indexBuffer = new graphics::IndexBuffer(m_indices.data(), m_indices.size() * sizeof(unsigned int));
 
 		m_vertexArrayBuffer->unbind();
 	}
 
 	void BatchRendererSystem::Begin()
 	{
+		// Bind vertex array
 		m_vertexArrayBuffer->bind();
 
+		// Reset current buffer size
+		m_currentBufferSize = 0;
 		// Reset primitive count
 		m_primitiveCount = 0;
 
@@ -77,12 +80,12 @@ namespace sudo { namespace sudo_system {
 		glBufferData(GL_ARRAY_BUFFER, BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
 	}
 
-	void BatchRendererSystem::Submit(graphics::VertexData *a_vertices)
+	void BatchRendererSystem::Submit(graphics::VertexData *a_vertices, uint a_vertexCount)
 	{
 		// Offset up to the current empty border 
-		GLintptr initialOffset = (m_primitiveCount * (sizeof(graphics::VertexData) * 4));
+		m_currentBufferSize += (sizeof(graphics::VertexData)*a_vertexCount);
 		// Add data at this point, size will be three vertices
-		glBufferSubData(GL_ARRAY_BUFFER, initialOffset, sizeof(graphics::VertexData) * 4, a_vertices);
+		glBufferSubData(GL_ARRAY_BUFFER, m_currentBufferSize, sizeof(graphics::VertexData) * 4, a_vertices);
 		// Increment the primitive count
 		m_primitiveCount++;
 	}

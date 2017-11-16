@@ -2,7 +2,8 @@
 
 #include"sudo_system.h"
 #include"../graphics/renderable2d.h"
-
+#include"../../definitions.h"
+#include<vector>
 
 namespace sudo {
 	namespace graphics {
@@ -40,7 +41,7 @@ namespace sudo { namespace sudo_system {
 			
 		// Renderer routines
 		void Begin();
-		void Submit(graphics::VertexData *a_vertices);
+		void Submit(graphics::VertexData *a_vertices, uint a_vertexCount);
 		void Flush();
 
 	private:
@@ -48,6 +49,9 @@ namespace sudo { namespace sudo_system {
 		graphics::Shader *m_shader;
 		graphics::IndexBuffer *m_indexBuffer;
 		graphics::VertexArrayBuffer *m_vertexArrayBuffer;
+		ptrdiff_t m_currentBufferSize;
+		std::vector<unsigned int> m_indices;
+
 		bool m_isActive;
 		unsigned int m_buffer;
 		unsigned short int m_primitiveCount; // 16-bit integer (65,536)

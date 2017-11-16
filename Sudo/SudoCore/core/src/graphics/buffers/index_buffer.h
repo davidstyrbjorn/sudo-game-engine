@@ -7,7 +7,9 @@ namespace sudo { namespace graphics {
 	class IndexBuffer {
 	public:
 		IndexBuffer();
-		IndexBuffer(unsigned int a_indices[], uint a_size);
+		IndexBuffer(unsigned int *a_indices, uint a_size);
+
+		void setData(unsigned int *a_indicies, uint a_size);
 
 		void bind() const;
 		void unbind() const;
