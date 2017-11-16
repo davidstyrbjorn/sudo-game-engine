@@ -20,7 +20,7 @@ private:
 	sudo_system::BatchRendererSystem *m_batchRenderer = sudo_system::BatchRendererSystem::Instance();
 	utility::Timer clock;
 
-	int triangleWidth = 13;
+	int width = 11;
 	int offset = 14;
 
 public:
@@ -37,8 +37,9 @@ public:
 				math::Vector4 colorVector = math::Vector4(sin(clock.GetTicks()*0.005f), cos(clock.GetTicks()*0.005f), 0.5f, 1);
 				graphics::VertexData vertices[] = {
 					graphics::VertexData(math::Vector3((offset*x),(offset*y),0),										colorVector, math::Vector2(0,0)), // Top left
-					graphics::VertexData(math::Vector3((offset*x),(offset*y) + triangleWidth,0),						colorVector, math::Vector2(0,0)), // Bottom left
-					graphics::VertexData(math::Vector3((offset*x) + triangleWidth,(offset*y) + triangleWidth,0),		colorVector, math::Vector2(0,0))  // Bottom right
+					graphics::VertexData(math::Vector3((offset*x),(offset*y) + width,0),						colorVector, math::Vector2(0,0)), // Bottom left
+					graphics::VertexData(math::Vector3((offset*x) + width,(offset*y) + width,0),		colorVector, math::Vector2(0,0)), // Bottom right
+					graphics::VertexData(math::Vector3((offset*x) + width, (offset*y), 0),						colorVector, math::Vector2(0,0))
 				};
 				m_batchRenderer->Submit(vertices);
 			}

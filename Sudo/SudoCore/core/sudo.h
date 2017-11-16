@@ -33,6 +33,7 @@
 #include"src\graphics\buffers\vertex_array_buffer.h"
 #include"src\graphics\buffers\vertex_buffer.h"
 #include"src\graphics\buffers\buffer.h"
+#include"src\graphics\buffers\index_buffer.h"
 
 #include"src\sudo_core.h"
 #include"src\sudo_class.h"
