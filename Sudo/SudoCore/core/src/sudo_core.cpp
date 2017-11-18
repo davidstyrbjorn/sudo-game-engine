@@ -83,6 +83,7 @@ void SudoCore::clean_up()
 	m_inputSystem->CleanUp();
 	m_worldSystem->CleanUp();
 	m_renderSystem->CleanUp();
+	m_batchRenderer->CleanUp();
 	m_settingsSystem->CleanUp();
 	m_soundSystem->CleanUp();
 

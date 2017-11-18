@@ -49,8 +49,9 @@ namespace sudo { namespace sudo_system {
 		graphics::Shader *m_shader;
 		graphics::IndexBuffer *m_indexBuffer;
 		graphics::VertexArrayBuffer *m_vertexArrayBuffer;
-		ptrdiff_t m_currentBufferSize;
-		std::vector<unsigned int> m_indices;
+
+		int m_indicesOffset;
+		std::vector<uint> m_indices;
 
 		bool m_isActive;
 		unsigned int m_buffer;

@@ -23,7 +23,7 @@ namespace sudo { namespace sudo_system {
 		glewInit();
 		glewExperimental = true;
 
-		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\unlit_shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\unlit_shader_fragment.txt");
+		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\unlit_shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\unlit_shader_fragment.txt");
 		m_shader->enable();
 		m_shader->setUniform1f("myTexture", 0);
 
@@ -44,23 +44,26 @@ namespace sudo { namespace sudo_system {
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(graphics::VertexData), reinterpret_cast<void*>(offsetof(graphics::VertexData, uvCoord))); // Vertex texture coordinates
 		glEnableVertexAttribArray(2);
-
-		m_indices.resize(INDICES_COUNT);
-		int offset = 0;
+										  
+		m_indicesOffset = 0;
+		
+		/*
 		for (int i = 0; i < INDICES_COUNT; i += 6) 
 		{
-			m_indices[i + 0] = offset + 0;
-			m_indices[i + 1] = offset + 1;
-			m_indices[i + 2] = offset + 2;
+			m_indices[i + 0] =	m_indicesOffset + 0;
+			m_indices[i + 1] =	m_indicesOffset + 1;
+			m_indices[i + 2] =	m_indicesOffset + 2;
+				
+			m_indices[i + 3] =	m_indicesOffset + 2;
+			m_indices[i + 4] =	m_indicesOffset + 3;
+			m_indices[i + 5] =	m_indicesOffset + 0;
 
-			m_indices[i + 3] = offset + 2;
-			m_indices[i + 4] = offset + 3;
-			m_indices[i + 5] = offset + 0;
-
-			offset += 4;
+			m_indicesOffset += 4;
 		}
-
+		*/
+		
 		m_indexBuffer = new graphics::IndexBuffer(m_indices.data(), m_indices.size() * sizeof(unsigned int));
+		m_indexBuffer->setData(nullptr, 0);
 
 		m_vertexArrayBuffer->unbind();
 	}
@@ -70,8 +73,7 @@ namespace sudo { namespace sudo_system {
 		// Bind vertex array
 		m_vertexArrayBuffer->bind();
 
-		// Reset current buffer size
-		m_currentBufferSize = 0;
+		m_indicesOffset = 0;
 		// Reset primitive count
 		m_primitiveCount = 0;
 
@@ -82,19 +84,42 @@ namespace sudo { namespace sudo_system {
 
 	void BatchRendererSystem::Submit(graphics::VertexData *a_vertices, uint a_vertexCount)
 	{
-		// Offset up to the current empty border 
-		m_currentBufferSize += (sizeof(graphics::VertexData)*a_vertexCount);
-		// Add data at this point, size will be three vertices
-		glBufferSubData(GL_ARRAY_BUFFER, m_currentBufferSize, sizeof(graphics::VertexData) * 4, a_vertices);
+		if (a_vertexCount == 3) 
+		{
+			m_indices.push_back(m_indicesOffset + 0);
+			m_indices.push_back(m_indicesOffset + 1);
+			m_indices.push_back(m_indicesOffset + 2);
+
+			m_indicesOffset = 3;
+		}
+		if (a_vertexCount == 4) 
+		{
+			m_indices.push_back(m_indicesOffset + 0);
+			m_indices.push_back(m_indicesOffset + 1);
+			m_indices.push_back(m_indicesOffset + 2);
+
+			m_indices.push_back(m_indicesOffset + 2);
+			m_indices.push_back(m_indicesOffset + 3);
+			m_indices.push_back(m_indicesOffset + 0);
+
+			m_indicesOffset = 4;
+		}
+
+		// Offset up to the current empty point in the buffer
+		GLintptr initialOffset = m_primitiveCount*(sizeof(graphics::VertexData) * a_vertexCount);
+		glBufferSubData(GL_ARRAY_BUFFER, initialOffset, sizeof(graphics::VertexData) * a_vertexCount, a_vertices);
+		
 		// Increment the primitive count
 		m_primitiveCount++;
 	}
 
 	void BatchRendererSystem::Flush()
-	{
-		if(m_primitiveCount != 0)
+	{			
+		m_indexBuffer->setData(m_indices.data(), m_indices.size() * sizeof(uint));
+		m_indices.clear();
+
+		if(m_primitiveCount != 0) 
 			glDrawElements(GL_TRIANGLES, 6*m_primitiveCount, GL_UNSIGNED_INT, 0);
-			//glDrawArrays(GL_TRIANGLES, 0, m_primitiveCount * 3);
 
 		// Unbind the buffer
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -102,7 +127,10 @@ namespace sudo { namespace sudo_system {
 
 	void BatchRendererSystem::CleanUp()
 	{
+		glDeleteBuffers(1, &m_buffer);
 
+		delete m_indexBuffer;
+		delete m_vertexArrayBuffer;
 	}
 
 } } 
