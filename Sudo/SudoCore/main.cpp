@@ -40,8 +40,8 @@ public:
 	void Update() override
 	{
 		// 3072 triangles with the batch renderer
-		for (int x = 0; x < 24; x++) {
-			for (int y = 0; y < 24; y++) {
+		for (int x = 0; x < 14; x++) {
+			for (int y = 0; y < 14; y++) {
 				math::Vector4 colorVector = math::Vector4(sin(clock.GetTicks()*0.001f), cos(clock.GetTicks()*0.001f), 0.5f, 1);
 				graphics::VertexData vertices[] = {
 					graphics::VertexData(math::Vector3((offset*x),(offset*y),0),								colorVector, math::Vector2(0,0)), // Top left
@@ -52,29 +52,12 @@ public:
 				m_batchRenderer->Submit(vertices, 4);
 			}					
 		}
-		
-		math::Vector4 colorVector = math::Vector4(1,0,0,1);
-		graphics::VertexData triangle[] = {
-			graphics::VertexData(math::Vector3(triangleX,triangleY,0),											colorVector, math::Vector2(0,0)), // Top left
-			graphics::VertexData(math::Vector3(triangleX,triangleY + triangleSize,0),							colorVector, math::Vector2(0,0)), // Bottom left
-			graphics::VertexData(math::Vector3(triangleX + triangleSize,triangleY + triangleSize,0),			colorVector, math::Vector2(0,0)) // Bottom right
-		};
-
-		colorVector = math::Vector4(0, 0, 1, 1);
-		graphics::VertexData quad[] = {
-			graphics::VertexData(math::Vector3(quadX,quadY,0),									colorVector, math::Vector2(0,0)), // Top left
-			graphics::VertexData(math::Vector3(quadX,quadY + quadSize,0),						colorVector, math::Vector2(0,0)), // Bottom left
-			graphics::VertexData(math::Vector3(quadX + quadSize,quadY + quadSize,0),			colorVector, math::Vector2(0,0)), // Bottom right
-			graphics::VertexData(math::Vector3(quadX + quadSize, quadY, 0),						colorVector, math::Vector2(0,0))
-		};
-		//m_batchRenderer->Submit(triangle, 3); 
-		//m_batchRenderer->Submit(quad, 4);
 	}
 
 	void Start() override
 	{		   
 		config->SetFPS(60);
-		config->SetBackgroundColor(math::Vector4(0.1, 0.1, 0.1, 1));
+		config->SetBackgroundColor(math::Vector4(0.05f, 0.0f, 0.05f, 1));
 
 		clock.Start();
 	}

@@ -22,6 +22,8 @@ namespace sudo { namespace sudo_system {
 #define BUFFER_SIZE PRIMITIVE_SIZE * MAX_PRIMITIVES 
 #define INDICES_COUNT MAX_PRIMITIVES * 6 // 6 indicies for each quad
 
+#define TRIANGLE_INDICES_COUNT MAX_PRIMITIVES * 3
+
 	class BatchRendererSystem : public SudoSystem {
 	private:
 		/* Private constructor, singleton class */
@@ -47,15 +49,12 @@ namespace sudo { namespace sudo_system {
 	private:
 		/* Batch Renderer data */
 		graphics::Shader *m_shader;
-		graphics::IndexBuffer *m_indexBuffer;
+		graphics::IndexBuffer *m_quadIndexBuffer, *m_triangleIndexBuffer;
 		graphics::VertexArrayBuffer *m_vertexArrayBuffer;
 
-		int m_indicesOffset;
-		std::vector<uint> m_indices;
-
 		bool m_isActive;
-		unsigned int m_buffer;
-		unsigned short int m_primitiveCount; // 16-bit integer (65,536)
+		unsigned int m_quadBuffer, m_triangleBuffer;
+		unsigned short int m_quadCount, m_triangleCount;
 	};
 
 } } 
