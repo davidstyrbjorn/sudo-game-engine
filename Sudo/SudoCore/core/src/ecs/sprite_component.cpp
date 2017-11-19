@@ -23,6 +23,7 @@ namespace sudo { namespace ecs {
 	{
 		m_entityTransform = m_entityHolder->transform;
 
+		/*
 		int width, height;
 		unsigned char* image = SOIL_load_image(m_imagePath, &width, &height, 0, SOIL_LOAD_RGBA);
 		m_size = math::Vector2(width, height);
@@ -31,32 +32,7 @@ namespace sudo { namespace ecs {
 			DEBUG::getInstance()->printMessage( (std::string("Failed to load image at path: \"") + std::string(m_imagePath)).c_str(), sudo::LogType::Error);
 		}
 
-		math::Vector4 colorVector = math::Vector4(m_color.x, m_color.y, m_color.z, m_color.w);
-		graphics::VertexData vertices_[] = {
-			graphics::VertexData(math::Vector3(0.0f,0.0f,0.0f),			colorVector, math::Vector2(0,0)),
-			graphics::VertexData(math::Vector3(0.0f,m_size.y,0.0f),		colorVector, math::Vector2(0,1)),
-			graphics::VertexData(math::Vector3(m_size.x,m_size.y,0.0f), colorVector, math::Vector2(1,1)),
-			graphics::VertexData(math::Vector3(m_size.x,0.0f,0.0f),		colorVector, math::Vector2(1,0))
-		};
-		unsigned int indices[] = {
-			0,1,2,
-			0,2,3
-		};
-
-		glewInit();
-		glewExperimental = true;
-
-		/* Vertex array object */
-		m_vertexArray = new graphics::VertexArrayBuffer();
-		m_vertexArray->bind();
-
-		/* Vertex buffer object */
-		m_vertexBuffer = new graphics::VertexBuffer(vertices_, sizeof(vertices_));
-
-		/* Index buffer */
-		m_elementBuffer = new graphics::Buffer(GL_ELEMENT_ARRAY_BUFFER, indices, sizeof(indices));
-
-		/* Texture loading and binding etc */
+		// Texture loading and binding etc 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_BLEND, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -73,60 +49,12 @@ namespace sudo { namespace ecs {
 		glGenerateMipmap(GL_TEXTURE_2D);
 		SOIL_free_image_data(image);
 		glBindTexture(GL_TEXTURE_2D, 0);
+		*/
 	}
 
 	SpriteComponent::~SpriteComponent()
 	{
-		delete m_vertexArray;
-		delete m_vertexBuffer;
-		delete m_elementBuffer;
-	}
 
-	void SpriteComponent::bind()
-	{
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture);
-
-		m_vertexArray->bind();
-	}
-
-	void SpriteComponent::unbind()
-	{
-
-	}
-
-	void SpriteComponent::resized()
-	{
-		/* Make sure the shape stays at it's position when resizing the vertices */
-		math::Vector2 deltaChange = m_size - m_sizeBeforeReisze;
-		m_entityTransform->position = math::Vector3(m_entityTransform->position.x - (deltaChange.x / 2),
-			m_entityTransform->position.y - (deltaChange.y / 2),
-			m_entityTransform->position.z);
-
-		float vertices[] = {
-			// Vertex data					  color data	 texture coordinates	         									
-			0, 0, 0.0f,						    1, 1, 1,         0,0,
-			0, m_size.y, 0.0f,				1, 1, 1,         0,1,
-			m_size.x, m_size.y, 0.0f,	1, 1, 1,		 1,1,
-			m_size.x, 0.0f, 0.0f,			1, 1, 1,         1,0
-		};
-
-		m_vertexArray->bind();
-		m_vertexBuffer->dataModified(vertices, sizeof(vertices));
-	}
-
-	void SpriteComponent::recolored()
-	{
-		float vertices[] = {
-			// Vertex data					  color data	 texture coordinates	         									
-			0, 0, 0.0f,						    1, 1, 1,         0,0,
-			0, m_size.y, 0.0f,				1, 1, 1,         0,1,
-			m_size.x, m_size.y, 0.0f,	1, 1, 1,		 1,1,
-			m_size.x, 0.0f, 0.0f,			1, 1, 1,         1,0
-		};
-
-		m_vertexArray->bind();
-		m_vertexBuffer->dataModified(vertices, sizeof(vertices));
 	}
 
 } }

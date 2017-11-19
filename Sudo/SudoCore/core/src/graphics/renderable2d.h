@@ -55,10 +55,6 @@ namespace sudo { namespace graphics {
 		/* Virtual desctructor */
 		virtual ~Renderable2D() { }
 
-		/* Binds and unbinds the necce buffers when rendering */
-		virtual void bind() = 0;
-		virtual void unbind() = 0;
-
 		/* Getters */
 		inline const math::Vector2 &GetSize() { return m_size; }
 		inline const math::Vector4 &GetColor() { return m_color; }
@@ -76,6 +72,9 @@ namespace sudo { namespace graphics {
 		/* Scales down m_size by orders of magnitude */
 		void SizeDown(const float a_magnitude);
 
+		/* Constructs a vertex list for the renderer to use */
+		virtual const VertexData* GetPrimitiveData() const = 0;
+
 	protected:	
 		/* Renderable2D shared data */
 		ecs::Transform *m_entityTransform;
@@ -83,11 +82,6 @@ namespace sudo { namespace graphics {
 		math::Vector4 m_color;
 
 		math::Vector2 m_sizeBeforeReisze;
-
-		/* Private Methods */
-		void resized_clamp();
-		virtual void resized() = 0;
-		virtual void recolored() = 0;
 
 	public:
 		sudo::RenderableType m_type;

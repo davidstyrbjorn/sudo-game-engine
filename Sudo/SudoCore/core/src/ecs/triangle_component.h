@@ -4,6 +4,11 @@
 #include"../graphics/renderable2d.h"
 
 namespace sudo {
+	namespace graphics {
+		struct VertexData;
+} }
+
+namespace sudo {
 	namespace ecs {
 
 		// Forward decleration
@@ -17,23 +22,12 @@ namespace sudo {
 			/* Destructor */
 			~TriangleComponent();
 
-			/* Component class methods */
+			/* Component virtual methods */
 			void Start()	override;
 			void Update()	override { }
 
-			/* Renderable2D class methods */
-			void bind()		override;
-			void unbind()	override;
-
-		private:
-			/* Data mainly different buffer handles */
-			graphics::VertexArrayBuffer *m_vertexArray;
-			graphics::VertexBuffer *m_vertexBuffer;
-			graphics::Buffer *m_elementBuffer;
-
-			/* Method from Renderable2D */
-			void resized() override;
-			void recolored() override;
+			/* Renderable2D virtual methods */
+			const graphics::VertexData* GetPrimitiveData() const;
 		};
 
 	}

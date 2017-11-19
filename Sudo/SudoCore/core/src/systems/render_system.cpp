@@ -23,11 +23,11 @@ namespace sudo { namespace sudo_system {
 			// Bind stuff and set model_matrix accordingly
 			m_shader->setUniformMatrix4x4("view_matrix", math::Matrix4x4::Rotation(renderObject->GetEntityTransform()->angle, math::Vector3::Forward()));
 			m_shader->setUniformMatrix4x4("model_matrix", math::Matrix4x4::Translation(renderObject->GetEntityTransform()->position));
-			renderObject->bind();
+			//renderObject->bind();
 
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-			renderObject->unbind();
+			//renderObject->unbind();
 			m_renderList.pop_front();
 		}
 	}
