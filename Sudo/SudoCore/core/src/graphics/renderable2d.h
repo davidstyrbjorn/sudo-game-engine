@@ -8,6 +8,8 @@
 
 #include"../../definitions.h"
 
+#include<vector>
+
 // Forward decleration
 namespace sudo { 
 	namespace ecs {
@@ -73,7 +75,7 @@ namespace sudo { namespace graphics {
 		void SizeDown(const float a_magnitude);
 
 		/* Constructs a vertex list for the renderer to use */
-		virtual const VertexData* GetPrimitiveData() const = 0;
+		virtual std::vector<graphics::VertexData> GetPrimitiveData() { std::vector<graphics::VertexData> temp; return temp; }
 
 	protected:	
 		/* Renderable2D shared data */

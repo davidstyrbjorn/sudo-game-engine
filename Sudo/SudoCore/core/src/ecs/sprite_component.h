@@ -25,7 +25,7 @@ namespace sudo { namespace ecs {
 		void Update()	override { }
 
 		/* Renderable2D virtual methods */
-		const graphics::VertexData* GetPrimitiveData() const { return nullptr; }
+		//std::vector<graphics::VertexData> GetPrimitiveData() { }
 	};
 	
 } } 

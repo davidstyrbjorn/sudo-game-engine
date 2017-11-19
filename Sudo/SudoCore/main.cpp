@@ -12,9 +12,6 @@ private:
 
 	sudo_system::BatchRendererSystem *m_batchRenderer = sudo_system::BatchRendererSystem::Instance();
 
-	int width = 14;
-	int offset = 16;
-
 	ecs::Entity *shape;
 
 public:
@@ -29,7 +26,7 @@ public:
 		// 3072 triangles with the batch renderer
 		for (int x = 0; x < 14; x++) {
 			for (int y = 0; y < 14; y++) {
-				math::Vector4 colorVector = math::Vector4(sin(clock.GetTicks()*0.001f), cos(clock.GetTicks()*0.001f), 0.5f, 1);
+				math::Vector4 colorVector = math::Vector4(1, 0.4f, 0.5f, 1);
 				graphics::VertexData vertices[] = {
 					graphics::VertexData(math::Vector3((offset*x),(offset*y),0),								colorVector, math::Vector2(0,0)), // Top left
 					graphics::VertexData(math::Vector3((offset*x),(offset*y) + width,0),						colorVector, math::Vector2(0,0)), // Bottom left
@@ -41,7 +38,7 @@ public:
 		}
 		for (int x = 14; x < 28; x++) {
 			for (int y = 14; y < 28; y++) {
-				math::Vector4 colorVector = math::Vector4(sin(clock.GetTicks()*0.001f), cos(clock.GetTicks()*0.001f), 0.5f, 1);
+				math::Vector4 colorVector = math::Vector4(0.4f, 1, 0.5f, 1);
 				graphics::VertexData vertices[] = {
 					graphics::VertexData(math::Vector3((offset*x),(offset*y),0),								colorVector, math::Vector2(0,0)), // Top left
 					graphics::VertexData(math::Vector3((offset*x),(offset*y) + width,0),						colorVector, math::Vector2(0,0)), // Bottom left
@@ -52,7 +49,12 @@ public:
 			}
 		}
 #endif
-		m_batchRenderer->Submit(shape->GetComponent<ecs::RectangleComponent>(), 4);
+		m_batchRenderer->Submit(shape->GetComponent<ecs::TriangleComponent>(), 4);
+
+		if (input->GetKey("d"))
+			shape->transform->Move(math::Vector3::Right() * 3);
+		if (input->GetKey("a"))
+			shape->transform->Move(math::Vector3::Right() * -3);
 	}
 
 	void Start() override
@@ -61,7 +63,7 @@ public:
 		config->SetBackgroundColor(math::Vector4(0.05f, 0.0f, 0.05f, 1));
 
 		shape = new ecs::Entity("shape");
-		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(100, 100), math::Vector4(0.5f, 0.25f, 1, 1)));
+		shape->AddComponent(new ecs::TriangleComponent(math::Vector2(100, 100), math::Vector4(1, 1, 0, 1)));
 	}
 };
 

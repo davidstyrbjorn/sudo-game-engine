@@ -27,7 +27,7 @@ namespace sudo {
 			void Update()	override { }
 
 			/* Renderable2D virtual methods */
-			const graphics::VertexData* GetPrimitiveData() const;
+			std::vector<graphics::VertexData> GetPrimitiveData();
 		};
 
 	}

@@ -75,7 +75,7 @@ namespace sudo { namespace sudo_system {
 		glBufferData(GL_ARRAY_BUFFER, BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
 	}
 
-	void BatchRendererSystem::Submit(const graphics::Renderable2D *a_primitive, uint a_vertexCount)
+	void BatchRendererSystem::Submit(graphics::Renderable2D *a_primitive, uint a_vertexCount)
 	{
 		if (a_vertexCount == 4) 
 		{
@@ -83,7 +83,7 @@ namespace sudo { namespace sudo_system {
 			glBindBuffer(GL_ARRAY_BUFFER, m_quadBuffer);
 			// Offset up to the current empty point in the buffer
 			GLintptr initialOffset = m_quadCount*(sizeof(graphics::VertexData) * 4);
-			glBufferSubData(GL_ARRAY_BUFFER, initialOffset, sizeof(graphics::VertexData) * 4, a_primitive->GetPrimitiveData());
+			glBufferSubData(GL_ARRAY_BUFFER, initialOffset, sizeof(graphics::VertexData) * 4, a_primitive->GetPrimitiveData().data());
 
 			// Increment the primitive count
 			m_quadCount++;

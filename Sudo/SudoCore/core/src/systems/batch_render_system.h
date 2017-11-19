@@ -43,7 +43,7 @@ namespace sudo { namespace sudo_system {
 			
 		// Renderer routines
 		void Begin();
-		void Submit(const graphics::Renderable2D *a_primitive, uint a_vertexCount);
+		void Submit(graphics::Renderable2D *a_primitive, uint a_vertexCount);
 		void Flush();
 
 	private:
@@ -51,7 +51,6 @@ namespace sudo { namespace sudo_system {
 		graphics::Shader *m_shader;
 		graphics::IndexBuffer *m_quadIndexBuffer;
 		graphics::VertexArrayBuffer *m_quadVertexArrayBuffer;
-
 
 		bool m_isActive;
 		unsigned int m_quadBuffer;
