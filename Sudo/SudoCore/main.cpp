@@ -12,7 +12,7 @@ private:
 
 	sudo_system::BatchRendererSystem *m_batchRenderer = sudo_system::BatchRendererSystem::Instance();
 
-	ecs::Entity *shape;
+	ecs::Entity *shape, *shape2, *shape3;
 
 public:
 	App() 
@@ -49,21 +49,29 @@ public:
 			}
 		}
 #endif
-		m_batchRenderer->Submit(shape->GetComponent<ecs::TriangleComponent>(), 4);
+		//m_batchRenderer->Submit(shape->GetComponent<ecs::TriangleComponent>(), 3);
+		m_batchRenderer->Submit(shape2->GetComponent<ecs::RectangleComponent>(), 6);
 
 		if (input->GetKey("d"))
-			shape->transform->Move(math::Vector3::Right() * 3);
+			shape2->transform->Move(math::Vector3::Right() * +8);
 		if (input->GetKey("a"))
-			shape->transform->Move(math::Vector3::Right() * -3);
+			shape2->transform->Move(math::Vector3::Right() * -8);
+		if (input->GetKey("s"))
+			shape2->transform->Move(math::Vector3::Down() * +8);
+		if (input->GetKey("w"))
+			shape2->transform->Move(math::Vector3::Up() * +8);
 	}
 
 	void Start() override
-	{		   
+	{
 		config->SetFPS(60);
 		config->SetBackgroundColor(math::Vector4(0.05f, 0.0f, 0.05f, 1));
 
 		shape = new ecs::Entity("shape");
-		shape->AddComponent(new ecs::TriangleComponent(math::Vector2(100, 100), math::Vector4(1, 1, 0, 1)));
+		shape->AddComponent(new ecs::TriangleComponent(math::Vector2(100, 100), math::Vector4(0, 0.5f, 1, 1)));
+
+		shape2 = new ecs::Entity("shape");
+		shape2->AddComponent(new ecs::RectangleComponent(math::Vector2(150, 150), math::Vector4(1, 0, 0.25f, 1)));
 	}
 };
 

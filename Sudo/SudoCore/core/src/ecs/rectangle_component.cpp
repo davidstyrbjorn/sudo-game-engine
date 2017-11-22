@@ -29,10 +29,15 @@ namespace sudo { namespace ecs {
 	std::vector<graphics::VertexData> RectangleComponent::GetPrimitiveData() 
 	{
 		std::vector<graphics::VertexData> vertices = {
-			graphics::VertexData(math::Vector3(m_entityTransform->position.x,			 m_entityTransform->position.y,				0), m_color, math::Vector2(0,0)),
-			graphics::VertexData(math::Vector3(m_entityTransform->position.x,			 m_entityTransform->position.y + m_size.y,  0), m_color, math::Vector2(0,0)),
-			graphics::VertexData(math::Vector3(m_entityTransform->position.x + m_size.x, m_entityTransform->position.y + m_size.y,  0), m_color, math::Vector2(0,0)),
-			graphics::VertexData(math::Vector3(m_entityTransform->position.x + m_size.x, m_entityTransform->position.y,				0), m_color, math::Vector2(0,0))
+			// Triangle 1
+			graphics::VertexData(math::Vector3((m_entityTransform->position.x),			   (m_entityTransform->position.y),				0), m_color, math::Vector2(0,0)),
+			graphics::VertexData(math::Vector3((m_entityTransform->position.x),			   (m_entityTransform->position.y + m_size.y),  0), m_color, math::Vector2(0,1)),
+			graphics::VertexData(math::Vector3((m_entityTransform->position.x + m_size.x), (m_entityTransform->position.y + m_size.y),  0), m_color, math::Vector2(1,1)),
+
+			// Triangle 2
+			graphics::VertexData(math::Vector3((m_entityTransform->position.x + m_size.x), (m_entityTransform->position.y + m_size.y),  0), m_color, math::Vector2(1,1)),
+			graphics::VertexData(math::Vector3((m_entityTransform->position.x + m_size.x), (m_entityTransform->position.y),				0), m_color, math::Vector2(1,0)),
+			graphics::VertexData(math::Vector3((m_entityTransform->position.x),			   (m_entityTransform->position.y),				0), m_color, math::Vector2(0,0))
 		};
 
 		return vertices;

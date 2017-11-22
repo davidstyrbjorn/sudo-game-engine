@@ -48,10 +48,6 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	m_worldSystem = sudo_system::WorldSystem::Instance();
 	m_worldSystem->Enable();
 
-	/* Render System */
-	//m_renderSystem = sudo_system::RenderSystem::Instance();
-	//m_renderSystem->Enable();
-
 	/* /2 Batch Renderer */
 	m_batchRenderer = sudo_system::BatchRendererSystem::Instance();
 	m_batchRenderer->Enable();
@@ -82,12 +78,11 @@ void SudoCore::clean_up()
 	/* Call CleanUp() on all systems */
 	m_inputSystem->CleanUp();
 	m_worldSystem->CleanUp();
-	m_renderSystem->CleanUp();
 	m_batchRenderer->CleanUp();
 	m_settingsSystem->CleanUp();
 	m_soundSystem->CleanUp();
 
-	delete m_engineInstance;
+	//delete m_engineInstance;
 	delete m_window;
 }
 
@@ -98,6 +93,7 @@ void SudoCore::game_loop()
 		/* Limit the update rate */
 		if (timer->GetTicks() >= m_settingsSystem->GetMS()) 
 		{
+			/* Reset renderer data */
 			m_batchRenderer->Begin();
 
 			/* Swap buffers and clear the screen */
@@ -113,7 +109,6 @@ void SudoCore::game_loop()
 
 			/* Render w/OpenGL */
 			m_batchRenderer->Flush();
-			//m_renderSystem->Update();
 
 			/* Display the current drawns elements */
 			m_window->display();
@@ -121,6 +116,8 @@ void SudoCore::game_loop()
 			timer->Reset();
 		}
 	}
+
+	clean_up();
 }
 
 graphics::Window& SudoCore::GetWindow() 

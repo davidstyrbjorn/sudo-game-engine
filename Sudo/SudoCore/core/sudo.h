@@ -29,6 +29,7 @@
 #include"src\graphics\shader.h"
 #include"src\graphics\window.h"
 #include"src\graphics\renderable2d.h"
+#include"src\graphics\texture.h"
 #include"src\graphics\buffers\vertex_array_buffer.h"
 #include"src\graphics\buffers\vertex_buffer.h"
 #include"src\graphics\buffers\buffer.h"

@@ -10,7 +10,7 @@ namespace sudo { namespace graphics {
 
 	VertexArrayBuffer::~VertexArrayBuffer()
 	{
-		glDeleteBuffers(1, &m_id);
+		glDeleteVertexArrays(1, &m_id);
 	}
 
 	void VertexArrayBuffer::bind() const 

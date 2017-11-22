@@ -29,15 +29,17 @@ namespace sudo { namespace sudo_system {
 
 		sudo_system::SettingsSystem* settings = sudo_system::SettingsSystem::Instance();
 		m_shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(0, settings->GetWindowSize().x, settings->GetWindowSize().y, 0, -1, 1));
+		// Test
+		m_shader->setUniform1f("myTexture", 0);
 
 
-		// =============== Quad ===================
-		m_quadVertexArrayBuffer = new graphics::VertexArrayBuffer();
-		m_quadVertexArrayBuffer->bind();
+		// =============== START ===================
+		m_vertexArrayBuffer = new graphics::VertexArrayBuffer();
+		m_vertexArrayBuffer->bind();
 
 		// Create and bind buffer
-		glGenBuffers(1, &m_quadBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, m_quadBuffer);
+		glGenBuffers(1, &m_buffer);
+		glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
 		// Structure the buffer layout
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(graphics::VertexData), nullptr); // Vertex position
 		glEnableVertexAttribArray(0);
@@ -46,7 +48,11 @@ namespace sudo { namespace sudo_system {
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(graphics::VertexData), reinterpret_cast<void*>(offsetof(graphics::VertexData, uvCoord))); // Vertex texture coordinates
 		glEnableVertexAttribArray(2);
 
-		// Quad index buffer
+		// Test
+		graphics::Texture texture("C:\\temp\\cat.png");
+
+		// index buffer
+#if USE_INDEX_BUFFER
 		int m_indicesOffset = 0;
 		uint m_indices[INDICES_COUNT];
 		for (int i = 0; i < INDICES_COUNT; i += 6) 
@@ -61,43 +67,43 @@ namespace sudo { namespace sudo_system {
 
 			m_indicesOffset += 4;
 		}
-		m_quadIndexBuffer = new graphics::IndexBuffer(m_indices,  sizeof(m_indices));
+		m_indexBuffer = new graphics::IndexBuffer(m_indices,  sizeof(m_indices));
+#endif
 	}
 
 	void BatchRendererSystem::Begin()
 	{
 		// Reset primitive count
-		m_quadCount = 0;
+		m_primitiveCount = 0;
 
 		// Bind and reset buffer data
-		m_quadVertexArrayBuffer->bind();
-		glBindBuffer(GL_ARRAY_BUFFER, m_quadBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
 		glBufferData(GL_ARRAY_BUFFER, BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
 	}
 
 	void BatchRendererSystem::Submit(graphics::Renderable2D *a_primitive, uint a_vertexCount)
 	{
-		if (a_vertexCount == 4) 
-		{
-			m_quadVertexArrayBuffer->bind();
-			glBindBuffer(GL_ARRAY_BUFFER, m_quadBuffer);
-			// Offset up to the current empty point in the buffer
-			GLintptr initialOffset = m_quadCount*(sizeof(graphics::VertexData) * 4);
-			glBufferSubData(GL_ARRAY_BUFFER, initialOffset, sizeof(graphics::VertexData) * 4, a_primitive->GetPrimitiveData().data());
+		glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
+		// Offset up to the current empty point in the buffer
+		GLintptr initialOffset = m_primitiveCount*(sizeof(graphics::VertexData) * a_vertexCount);
+		glBufferSubData(GL_ARRAY_BUFFER, initialOffset, sizeof(graphics::VertexData) * a_vertexCount, a_primitive->GetPrimitiveData().data());
 
-			// Increment the primitive count
-			m_quadCount++;
-		}
+		// Increment the primitive count
+		m_primitiveCount++;
 	}
 
 	void BatchRendererSystem::Flush()
 	{
 		// Draw call
-		if (m_quadCount != 0) {
-			m_quadVertexArrayBuffer->bind();
+		if (m_primitiveCount != 0) {
+#if USE_INDEX_BUFFER
 			m_quadIndexBuffer->bind();
-			glBindBuffer(GL_ARRAY_BUFFER, m_quadBuffer);
-			glDrawElements(GL_TRIANGLES, 6 * m_quadCount, GL_UNSIGNED_INT, 0);
+			glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
+			glDrawElements(GL_ARRAY_BUFFER, );
+#else
+			glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
+			glDrawArrays(GL_TRIANGLES, 0, m_primitiveCount * 6);
+#endif
 		}
 
 		// Unbind the buffer
@@ -106,10 +112,12 @@ namespace sudo { namespace sudo_system {
 
 	void BatchRendererSystem::CleanUp()
 	{
-		glDeleteBuffers(1, &m_quadBuffer);
+		glDeleteBuffers(1, &m_buffer);
 
-		delete m_quadIndexBuffer;
-		delete m_quadVertexArrayBuffer;
+#if USE_INDEX_BUFFER
+		delete m_indexBuffer;
+#endif
+		//delete m_vertexArrayBuffer;
 	}
 
 } } 

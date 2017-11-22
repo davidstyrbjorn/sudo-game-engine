@@ -116,7 +116,7 @@ public:
 			}
 
 			// Draw stuff
-			renderer->Draw(backgroundMenu->GetComponent<ecs::SpriteComponent>());
+			renderer->Submit(backgroundMenu->GetComponent<ecs::SpriteComponent>(), 4);
 		}
 		else if (state == GameStates::PLAYING)
 		{
@@ -132,9 +132,9 @@ public:
 			config->SetBackgroundColor(math::Vector4(sinf(gameClock.GetTicks()*0.0005f), sinf(gameClock.GetTicks() * 0.0005f), 0, 1));
 
 			// Draw stuff
-			renderer->Draw(leftPaddle->GetComponent<ecs::RectangleComponent>());
-			renderer->Draw(rightPaddle->GetComponent<ecs::RectangleComponent>());			
-			renderer->Draw(ballEntity->GetComponent<ecs::RectangleComponent>());
+			renderer->Submit(leftPaddle->GetComponent<ecs::RectangleComponent>(),6);
+			renderer->Submit(rightPaddle->GetComponent<ecs::RectangleComponent>(),6);			
+			renderer->Submit(ballEntity->GetComponent<ecs::RectangleComponent>(),6);
 		}
 	}
 
@@ -254,11 +254,9 @@ public:
 	}
 };
 
-/*
-int main()
+int lmain()
 {
 	Game* game = new Game();
 
 	return 0;
 }
-*/

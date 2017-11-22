@@ -72,3 +72,6 @@ ERROR: 0:13: 'assign' :  cannot convert from 'const float' to 'FragUserData 4-co
 [Tue Sep 26 09:33](ERROR: ERROR: 0:20: 'delete' : undeclared identifier 
 
 )
+[Wed Nov 22 12:38](ERROR: ERROR: 0:13: 'assign' :  cannot convert from '3-component vector of float' to 'FragColor 4-component vector of float'
+
+)

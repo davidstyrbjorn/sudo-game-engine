@@ -13,7 +13,6 @@ namespace sudo {
 	namespace sudo_system {
 		class InputSystem;
 		class WorldSystem;
-		class RenderSystem;
 		class SettingsSystem;
 		class SoundSystem;
 		class BatchRendererSystem;
@@ -33,7 +32,6 @@ namespace sudo {
 		/* Systems */
 		sudo_system::InputSystem		*m_inputSystem;
 		sudo_system::WorldSystem		*m_worldSystem;
-		sudo_system::RenderSystem		*m_renderSystem;
 		sudo_system::SettingsSystem		*m_settingsSystem;
 		sudo_system::SoundSystem		*m_soundSystem;
 		sudo_system::BatchRendererSystem *m_batchRenderer;
