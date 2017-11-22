@@ -75,3 +75,17 @@ ERROR: 0:13: 'assign' :  cannot convert from 'const float' to 'FragUserData 4-co
 [Wed Nov 22 12:38](ERROR: ERROR: 0:13: 'assign' :  cannot convert from '3-component vector of float' to 'FragColor 4-component vector of float'
 
 )
+[Wed Nov 22 21:13](ERROR: 0(12) : warning C7533: global variable gl_FragColor is deprecated after version 120
+0(12) : error C1035: assignment of incompatible types
+)
+[Wed Nov 22 22:37](ERROR: 0(23) : error C1008: undefined variable "out_position"
+)
+[Wed Nov 22 22:37](ERROR: 0(13) : error C1115: unable to find compatible overloaded function "length()"
+0(16) : error C0000: syntax error, unexpected identifier, expecting ',' or ';' at token "gl_FragColor"
+)
+[Wed Nov 22 22:37](ERROR: 0(16) : warning C7533: global variable gl_FragColor is deprecated after version 120
+0(13) : error C1008: undefined variable "in_pos"
+)
+[Wed Nov 22 22:37](ERROR: 0(13) : error C7011: implicit cast from "vec3" to "vec2"
+0(16) : warning C7533: global variable gl_FragColor is deprecated after version 120
+)

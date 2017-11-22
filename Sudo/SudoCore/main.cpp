@@ -12,7 +12,7 @@ private:
 
 	sudo_system::BatchRendererSystem *m_batchRenderer = sudo_system::BatchRendererSystem::Instance();
 
-	ecs::Entity *shape, *shape2, *shape3;
+	ecs::Entity *shape, *shape2;
 
 public:
 	App() 
@@ -49,7 +49,7 @@ public:
 			}
 		}
 #endif
-		//m_batchRenderer->Submit(shape->GetComponent<ecs::TriangleComponent>(), 3);
+		m_batchRenderer->Submit(shape->GetComponent<ecs::TriangleComponent>(), 3);
 		m_batchRenderer->Submit(shape2->GetComponent<ecs::RectangleComponent>(), 6);
 
 		if (input->GetKey("d"))
@@ -71,7 +71,10 @@ public:
 		shape->AddComponent(new ecs::TriangleComponent(math::Vector2(100, 100), math::Vector4(0, 0.5f, 1, 1)));
 
 		shape2 = new ecs::Entity("shape");
-		shape2->AddComponent(new ecs::RectangleComponent(math::Vector2(150, 150), math::Vector4(1, 0, 0.25f, 1)));
+		shape2->AddComponent(new /*fuck this*/ecs::RectangleComponent(math::Vector2(150, 150), math::Vector4(1, 0, 0.25f, 1)));
+
+
+
 	}
 };
 

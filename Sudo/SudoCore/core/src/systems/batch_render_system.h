@@ -10,18 +10,27 @@ namespace sudo {
 		class Shader;
 		class IndexBuffer;
 		class VertexArrayBuffer;
+
+		class Texture;
 	}
 }
 
 namespace sudo { namespace sudo_system { 
 
-// Renderer pre-processor data
-#define MAX_PRIMITIVES 10000
-#define VERTEX_SIZE sizeof(graphics::VertexData)
-#define PRIMITIVE_SIZE VERTEX_SIZE * 6 // 6 verts in a quad
-#define BUFFER_SIZE PRIMITIVE_SIZE * MAX_PRIMITIVES 
-
 #define USE_INDEX_BUFFER 0
+
+	// Renderer pre-processor data
+#define MAX_PRIMITIVES 2000
+#define VERTEX_SIZE sizeof(graphics::VertexData)
+
+#if USE_INDEX_BUFFER
+#define PRIMITIVE_SIZE VERTEX_SIZE * 4 // 6 verts in a quad
+#else
+#define PRIMITIVE_SIZE VERTEX_SIZE * 6
+#endif
+
+#define BUFFER_SIZE PRIMITIVE_SIZE * MAX_PRIMITIVES 
+#define INDICES_COUNT MAX_PRIMITIVES * 6
 
 	class BatchRendererSystem : public SudoSystem {
 	private:
@@ -49,6 +58,8 @@ namespace sudo { namespace sudo_system {
 		/* Batch Renderer data */
 		graphics::Shader *m_shader;
 		graphics::VertexArrayBuffer *m_vertexArrayBuffer;
+
+		graphics::Texture *m_texture;
 
 #if USE_INDEX_BUFFER
 		graphics::IndexBuffer *m_indexBuffer;

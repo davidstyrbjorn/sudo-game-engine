@@ -19,6 +19,11 @@ namespace sudo { namespace graphics {
 
 		/* Binds the texture buffer */
 		void bind() const;
+
+		/* Size getters */
+		__forceinline uint getWidth() { return m_width; }
+		__forceinline uint getHeight() { return m_height; }
+
 	public:
 		/* Texture data */
 		GLuint m_texId;
