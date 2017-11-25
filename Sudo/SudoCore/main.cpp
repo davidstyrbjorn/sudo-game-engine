@@ -16,6 +16,10 @@ private:
 
 	graphics::Texture *texture1, *texture2;
 
+	std::vector<ecs::RectangleComponent*> m_rectangleComponentEntities;
+
+	int offset = 22;
+
 public:
 	App() 
 	{
@@ -24,23 +28,25 @@ public:
 
 	void Update() override
 	{
-		renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
-		renderer->Submit(shape2->GetComponent<ecs::RectangleComponent>());
-		renderer->Submit(sprite1->GetComponent<ecs::SpriteComponent>());
+		for (int i = 0; i < m_rectangleComponentEntities.size(); i++) {
+			renderer->Submit(m_rectangleComponentEntities[i]);
+		}
 	}	
 
 	void Start() override
 	{
-		shape = new ecs::Entity("shape");
-		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(100, 100), math::Vector4(0.25f, 0.1f, 0.8f, 1)));
+		// Genereate alot of rectangles
+		for (int x = 0; x < 36; x++)
+		{
+			for (int y = 0; y < 23; y++) 
+			{
+				ecs::Entity *thing = new ecs::Entity("thing_thing");
+				thing->AddComponent(new ecs::RectangleComponent(math::Vector2(20, 20), math::Color(1, 0.1f, 0.25f, 1)));
+				thing->transform->position = math::Vector3(x*offset, y*offset, 0);
 
-		shape2 = new ecs::Entity("shape");
-		shape2->AddComponent(new ecs::RectangleComponent(math::Vector2(200, 200), math::Vector4(1.0f, 0.1f, 0.8f, 1)));
-		shape2->transform->Move(math::Vector3(120, 120, 0));
-
-		sprite1 = new ecs::Entity("sprite");
-		sprite1->AddComponent(new ecs::SpriteComponent("D:\\temp\\cat.png"));
-		sprite1->transform->Move(math::Vector3(300, 300, 0));
+				m_rectangleComponentEntities.push_back(thing->GetComponent<ecs::RectangleComponent>());
+			}
+		}
 
 		//config->SetFPS(60);
 		config->SetBackgroundColor(math::Vector4(0.05f, 0.0f, 0.05f, 1));

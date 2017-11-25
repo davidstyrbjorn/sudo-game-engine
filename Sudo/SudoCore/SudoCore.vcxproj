@@ -139,6 +139,7 @@
     <ClCompile Include="core\src\graphics\buffers\vertex_buffer.cpp" />
     <ClCompile Include="core\src\graphics\renderable2d.cpp" />
     <ClCompile Include="core\src\graphics\texture.cpp" />
+    <ClCompile Include="core\src\math\color.cpp" />
     <ClCompile Include="core\src\sound\sound_buffer.cpp" />
     <ClCompile Include="core\src\sound\sound_source.cpp" />
     <ClCompile Include="core\src\sudo_core.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="core\src\graphics\buffers\vertex_buffer.h" />
     <ClInclude Include="core\src\graphics\renderable2d.h" />
     <ClInclude Include="core\src\graphics\texture.h" />
+    <ClInclude Include="core\src\math\color.h" />
     <ClInclude Include="core\src\math\math.h" />
     <ClInclude Include="core\src\math\vector4.h" />
     <ClInclude Include="core\src\sound\sound_buffer.h" />

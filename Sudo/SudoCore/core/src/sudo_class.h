@@ -25,5 +25,8 @@ namespace sudo {
 
 		/* Gets called when application ends, after the engine is done un-initilazing */
 		virtual void OnApplicationQuit() { }
+
+		/* Time between frames, is set by the engine game loop */
+		double deltaTime;
 	};
 }
