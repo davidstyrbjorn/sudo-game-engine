@@ -6,6 +6,8 @@
 
 namespace sudo {
 
+	#define PRINT_FPS 1
+
 	// Forward declarations
 	namespace graphics {
 		class Window;
@@ -37,6 +39,9 @@ namespace sudo {
 		sudo_system::BatchRendererSystem *m_batchRenderer;
 
 		utility::Timer *timer;
+#if PRINT_FPS
+		utility::Timer *realTimer;
+#endif
 
 		/* ======================================================================= */
 		/* ======================> CORE ENGINE METHODS <========================== */

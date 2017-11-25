@@ -47,7 +47,7 @@ namespace sudo { namespace sudo_system {
 		#pragma endregion
 		#pragma region Setters
 		/* Sets m_windowSize to a new size */
-		void SetWindowSize(const math::Vector2& a_newWindowSize);
+		void SetWindowSize(math::Vector2& a_newWindowSize);
 
 		/* Sets window background color */
 		void SetBackgroundColor(const math::Vector4& a_newBackgroundColor);

@@ -7,10 +7,6 @@ namespace sudo { namespace ecs {
 
 	class SpriteComponent : public Component, public graphics::Renderable2D {
 	private:
-
-		unsigned int TCBO;
-		unsigned int texture;
-
 		char* m_imagePath;
 
 	public:
@@ -23,9 +19,6 @@ namespace sudo { namespace ecs {
 		/* Component virtual methods */
 		void Start()	override;
 		void Update()	override { }
-
-		/* Renderable2D virtual methods */
-		//std::vector<graphics::VertexData> GetPrimitiveData() { }
 	};
 	
 } } 

@@ -32,31 +32,6 @@ namespace sudo { namespace graphics {
 
 	struct VertexData 
 	{
-		/*
-		VertexData(const math::Vector3 &a_pos, const math::Vector4 &a_color, const math::Vector2 &a_uv)
-		{
-			// Position
-			pos[0] = a_pos.x;
-			pos[1] = a_pos.y;
-			pos[2] = a_pos.z;
-
-			// Colour
-			color[0] = a_color.x;
-			color[1] = a_color.y;
-			color[2] = a_color.z;
-			color[3] = a_color.w;
-
-			// UV Coordinates
-			uvCoord[0] = a_uv.x;
-			uvCoord[1] = a_uv.y;
-		}
-		float pos[3];
-		float color[4];
-		float uvCoord[2];
-		// Texture
-		//float tid;
-		*/		
-
 		math::Vector3 pos;
 		math::Vector4 color;
 		math::Vector2 uv;
@@ -93,9 +68,7 @@ namespace sudo { namespace graphics {
 		/* Scales down m_size by orders of magnitude */
 		void SizeDown(const float a_magnitude);
 
-		/* Constructs a vertex list for the renderer to use */
-		virtual std::vector<graphics::VertexData> GetPrimitiveData() { std::vector<graphics::VertexData> temp; return temp; }
-
+		/* Get the renderables texture id, return 0 if ther is no texture on the renderable */
 		inline const uint getTID() const { return m_texture == nullptr ? 0 : m_texture->getID(); }
 
 	protected:	
@@ -108,8 +81,5 @@ namespace sudo { namespace graphics {
 
 		// Texture 
 		Texture *m_texture;
-
-	public:
-		sudo::RenderableType m_type;
 	};
 } }

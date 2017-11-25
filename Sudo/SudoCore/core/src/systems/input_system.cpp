@@ -56,7 +56,8 @@ namespace sudo { namespace sudo_system {
 
 	void InputSystem::CleanUp() 
 	{
-
+		// Delete all the allocated memory
+		delete m_mousePos;
 	}
 
 	bool InputSystem::GetKeyDown(const char* a_key)

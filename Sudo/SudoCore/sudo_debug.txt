@@ -154,3 +154,9 @@ ERROR: 0:91: '<' : wrong operand types no operation '<' exists that takes a left
 [Sat Nov 25 14:46](ERROR: ERROR: 0:84: 'textures' : syntax error syntax error
 
 )
+[Sat Nov 25 17:08](ERROR: 0(25) : warning C7533: global variable gl_FragColor is deprecated after version 120
+0(21) : error C1008: undefined variable "glFragColor"
+)
+[Sat Nov 25 17:08](ERROR: 0(25) : warning C7533: global variable gl_FragColor is deprecated after version 120
+0(21) : error C1008: undefined variable "glFragColor"
+)

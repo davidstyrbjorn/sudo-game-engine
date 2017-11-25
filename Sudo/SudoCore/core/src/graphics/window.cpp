@@ -27,6 +27,8 @@ sudo::graphics::Window::Window(uint a_width, uint a_height, char *a_caption)
 
 	/* Initalize Settings System */
 	settings = sudo_system::SettingsSystem::Instance();
+
+	glfwSwapInterval(0);
 }
 
 sudo::graphics::Window::~Window()

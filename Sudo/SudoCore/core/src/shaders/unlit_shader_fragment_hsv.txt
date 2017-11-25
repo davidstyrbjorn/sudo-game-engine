@@ -2,9 +2,6 @@
 
 in vec4 out_color;
 in vec2 out_texCoords;
-in float out_textureMode;
-
-uniform sampler2D myTexture;
 
 // Luminance weight vector
 const vec3 w = vec3(0.2125, 0.7154, 0.0721);

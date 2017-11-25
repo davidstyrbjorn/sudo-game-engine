@@ -1,6 +1,5 @@
 #include"core\sudo.h"
 
-/*
 using namespace sudo;
 
 // User end componet
@@ -46,7 +45,7 @@ private:
 	enum GameStates { MENU, PLAYING };
 	GameStates state;
 
-	ecs::Entity *backgroundMenu;
+	ecs::Entity *backgroundMenu, *backgroundGame;
 
 	ecs::Entity *leftPaddle, *rightPaddle, *ballEntity;
 	ecs::Entity *cpuPaddle;
@@ -74,13 +73,16 @@ public:
 		state = GameStates::MENU;
 
 		backgroundMenu = new ecs::Entity("backgroundMenu");
-		backgroundMenu->AddComponent(new ecs::SpriteComponent("C:\\SudoGameEngine\\images\\_pong_assets\\title_screen_texture.png"));
+		backgroundMenu->AddComponent(new ecs::SpriteComponent("D:\\SudoGameEngine\\images\\_pong_assets\\title_screen_texture.png"));
 		
+		backgroundGame = new ecs::Entity("backgroundGame");
+		backgroundGame->AddComponent(new ecs::SpriteComponent("D:\\temp\\game_background.jpg"));
+
 		// Left Paddle
 		leftPaddle = new ecs::Entity("leftPaddle");
 		leftPaddle->transform->position = math::Vector3(30, 0, 0);
 		leftPaddle->AddComponent(new PaddleComponent("w", "s"));
-		leftPaddle->AddComponent(new ecs::RectangleComponent(math::Vector2(10, 100), math::Vector4(1, 0, 0, 1)));
+		leftPaddle->AddComponent(new ecs::SpriteComponent("D:\\temp\\paddle.png"));
 		leftPaddle->AddComponent(new ecs::BoxCollider2D());
 		leftPaddle->GetComponent<ecs::BoxCollider2D>()->SetKeepInBounds(true);
 		left = leftPaddle->GetComponent<ecs::BoxCollider2D>();
@@ -89,14 +91,14 @@ public:
 		rightPaddle = new ecs::Entity("rightPaddle");
 		rightPaddle->transform->position = math::Vector3(800 - 25 - 30, 0, 0);
 		rightPaddle->AddComponent(new PaddleComponent("up", "down"));
-		rightPaddle->AddComponent(new ecs::RectangleComponent(math::Vector2(10, 100), math::Vector4(0, 1, 0, 1)));
+		rightPaddle->AddComponent(new ecs::SpriteComponent("D:\\temp\\paddle.png"));
 		rightPaddle->AddComponent(new ecs::BoxCollider2D());
 		rightPaddle->GetComponent<ecs::BoxCollider2D>()->SetKeepInBounds(true);
 		right = rightPaddle->GetComponent<ecs::BoxCollider2D>();
 
 		// Ball
 		ballEntity = new ecs::Entity("ball");
-		ballEntity->AddComponent(new ecs::RectangleComponent(math::Vector2(20, 20), math::Vector4(0, 0, 1, 1)));
+		ballEntity->AddComponent(new ecs::SpriteComponent("D:\\temp\\test.jpg"));
 		ballEntity->transform->position = math::Vector3((800 / 2) - 10, (600/2) - 10, 0);
 		ballEntity->AddComponent(new ecs::BoxCollider2D());
 		ball = ballEntity->GetComponent<ecs::BoxCollider2D>();
@@ -117,7 +119,7 @@ public:
 			}
 
 			// Draw stuff
-			renderer->Submit(backgroundMenu->GetComponent<ecs::SpriteComponent>(), 4);
+			renderer->Submit(backgroundMenu->GetComponent<ecs::SpriteComponent>());
 		}
 		else if (state == GameStates::PLAYING)
 		{
@@ -130,12 +132,11 @@ public:
 			// Ball Logic
 			this->BallLogic();
 
-			config->SetBackgroundColor(math::Vector4(sinf(gameClock.GetTicks()*0.0005f), sinf(gameClock.GetTicks() * 0.0005f), 0, 1));
-
 			// Draw stuff
-			renderer->Submit(leftPaddle->GetComponent<ecs::RectangleComponent>(),6);
-			renderer->Submit(rightPaddle->GetComponent<ecs::RectangleComponent>(),6);			
-			renderer->Submit(ballEntity->GetComponent<ecs::RectangleComponent>(),6);
+			renderer->Submit(backgroundGame->GetComponent<ecs::SpriteComponent>());
+			renderer->Submit(leftPaddle->GetComponent<ecs::SpriteComponent>());
+			renderer->Submit(rightPaddle->GetComponent<ecs::SpriteComponent>());			
+			renderer->Submit(ballEntity->GetComponent<ecs::SpriteComponent>());
 		}
 	}
 
@@ -182,7 +183,7 @@ public:
 		if (ballEntity->transform->position.y <= 0) {
 			ball_y_change *= -1;
 		}
-		if (ballEntity->transform->position.y + 20 > HEIGHT) {
+		if (ballEntity->transform->position.y + 32 > HEIGHT) {
 			ball_y_change *= -1;
 		}
 
@@ -261,4 +262,3 @@ int lmain()
 
 	return 0;
 }
-*/

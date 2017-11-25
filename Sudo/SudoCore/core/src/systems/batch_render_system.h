@@ -51,7 +51,7 @@ namespace sudo { namespace sudo_system {
 			
 		// Renderer routines
 		void Begin();
-		void Submit(graphics::Renderable2D *a_primitive, uint a_vertexCount);
+		void Submit(graphics::Renderable2D *a_primitive);
 		void Flush();
 		void End();
 

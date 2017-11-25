@@ -9,16 +9,21 @@ namespace sudo {
 	class SudoClass {
 	public:
 		sudo_system::InputSystem *input = sudo_system::InputSystem::Instance();
-		//sudo_system::RenderSystem *renderer = sudo_system::RenderSystem::Instance();
 		sudo_system::BatchRendererSystem *renderer = sudo_system::BatchRendererSystem::Instance();
 		sudo_system::WorldSystem *world = sudo_system::WorldSystem::Instance();
 		sudo_system::SettingsSystem *config = sudo_system::SettingsSystem::Instance();
 		sudo_system::SoundSystem *sound = sudo_system::SoundSystem::Instance();
 
 	public:
-		virtual ~SudoClass() { };
+		virtual ~SudoClass() { }
 
-		virtual void Start() { };
-		virtual void Update() { };
+		/* Gets called upon engine init */
+		virtual void Start() { }
+
+		/* Gets called once every frame, before renderer flushes and entities gets updated */
+		virtual void Update() { }
+
+		/* Gets called when application ends, after the engine is done un-initilazing */
+		virtual void OnApplicationQuit() { }
 	};
 }

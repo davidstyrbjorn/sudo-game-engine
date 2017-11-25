@@ -33,7 +33,7 @@ namespace sudo { namespace sudo_system {
 		return m_msPerFrame;
 	}
 
-	void SettingsSystem::SetWindowSize(const math::Vector2& a_newWindowSize) 
+	void SettingsSystem::SetWindowSize(math::Vector2& a_newWindowSize) 
 	{
 		m_windowSize = a_newWindowSize;
 

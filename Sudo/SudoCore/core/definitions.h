@@ -16,11 +16,6 @@ enum SudoBufferType {
 	VERTEX_COLOR_TEXTURE
 };
 
-enum RenderableType {
-	SHAPE,
-	SPRITE
-};
-
 /* ===================================================== */
 /* ===================================================== */
 
@@ -29,6 +24,6 @@ enum RenderableType {
 #define MAX_PIXEL_SIZE_Y 6000
 #define MIN_PIXEL_SIZE_Y 0
 
-#define DEFAULT_FPS_CAP 60
+#define DEFAULT_FPS_CAP 10000
 
 }

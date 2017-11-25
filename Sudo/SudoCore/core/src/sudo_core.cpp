@@ -37,7 +37,7 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	m_settingsSystem = sudo_system::SettingsSystem::Instance();
 	m_settingsSystem->Enable();
 	m_settingsSystem->SetFPS(DEFAULT_FPS_CAP);
-	m_settingsSystem->SetWindowSize(a_windowSize);
+	m_settingsSystem->SetWindowSize((math::Vector2&)a_windowSize);
 	m_settingsSystem->SetBackgroundColor(math::Vector4(0, 0, 0, 1));
 
 	/* Input system */
@@ -63,9 +63,6 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	//m_renderSystem->Start();
 	m_batchRenderer->Start();
 
-	timer = new utility::Timer();
-	timer->Start();
-
 	/* Start the game_loop; This means Start gets called before any Update calls */
 	game_loop();
 }
@@ -82,30 +79,46 @@ void SudoCore::clean_up()
 	m_settingsSystem->CleanUp();
 	m_soundSystem->CleanUp();
 
-	//delete m_engineInstance;
 	delete m_window;
+
+	m_engineInstance->OnApplicationQuit();
 }
 
 void SudoCore::game_loop()
 {
+	timer = new utility::Timer();
+	timer->Start();
+
+#if PRINT_FPS
+	realTimer = new utility::Timer;
+	realTimer->Start();
+	unsigned int framesPerSecond = 0;
+#endif
+
 	while (m_window->is_open()) 
 	{
-		/* Limit the update rate */
-		if (timer->GetTicks() >= m_settingsSystem->GetMS()) 
-		{
-			/* Reset renderer data */
-			m_batchRenderer->Begin();
+#if PRINT_FPS
+		if (realTimer->GetTicks() > 1000) {
+			std::cout << framesPerSecond << std::endl;
+			framesPerSecond = 0;
+			realTimer->Reset();
+		}
+#endif
 
+		/* Limit the update rate */
+		if (1==1) 
+		{
 			/* Swap buffers and clear the screen */
 			m_window->clear();
 
-			/* Update the WorldSystem holding all game entities */
-			m_worldSystem->Update();
+			/* Reset renderer data */
+			m_batchRenderer->Begin();
 
 			/* Call the Update method for the end-user */
 			m_engineInstance->Update();
 
-			m_inputSystem->Update();
+			/* Update the WorldSystem holding all game entities */
+			m_worldSystem->Update();
 
 			/* Render w/OpenGL */
 			m_batchRenderer->End();
@@ -114,7 +127,14 @@ void SudoCore::game_loop()
 			/* Display the current drawns elements */
 			m_window->display();
 
+			/* Update input | Currently only does window shake effect */
+			m_inputSystem->Update();
+
 			timer->Reset();
+
+#if PRINT_FPS
+			framesPerSecond++;
+#endif
 		}
 	}
 

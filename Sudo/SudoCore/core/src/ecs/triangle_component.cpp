@@ -10,9 +10,6 @@ namespace sudo { namespace ecs {
 		// Arbitary shape values
 		m_size = a_size;
 		m_color = a_color;
-
-		// Used when shading 
-		m_type = sudo::RenderableType::SHAPE;
 	}
 
 	TriangleComponent::~TriangleComponent() 

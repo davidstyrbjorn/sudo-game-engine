@@ -1,0 +1,25 @@
+#version 330 core
+
+in vec4 out_color;
+in vec2 out_texCoords;
+
+in float out_tid;
+uniform sampler2D textures[32];
+
+void main()
+{
+	// Getting texture data if there is any
+	vec4 texColor = out_color;
+	if(out_tid > 0.0) {
+		int tid = int(out_tid - 0.5);
+		texColor = texture(textures[tid], out_texCoords);
+	}
+
+	gl_FragColor = texColor;
+	//gl_FragColor = vec4(texColor.a , 0, 0, 1);
+
+	// Alpha cut off
+	if(gl_FragColor.a < 0.1) {
+		discard;
+	}
+}

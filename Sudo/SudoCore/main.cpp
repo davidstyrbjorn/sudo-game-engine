@@ -12,8 +12,7 @@ private:
 
 	sudo_system::BatchRendererSystem *m_batchRenderer = sudo_system::BatchRendererSystem::Instance();
 
-	ecs::Entity *shape, *shape2;
-	float hueShift = 0;
+	ecs::Entity *shape, *shape2, *sprite1;
 
 	graphics::Texture *texture1, *texture2;
 
@@ -25,40 +24,32 @@ public:
 
 	void Update() override
 	{
-#if 0
-		// 3072 triangles with the batch renderer
-		for (int x = 0; x < 14; x++) {
-			for (int y = 0; y < 14; y++) {
-				math::Vector4 colorVector = math::Vector4(1, 0.4f, 0.5f, 1);
-				graphics::VertexData vertices[] = {
-					graphics::VertexData(math::Vector3((offset*x),(offset*y),0),								colorVector, math::Vector2(0,0)), // Top left
-					graphics::VertexData(math::Vector3((offset*x),(offset*y) + width,0),						colorVector, math::Vector2(0,0)), // Bottom left
-					graphics::VertexData(math::Vector3((offset*x) + width,(offset*y) + width,0),				colorVector, math::Vector2(0,0)) // Bottom right
-					//graphics::VertexData(math::Vector3((offset*x) + width, (offset*y), 0),						colorVector, math::Vector2(0,0))  // Top right
-				};
-				m_batchRenderer->Submit(vertices, 4);
-			}					
-		}
-#endif
-
-		m_batchRenderer->Submit(shape->GetComponent<ecs::RectangleComponent>(), 6);
-		m_batchRenderer->Submit(shape2->GetComponent<ecs::RectangleComponent>(), 6);
+		renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
+		renderer->Submit(shape2->GetComponent<ecs::RectangleComponent>());
+		renderer->Submit(sprite1->GetComponent<ecs::SpriteComponent>());
 	}	
 
 	void Start() override
 	{
-		texture1 = new graphics::Texture("C:\\temp\\sample.jpg");
-		texture2 = new graphics::Texture("C:\\temp\\sample2.jpg");
-
 		shape = new ecs::Entity("shape");
-		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(100, 100), math::Vector4(0.25f, 0.1f, 0.8f, 1), texture1));
+		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(100, 100), math::Vector4(0.25f, 0.1f, 0.8f, 1)));
 
 		shape2 = new ecs::Entity("shape");
-		shape2->AddComponent(new ecs::RectangleComponent(math::Vector2(200, 200), math::Vector4(0.25f, 0.1f, 0.8f, 1), texture2));
+		shape2->AddComponent(new ecs::RectangleComponent(math::Vector2(200, 200), math::Vector4(1.0f, 0.1f, 0.8f, 1)));
 		shape2->transform->Move(math::Vector3(120, 120, 0));
 
-		config->SetFPS(60);
+		sprite1 = new ecs::Entity("sprite");
+		sprite1->AddComponent(new ecs::SpriteComponent("D:\\temp\\cat.png"));
+		sprite1->transform->Move(math::Vector3(300, 300, 0));
+
+		//config->SetFPS(60);
 		config->SetBackgroundColor(math::Vector4(0.05f, 0.0f, 0.05f, 1));
+	}
+
+	void OnApplicationQuit() override 
+	{
+		delete texture1;
+		delete texture2;
 	}
 };
 
