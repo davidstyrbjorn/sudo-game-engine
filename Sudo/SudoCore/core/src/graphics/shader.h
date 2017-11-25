@@ -37,6 +37,8 @@ namespace sudo { namespace graphics {
 		/* glUniform methods */
 		void setUniformMatrix4x4 (const GLchar *a_name, math::Matrix4x4& a_matrix);
 		void setUniform1f		 (const GLchar *a_name, float value);
+		void setUniform1fv		 (const GLchar *a_name, int count, float *value);
+		void setUniform1iv		 (const GLchar *a_name, int count, int *value);
 		void setUniform2f		 (const GLchar *a_name, const math::Vector2& vec);
 		void setUniform3f		 (const GLchar *a_name, const math::Vector3& vec);
 	};

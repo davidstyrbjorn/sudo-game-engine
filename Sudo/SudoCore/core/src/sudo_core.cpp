@@ -108,6 +108,7 @@ void SudoCore::game_loop()
 			m_inputSystem->Update();
 
 			/* Render w/OpenGL */
+			m_batchRenderer->End();
 			m_batchRenderer->Flush();
 
 			/* Display the current drawns elements */

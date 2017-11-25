@@ -23,6 +23,7 @@ namespace sudo { namespace graphics {
 		/* Size getters */
 		__forceinline uint getWidth() { return m_width; }
 		__forceinline uint getHeight() { return m_height; }
+		__forceinline uint getID() const { return m_texId; }
 
 	public:
 		/* Texture data */

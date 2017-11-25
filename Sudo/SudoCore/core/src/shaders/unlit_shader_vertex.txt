@@ -3,6 +3,7 @@
 layout (location = 0) in vec3 in_pos;
 layout (location = 1) in vec4 in_color;
 layout (location = 2) in vec2 in_texCoords;
+layout (location = 3) in float tid;
 
 uniform mat4 projection_matrix;
 uniform mat4 view_matrix = mat4(1.0);
@@ -11,6 +12,7 @@ uniform float texture_mode = 0;
 
 out vec4 out_color;
 out vec2 out_texCoords;
+out float out_tid;
 
 void main() 
 {
@@ -19,4 +21,5 @@ void main()
 
 	out_texCoords = in_texCoords;
 	out_color = in_color;
+	out_tid = tid;
 }

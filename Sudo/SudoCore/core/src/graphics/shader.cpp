@@ -96,6 +96,16 @@ namespace sudo { namespace graphics {
 		glUniform3f(getUniformLocation(a_name), vec.x, vec.y, vec.z);
 	}
 
+	void Shader::setUniform1fv(const GLchar *a_name, int count, float *value) 
+	{
+		glUniform1fv(getUniformLocation(a_name), count, value);
+	}
+
+	void Shader::setUniform1iv(const GLchar *a_name, int count, int *value)
+	{
+		glUniform1iv(getUniformLocation(a_name), count, value);
+	}
+
 	uint Shader::getUniformLocation(const char* a_name) 
 	{
 		return glGetUniformLocation(m_shaderProgram, a_name);

@@ -51,13 +51,16 @@ namespace sudo { namespace ecs {
 		}
 	}
 
-	void Entity::AddComponent(Component *a_component) 
+	Component* Entity::AddComponent(Component *a_component) 
 	{
 		/* Set the components entity holder */
 		a_component->SetEntityHolder(this);
 
 		/* Push back the component into the list */
 		m_components.push_back(a_component);
+
+		/* Return the created component for the user to possibly store */
+		return a_component;
 	}
 
 	void Entity::SetName(char* a_name)

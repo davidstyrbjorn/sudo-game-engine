@@ -6,7 +6,7 @@
 
 namespace sudo { namespace ecs {
 
-	RectangleComponent::RectangleComponent(math::Vector2 &a_size, math::Vector4 &a_color)
+	RectangleComponent::RectangleComponent(math::Vector2 &a_size, math::Vector4 &a_color, graphics::Texture* a_texture)
 	{
 		// Arbitary shape values
 		m_size = a_size;
@@ -14,6 +14,8 @@ namespace sudo { namespace ecs {
 
 		// Used when shading 
 		m_type = sudo::RenderableType::SHAPE;
+
+		m_texture = a_texture;
 	}
 
 	RectangleComponent::~RectangleComponent() 

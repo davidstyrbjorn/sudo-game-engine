@@ -23,9 +23,11 @@ namespace sudo { namespace sudo_system {
 		glewInit();
 		glewExperimental = true;
 
-		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\unlit_shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\unlit_shader_fragment.txt");
+		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\unlit_shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\unlit_shader_fragment.txt");
 		m_shader->enable();
-		m_shader->setUniform1f("myTexture", 0);
+
+		int texIds[] = { 0,1,2,3,4,5,6,7,8,9 };
+		m_shader->setUniform1iv("textures", 10, texIds);
 
 		sudo_system::SettingsSystem* settings = sudo_system::SettingsSystem::Instance();
 		m_shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(0, settings->GetWindowSize().x, settings->GetWindowSize().y, 0, -1, 1));
@@ -37,18 +39,16 @@ namespace sudo { namespace sudo_system {
 		// Create and bind buffer
 		glGenBuffers(1, &m_buffer);
 		glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
+		glBufferData(GL_ARRAY_BUFFER, BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
 		// Structure the buffer layout
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(graphics::VertexData), nullptr); // Vertex position
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(graphics::VertexData), reinterpret_cast<GLvoid*>(offsetof(graphics::VertexData, color))); // Vertex color
 		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(graphics::VertexData), reinterpret_cast<GLvoid*>(offsetof(graphics::VertexData, uvCoord))); // Vertex texture coordinates
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(graphics::VertexData), reinterpret_cast<GLvoid*>(offsetof(graphics::VertexData, uv))); // Vertex texture coordinates
 		glEnableVertexAttribArray(2);
-
-		// Test
-		m_texture = new graphics::Texture("D:\\temp\\cat.png");
-		m_texture->bind();
-		m_shader->setUniform1f("myTexture", 0);
+		glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(graphics::VertexData), reinterpret_cast<GLvoid*>(offsetof(graphics::VertexData, tid)));
+		glEnableVertexAttribArray(3);
 
 		// index buffer
 #if USE_INDEX_BUFFER
@@ -74,19 +74,78 @@ namespace sudo { namespace sudo_system {
 	{
 		// Reset primitive count
 		m_primitiveCount = 0;
-
+		
 		// Bind and reset buffer data
 		glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
-		glBufferData(GL_ARRAY_BUFFER, BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
+		m_mapBuffer = (graphics::VertexData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 	}
 
 	void BatchRendererSystem::Submit(graphics::Renderable2D *a_primitive, uint a_vertexCount)
 	{
+		
+		// Texture
+		const uint tid = a_primitive->getTID();
+		float ts = 0.0f; // texture slot
+		if (tid > 0) 
+		{
+			bool found = false;
+			for (int i = 0; i < m_textureSlots.size(); i++)
+			{
+				if (m_textureSlots[i] == tid) 
+				{
+					found = true;
+					ts = (float)(i+1);
+					break;
+				}
+			}
+
+			if (!found) 
+			{
+				if (m_textureSlots.size() >= 32) {
+					End();
+					Flush();
+					Begin();
+				}
+				m_textureSlots.push_back(tid);
+				ts = (float)(m_textureSlots.size());
+			}
+		}
+		
+		const math::Vector3 &_position = a_primitive->GetEntityTransform()->position;
+		const math::Vector2 &_size = a_primitive->GetSize();
+		const math::Vector4 &_color = a_primitive->GetColor();
+
+		m_mapBuffer->pos = _position;
+		m_mapBuffer->color = _color;
+		m_mapBuffer->uv = math::Vector2(0, 0);
+		m_mapBuffer->tid = ts;
+		m_mapBuffer++;
+
+		m_mapBuffer->pos = math::Vector3(_position.x, _position.y + _size.y, 0);
+		m_mapBuffer->color = _color;
+		m_mapBuffer->uv = math::Vector2(1, 0);		
+		m_mapBuffer->tid = ts;
+		m_mapBuffer++;
+
+		m_mapBuffer->pos = math::Vector3(_position.x + _size.x, _position.y + _size.y, 0);
+		m_mapBuffer->color = _color;
+		m_mapBuffer->uv = math::Vector2(1, 1);
+		m_mapBuffer->tid = ts;
+		m_mapBuffer++;
+
+		m_mapBuffer->pos = math::Vector3(_position.x + _size.x, _position.y, 0);
+		m_mapBuffer->color = _color;
+		m_mapBuffer->uv = math::Vector2(0, 1);
+		m_mapBuffer->tid = ts;
+		m_mapBuffer++;
+
+#if 0
 		glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
 		// Offset up to the current empty point in the buffer
 		GLintptr initialOffset = m_primitiveCount*(sizeof(graphics::VertexData) * a_vertexCount);
 		glBufferSubData(GL_ARRAY_BUFFER, initialOffset, sizeof(graphics::VertexData) * a_vertexCount, a_primitive->GetPrimitiveData().data());
 
+#endif
 		// Increment the primitive count
 		m_primitiveCount++;
 	}
@@ -96,17 +155,25 @@ namespace sudo { namespace sudo_system {
 		// Draw call
 		if (m_primitiveCount != 0) {
 #if USE_INDEX_BUFFER
+			for (int i = 0; i < m_textureSlots.size(); i++) {
+				glActiveTexture(GL_TEXTURE0 + i);
+				glBindTexture(GL_TEXTURE_2D, m_textureSlots[i]);
+			}
+
 			m_indexBuffer->bind();
 			glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
-			glDrawElements(GL_TRIANGLES, 6*m_primitiveCount, GL_UNSIGNED_INT, 0);
+			glDrawElements(GL_TRIANGLES, 6 * m_primitiveCount, GL_UNSIGNED_INT, 0);
 #else
 			glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
-			glDrawArrays(GL_TRIANGLES, 0, 6*m_primitiveCount);
+			glDrawArrays(GL_TRIANGLES, 0, 6 * m_primitiveCount);
 #endif
 		}
+	}
 
-		// Unbind the buffer
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	void BatchRendererSystem::End()
+	{
+		// Empty the buffer
+		glUnmapBuffer(GL_ARRAY_BUFFER);
 	}
 
 	void BatchRendererSystem::CleanUp()

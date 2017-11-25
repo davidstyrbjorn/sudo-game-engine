@@ -89,3 +89,68 @@ ERROR: 0:13: 'assign' :  cannot convert from 'const float' to 'FragUserData 4-co
 [Wed Nov 22 22:37](ERROR: 0(13) : error C7011: implicit cast from "vec3" to "vec2"
 0(16) : warning C7533: global variable gl_FragColor is deprecated after version 120
 )
+[Fri Nov 24 10:36](ERROR: ERROR: 0:14: '=' :  cannot convert from '4-component vector of float' to '3-component vector of float'
+
+)
+[Fri Nov 24 10:36](ERROR: ERROR: 0:14: '=' :  cannot convert from '4-component vector of float' to '3-component vector of float'
+
+)
+[Fri Nov 24 10:37](ERROR: ERROR: 0:15: 'dot' : no matching overloaded function found (using implicit conversion) 
+
+)
+[Fri Nov 24 10:38](ERROR: ERROR: 0:14: '=' :  cannot convert from '4-component vector of float' to '3-component vector of float'
+ERROR: 0:17: 'constructor' : not enough data provided for construction 
+
+)
+[Fri Nov 24 10:38](ERROR: ERROR: 0:14: '=' :  cannot convert from '4-component vector of float' to '3-component vector of float'
+
+)
+[Fri Nov 24 10:39](ERROR: ERROR: 0:14: '=' :  cannot convert from '4-component vector of float' to '3-component vector of float'
+
+)
+[Fri Nov 24 10:41](ERROR: ERROR: 0:14: '=' :  cannot convert from '4-component vector of float' to '3-component vector of float'
+ERROR: 0:17: 'assign' :  cannot convert from '3-component vector of float' to 'FragColor 4-component vector of float'
+
+)
+[Fri Nov 24 10:41](ERROR: ERROR: 0:14: '=' :  cannot convert from '4-component vector of float' to '3-component vector of float'
+
+)
+[Fri Nov 24 10:41](ERROR: ERROR: 0:14: '=' :  cannot convert from '4-component vector of float' to '3-component vector of float'
+
+)
+[Fri Nov 24 10:41](ERROR: ERROR: 0:14: '=' :  cannot convert from '4-component vector of float' to '3-component vector of float'
+
+)
+[Fri Nov 24 10:42](ERROR: ERROR: 0:14: '=' :  cannot convert from '4-component vector of float' to '3-component vector of float'
+
+)
+[Fri Nov 24 10:42](ERROR: ERROR: 0:15: '=' :  cannot convert from '4-component vector of float' to '3-component vector of float'
+
+)
+[Fri Nov 24 12:04](ERROR: ERROR: 0:22: 'maxval' : syntax error syntax error
+
+)
+[Fri Nov 24 12:05](ERROR: ERROR: 0:22: 'v' : redefinition 
+ERROR: 0:52: 'convertHSV2RGB' : syntax error syntax error
+
+)
+[Fri Nov 24 12:06](ERROR: ERROR: 0:52: 'convertHSV2RGB' : syntax error syntax error
+
+)
+[Fri Nov 24 12:06](ERROR: ERROR: 0:59: '}' : syntax error syntax error
+
+)
+[Fri Nov 24 12:06](ERROR: ERROR: 0:90: '>' : wrong operand types no operation '>' exists that takes a left-hand operand of type '3-component vector of float' and a right operand of type 'const float' (or there is no acceptable conversion)
+ERROR: 0:91: '<' : wrong operand types no operation '<' exists that takes a left-hand operand of type '3-component vector of float' and a right operand of type 'const float' (or there is no acceptable conversion)
+
+)
+[Fri Nov 24 12:07](ERROR: ERROR: 0:90: '>' : wrong operand types no operation '>' exists that takes a left-hand operand of type '3-component vector of float' and a right operand of type 'const float' (or there is no acceptable conversion)
+ERROR: 0:91: '<' : wrong operand types no operation '<' exists that takes a left-hand operand of type '3-component vector of float' and a right operand of type 'const float' (or there is no acceptable conversion)
+
+)
+[Sat Nov 25 14:45](ERROR: ERROR: 0:84: 'textures' : syntax error syntax error
+
+)
+[Sat Nov 25 14:46](ERROR: ERROR: 0:84: 'textures' : syntax error syntax error
+
+)

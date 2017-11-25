@@ -17,7 +17,7 @@ namespace sudo {
 
 namespace sudo { namespace sudo_system { 
 
-#define USE_INDEX_BUFFER 0
+#define USE_INDEX_BUFFER 1
 
 	// Renderer pre-processor data
 #define MAX_PRIMITIVES 2000
@@ -53,13 +53,17 @@ namespace sudo { namespace sudo_system {
 		void Begin();
 		void Submit(graphics::Renderable2D *a_primitive, uint a_vertexCount);
 		void Flush();
+		void End();
+
 
 	private:
 		/* Batch Renderer data */
-		graphics::Shader *m_shader;
 		graphics::VertexArrayBuffer *m_vertexArrayBuffer;
+		graphics::Shader *m_shader;
+		graphics::VertexData *m_mapBuffer;
 
-		graphics::Texture *m_texture;
+		// Texture 
+		std::vector<uint> m_textureSlots;
 
 #if USE_INDEX_BUFFER
 		graphics::IndexBuffer *m_indexBuffer;

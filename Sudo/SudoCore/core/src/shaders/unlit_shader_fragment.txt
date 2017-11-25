@@ -6,10 +6,107 @@ in float out_textureMode;
 
 uniform sampler2D myTexture;
 
+// Luminance weight vector
+const vec3 w = vec3(0.2125, 0.7154, 0.0721);
+
+// HUE shift (0-360)
+// float hueShift = 180;
+uniform float hueShift;
+
+vec3 convertRGB2HSV(vec3 a_rgbColor) {
+	float h, s, v;
+
+	float r = a_rgbColor.r;
+	float g = a_rgbColor.g;
+	float b = a_rgbColor.b;
+
+	v = max(r, max(g,b));
+	float maxval = v;
+
+	float minval = min(r, min(g,b));
+	if( maxval == 0. ) {
+		s = 0.0;
+	}
+	else {
+		s = (maxval - minval) / maxval;
+	}
+
+	if( s == 0.0 ) {
+		h = 0.0;
+	}
+	else 
+	{
+		float delta = maxval - minval;
+		if ( r == maxval ) h = (g - b) / delta;
+		else 
+			if( g == maxval ) h = 2.0 + (b - r) / delta;
+			else
+			if( b == maxval) h = 4.0 + (r - g) / delta;
+
+		h *= 60;
+		if( h < 0.0) h += 360;
+	}
+
+	return vec3(h,s,v);
+}
+
+vec3 convertHSV2RGB(vec3 a_hsvColor) {
+	float h = a_hsvColor.x;
+	float s = a_hsvColor.y;
+	float v = a_hsvColor.z;
+	if( s == 0.0 ) // Acrhomatic saturation is 0
+	{
+		return vec3(v,v,v); // return gray
+	}
+	else // Achromatic saturation is a thing
+	{
+		// Clamp h value
+		if( h > 360.0 ) h = 360.0; 
+		if( h < 0.0 )	h = 0.0;
+
+		h /= 60;
+		int k = int(h);
+		float f = h -float(k);
+		float p = v * (1.0 - s);
+		float q = v * (1.0 - (s * f));
+		float t = v * (1.0 - (s * (1.0 - f)));
+
+		if (k == 0) return vec3(v,t,p);
+		if (k == 1) return vec3(q,v,p);
+		if (k == 2) return vec3(p,v,t);
+		if (k == 3) return vec3(p,q,v);
+		if (k == 4) return vec3(t,p,v);
+		if (k == 5) return vec3(v,p,q);
+	}
+}
+
+in float out_tid;
+uniform sampler2D textures[32];
+
 void main() 
 {
+	vec4 texColor = out_color;
+	if(out_tid > 0.0)
+	{
+		int tid = int(out_tid - 0.5);
+		texColor = texture(textures[tid], out_texCoords);
+	}
 
-	//gl_FragColor = out_color;
-	gl_FragColor = texture(myTexture, out_texCoords);
-	//gl_FragColor = vec4(out_texCoords,0,1);
+	gl_FragColor = texColor;
+
+	/*
+	// Hue saturation test thing
+	vec3 irgb = texture(myTexture, out_texCoords).rgb;
+	vec3 ihsv = convertRGB2HSV(irgb);
+	ihsv.x += hueShift;
+	if (ihsv.x > 360.) ihsv.x -= 360;
+	if (ihsv.x < 0.) ihsv.x += 360;
+	irgb = convertHSV2RGB(ihsv);
+	//gl_FragColor = vec4(irgb,1);
+
+	// Luminance test thing
+	//vec3 irgb = texture(myTexture, out_texCoords).rgb;
+	//float luminance = dot(irgb, w);
+	//gl_FragColor = vec4(luminance, luminance, luminance, 1);
+	*/
 }

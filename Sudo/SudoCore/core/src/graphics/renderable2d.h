@@ -10,6 +10,9 @@
 
 #include<vector>
 
+// Texture 
+#include"texture.h"
+
 // Forward decleration
 namespace sudo { 
 	namespace ecs {
@@ -29,6 +32,7 @@ namespace sudo { namespace graphics {
 
 	struct VertexData 
 	{
+		/*
 		VertexData(const math::Vector3 &a_pos, const math::Vector4 &a_color, const math::Vector2 &a_uv)
 		{
 			// Position
@@ -49,6 +53,21 @@ namespace sudo { namespace graphics {
 		float pos[3];
 		float color[4];
 		float uvCoord[2];
+		// Texture
+		//float tid;
+		*/		
+
+		math::Vector3 pos;
+		math::Vector4 color;
+		math::Vector2 uv;
+		float tid;
+
+		VertexData(const math::Vector3 &a_pos, const math::Vector4 &a_color, const math::Vector2 &a_uv)
+		{
+			pos = a_pos;
+			color = a_color;
+			uv = a_uv;
+		}
 	};
 
 	/* Base class for 2D renderable shapes */
@@ -77,6 +96,8 @@ namespace sudo { namespace graphics {
 		/* Constructs a vertex list for the renderer to use */
 		virtual std::vector<graphics::VertexData> GetPrimitiveData() { std::vector<graphics::VertexData> temp; return temp; }
 
+		inline const uint getTID() const { return m_texture == nullptr ? 0 : m_texture->getID(); }
+
 	protected:	
 		/* Renderable2D shared data */
 		ecs::Transform *m_entityTransform;
@@ -84,6 +105,9 @@ namespace sudo { namespace graphics {
 		math::Vector4 m_color;
 
 		math::Vector2 m_sizeBeforeReisze;
+
+		// Texture 
+		Texture *m_texture;
 
 	public:
 		sudo::RenderableType m_type;

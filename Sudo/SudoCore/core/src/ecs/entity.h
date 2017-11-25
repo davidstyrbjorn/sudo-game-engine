@@ -33,7 +33,7 @@ namespace sudo { namespace ecs {
 		void Start();
 
 		/* Adds a_component to the components list */
-		void AddComponent(Component *a_component);
+		Component* AddComponent(Component *a_component);
 
 		// class sudo::ecs::class_name
 		/* Returns the component inside the components list with a_name */

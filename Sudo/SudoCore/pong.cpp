@@ -1,5 +1,6 @@
 #include"core\sudo.h"
 
+/*
 using namespace sudo;
 
 // User end componet
@@ -260,3 +261,4 @@ int lmain()
 
 	return 0;
 }
+*/
