@@ -12,7 +12,7 @@ private:
 
 	sudo_system::BatchRendererSystem *m_batchRenderer = sudo_system::BatchRendererSystem::Instance();
 
-	ecs::Entity *shape, *shape2, *sprite1;
+	ecs::Entity *shape;
 
 	graphics::Texture *texture1, *texture2;
 
@@ -26,11 +26,21 @@ public:
 		coreEngine.init(math::Vector2(800,500), "Sudo Game Engine", this);
 	}
 
-	void Update() override
+	void Update(float deltaTime) override
 	{
 		for (int i = 0; i < m_rectangleComponentEntities.size(); i++) {
 			renderer->Submit(m_rectangleComponentEntities[i]);
 		}
+		renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
+		
+		if (input->GetKey("d"))
+			shape->transform->Move(math::Vector3::Right() * 0.1f * deltaTime);
+		if (input->GetKey("a"))
+			shape->transform->Move(math::Vector3::Left() * 0.1f * deltaTime);
+		if (input->GetKey("s"))
+			shape->transform->Move(math::Vector3::Down() * 0.1f * deltaTime);
+		if (input->GetKey("w"))
+			shape->transform->Move(math::Vector3::Up() * 0.1f * deltaTime);
 	}	
 
 	void Start() override
@@ -41,12 +51,15 @@ public:
 			for (int y = 0; y < 23; y++) 
 			{
 				ecs::Entity *thing = new ecs::Entity("thing_thing");
-				thing->AddComponent(new ecs::RectangleComponent(math::Vector2(20, 20), math::Color(1, 0.1f, 0.25f, 1)));
+				thing->AddComponent(new ecs::RectangleComponent(math::Vector2(20, 20), math::Vector4(1, 0.1f, 0.25f, 1)));
 				thing->transform->position = math::Vector3(x*offset, y*offset, 0);
 
 				m_rectangleComponentEntities.push_back(thing->GetComponent<ecs::RectangleComponent>());
 			}
 		}
+
+		shape = new ecs::Entity("shape");
+		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(50, 50), math::Vector4(1, 0, 1, 1)));
 
 		//config->SetFPS(60);
 		config->SetBackgroundColor(math::Vector4(0.05f, 0.0f, 0.05f, 1));
@@ -59,7 +72,7 @@ public:
 	}
 };
 
-int main() 
+int lmain() 
 {
 	App* app = new App();
 

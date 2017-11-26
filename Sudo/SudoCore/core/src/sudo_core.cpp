@@ -89,6 +89,12 @@ void SudoCore::game_loop()
 	timer = new utility::Timer();
 	timer->Start();
 
+	deltaTimer = new utility::Timer();
+	deltaTimer->Start();
+	float _frameStartTime = deltaTimer->GetTicks();
+
+	float _deltaTime = deltaTimer->GetTicks() - _frameStartTime;
+
 #if PRINT_FPS
 	realTimer = new utility::Timer;
 	realTimer->Start();
@@ -106,31 +112,35 @@ void SudoCore::game_loop()
 #endif
 
 		/* Limit the update rate */
-		if (1==1) 
+		if (true) 
 		{
-			/* Swap buffers and clear the screen */
+			_frameStartTime = deltaTimer->GetTicks();
+
+			// Swap buffers and clear the screen 
 			m_window->clear();
 
-			/* Reset renderer data */
+			// Reset renderer data 
 			m_batchRenderer->Begin();
 
-			/* Call the Update method for the end-user */
-			m_engineInstance->Update();
+			// Call the Update method for the end-user 
+			if(_deltaTime == 0) m_engineInstance->Update(1.0f);
+			else				m_engineInstance->Update(_deltaTime);
 
-			/* Update the WorldSystem holding all game entities */
+			// Update the WorldSystem holding all game entities 
 			m_worldSystem->Update();
 
-			/* Render w/OpenGL */
+			// Render w/OpenGL 
 			m_batchRenderer->End();
 			m_batchRenderer->Flush();
 
-			/* Display the current drawns elements */
+			// Display the current drawns elements 
 			m_window->display();
 
-			/* Update input | Currently only does window shake effect */
+			// Update input | Currently only does window shake effect 
 			m_inputSystem->Update();
 
 			timer->Reset();
+			_deltaTime = deltaTimer->GetTicks() - _frameStartTime;
 
 #if PRINT_FPS
 			framesPerSecond++;

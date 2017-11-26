@@ -38,7 +38,7 @@ namespace sudo {
 		sudo_system::SoundSystem		*m_soundSystem;
 		sudo_system::BatchRendererSystem *m_batchRenderer;
 
-		utility::Timer *timer;
+		utility::Timer *timer, *deltaTimer;
 #if PRINT_FPS
 		utility::Timer *realTimer;
 #endif

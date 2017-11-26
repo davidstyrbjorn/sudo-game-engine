@@ -21,7 +21,7 @@ namespace sudo {
 		virtual void Start() { }
 
 		/* Gets called once every frame, before renderer flushes and entities gets updated */
-		virtual void Update() { }
+		virtual void Update(float deltaTime) { }
 
 		/* Gets called when application ends, after the engine is done un-initilazing */
 		virtual void OnApplicationQuit() { }
