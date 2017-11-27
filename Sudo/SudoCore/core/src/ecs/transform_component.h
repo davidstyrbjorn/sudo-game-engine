@@ -18,7 +18,7 @@ namespace sudo { namespace ecs {
 		void Move(const math::Vector3& a_vector);
 
 		void Start() override;
-		void Update() override;
+		void Update(float deltaTime) override;
 	};
 
 } } 

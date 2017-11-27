@@ -32,7 +32,7 @@ namespace sudo { namespace sudo_system {
 		void CleanUp() override;
 
 		/* Updates all entities */
-		void Update() override;
+		void Update(float deltaTime) override;
 
 		/* Calls start on entity */
 		void Start() override;

@@ -32,7 +32,7 @@ namespace sudo { namespace ecs {
 		BoxCollider2D();
 
 		// <===========> COMPONENT BASE METHODS <===========> //
-		void Update() override;
+		void Update(float deltaTime) override;
 		void Start() override;
 
 		// <===========> BOX COLLIDER METHODS <===========> //

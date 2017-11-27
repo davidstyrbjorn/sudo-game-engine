@@ -14,7 +14,7 @@ namespace sudo { namespace ecs {
 
 	TriangleComponent::~TriangleComponent() 
 	{
-	
+		
 	}
 
 	void TriangleComponent::Start()

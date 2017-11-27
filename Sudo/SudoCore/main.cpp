@@ -34,13 +34,13 @@ public:
 		renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
 		
 		if (input->GetKey("d"))
-			shape->transform->Move(math::Vector3::Right() * 0.1f * deltaTime);
+			shape->transform->Move(math::Vector3::Right() * 0.4f * deltaTime);
 		if (input->GetKey("a"))
-			shape->transform->Move(math::Vector3::Left() * 0.1f * deltaTime);
+			shape->transform->Move(math::Vector3::Left() * 0.4f * deltaTime);
 		if (input->GetKey("s"))
-			shape->transform->Move(math::Vector3::Down() * 0.1f * deltaTime);
+			shape->transform->Move(math::Vector3::Down() * 0.4f * deltaTime);
 		if (input->GetKey("w"))
-			shape->transform->Move(math::Vector3::Up() * 0.1f * deltaTime);
+			shape->transform->Move(math::Vector3::Up() * 0.4f * deltaTime);
 	}	
 
 	void Start() override

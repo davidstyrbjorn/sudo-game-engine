@@ -13,6 +13,7 @@ namespace sudo { namespace sudo_system {
 
 		/* Gets called on engine update, abstract */
 		virtual void Update() { }
+		virtual void Update(float deltaTime) { }
 
 		/* Enables said system, pure virtual */
 		virtual void Enable() = 0;

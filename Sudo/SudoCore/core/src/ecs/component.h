@@ -20,7 +20,7 @@ namespace sudo { namespace ecs {
 		}
 		
 		/* Updates the component behaviour */
-		virtual void Update() = 0;
+		virtual void Update(float deltaTime) = 0;
 
 		/* Starts, updates the necc behvaiours at start */
 		virtual void Start() = 0;

@@ -40,7 +40,7 @@ void SoundComponent::Start()
 	}
 }
 
-void SoundComponent::Update() 
+void SoundComponent::Update(float deltaTime) 
 {
 	// Update the source's position to be identical to the m_entityHolder-transform->position! 
 	// Important for the dynamic sound OpenAL provides

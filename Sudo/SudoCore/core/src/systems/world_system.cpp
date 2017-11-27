@@ -32,11 +32,11 @@ namespace sudo { namespace sudo_system {
 		m_entityList.clear();
 	}
 
-	void WorldSystem::Update()
+	void WorldSystem::Update(float deltaTime)
 	{
 		if (m_isActive) {
 			for (unsigned int i = 0; i < m_entityList.size(); i++) {
-				m_entityList[i]->Update();
+				m_entityList[i]->Update(deltaTime);
 			}
 		}
 	}

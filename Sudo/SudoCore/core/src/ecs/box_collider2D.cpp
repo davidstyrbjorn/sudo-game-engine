@@ -9,7 +9,7 @@ namespace sudo { namespace ecs {
 		m_keepInBounds = false;
 	}
 	
-	void BoxCollider2D::Update() 
+	void BoxCollider2D::Update(float deltaTime) 
 	{
 		// Should the box collider be kept inside the bounds of the screen?
 		if (m_keepInBounds) {

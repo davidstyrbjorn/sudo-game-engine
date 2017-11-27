@@ -127,7 +127,7 @@ void SudoCore::game_loop()
 			else				m_engineInstance->Update(_deltaTime);
 
 			// Update the WorldSystem holding all game entities 
-			m_worldSystem->Update();
+			m_worldSystem->Update(_deltaTime);
 
 			// Render w/OpenGL 
 			m_batchRenderer->End();

@@ -18,7 +18,7 @@ void Transform::Start()
 
 }
 
-void Transform::Update() 
+void Transform::Update(float deltaTime) 
 {
 
 }

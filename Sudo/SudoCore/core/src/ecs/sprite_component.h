@@ -18,7 +18,7 @@ namespace sudo { namespace ecs {
 
 		/* Component virtual methods */
 		void Start()	override;
-		void Update()	override { }
+		void Update(float deltaTime)	override { }
 	};
 	
 } } 

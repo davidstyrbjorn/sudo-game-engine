@@ -23,18 +23,18 @@ namespace sudo { namespace ecs {
 		transform->SetEntityHolder(this);
 	}
 
-	void Entity::Update()
+	void Entity::Update(float deltaTime)
 	{
 		/* Update the transform component */
 		if (transform->GetComponentState() == ComponentState::ACTIVE) {
-			transform->Update();
+			transform->Update(deltaTime);
 		}
 
 		for (unsigned int i = 0; i < m_components.size(); i++) {
 
 			// Check if component is up for being updated
 			if (m_components[i]->GetComponentState() == ComponentState::ACTIVE) { // Check if the component is active
-				m_components[i]->Update();
+				m_components[i]->Update(deltaTime);
 			}
 		}
 	}

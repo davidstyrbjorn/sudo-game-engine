@@ -24,7 +24,7 @@ namespace sudo {
 
 			/* Component virtual methods */
 			void Start()	override;
-			void Update()	override { }
+			void Update(float deltaTime)	override { }
 
 			/* Renderable2D virtual methods */
 			std::vector<graphics::VertexData> GetPrimitiveData();

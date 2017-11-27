@@ -27,7 +27,7 @@ namespace sudo { namespace ecs {
 		~Entity();
 
 		/* Updates all components inside m_components list */
-		void Update();
+		void Update(float deltaTime);
 
 		/* Calls start on all components inside m_components list */
 		void Start();

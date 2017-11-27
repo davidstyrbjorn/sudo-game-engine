@@ -31,7 +31,7 @@ namespace sudo { namespace ecs {
 		sound::SoundSource *GetSoundSource();
 
 		/* Component base methods */
-		void Update() override;
+		void Update(float deltaTime) override;
 		void Start() override;
 	};
 
