@@ -7,7 +7,7 @@ namespace sudo { namespace graphics {
 		m_size = a_newSize; 
 	}
 
-	void Renderable2D::SetColor(const math::Vector4 &a_newColor) 
+	void Renderable2D::SetColor(const math::Color &a_newColor) 
 	{ 
 		m_color = a_newColor; 
 	}

@@ -23,6 +23,9 @@ namespace sudo {
 		/* Gets called once every frame, before renderer flushes and entities gets updated */
 		virtual void Update(float deltaTime) { }
 
+		/* Gets called on a fixed time pattern */
+		virtual void FixedUpdate() { } 
+
 		/* Gets called when application ends, after the engine is done un-initilazing */
 		virtual void OnApplicationQuit() { }
 

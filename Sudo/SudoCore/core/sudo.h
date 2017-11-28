@@ -54,7 +54,7 @@ namespace sudo {
 
 #define SUDO_FINAL_VERSION 0
 #define SUDO_MAJOR_VERSION 5
-#define SUDO_MINOR_VERSION 0
+#define SUDO_MINOR_VERSION 2
 
 static std::string GetSudoVersion() {	
 	return "[Sudo Game Engine] \nVersion: " + std::to_string(SUDO_FINAL_VERSION) + "." + std::to_string(SUDO_MAJOR_VERSION) + "." + std::to_string(SUDO_MINOR_VERSION) + "!"; }

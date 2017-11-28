@@ -5,7 +5,7 @@
 
 namespace sudo { namespace ecs {
 
-	TriangleComponent::TriangleComponent(math::Vector2 & a_size, math::Vector4 &a_color)
+	TriangleComponent::TriangleComponent(math::Vector2 & a_size, math::Color &a_color)
 	{
 		// Arbitary shape values
 		m_size = a_size;

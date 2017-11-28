@@ -13,6 +13,11 @@ namespace sudo {
 			return Color(this->r - rhs.r, this->g - rhs.g, this->b - rhs.b, this->a - rhs.a);
 		}
 
+		Color Color::operator/(const float rhs) 
+		{
+			return Color(this->r / rhs, this->g / rhs, this->b / rhs, this->a / rhs);
+		}
+
 		Color Color::operator=(const Color &rhs)
 		{
 			this->r = rhs.r;

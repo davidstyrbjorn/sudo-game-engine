@@ -87,6 +87,7 @@ namespace sudo { namespace sudo_system {
 	{
 		// Only submit data if the renderer is active
 		if (m_isActive) {
+
 			// Texture
 			const uint tid = a_primitive->getTID();
 			float ts = 0.0f; // texture slot
@@ -105,6 +106,7 @@ namespace sudo { namespace sudo_system {
 
 				if (!found)
 				{
+					// GL_TEXTURE0 -> GL_TEXTURE32
 					if (m_textureSlots.size() >= 32) {
 						End();
 						Flush();
@@ -117,7 +119,8 @@ namespace sudo { namespace sudo_system {
 
 			const math::Vector3 &_position = a_primitive->GetEntityTransform()->position;
 			const math::Vector2 &_size = a_primitive->GetSize();
-			const math::Vector4 &_color = a_primitive->GetColor();
+			// Clamp it to 0-1 for the shader
+			const math::Color &_color = a_primitive->GetColor()/255;
 
 			m_mapBuffer->pos = _position;
 			m_mapBuffer->color = _color;
@@ -143,7 +146,7 @@ namespace sudo { namespace sudo_system {
 			m_mapBuffer->tid = ts;
 			m_mapBuffer++;
 
-			// This method won't work with texture arrays implementation
+			// This method won't work with the current texture arrays implementation
 			/*
 			glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
 			// Offset up to the current empty point in the buffer

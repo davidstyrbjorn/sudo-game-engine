@@ -6,18 +6,20 @@ namespace sudo {
 	namespace math {
 
 		struct Color {
+			// Values between 0 - 255
 			float r, g, b, a;
 
 			/* Default Constructor */
-			Color() : r(0), g(0), b(0), a(0) { }
+			Color() : r(0), g(0), b(0), a(255) { }
 
-			/* Constructor (float) */
-			Color(float a_red, float a_green, float a_blue, float a_alpha) : r(a_red), g(a_green), b(a_blue), a(a_alpha) { }
+			/* Takes in values between 0-255 */
+			Color(float a_red, float a_green, float a_blue, float a_alpha = 255) : r(a_red), g(a_green), b(a_blue), a(a_alpha) { }
 
 			/* Operator Overloading Methods */
 			/* Arithmetic Operators */
 			Color operator+(const Color rhs);
 			Color operator-(const Color rhs);
+			Color operator/(const float rhs);
 			Color operator=(const Color &rhs);
 			Color operator*(const float scalar);
 			Color& operator+=(const Color &rhs);

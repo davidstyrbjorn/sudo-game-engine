@@ -103,49 +103,50 @@ void SudoCore::game_loop()
 
 	while (m_window->is_open()) 
 	{
-#if PRINT_FPS
+		#if PRINT_FPS
 		if (realTimer->GetTicks() > 1000) {
 			std::cout << framesPerSecond << std::endl;
 			framesPerSecond = 0;
 			realTimer->Reset();
 		}
-#endif
+		#endif
 
-		/* Limit the update rate */
-		if (true) 
-		{
-			_frameStartTime = deltaTimer->GetTicks();
+		// Set the time at the start of the frame
+		_frameStartTime = deltaTimer->GetTicks();
 
-			// Swap buffers and clear the screen 
-			m_window->clear();
+		// Swap buffers and clear the screen 
+		m_window->clear();
 
-			// Reset renderer data 
-			m_batchRenderer->Begin();
+		// Reset renderer data 
+		m_batchRenderer->Begin();
 
-			// Call the Update method for the end-user 
-			if(_deltaTime == 0) m_engineInstance->Update(1.0f);
-			else				m_engineInstance->Update(_deltaTime);
-
-			// Update the WorldSystem holding all game entities 
-			m_worldSystem->Update(_deltaTime);
-
-			// Render w/OpenGL 
-			m_batchRenderer->End();
-			m_batchRenderer->Flush();
-
-			// Display the current drawns elements 
-			m_window->display();
-
-			// Update input | Currently only does window shake effect 
-			m_inputSystem->Update();
-
+		// Call the Update method for the end-user 
+		if(_deltaTime == 0) m_engineInstance->Update(1.0f);
+		else				m_engineInstance->Update(_deltaTime);
+		if (timer->GetTicks() >= FIXED_UPDATE_MS) {
+			m_engineInstance->FixedUpdate();
 			timer->Reset();
-			_deltaTime = deltaTimer->GetTicks() - _frameStartTime;
-
-#if PRINT_FPS
-			framesPerSecond++;
-#endif
 		}
+
+		// Update the WorldSystem holding all game entities 
+		m_worldSystem->Update(_deltaTime);
+
+		// Render w/OpenGL 
+		m_batchRenderer->End();
+		m_batchRenderer->Flush();
+
+		// Display the current drawns elements 
+		m_window->display();
+
+		// Update input | Currently only does window shake effect 
+		m_inputSystem->Update();
+
+		// Calculate the time it took to get this frame done and set it to _deltaTime
+		_deltaTime = deltaTimer->GetTicks() - _frameStartTime;
+
+		#if PRINT_FPS
+		framesPerSecond++;
+		#endif
 	}
 
 	clean_up();

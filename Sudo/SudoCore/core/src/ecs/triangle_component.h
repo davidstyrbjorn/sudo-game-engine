@@ -17,7 +17,7 @@ namespace sudo {
 		class TriangleComponent : public Component, public graphics::Renderable2D {
 		public:
 			/* Constrcutor */
-			TriangleComponent(math::Vector2 &a_size, math::Vector4 &a_color);
+			TriangleComponent(math::Vector2 &a_size, math::Color &a_color);
 
 			/* Destructor */
 			~TriangleComponent();

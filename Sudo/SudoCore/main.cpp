@@ -33,6 +33,7 @@ public:
 		}
 		renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
 		
+		/*
 		if (input->GetKey("d"))
 			shape->transform->Move(math::Vector3::Right() * 0.4f * deltaTime);
 		if (input->GetKey("a"))
@@ -41,7 +42,20 @@ public:
 			shape->transform->Move(math::Vector3::Down() * 0.4f * deltaTime);
 		if (input->GetKey("w"))
 			shape->transform->Move(math::Vector3::Up() * 0.4f * deltaTime);
+			*/
 	}	
+
+	void FixedUpdate() 
+	{
+		if (input->GetKey("d"))
+			shape->transform->Move(math::Vector3::Right() * 0.4f);
+		if (input->GetKey("a"))
+			shape->transform->Move(math::Vector3::Left() * 0.4f);
+		if (input->GetKey("s"))
+			shape->transform->Move(math::Vector3::Down() * 0.4f);
+		if (input->GetKey("w"))
+			shape->transform->Move(math::Vector3::Up() * 0.4f);
+	}
 
 	void Start() override
 	{
@@ -51,7 +65,7 @@ public:
 			for (int y = 0; y < 23; y++) 
 			{
 				ecs::Entity *thing = new ecs::Entity("thing_thing");
-				thing->AddComponent(new ecs::RectangleComponent(math::Vector2(20, 20), math::Vector4(1, 0.1f, 0.25f, 1)));
+				thing->AddComponent(new ecs::RectangleComponent(math::Vector2(20, 20), math::Color(255,0,0,255)));
 				thing->transform->position = math::Vector3(x*offset, y*offset, 0);
 
 				m_rectangleComponentEntities.push_back(thing->GetComponent<ecs::RectangleComponent>());
@@ -59,7 +73,7 @@ public:
 		}
 
 		shape = new ecs::Entity("shape");
-		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(50, 50), math::Vector4(1, 0, 1, 1)));
+		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(50, 50), math::Color(255, 0, 255, 255)));
 
 		//config->SetFPS(60);
 		config->SetBackgroundColor(math::Vector4(0.05f, 0.0f, 0.05f, 1));
@@ -72,7 +86,7 @@ public:
 	}
 };
 
-int lmain() 
+int main() 
 {
 	App* app = new App();
 

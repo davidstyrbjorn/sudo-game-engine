@@ -3,6 +3,7 @@
 #include"../math/vector2.h"
 #include"../math/vector3.h"
 #include"../math/vector4.h"
+#include"../math/color.h"
 
 #include"../math/math.h"
 
@@ -33,11 +34,11 @@ namespace sudo { namespace graphics {
 	struct VertexData 
 	{
 		math::Vector3 pos;
-		math::Vector4 color;
+		math::Color color;
 		math::Vector2 uv;
 		float tid;
 
-		VertexData(const math::Vector3 &a_pos, const math::Vector4 &a_color, const math::Vector2 &a_uv)
+		VertexData(const math::Vector3 &a_pos, const math::Color &a_color, const math::Vector2 &a_uv)
 		{
 			pos = a_pos;
 			color = a_color;
@@ -52,15 +53,15 @@ namespace sudo { namespace graphics {
 		virtual ~Renderable2D() { }
 
 		/* Getters */
-		inline const math::Vector2 &GetSize() { return m_size; }
-		inline const math::Vector4 &GetColor() { return m_color; }
+		__forceinline const math::Vector2 &GetSize() { return m_size; }
+		__forceinline math::Color &GetColor() { return m_color; }
 		ecs::Transform* GetEntityTransform() { return m_entityTransform; }
 
 		/* Sets m_size to a new specified size */
 		void SetSize(const math::Vector2 &a_newSize);
 
 		/* Sets m_color to a new color */
-		void SetColor(const math::Vector4 &a_newColor);
+		void SetColor(const math::Color &a_newColor);
 
 		/* Scales up m_size by orders of magnitude */
 		void SizeUp(const float a_magnitude);
@@ -75,7 +76,7 @@ namespace sudo { namespace graphics {
 		/* Renderable2D shared data */
 		ecs::Transform *m_entityTransform;
 		math::Vector2 m_size;
-		math::Vector4 m_color;
+		math::Color m_color;
 
 		math::Vector2 m_sizeBeforeReisze;
 

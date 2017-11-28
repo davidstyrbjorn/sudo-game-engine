@@ -57,7 +57,7 @@ private:
 
 	const int WIDTH = 800;
 	const int HEIGHT = 600;
-	const float SPEED_INCREASE = 0.05f;
+	const float SPEED_INCREASE = 0.025f;
 
 	int leftScore = 0, rightScore = 0;
 	utility::Timer gameClock;
@@ -256,7 +256,7 @@ public:
 	}
 };
 
-int main()
+int lmain()
 {
 	Game* game = new Game();
 

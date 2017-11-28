@@ -19,11 +19,22 @@ enum SudoBufferType {
 /* ===================================================== */
 /* ===================================================== */
 
+// System macros
+#define SYSTEM_API
+
+// Graphics macros
+#define GRAPHICS_API
 #define MAX_PIXEL_SIZE_X 6000
 #define MIN_PIXEL_SIZE_X 0
 #define MAX_PIXEL_SIZE_Y 6000
 #define MIN_PIXEL_SIZE_Y 0
 
-#define DEFAULT_FPS_CAP 10000
+// Window macros
+#define WINDOW_API 
+
+// Time macros
+#define TIME_API
+#define DEFAULT_FPS_CAP 60
+#define FIXED_UPDATE_MS 1000 / DEFAULT_FPS_CAP
 
 }

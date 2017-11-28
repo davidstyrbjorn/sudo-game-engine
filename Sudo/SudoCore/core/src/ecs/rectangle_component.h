@@ -17,7 +17,7 @@ namespace sudo { namespace ecs {
 	class RectangleComponent : public Component, public graphics::Renderable2D {
 	public:
 		/* Constrcutor */
-		RectangleComponent(math::Vector2 &a_size, math::Vector4 &a_color);
+		RectangleComponent(math::Vector2 &a_size, math::Color &a_color);
 
 		/* Destructor */
 		~RectangleComponent();

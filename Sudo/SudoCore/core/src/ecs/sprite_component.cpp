@@ -13,7 +13,7 @@ namespace sudo { namespace ecs {
 		m_imagePath = a_imagePath;
 
 		// m_size is set when loading the texture 
-		m_color = math::Vector4(1, 1, 1, 1);
+		m_color = math::Color(255, 255, 255, 255);
 
 		// Initialize sprite texture
 		m_texture = new graphics::Texture(a_imagePath);
