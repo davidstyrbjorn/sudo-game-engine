@@ -18,6 +18,7 @@ namespace sudo {
 		class SettingsSystem;
 		class SoundSystem;
 		class BatchRendererSystem;
+		class ParticleSystem;
 	}
 	class SudoClass;
 	class CoreSettings;
@@ -37,6 +38,7 @@ namespace sudo {
 		sudo_system::SettingsSystem		*m_settingsSystem;
 		sudo_system::SoundSystem		*m_soundSystem;
 		sudo_system::BatchRendererSystem *m_batchRenderer;
+		sudo_system::ParticleSystem		*m_particleSystem;
 
 		utility::Timer *timer, *deltaTimer;
 #if PRINT_FPS

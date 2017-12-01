@@ -29,33 +29,24 @@ public:
 	void Update(float deltaTime) override
 	{
 		for (int i = 0; i < m_rectangleComponentEntities.size(); i++) {
-			renderer->Submit(m_rectangleComponentEntities[i]);
+			//renderer->Submit(m_rectangleComponentEntities[i]);
 		}
-		renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
-		
-		/*
-		if (input->GetKey("d"))
-			shape->transform->Move(math::Vector3::Right() * 0.4f * deltaTime);
-		if (input->GetKey("a"))
-			shape->transform->Move(math::Vector3::Left() * 0.4f * deltaTime);
-		if (input->GetKey("s"))
-			shape->transform->Move(math::Vector3::Down() * 0.4f * deltaTime);
-		if (input->GetKey("w"))
-			shape->transform->Move(math::Vector3::Up() * 0.4f * deltaTime);
-			*/
-	}	
+		//renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
 
-	void FixedUpdate() 
-	{
+		if (input->GetKey("space"))
+			shape->transform->angle += (0.005f * deltaTime);
+		else if (input->GetKey("q"))
+			shape->transform->angle -= (0.005f * deltaTime);
+
 		if (input->GetKey("d"))
-			shape->transform->Move(math::Vector3::Right() * 0.4f);
+			shape->transform->Move(math::Vector3::Right() * 0.25f * deltaTime);
 		if (input->GetKey("a"))
-			shape->transform->Move(math::Vector3::Left() * 0.4f);
+			shape->transform->Move(math::Vector3::Left() * 0.25f * deltaTime);
 		if (input->GetKey("s"))
-			shape->transform->Move(math::Vector3::Down() * 0.4f);
+			shape->transform->Move(math::Vector3::Down() * 0.25f * deltaTime);
 		if (input->GetKey("w"))
-			shape->transform->Move(math::Vector3::Up() * 0.4f);
-	}
+			shape->transform->Move(math::Vector3::Up() * 0.25f * deltaTime);
+	}	
 
 	void Start() override
 	{
@@ -73,7 +64,8 @@ public:
 		}
 
 		shape = new ecs::Entity("shape");
-		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(50, 50), math::Color(255, 0, 255, 255)));
+		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(150, 150), math::Color(255, 125, 25, 255)));
+		shape->transform->position = math::Vector3(400, 300, 0);
 
 		//config->SetFPS(60);
 		config->SetBackgroundColor(math::Vector4(0.05f, 0.0f, 0.05f, 1));

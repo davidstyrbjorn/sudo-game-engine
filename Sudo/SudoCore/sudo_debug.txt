@@ -160,3 +160,21 @@ ERROR: 0:91: '<' : wrong operand types no operation '<' exists that takes a left
 [Sat Nov 25 17:08](ERROR: 0(25) : warning C7533: global variable gl_FragColor is deprecated after version 120
 0(21) : error C1008: undefined variable "glFragColor"
 )
+[Thu Nov 30 19:03](ERROR: ERROR: 0:1: '' :  incorrect GLSL version: 300
+ERROR: 0:7: 'outColor' : undeclared identifier 
+ERROR: 0:7: 'assign' :  cannot convert from 'float' to 'FragColor 4-component vector of float'
+
+)
+[Thu Nov 30 19:22](ERROR: ERROR: 0:1: '' :  incorrect GLSL version: 300
+ERROR: 0:7: 'outColor' : undeclared identifier 
+ERROR: 0:7: 'assign' :  cannot convert from 'float' to 'FragColor 4-component vector of float'
+
+)
+[Thu Nov 30 19:22](ERROR: ERROR: 0:7: 'outColor' : undeclared identifier 
+ERROR: 0:7: 'assign' :  cannot convert from 'float' to 'FragColor 4-component vector of float'
+
+)
+[Thu Nov 30 19:23](ERROR: ERROR: 0:7: 'outColor' : undeclared identifier 
+ERROR: 0:7: 'assign' :  cannot convert from 'float' to 'FragColor 4-component vector of float'
+
+)

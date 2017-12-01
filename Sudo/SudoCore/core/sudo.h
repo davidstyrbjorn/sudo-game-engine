@@ -26,6 +26,7 @@
 #include"src\systems\settings_system.h"
 #include"src\systems\sound_system.h"
 #include"src\systems\batch_render_system.h"
+#include"src\systems\particle_system.h"
 
 #include"src\graphics\shader.h"
 #include"src\graphics\window.h"

@@ -18,8 +18,8 @@ namespace sudo { namespace sudo_system {
 		/* Window Shake Code */
 		if (m_doWindowShake) {
 			// Get the window's new position values for this frame
-			int _x = utility::SudoRandomNumber::GetRandomNumber<int>(-m_windowShakeStrength, m_windowShakeStrength);
-			int _y = utility::SudoRandomNumber::GetRandomNumber<int>(-m_windowShakeStrength, m_windowShakeStrength);
+			int _x = utility::SudoRandomNumber::GetRandomInteger<int>(-m_windowShakeStrength, m_windowShakeStrength);
+			int _y = utility::SudoRandomNumber::GetRandomInteger<int>(-m_windowShakeStrength, m_windowShakeStrength);
 
 			// Set the window's position accordingly
 			glfwSetWindowPos(glfwGetCurrentContext(), m_windowOrgX + _x, m_windowOrgY + _y);
@@ -110,7 +110,7 @@ namespace sudo { namespace sudo_system {
 
 	void InputSystem::populateKeyList()
 	{
-		keyCodeToLiteral["spacebar"] = 32;
+		keyCodeToLiteral["space"] = 32;
 		keyCodeToLiteral[" ' "] = 39;
 		keyCodeToLiteral[","] = 44;
 		keyCodeToLiteral["-"] = 45;

@@ -23,7 +23,7 @@ namespace sudo { namespace sudo_system {
 		glewInit();
 		glewExperimental = true;
 
-		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\unlit_shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_fragment.txt");
+		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_fragment.txt");
 		m_shader->enable();
 
 		int texIds[] = { 0,1,2,3,4,5,6,7,8,9 };
@@ -121,26 +121,78 @@ namespace sudo { namespace sudo_system {
 			const math::Vector2 &_size = a_primitive->GetSize();
 			// Clamp it to 0-1 for the shader
 			const math::Color &_color = a_primitive->GetColor()/255;
+			// All the vertex positions
+			math::Vector3 pos1, pos2, pos3, pos4;
 
-			m_mapBuffer->pos = _position;
+			// Test for rotation
+			float angle = a_primitive->GetEntityTransform()->angle;
+			// cx, cy - center for the rectangle
+			float cx = a_primitive->GetEntityTransform()->position.x + (a_primitive->GetSize().x / 2);
+			float cy = a_primitive->GetEntityTransform()->position.y + (a_primitive->GetSize().y / 2);
+
+			// Vertex 1 rotation
+			// Translate point to the origin
+			float tempX = _position.x - cx;
+			float tempY = _position.y - cy;
+			// apply rotation
+			float rotatedX = tempX*cos(angle) - tempY*sin(angle);
+			float rotatedY = tempX*sin(angle) + tempY*cos(angle);
+			pos1 = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
+
+			// Vertex 2 rotation
+			// Translate point to the origin
+			tempX = _position.x - cx;
+			tempY = (_position.y + _size.y) - cy;
+			// apply rotation
+			rotatedX = tempX*cos(angle) - tempY*sin(angle);
+			rotatedY = tempX*sin(angle) + tempY*cos(angle);
+			pos2 = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
+
+			// Vertex 3 rotation
+			// Translate point to the origin
+			tempX = (_position.x + _size.x) - cx;
+			tempY = (_position.y + _size.y) - cy;
+			// apply rotation
+			rotatedX = tempX*cos(angle) - tempY*sin(angle);
+			rotatedY = tempX*sin(angle) + tempY*cos(angle);
+			pos3 = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
+
+			// Vertex 4 rotation
+			// Translate point to the origin
+			tempX = (_position.x + _size.x) - cx;
+			tempY = _position.y - cy;
+			// apply rotation
+			rotatedX = tempX*cos(angle) - tempY*sin(angle);
+			rotatedY = tempX*sin(angle) + tempY*cos(angle);
+			pos4 = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
+
+			// ============================================================ //
+			// ================= Update the actual buffer ================= //
+			// ============================================================ //
+
+			// Vertex 1
+			m_mapBuffer->pos = pos1;
 			m_mapBuffer->color = _color;
 			m_mapBuffer->uv = math::Vector2(0, 0);
 			m_mapBuffer->tid = ts;
 			m_mapBuffer++;
 
-			m_mapBuffer->pos = math::Vector3(_position.x, _position.y + _size.y, 0);
+			// Vertex 2
+			m_mapBuffer->pos = pos2;
 			m_mapBuffer->color = _color;
 			m_mapBuffer->uv = math::Vector2(0, 1);
 			m_mapBuffer->tid = ts;
 			m_mapBuffer++;
 
-			m_mapBuffer->pos = math::Vector3(_position.x + _size.x, _position.y + _size.y, 0);
+			// Vertex 3
+			m_mapBuffer->pos = pos3;
 			m_mapBuffer->color = _color;
 			m_mapBuffer->uv = math::Vector2(1, 1);
 			m_mapBuffer->tid = ts;
 			m_mapBuffer++;
 
-			m_mapBuffer->pos = math::Vector3(_position.x + _size.x, _position.y, 0);
+			// Vertex 4
+			m_mapBuffer->pos = pos4;
 			m_mapBuffer->color = _color;
 			m_mapBuffer->uv = math::Vector2(1, 0);
 			m_mapBuffer->tid = ts;
