@@ -64,7 +64,7 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 
 	/* Call Start on systems */
 	m_worldSystem->Start();
-	//m_batchRenderer->Start();
+	m_batchRenderer->Start();
 	m_particleSystem->Start();
 
 	/* Start the game_loop; This means Start gets called before any Update calls */
@@ -123,7 +123,7 @@ void SudoCore::game_loop()
 		m_window->clear();
 
 		// Reset renderer data 
-		//m_batchRenderer->Begin();
+		m_batchRenderer->Begin();
 		m_particleSystem->Begin();
 
 		// Call the Update method for the end-user 
@@ -134,20 +134,14 @@ void SudoCore::game_loop()
 			timer->Reset();
 		}
 
-		if(m_inputSystem->GetKey("space"))
-			m_particleSystem->Submit(math::Vector2(100, 100), math::Vector2(5, 5), math::Color(255, 0, 0, 255), 1000, 1);
-		if (m_inputSystem->GetKey("f")) {
-			m_particleSystem->Submit(math::Vector2(100, 100), math::Vector2(5, 5), math::Color(255, 0, 0, 255), 1000, 1);
-		}
-
 		// Update the WorldSystem holding all game entities 
 		m_worldSystem->Update(_deltaTime);
 		// Update particle system
 		m_particleSystem->Update(_deltaTime);
 
 		// Render w/OpenGL 
-		//m_batchRenderer->End();
-		//m_batchRenderer->Flush();
+		m_batchRenderer->End();
+		m_batchRenderer->Flush();
 		m_particleSystem->Flush();
 
 		// Display the current drawns elements 

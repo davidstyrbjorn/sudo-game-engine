@@ -25,9 +25,10 @@ namespace sudo { namespace sudo_system {
 		m_particleCount = 0;
 
 		// Set-up the shader
-		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_fragment.txt");
+		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_fragment.txt");
 		m_shader->enable();
 		m_shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(0, 800, 600, 0, -1, 1));
+		m_shader->disable();
 
 		// Set up the rendering buffer
 		setUpVAO_VBO();
@@ -35,40 +36,31 @@ namespace sudo { namespace sudo_system {
 
 	void ParticleSystem::Update(float deltaTime)
 	{
-		
-		// Update the particles
-		for (int i = 0; i < MAX_PARTICLES; i++) 
-		{
-			if (m_particlePool[i].active == 1) 
-			{
-				// Check to see if we want to disable particle
-				float aliveTime = timer->GetTicks() - m_particlePool[i].spawnTime;
-				if (aliveTime >= m_particlePool[i].lifeTime) {
-					m_particlePool[i].disbale();
-					m_particleCount--;
-				}
-				else {
-					m_particlePool[i].update(deltaTime);
-				}
+		for (int i = 0; i < MAX_PARTICLES; i++) {
+			if (m_particlePool[i].active == true) {
+				m_particlePool[i].update(deltaTime);
 			}
 		}
 	}
 
 	void ParticleSystem::Begin()
 	{
+		m_particleCount = 0;
+		for (int i = 0; i < MAX_PARTICLES; i++) {
+			if (m_particlePool[i].active) {
+				m_particleCount++;
+			}
+		}
+
 		// Reset
-		glBindVertexArray(m_vao);
 		glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 		glBufferData(GL_ARRAY_BUFFER, PARTICLE_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
 	}
 
 	void ParticleSystem::Submit(math::Vector2 a_spawnPosition, math::Vector2 a_particleSize, math::Color a_particleColor, uint a_lifeTime, uint a_particleCount)
 	{
-		// Add particle(s) to the to be rendered list
-		if (m_particleCount+a_particleCount >= MAX_PARTICLES) return;
-
-		for (int i = 0; i < a_particleCount; i++) {
-			m_particlePool[m_particleCount].enable(a_spawnPosition, a_particleSize, a_particleColor, a_lifeTime, timer->GetTicks());
+		if (m_particleCount < MAX_PARTICLES) {
+			m_particlePool[m_particleCount].enable(a_spawnPosition, a_particleSize, a_particleColor, a_lifeTime);
 			m_particleCount++;
 		}
 	}
@@ -76,39 +68,52 @@ namespace sudo { namespace sudo_system {
 	void ParticleSystem::Flush()
 	{
 		// Draw all the particles inside m_particlesToRender
-		// Bind
-		glBindVertexArray(m_vao);
-		glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-		m_indexBuffer->bind();
+		if (m_particleCount != 0) {
 
-		// Add all the particles from m_particlesToDraw list to the buffer
-		int count = 0;
-		for (int i = 0; i < MAX_PARTICLES; i++) {
-			if (m_particlePool[i].active == 1) {
-				const math::Vector2& position = m_particlePool[i].position;
-				const math::Vector2& size = m_particlePool[i].size;
-				const math::Color&   color = m_particlePool[i].color;
+			// Remove all dead particles before rendering
+			this->disableDeadParticles();
+			// Enable the particle shader
+			m_shader->enable();
+			// Bind
+			glBindVertexArray(m_vao);
+			glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+			m_indexBuffer->bind();
 
-				// This is to be pushed into the buffer
-				ParticleVertexData temp[] = {
-					ParticleVertexData(position, color),
-					ParticleVertexData(math::Vector2(position.x, position.y + size.y), color),
-					ParticleVertexData(math::Vector2(position.x + size.x, position.y + size.y), color),
-					ParticleVertexData(math::Vector2(position.x + size.x, position.y), color)
-				};
+			// Add all the particles from m_particlesToDraw list to the buffer
+			int count = 0;
+			for (int i = 0; i < MAX_PARTICLES; i++) {
+				if (m_particlePool[i].active) {
+					const math::Vector2& position = m_particlePool[i].position;
+					const math::Vector2& size = m_particlePool[i].size;
+					const math::Color&   color = m_particlePool[i].color;
 
-				glBufferSubData(GL_ARRAY_BUFFER, (4 * sizeof(ParticleVertexData))*count, 4 * sizeof(ParticleVertexData), temp);
-				count++;
+					// This is to be pushed into the buffer
+					ParticleVertexData temp[] = {
+						ParticleVertexData(position, color),
+						ParticleVertexData(math::Vector2(position.x, position.y + size.y), color),
+						ParticleVertexData(math::Vector2(position.x + size.x, position.y + size.y), color),
+						ParticleVertexData(math::Vector2(position.x + size.x, position.y), color)
+					};
+
+					glBufferSubData(GL_ARRAY_BUFFER, (4 * sizeof(ParticleVertexData))*count, 4 * sizeof(ParticleVertexData), temp);
+					count++;
+				}
 			}
-		}
-		
-		// Draw Call
-		glDrawElements(GL_TRIANGLES, 6 * m_particleCount, GL_UNSIGNED_INT, 0);
 
-		// Unbind
-		//m_indexBuffer->unbind();
-		//glBindBuffer(GL_ARRAY_BUFFER, 0);
-		//glBindVertexArray(0);
+			// Draw Call
+			glDrawElements(GL_TRIANGLES, 6 * m_particleCount, GL_UNSIGNED_INT, 0);
+
+			// Unbind
+			glBindVertexArray(0);
+		}
+	}
+
+	void ParticleSystem::disableDeadParticles()
+	{
+		for (int i = 0; i < MAX_PARTICLES; i++) {
+			if (m_particlePool[i].aliveTime >= m_particlePool[i].lifeTime)
+				m_particlePool[i].disbale();
+		}
 	}
 
 	void ParticleSystem::setUpVAO_VBO()

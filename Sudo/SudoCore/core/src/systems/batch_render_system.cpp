@@ -23,7 +23,7 @@ namespace sudo { namespace sudo_system {
 		glewInit();
 		glewExperimental = true;
 
-		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_fragment.txt");
+		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_fragment.txt");
 		m_shader->enable();
 
 		int texIds[] = { 0,1,2,3,4,5,6,7,8,9 };
@@ -33,8 +33,8 @@ namespace sudo { namespace sudo_system {
 		m_shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(0, settings->GetWindowSize().x, settings->GetWindowSize().y, 0, -1, 1));
 
 		// =============== START ===================
-		m_vertexArrayBuffer = new graphics::VertexArrayBuffer();
-		m_vertexArrayBuffer->bind();
+		glGenVertexArrays(1, &m_vertexArray);
+		glBindVertexArray(m_vertexArray);
 
 		// Create and bind buffer
 		glGenBuffers(1, &m_buffer);
@@ -87,6 +87,8 @@ namespace sudo { namespace sudo_system {
 	{
 		// Only submit data if the renderer is active
 		if (m_isActive) {
+			glBindVertexArray(m_vertexArray);
+			glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
 
 			// Texture
 			const uint tid = a_primitive->getTID();
@@ -198,14 +200,6 @@ namespace sudo { namespace sudo_system {
 			m_mapBuffer->tid = ts;
 			m_mapBuffer++;
 
-			// This method won't work with the current texture arrays implementation
-			/*
-			glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
-			// Offset up to the current empty point in the buffer
-			GLintptr initialOffset = m_primitiveCount*(sizeof(graphics::VertexData) * a_vertexCount);
-			glBufferSubData(GL_ARRAY_BUFFER, initialOffset, sizeof(graphics::VertexData) * a_vertexCount, a_primitive->GetPrimitiveData().data());
-			*/
-
 			// Increment the primitive count
 			m_primitiveCount++;
 		}
@@ -215,17 +209,23 @@ namespace sudo { namespace sudo_system {
 	{
 		if (m_primitiveCount != 0) {
 #if USE_INDEX_BUFFER
+			// Enable this shader
+			m_shader->enable();
+			// Bind the vertex array
+			glBindVertexArray(m_vertexArray);
 			// Bind the textures
 			for (int i = 0; i < m_textureSlots.size(); i++) {
 				glActiveTexture(GL_TEXTURE0 + i);
 				glBindTexture(GL_TEXTURE_2D, m_textureSlots[i]);
 			}
-
 			m_indexBuffer->bind();
 			glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
 
 			// Draw call
 			glDrawElements(GL_TRIANGLES, 6 * m_primitiveCount, GL_UNSIGNED_INT, 0);
+
+			// Unbind
+			glBindVertexArray(0);
 #else
 			glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
 			glDrawArrays(GL_TRIANGLES, 0, 6 * m_primitiveCount);
@@ -248,7 +248,7 @@ namespace sudo { namespace sudo_system {
 #if USE_INDEX_BUFFER
 		delete m_indexBuffer;
 #endif
-		delete m_vertexArrayBuffer;
+		glDeleteVertexArrays(1, &m_vertexArray);
 	}
 
 } } 

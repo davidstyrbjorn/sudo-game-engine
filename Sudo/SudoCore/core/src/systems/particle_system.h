@@ -31,8 +31,8 @@ struct Particle {
 	math::Vector2 position;
 	math::Vector2 size;
 	math::Color color;
-	float lifeTime;
-	int active;
+	float lifeTime, aliveTime;
+	bool active;
 	float spawnTime;
 	
 	math::Vector2 velocity;
@@ -43,20 +43,19 @@ struct Particle {
 		size = math::Vector2(0, 0);
 		color = math::Color(0, 0, 0, 0);
 		lifeTime = 0;
-		spawnTime = 0;
-		active = 0;
+		active = false;
 	}
 
-	void init(const math::Vector2 &a_position, const math::Vector2 &a_size, const math::Color &a_color, float a_lifeTime, float a_spawnTime) 
+	void init(const math::Vector2 &a_position, const math::Vector2 &a_size, const math::Color &a_color, float a_lifeTime) 
 	{
 		position = a_position;
 		size = a_size;
 		color = a_color;
 		lifeTime = a_lifeTime;
-		spawnTime = a_spawnTime;
+		aliveTime = 0;
 
-		float temp = static_cast<float>((utility::SudoRandomNumber::GetRandomInteger<int>(-10, 10)) / 100.0f);
-		float temp2 = static_cast<float>((utility::SudoRandomNumber::GetRandomInteger<int>(-10, 10)) / 100.0f);
+		float temp = (float)((utility::SudoRandomNumber::GetRandomInteger<int>(-10, 10)) / 100.0f);
+		float temp2 = (float)((utility::SudoRandomNumber::GetRandomInteger<int>(-10, 10)) / 100.0f);
 
 		velocity = math::Vector2(
 			temp, temp2
@@ -66,17 +65,23 @@ struct Particle {
 	void update(float deltaTime) 
 	{
 		position = math::Vector2(position.x + velocity.x*deltaTime, position.y + velocity.y*deltaTime);
+		aliveTime += deltaTime;
 	}
 
-	void enable(const math::Vector2 &a_position, const math::Vector2 &a_size, const math::Color &a_color, float a_lifeTime, float a_spawnTime)
+	void enable(const math::Vector2 &a_position, const math::Vector2 &a_size, const math::Color &a_color, float a_lifeTime)
 	{
-		active = 1;
-		init(a_position, a_size, a_color, a_lifeTime, a_spawnTime);
+		active = true;
+		init(a_position, a_size, a_color, a_lifeTime);
 	}
 
 	void disbale() 
 	{
-		active = 0;
+		position = math::Vector2(0, 0);
+		size = math::Vector2(0, 0);
+		color = math::Color(0, 0, 0, 0);
+		lifeTime = 0;
+		spawnTime = 0;
+		active = false;
 	}
 };
 
@@ -91,7 +96,7 @@ struct ParticleVertexData {
 	math::Color color;
 };
 
-#define MAX_PARTICLES 800
+#define MAX_PARTICLES 300
 #define PARTICLE_SIZE sizeof(ParticleVertexData) * 4
 #define PARTICLE_BUFFER_SIZE PARTICLE_SIZE * MAX_PARTICLES
 
@@ -134,10 +139,12 @@ class ParticleSystem : public SudoSystem {
 		void Flush();
 
 	private:
+		void disableDeadParticles();
+
+	private:
 		/* Particle system data members */
 		bool m_isActive;
 		uint m_vbo, m_vao;
-		//Particle* m_particlePool[MAX_PARTICLES];
 		std::array<Particle, MAX_PARTICLES> m_particlePool;
 		int m_particleCount;
 		graphics::Shader *m_shader;

@@ -58,7 +58,7 @@ namespace sudo { namespace sudo_system {
 
 	private:
 		/* Batch Renderer data */
-		graphics::VertexArrayBuffer *m_vertexArrayBuffer;
+		GLuint m_vertexArray;
 		graphics::Shader *m_shader;
 		graphics::VertexData *m_mapBuffer;
 

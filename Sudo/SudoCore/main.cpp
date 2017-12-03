@@ -10,13 +10,13 @@ class App : SudoClass {
 private:
 	SudoCore coreEngine;
 
-	sudo_system::BatchRendererSystem *m_batchRenderer = sudo_system::BatchRendererSystem::Instance();
-
 	ecs::Entity *shape;
 
 	graphics::Texture *texture1, *texture2;
 
 	std::vector<ecs::RectangleComponent*> m_rectangleComponentEntities;
+
+	sudo::sudo_system::ParticleSystem *particleSystem = sudo_system::ParticleSystem::Instance();
 
 	int offset = 22;
 
@@ -31,10 +31,12 @@ public:
 		for (int i = 0; i < m_rectangleComponentEntities.size(); i++) {
 			//renderer->Submit(m_rectangleComponentEntities[i]);
 		}
-		//renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
+		renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
 
-		if (input->GetKey("space"))
+		if (input->GetKey("space")) {
 			shape->transform->angle += (0.005f * deltaTime);
+			particleSystem->Submit(math::Vector2(200, 200), math::Vector2(3, 3), math::Color(255, 125, 25, 255), 1500, 1);
+		}
 		else if (input->GetKey("q"))
 			shape->transform->angle -= (0.005f * deltaTime);
 
