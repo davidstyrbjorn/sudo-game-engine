@@ -34,11 +34,8 @@ public:
 		renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
 
 		if (input->GetKey("space")) {
-			shape->transform->angle += (0.005f * deltaTime);
-			particleSystem->Submit(math::Vector2(200, 200), math::Vector2(3, 3), math::Color(255, 125, 25, 255), 1500, 1);
+			particleSystem->Submit(math::Vector2(shape->transform->position.x, shape->transform->position.y), math::Vector2(3, 3), math::Color(utility::SudoRandomNumber::GetRandomInteger(0,255), utility::SudoRandomNumber::GetRandomInteger(0, 255), utility::SudoRandomNumber::GetRandomInteger(0, 255), 0), 1500);
 		}
-		else if (input->GetKey("q"))
-			shape->transform->angle -= (0.005f * deltaTime);
 
 		if (input->GetKey("d"))
 			shape->transform->Move(math::Vector3::Right() * 0.25f * deltaTime);
@@ -66,7 +63,7 @@ public:
 		}
 
 		shape = new ecs::Entity("shape");
-		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(150, 150), math::Color(255, 125, 25, 255)));
+		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(150, 150), math::Color::Green()));
 		shape->transform->position = math::Vector3(400, 300, 0);
 
 		//config->SetFPS(60);

@@ -178,3 +178,13 @@ ERROR: 0:7: 'assign' :  cannot convert from 'float' to 'FragColor 4-component ve
 ERROR: 0:7: 'assign' :  cannot convert from 'float' to 'FragColor 4-component vector of float'
 
 )
+[Mon Dec  4 16:25](ERROR: ERROR: 0:8: 'ved4' : undeclared identifier 
+ERROR: 0:8: 'ved4' : no matching overloaded function found (using implicit conversion) 
+ERROR: 0:8: 'assign' :  cannot convert from 'const float' to 'FragColor 4-component vector of float'
+
+)
+[Mon Dec  4 16:25](ERROR: ERROR: 0:8: 'ved4' : undeclared identifier 
+ERROR: 0:8: 'ved4' : no matching overloaded function found (using implicit conversion) 
+ERROR: 0:8: 'assign' :  cannot convert from 'const float' to 'FragColor 4-component vector of float'
+
+)

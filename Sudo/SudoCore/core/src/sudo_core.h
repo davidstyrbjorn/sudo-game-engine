@@ -6,7 +6,7 @@
 
 namespace sudo {
 
-	#define PRINT_FPS 0
+	#define PRINT_FPS 1
 
 	// Forward declarations
 	namespace graphics {

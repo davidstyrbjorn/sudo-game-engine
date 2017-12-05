@@ -23,14 +23,20 @@ namespace sudo { namespace sudo_system {
 		glewInit();
 		glewExperimental = true;
 
-		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_fragment.txt");
+		// Creating shader 
+		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_fragment.txt");
 		m_shader->enable();
 
 		int texIds[] = { 0,1,2,3,4,5,6,7,8,9 };
 		m_shader->setUniform1iv("textures", 10, texIds);
 
-		sudo_system::SettingsSystem* settings = sudo_system::SettingsSystem::Instance();
-		m_shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(0, settings->GetWindowSize().x, settings->GetWindowSize().y, 0, -1, 1));
+		m_shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(
+			0, 
+			sudo_system::SettingsSystem::Instance()->GetWindowSize().x, 
+			sudo_system::SettingsSystem::Instance()->GetWindowSize().y,
+			0, 
+			-1, 1));
+		m_shader->disable();
 
 		// =============== START ===================
 		glGenVertexArrays(1, &m_vertexArray);

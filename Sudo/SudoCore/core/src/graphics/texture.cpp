@@ -16,14 +16,7 @@ namespace sudo { namespace graphics {
 			{
 				DEBUG::getInstance()->printMessage((std::string("Failed to load image at path: \"") + std::string(a_imagePath)).c_str(), sudo::LogType::Error);
 			}
-			
-			glDepthMask(GL_FALSE);
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			//glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
-
-			//glActiveTexture(GL_TEXTURE0);
 			// Generate and bind buffer
 			glGenTextures(1, &m_texId);
 			glBindTexture(GL_TEXTURE_2D, m_texId);

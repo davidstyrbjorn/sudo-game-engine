@@ -26,6 +26,11 @@ namespace sudo {
 			Color& operator-=(const Color &rhs);
 			Color& operator*=(const float scalar);
 
+			/* Basic colors static methods */
+			__forceinline static Color Red() { return Color(255, 0, 0, 255); }
+			__forceinline static Color Green() { return Color(0, 255, 0, 255); }
+			__forceinline static Color Blue() { return Color(0, 0, 255, 255); }
+
 			friend std::ostream& operator<<(std::ostream &os, const Color &other);
 		};
 

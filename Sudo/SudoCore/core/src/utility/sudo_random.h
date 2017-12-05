@@ -1,6 +1,7 @@
 #pragma once
 
 #include<random>
+#include<time.h>
 
 namespace sudo { namespace utility { 
 
@@ -9,12 +10,11 @@ namespace sudo { namespace utility {
 		static std::random_device m_randomDevice;
 
 	public:
-		template<class T>
-		static T GetRandomInteger(T a_min, T a_max) {
+		static int GetRandomInteger(const int a_min, const int a_max) {
 			std::mt19937 gen(m_randomDevice());
 
-			std::uniform_int_distribution<T> _distribution(a_min, a_max);
-			T _returnValue = _distribution(gen);
+			std::uniform_int_distribution<int> _distribution(a_min, a_max);
+			int _returnValue = _distribution(gen);
 
 			return _returnValue;
 		}

@@ -80,12 +80,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;D:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;C:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;$(SolutionDir)\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)\SudoCore\Libraries\SOIL2\lib;D:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\libs\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;$(SolutionDir)\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)\SudoCore\Libraries\SOIL2\lib;C:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\libs\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>openal32.lib;glfw3.lib;glew32s.lib;opengl32.lib;soil2-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -103,14 +103,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;D:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;C:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;$(SolutionDir)\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)\SudoCore\Libraries\SOIL2\lib;D:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\libs\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;$(SolutionDir)\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)\SudoCore\Libraries\SOIL2\lib;C:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\libs\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>openal32.lib;glfw3.lib;glew32s.lib;opengl32.lib;soil2-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -179,6 +179,7 @@
     <ClInclude Include="core\src\graphics\buffers\index_buffer.h" />
     <ClInclude Include="core\src\graphics\buffers\vertex_array_buffer.h" />
     <ClInclude Include="core\src\graphics\buffers\vertex_buffer.h" />
+    <ClInclude Include="core\src\graphics\particle.h" />
     <ClInclude Include="core\src\graphics\renderable2d.h" />
     <ClInclude Include="core\src\graphics\texture.h" />
     <ClInclude Include="core\src\math\color.h" />

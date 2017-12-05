@@ -4,6 +4,8 @@
 #include"../math/vector2.h"
 #include"../math/color.h"
 #include"../../definitions.h"
+
+#include<array>
 #include<vector>
 
 #include"../graphics/buffers/index_buffer.h"
@@ -12,7 +14,7 @@
 #include"../utility/timer.h"
 #include"../utility/sudo_random.h"
 
-#include<array>
+#include"../graphics/particle.h"
 
 /*
 - This class system will basically work as a glorifed renderer
@@ -26,63 +28,12 @@
 
 namespace sudo { namespace sudo_system { 
 
-struct Particle {
-
-	math::Vector2 position;
-	math::Vector2 size;
-	math::Color color;
-	float lifeTime, aliveTime;
-	bool active;
-	float spawnTime;
-	
-	math::Vector2 velocity;
-
-	Particle() 
-	{
-		position = math::Vector2(0, 0);
-		size = math::Vector2(0, 0);
-		color = math::Color(0, 0, 0, 0);
-		lifeTime = 0;
-		active = false;
-	}
-
-	void init(const math::Vector2 &a_position, const math::Vector2 &a_size, const math::Color &a_color, float a_lifeTime) 
-	{
-		position = a_position;
-		size = a_size;
-		color = a_color;
-		lifeTime = a_lifeTime;
-		aliveTime = 0;
-
-		float temp = (float)((utility::SudoRandomNumber::GetRandomInteger<int>(-10, 10)) / 100.0f);
-		float temp2 = (float)((utility::SudoRandomNumber::GetRandomInteger<int>(-10, 10)) / 100.0f);
-
-		velocity = math::Vector2(
-			temp, temp2
-		);
-	}
-
-	void update(float deltaTime) 
-	{
-		position = math::Vector2(position.x + velocity.x*deltaTime, position.y + velocity.y*deltaTime);
-		aliveTime += deltaTime;
-	}
-
-	void enable(const math::Vector2 &a_position, const math::Vector2 &a_size, const math::Color &a_color, float a_lifeTime)
-	{
-		active = true;
-		init(a_position, a_size, a_color, a_lifeTime);
-	}
-
-	void disbale() 
-	{
-		position = math::Vector2(0, 0);
-		size = math::Vector2(0, 0);
-		color = math::Color(0, 0, 0, 0);
-		lifeTime = 0;
-		spawnTime = 0;
-		active = false;
-	}
+struct ParticleFlags {
+	enum Flags {
+		RANDOM_COLOR		= 0x01,
+		RANDOM_VELOCITY		= 0x02,
+		GRAVITY_PULL		= 0x03,
+	};
 };
 
 struct ParticleVertexData {
@@ -91,7 +42,7 @@ struct ParticleVertexData {
 		pos = a_pos;
 		color = a_color;
 	}
-
+	
 	math::Vector2 pos;
 	math::Color color;
 };
@@ -135,7 +86,7 @@ class ParticleSystem : public SudoSystem {
 
 		// Renderer routines
 		void Begin();
-		void Submit(math::Vector2 a_spawnPosition, math::Vector2 a_particleSize, math::Color a_particleColor, uint a_lifeTime, uint a_particleCount);
+		void Submit(ParticleFlags::Flags a_flag, math::Vector2 a_spawnPosition, math::Vector2 a_particleSize, math::Color a_particleColor, uint a_lifeTime);
 		void Flush();
 
 	private:
@@ -145,7 +96,7 @@ class ParticleSystem : public SudoSystem {
 		/* Particle system data members */
 		bool m_isActive;
 		uint m_vbo, m_vao;
-		std::array<Particle, MAX_PARTICLES> m_particlePool;
+		std::array<graphics::Particle, MAX_PARTICLES> m_particlePool;
 		int m_particleCount;
 		graphics::Shader *m_shader;
 		graphics::IndexBuffer *m_indexBuffer;
