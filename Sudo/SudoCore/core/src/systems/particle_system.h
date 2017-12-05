@@ -47,7 +47,7 @@ struct ParticleVertexData {
 	math::Color color;
 };
 
-#define MAX_PARTICLES 300
+#define MAX_PARTICLES 1000
 #define PARTICLE_SIZE sizeof(ParticleVertexData) * 4
 #define PARTICLE_BUFFER_SIZE PARTICLE_SIZE * MAX_PARTICLES
 
@@ -86,7 +86,15 @@ class ParticleSystem : public SudoSystem {
 
 		// Renderer routines
 		void Begin();
-		void Submit(ParticleFlags::Flags a_flag, math::Vector2 a_spawnPosition, math::Vector2 a_particleSize, math::Color a_particleColor, uint a_lifeTime);
+		// Base constructor   
+		void Submit(
+			math::Vector2 a_spawnPosition, 
+			math::Vector2 a_particleSize, 
+			math::Color a_particleColor, 
+			uint a_lifeTime, 
+			bool a_gravity,
+			math::Vector2 a_velocity
+		);
 		void Flush();
 
 	private:

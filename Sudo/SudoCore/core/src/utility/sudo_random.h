@@ -20,11 +20,11 @@ namespace sudo { namespace utility {
 		}
 
 		static float GetRandomFloatingPoint(float a_min, float a_max) {
-			// Seed the number
-			srand(time(NULL));
-
-			// Return the number
-			return a_min + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (a_max - a_min)));
+			float random = ((float)rand()) / (float)RAND_MAX;
+			float diff = a_max - a_min;
+			float r = random * diff;
+			return a_min + r;
+			
 		}
 	};
 } } 

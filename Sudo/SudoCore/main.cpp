@@ -34,7 +34,7 @@ public:
 		renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
 
 		if (input->GetKey("space")) {
-			particleSystem->Submit(math::Vector2(shape->transform->position.x, shape->transform->position.y), math::Vector2(3, 3), math::Color(utility::SudoRandomNumber::GetRandomInteger(0,255), utility::SudoRandomNumber::GetRandomInteger(0, 255), utility::SudoRandomNumber::GetRandomInteger(0, 255), 0), 1500);
+			particleSystem->Submit(math::Vector2(shape->transform->position.x, shape->transform->position.y), math::Vector2(3, 3), math::Color(utility::SudoRandomNumber::GetRandomInteger(0,255), utility::SudoRandomNumber::GetRandomInteger(0, 255), utility::SudoRandomNumber::GetRandomInteger(0, 255), 0), 1500, true, math::Vector2(utility::SudoRandomNumber::GetRandomFloatingPoint(-0.5f, 0.5f), utility::SudoRandomNumber::GetRandomFloatingPoint(-0.5f, 0.5f)));
 		}
 
 		if (input->GetKey("d"))

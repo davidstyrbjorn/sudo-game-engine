@@ -22,11 +22,12 @@ namespace sudo { namespace sudo_system {
 		// Initalize particle array
 		for (int i = 0; i < MAX_PARTICLES; i++) {
 			m_particlePool[i] = graphics::Particle();
+			m_particlePool[i].disable();
 		}
 		m_particleCount = 0;
 
 		// Creating the shader
-		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_fragment.txt");
+		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_fragment.txt");
 		m_shader->enable();
 
 		m_shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(
@@ -64,10 +65,11 @@ namespace sudo { namespace sudo_system {
 		glBufferData(GL_ARRAY_BUFFER, PARTICLE_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
 	}
 
-	void ParticleSystem::Submit(math::Vector2 a_spawnPosition, math::Vector2 a_particleSize, math::Color a_particleColor, uint a_lifeTime)
+	void ParticleSystem::Submit(math::Vector2 a_spawnPosition, math::Vector2 a_particleSize, math::Color a_particleColor, uint a_lifeTime, bool a_gravity, math::Vector2 a_velocity)
 	{
 		if (m_particleCount < MAX_PARTICLES) {
 			m_particlePool[m_particleCount].init(a_spawnPosition, a_particleSize, a_particleColor, a_lifeTime);
+			m_particlePool[m_particleCount].m_velocity = a_velocity;
 			m_particleCount++;
 		}
 	}
