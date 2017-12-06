@@ -10,7 +10,7 @@ class App : SudoClass {
 private:
 	SudoCore coreEngine;
 
-	ecs::Entity *shape;
+	ecs::Entity *shape, *shape2;
 
 	graphics::Texture *texture1, *texture2;
 
@@ -28,13 +28,21 @@ public:
 
 	void Update(float deltaTime) override
 	{
-		for (int i = 0; i < m_rectangleComponentEntities.size(); i++) {
-			//renderer->Submit(m_rectangleComponentEntities[i]);
-		}
 		renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
 
 		if (input->GetKey("space")) {
-			particleSystem->Submit(math::Vector2(shape->transform->position.x, shape->transform->position.y), math::Vector2(3, 3), math::Color(utility::SudoRandomNumber::GetRandomInteger(0,255), utility::SudoRandomNumber::GetRandomInteger(0, 255), utility::SudoRandomNumber::GetRandomInteger(0, 255), 0), 1500, true, math::Vector2(utility::SudoRandomNumber::GetRandomFloatingPoint(-0.5f, 0.5f), utility::SudoRandomNumber::GetRandomFloatingPoint(-0.5f, 0.5f)));
+			sudo_system::ParticleConfiguration config = sudo_system::ParticleConfiguration();
+			config.DoFade = true;
+			config.GravitySimulated = true;
+			config.GravityScale = -0.001f * sin(deltaTime);
+
+			particleSystem->Submit(shape->transform->position,
+				math::Vector2(3, 3),
+				math::Color(utility::SudoRandomNumber::GetRandomInteger(0,255), utility::SudoRandomNumber::GetRandomInteger(0, 255), utility::SudoRandomNumber::GetRandomInteger(0, 255), 255),
+				1000,
+				math::Vector2(utility::SudoRandomNumber::GetRandomFloatingPoint(-0.5f, 0.5f), utility::SudoRandomNumber::GetRandomFloatingPoint(-0.5f, 0.5f)),
+				config
+			);
 		}
 
 		if (input->GetKey("d"))
@@ -63,7 +71,7 @@ public:
 		}
 
 		shape = new ecs::Entity("shape");
-		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(150, 150), math::Color::Green()));
+		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(10, 10), math::Color(255, 100, 10, 255)));
 		shape->transform->position = math::Vector3(400, 300, 0);
 
 		//config->SetFPS(60);
@@ -77,7 +85,7 @@ public:
 	}
 };
 
-int main() 
+int lmain() 
 {
 	App* app = new App();
 

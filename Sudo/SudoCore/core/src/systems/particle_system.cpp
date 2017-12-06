@@ -3,6 +3,7 @@
 
 #include"../math/mat4.h"
 #include"../systems/settings_system.h"
+#include"../math/vector3.h"
 
 namespace sudo { namespace sudo_system {
 	
@@ -27,7 +28,7 @@ namespace sudo { namespace sudo_system {
 		m_particleCount = 0;
 
 		// Creating the shader
-		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_fragment.txt");
+		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_fragment.txt");
 		m_shader->enable();
 
 		m_shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(
@@ -65,11 +66,21 @@ namespace sudo { namespace sudo_system {
 		glBufferData(GL_ARRAY_BUFFER, PARTICLE_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
 	}
 
-	void ParticleSystem::Submit(math::Vector2 a_spawnPosition, math::Vector2 a_particleSize, math::Color a_particleColor, uint a_lifeTime, bool a_gravity, math::Vector2 a_velocity)
+	void ParticleSystem::Submit(math::Vector3 a_spawnPosition, 
+		math::Vector2 a_particleSize, 
+		math::Color a_particleColor, 
+		uint a_lifeTime, 
+		math::Vector2 a_velocity, 
+		ParticleConfiguration a_config)
 	{
-		if (m_particleCount < MAX_PARTICLES) {
-			m_particlePool[m_particleCount].init(a_spawnPosition, a_particleSize, a_particleColor, a_lifeTime);
-			m_particlePool[m_particleCount].m_velocity = a_velocity;
+		if (m_particleCount < MAX_PARTICLES) 
+		{
+			m_particlePool[m_particleCount].init(math::Vector2(a_spawnPosition.x, a_spawnPosition.y), a_particleSize, a_particleColor, a_velocity, a_lifeTime);
+			// Configuration
+			m_particlePool[m_particleCount].m_doAlphaBlend = a_config.DoFade;
+			m_particlePool[m_particleCount].m_gravitySimulated = a_config.GravitySimulated;
+			m_particlePool[m_particleCount].m_gravityScale = a_config.GravityScale;
+
 			m_particleCount++;
 		}
 	}
@@ -120,8 +131,9 @@ namespace sudo { namespace sudo_system {
 	void ParticleSystem::disableDeadParticles()
 	{
 		for (int i = 0; i < MAX_PARTICLES; i++) {
-			if (m_particlePool[i].m_aliveTime >= m_particlePool[i].m_lifeTime)
+			if (m_particlePool[i].m_aliveTime >= m_particlePool[i].m_lifeTime) {
 				m_particlePool[i].disable();
+			}
 		}
 	}
 

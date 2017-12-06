@@ -62,6 +62,8 @@ private:
 	int leftScore = 0, rightScore = 0;
 	utility::Timer gameClock;
 
+	sudo_system::ParticleSystem *particleSystem = sudo_system::ParticleSystem::Instance();
+
 public:
 	Game()
 	{
@@ -244,6 +246,10 @@ public:
 
 			float distanceToMiddle = ((leftPaddle->transform->position.y+50) - (ballEntity->transform->position.y+10));
 			ball_y_change += (distanceToMiddle/100)*-1;
+
+			// Spawn particles
+			//for(int i = 0; i < 30; i++)
+				//particleSystem->Submit(ballEntity->transform->position, math::Vector2(5, 5), math::Color(utility::SudoRandomNumber::GetRandomInteger(0, 255), utility::SudoRandomNumber::GetRandomInteger(0, 255), utility::SudoRandomNumber::GetRandomInteger(0, 255)), 1000, true, math::Vector2(utility::SudoRandomNumber::GetRandomFloatingPoint(0.1f, 0.5f), utility::SudoRandomNumber::GetRandomFloatingPoint(-0.5f, 0.5f)));
 		}
 		if (paddle == "right") 
 		{
@@ -252,13 +258,10 @@ public:
 
 			float distanceToMiddle = ((rightPaddle->transform->position.y+50) - (ballEntity->transform->position.y+10));
 			ball_y_change += (distanceToMiddle/200)*-1;
+			
+			// Spawn particles
+			//for (int i = 0; i < 30; i++)
+				//particleSystem->Submit(ballEntity->transform->position, math::Vector2(5, 5), math::Color(utility::SudoRandomNumber::GetRandomInteger(0, 255), utility::SudoRandomNumber::GetRandomInteger(0, 255), utility::SudoRandomNumber::GetRandomInteger(0, 255)), 1000, true, math::Vector2(utility::SudoRandomNumber::GetRandomFloatingPoint(-0.5f, -0.1f), utility::SudoRandomNumber::GetRandomFloatingPoint(-0.5f, 0.5f)));
 		}
 	}
 };
-
-int lmain()
-{
-	Game* game = new Game();
-
-	return 0;
-}

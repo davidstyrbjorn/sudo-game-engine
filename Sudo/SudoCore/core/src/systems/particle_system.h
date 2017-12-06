@@ -17,23 +17,35 @@
 #include"../graphics/particle.h"
 
 /*
-- This class system will basically work as a glorifed renderer
-- It will have methods that takes in arguments to spawn particles such as
--> CreateParticles(pos, color, count, ...)
--> ... could be perhaps, life, 
-- It will also handles the rendering of these particles
-- The actual particle struct will be created seperate from the ParticleClass
-- It's rendering methods will be called by the 'engine-loop' 
+* This class system will basically work as a glorified renderer
+* It will have a method that takes in arguments to spawn particles 
+* CreateParticles(pos, color, count, ...)
+* ... = life etc 
+* It will also handles the rendering of these particles
+* The actual particle struct will be created seperate from the ParticleClass
+* It's rendering methods will be called by the 'engine-loop' 
 */
+
+namespace sudo {
+	namespace math {
+		class Vector3;
+	}
+}
 
 namespace sudo { namespace sudo_system { 
 
-struct ParticleFlags {
-	enum Flags {
-		RANDOM_COLOR		= 0x01,
-		RANDOM_VELOCITY		= 0x02,
-		GRAVITY_PULL		= 0x03,
-	};
+struct ParticleConfiguration {
+	// Values sent in by the user used when spawning particles 
+	bool DoFade;
+	bool GravitySimulated;
+	float GravityScale;
+
+	// The constructor will set all the config values to their default
+	ParticleConfiguration() {
+		DoFade = false;
+		GravitySimulated = false;
+		GravityScale = GRAVITY;
+	}
 };
 
 struct ParticleVertexData {
@@ -88,12 +100,12 @@ class ParticleSystem : public SudoSystem {
 		void Begin();
 		// Base constructor   
 		void Submit(
-			math::Vector2 a_spawnPosition, 
-			math::Vector2 a_particleSize, 
-			math::Color a_particleColor, 
-			uint a_lifeTime, 
-			bool a_gravity,
-			math::Vector2 a_velocity
+			math::Vector3 a_spawnPosition,
+			math::Vector2 a_particleSize,
+			math::Color a_particleColor,
+			uint a_lifeTime,
+			math::Vector2 a_velocity,
+			ParticleConfiguration a_config = ParticleConfiguration()
 		);
 		void Flush();
 
