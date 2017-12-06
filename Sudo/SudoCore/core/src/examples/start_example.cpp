@@ -53,9 +53,3 @@ MyGame::MyGame()
 	engine = new SudoCore();
 	engine->init(Vector2(400, 400), "Sudo Game Engine", this);
 }
-
-int main() {
-	MyGame *game = new MyGame();
-
-	return EXIT_SUCCESS;
-}
