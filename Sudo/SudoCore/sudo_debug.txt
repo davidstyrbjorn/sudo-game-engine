@@ -188,3 +188,24 @@ ERROR: 0:8: 'ved4' : no matching overloaded function found (using implicit conve
 ERROR: 0:8: 'assign' :  cannot convert from 'const float' to 'FragColor 4-component vector of float'
 
 )
+[Thu Dec  7 18:08](ERROR: 0(5) : error C0000: syntax error, unexpected identifier, expecting '{' at token "texture"
+0(10) : error C1115: unable to find compatible overloaded function "texture(<overloaded function>, vec2)"
+0(11) : warning C7533: global variable gl_FragColor is deprecated after version 120
+)
+[Thu Dec  7 18:08](ERROR: 0(5) : error C0000: syntax error, unexpected identifier, expecting '{' at token "texture"
+0(10) : error C1115: unable to find compatible overloaded function "texture(<overloaded function>, vec2)"
+0(11) : warning C7533: global variable gl_FragColor is deprecated after version 120
+)
+[Thu Dec  7 18:10](ERROR: 0(5) : error C0000: syntax error, unexpected identifier, expecting '{' at token "texture"
+0(10) : error C1115: unable to find compatible overloaded function "texture(<overloaded function>, vec2)"
+0(11) : warning C7533: global variable gl_FragColor is deprecated after version 120
+)
+[Thu Dec  7 18:11](ERROR: 0(5) : error C0000: syntax error, unexpected identifier, expecting '{' at token "texture"
+0(12) : error C1115: unable to find compatible overloaded function "texture(<overloaded function>, vec2)"
+)
+[Thu Dec  7 18:12](ERROR: 0(5) : error C0000: syntax error, unexpected identifier, expecting '{' at token "texture"
+0(12) : error C1115: unable to find compatible overloaded function "texture2D(<overloaded function>, vec2)"
+)
+[Thu Dec  7 18:15](ERROR: 0(5) : error C0000: syntax error, unexpected identifier, expecting '{' at token "texture"
+0(12) : error C1115: unable to find compatible overloaded function "texture2D(<overloaded function>, vec2)"
+)

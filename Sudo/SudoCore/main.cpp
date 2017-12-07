@@ -102,6 +102,7 @@ public:
 
 using namespace sudo;
 
+/*
 int main()
 {
 	FT_Library ft;
@@ -112,8 +113,9 @@ int main()
 	system("pause>null");
 	return 0;
 }
+*/
 
-/*
+
 struct Character {
 	unsigned int		TextureID;  // ID handle of the glyph texture
 	sudo::math::Vector2 Size;       // Size of glyph
@@ -141,6 +143,7 @@ void RenderText(graphics::Shader &shader, std::string text, float x, float y, fl
 
 		GLfloat w = ch.Size.x * scale;
 		GLfloat h = ch.Size.y * scale;
+
 		// Update VBO for each character
 		GLfloat vertices[6][4] = {
 			{ xpos,     ypos + h,   0.0, 0.0 },
@@ -153,12 +156,15 @@ void RenderText(graphics::Shader &shader, std::string text, float x, float y, fl
 		};
 		// Render glyph texture over quad
 		glBindTexture(GL_TEXTURE_2D, ch.TextureID);
+
 		// Update content of VBO memory
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 		// Render quad
 		glDrawArrays(GL_TRIANGLES, 0, 6);
+
 		// Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
 		x += (ch.Advance >> 6) * scale; // Bitshift by 6 to get value in pixels (2^6 = 64)
 	}
@@ -179,7 +185,9 @@ int main()
 
 	GLFWwindow *window = glfwCreateWindow(800, 600, "Text", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
-	glViewport(0, 0, 800, 600);
+
+	glewInit();
+	glewExperimental = true;
 
 	FT_Library ft;
 	if (FT_Init_FreeType(&ft)) {
@@ -254,7 +262,7 @@ int main()
 	graphics::Shader *shader;
 	shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\font_shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\font_shader_fragment.txt");
 	shader->enable();
-	shader->setUniformMatrix4x4("projection", math::Matrix4x4::Orthographic(0, 800, 600, 0, -1, 1));
+	shader->setUniformMatrix4x4("projection", math::Matrix4x4::Orthographic(0, 800, 0, 600, -1, 1));
 
 	// Create buffer
 	glGenVertexArrays(1, &VAO);
@@ -273,14 +281,16 @@ int main()
 	while (!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
 
-		glClearColor(0, 0, 0, 1);
+		glClearColor(0.1, 0.2, 0.3, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		RenderText(*shader, "Nigger Faggot", 20, 20, 1, math::Vector3(255, 255, 0));
+		RenderText(*shader, "OpenGL Text", 200, 400, 0.5f, math::Vector3(255, 255, 0));
+		RenderText(*shader, "Sample Text", 20, 20, 1, math::Vector3(255, 255, 0));
+
+		glfwSwapBuffers(window);
 	}
 
 	glfwTerminate();
 
 	return EXIT_SUCCESS;
 }
-*/

@@ -80,12 +80,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;D:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\include;D:\C++ Libraries\freetype\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;D:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\include;$(SolutionDir)SudoCore\Libraries\freealut\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;$(SolutionDir)\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)\SudoCore\Libraries\SOIL2\lib;D:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\libs\Win32;D:\C++ Libraries\freetype\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;$(SolutionDir)\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)\SudoCore\Libraries\SOIL2\lib;D:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\libs\Win32;$(SolutionDir)SudoCore\Libraries\freetype\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>openal32.lib;glfw3.lib;glew32s.lib;opengl32.lib;soil2-debug.lib;freetype271.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
@@ -105,14 +105,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;D:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\include;D:\C++ Libraries\freetype\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;D:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\include;$(SolutionDir)SudoCore\Libraries\freealut\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;$(SolutionDir)\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)\SudoCore\Libraries\SOIL2\lib;D:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\libs\Win32;D:\C++ Libraries\freetype\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;$(SolutionDir)\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)\SudoCore\Libraries\SOIL2\lib;D:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\libs\Win32;$(SolutionDir)SudoCore\Libraries\freetype\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>openal32.lib;glfw3.lib;glew32s.lib;opengl32.lib;soil2-debug.lib;freetype271.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
@@ -163,6 +163,7 @@
     <ClCompile Include="core\src\systems\render_system.cpp" />
     <ClCompile Include="core\src\systems\settings_system.cpp" />
     <ClCompile Include="core\src\systems\sound_system.cpp" />
+    <ClCompile Include="core\src\systems\text_system.cpp" />
     <ClCompile Include="core\src\systems\world_system.cpp" />
     <ClCompile Include="core\src\utility\linked_list.cpp" />
     <ClCompile Include="core\src\utility\string.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="core\src\graphics\particle.h" />
     <ClInclude Include="core\src\graphics\renderable2d.h" />
     <ClInclude Include="core\src\graphics\texture.h" />
+    <ClInclude Include="core\src\graphics\text_character.h" />
     <ClInclude Include="core\src\math\color.h" />
     <ClInclude Include="core\src\math\math.h" />
     <ClInclude Include="core\src\math\vector4.h" />
@@ -204,6 +206,7 @@
     <ClInclude Include="core\src\systems\settings_system.h" />
     <ClInclude Include="core\src\systems\sound_system.h" />
     <ClInclude Include="core\src\systems\sudo_system.h" />
+    <ClInclude Include="core\src\systems\text_system.h" />
     <ClInclude Include="core\src\systems\world_system.h" />
     <ClInclude Include="core\src\utility\linked_list.h" />
     <ClInclude Include="core\src\utility\string.h" />

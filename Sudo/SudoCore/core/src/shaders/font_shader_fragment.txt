@@ -2,11 +2,12 @@
 
 in vec2 TexCoords;
 
-uniform sampler2d texture;
+uniform sampler2D texture;
 uniform vec3 textColor;
+
+out vec4 color;
 
 void main()
 {
-	vec4 sampled = vec4(1.0, 1.0, 1.0, texture(texture, TexCoords).r);
-	gl_FragColor = vec4(textColor, 1.0) * sampled;
+	color = vec4(1, 1, 1, texture2D(texture, TexCoords).r) * vec4(textColor, 1);
 }
