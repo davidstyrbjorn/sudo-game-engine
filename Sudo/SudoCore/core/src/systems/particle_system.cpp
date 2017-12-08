@@ -2,8 +2,36 @@
 #include"../../gl_include.h"
 
 #include"../math/mat4.h"
-#include"../systems/settings_system.h"
 #include"../math/vector3.h"
+#include"../math/vector2.h"
+#include"../math/color.h"
+
+#include"../systems/settings_system.h"
+
+#include"../graphics/particle.h"
+#include"../graphics/buffers/index_buffer.h" 
+#include"../graphics/shader.h" 
+
+
+namespace sudo { namespace sudo_system { 
+
+struct ParticleVertexData {
+	ParticleVertexData(const math::Vector2& a_pos, const math::Color& a_color)
+	{
+		pos = a_pos;
+		color = a_color;
+	}
+
+	math::Vector2 pos;
+	math::Color color;
+};
+
+} } 
+
+#define PARTICLE_SIZE sizeof(ParticleVertexData) * 4
+#define PARTICLE_BUFFER_SIZE PARTICLE_SIZE * MAX_PARTICLES
+
+#define INDICES_COUNT 6*MAX_PARTICLES
 
 namespace sudo { namespace sudo_system {
 	
@@ -22,13 +50,13 @@ namespace sudo { namespace sudo_system {
 		
 		// Initalize particle array
 		for (int i = 0; i < MAX_PARTICLES; i++) {
-			m_particlePool[i] = graphics::Particle();
-			m_particlePool[i].disable();
+			m_particlePool[i] = new graphics::Particle();
+			m_particlePool[i]->disable();
 		}
 		m_particleCount = 0;
 
 		// Creating the shader
-		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_fragment.txt");
+		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_fragment.txt");
 		m_shader->enable();
 
 		m_shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(
@@ -46,8 +74,8 @@ namespace sudo { namespace sudo_system {
 	void ParticleSystem::Update(float deltaTime)
 	{
 		for (int i = 0; i < MAX_PARTICLES; i++) {
-			if (m_particlePool[i].m_active) {
-				m_particlePool[i].update(deltaTime);
+			if (m_particlePool[i]->m_active) {
+				m_particlePool[i]->update(deltaTime);
 			}
 		}
 	}
@@ -56,7 +84,7 @@ namespace sudo { namespace sudo_system {
 	{
 		m_particleCount = 0;
 		for (int i = 0; i < MAX_PARTICLES; i++) {
-			if (m_particlePool[i].m_active) {
+			if (m_particlePool[i]->m_active) {
 				m_particleCount++;
 			}
 		}
@@ -75,11 +103,11 @@ namespace sudo { namespace sudo_system {
 	{
 		if (m_particleCount < MAX_PARTICLES) 
 		{
-			m_particlePool[m_particleCount].init(math::Vector2(a_spawnPosition.x, a_spawnPosition.y), a_particleSize, a_particleColor, a_velocity, a_lifeTime);
+			m_particlePool[m_particleCount]->init(math::Vector2(a_spawnPosition.x, a_spawnPosition.y), a_particleSize, a_particleColor, a_velocity, a_lifeTime);
 			// Configuration
-			m_particlePool[m_particleCount].m_doAlphaBlend = a_config.DoFade;
-			m_particlePool[m_particleCount].m_gravitySimulated = a_config.GravitySimulated;
-			m_particlePool[m_particleCount].m_gravityScale = a_config.GravityScale;
+			m_particlePool[m_particleCount]->m_doAlphaBlend = a_config.DoFade;
+			m_particlePool[m_particleCount]->m_gravitySimulated = a_config.GravitySimulated;
+			m_particlePool[m_particleCount]->m_gravityScale = a_config.GravityScale;
 
 			m_particleCount++;
 		}
@@ -102,10 +130,10 @@ namespace sudo { namespace sudo_system {
 			// Add all the particles from m_particlesToDraw list to the buffer
 			int count = 0;
 			for (int i = 0; i < MAX_PARTICLES; i++) {
-				if (m_particlePool[i].m_active) {
-					const math::Vector2& position = m_particlePool[i].m_position;
-					const math::Vector2& size = m_particlePool[i].m_size;
-					const math::Color&   color = m_particlePool[i].m_color/255;
+				if (m_particlePool[i]->m_active) {
+					const math::Vector2& position = m_particlePool[i]->m_position;
+					const math::Vector2& size = m_particlePool[i]->m_size;
+					const math::Color&   color = m_particlePool[i]->m_color/255;
 
 					// This is to be pushed into the buffer
 					ParticleVertexData temp[] = {
@@ -131,8 +159,8 @@ namespace sudo { namespace sudo_system {
 	void ParticleSystem::disableDeadParticles()
 	{
 		for (int i = 0; i < MAX_PARTICLES; i++) {
-			if (m_particlePool[i].m_aliveTime >= m_particlePool[i].m_lifeTime) {
-				m_particlePool[i].disable();
+			if (m_particlePool[i]->m_aliveTime >= m_particlePool[i]->m_lifeTime) {
+				m_particlePool[i]->disable();
 			}
 		}
 	}
@@ -180,6 +208,10 @@ namespace sudo { namespace sudo_system {
 	{
 		glDeleteBuffers(1, &m_vbo);
 		glDeleteVertexArrays(1, &m_vao);
+
+		for (int i = 0; i < MAX_PARTICLES; i++) {
+			delete m_particlePool[i];
+		}
 	}
 
 } }

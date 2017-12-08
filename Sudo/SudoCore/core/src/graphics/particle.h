@@ -5,8 +5,6 @@
 
 namespace sudo { namespace graphics {
 
-#define GRAVITY 0.001f
-
 	struct Particle {
 		// Core members
 		math::Vector2 m_position;

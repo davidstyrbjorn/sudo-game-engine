@@ -6,7 +6,7 @@
 
 namespace sudo {
 
-	#define PRINT_FPS 1
+	#define PRINT_FPS 0
 
 	// Forward declarations
 	namespace graphics {
@@ -19,6 +19,7 @@ namespace sudo {
 		class SoundSystem;
 		class BatchRendererSystem;
 		class ParticleSystem;
+		class TextSystem;
 	}
 	class SudoClass;
 	class CoreSettings;
@@ -39,6 +40,7 @@ namespace sudo {
 		sudo_system::SoundSystem		*m_soundSystem;
 		sudo_system::BatchRendererSystem *m_batchRenderer;
 		sudo_system::ParticleSystem		*m_particleSystem;
+		sudo_system::TextSystem			*m_textSystem;
 
 		utility::Timer *timer, *deltaTimer;
 #if PRINT_FPS

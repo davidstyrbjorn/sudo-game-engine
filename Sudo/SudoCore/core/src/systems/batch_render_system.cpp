@@ -27,7 +27,7 @@ namespace sudo { namespace sudo_system {
 		glEnable(GL_BLEND);
 
 		// Creating shader 
-		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_fragment.txt");
+		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_fragment.txt");
 		m_shader->enable();
 
 		int texIds[] = { 0,1,2,3,4,5,6,7,8,9 };

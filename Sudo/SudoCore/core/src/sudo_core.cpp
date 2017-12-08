@@ -52,6 +52,10 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	m_batchRenderer = sudo_system::BatchRendererSystem::Instance();
 	m_batchRenderer->Enable();
 
+	/* Text system */
+	m_textSystem = sudo_system::TextSystem::Instance();
+	m_textSystem->Enable();
+
 	/* Particle System */
 	m_particleSystem = sudo_system::ParticleSystem::Instance();
 	m_particleSystem->Enable();
@@ -66,6 +70,7 @@ void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, Su
 	m_worldSystem->Start();
 	m_batchRenderer->Start();
 	m_particleSystem->Start();
+	m_textSystem->Start();
 
 	/* Start the game_loop; This means Start gets called before any Update calls */
 	game_loop();
@@ -83,6 +88,7 @@ void SudoCore::clean_up()
 	m_settingsSystem->CleanUp();
 	m_soundSystem->CleanUp();
 	m_particleSystem->CleanUp();
+	m_textSystem->CleanUp();
 
 	delete m_window;
 
@@ -143,6 +149,7 @@ void SudoCore::game_loop()
 		m_batchRenderer->End();
 		m_batchRenderer->Flush();
 		m_particleSystem->Flush();
+		m_textSystem->Flush();
 
 		// Display the current drawns elements 
 		m_window->display();

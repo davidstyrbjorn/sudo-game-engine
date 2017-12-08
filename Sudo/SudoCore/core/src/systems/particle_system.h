@@ -1,20 +1,11 @@
 #pragma once
 
 #include"sudo_system.h"
-#include"../math/vector2.h"
-#include"../math/color.h"
-#include"../../definitions.h"
-
 #include<array>
 #include<vector>
-
-#include"../graphics/buffers/index_buffer.h"
-#include"../graphics/shader.h"
+#include"../../definitions.h"
 
 #include"../utility/timer.h"
-#include"../utility/sudo_random.h"
-
-#include"../graphics/particle.h"
 
 /*
 * This class system will basically work as a glorified renderer
@@ -29,10 +20,19 @@
 namespace sudo {
 	namespace math {
 		class Vector3;
+		class Vector2;
+		class Color;
+	}
+	namespace graphics {
+		struct Particle;
+		class Shader;
+		class IndexBuffer;
 	}
 }
 
 namespace sudo { namespace sudo_system { 
+
+#define MAX_PARTICLES 1000
 
 struct ParticleConfiguration {
 	// Values sent in by the user used when spawning particles 
@@ -44,26 +44,9 @@ struct ParticleConfiguration {
 	ParticleConfiguration() {
 		DoFade = false;
 		GravitySimulated = false;
-		GravityScale = GRAVITY;
+		GravityScale = PARTICLE_GRAVITY_Y;
 	}
 };
-
-struct ParticleVertexData {
-	ParticleVertexData(const math::Vector2& a_pos, const math::Color& a_color) 
-	{
-		pos = a_pos;
-		color = a_color;
-	}
-	
-	math::Vector2 pos;
-	math::Color color;
-};
-
-#define MAX_PARTICLES 1000
-#define PARTICLE_SIZE sizeof(ParticleVertexData) * 4
-#define PARTICLE_BUFFER_SIZE PARTICLE_SIZE * MAX_PARTICLES
-
-#define INDICES_COUNT 6*MAX_PARTICLES
 
 class ParticleSystem : public SudoSystem {
 	private:
@@ -105,7 +88,7 @@ class ParticleSystem : public SudoSystem {
 			math::Color a_particleColor,
 			uint a_lifeTime,
 			math::Vector2 a_velocity,
-			ParticleConfiguration a_config = ParticleConfiguration()
+			ParticleConfiguration a_config
 		);
 		void Flush();
 
@@ -116,7 +99,7 @@ class ParticleSystem : public SudoSystem {
 		/* Particle system data members */
 		bool m_isActive;
 		uint m_vbo, m_vao;
-		std::array<graphics::Particle, MAX_PARTICLES> m_particlePool;
+		std::array<graphics::Particle*, MAX_PARTICLES> m_particlePool;
 		int m_particleCount;
 		graphics::Shader *m_shader;
 		graphics::IndexBuffer *m_indexBuffer;
