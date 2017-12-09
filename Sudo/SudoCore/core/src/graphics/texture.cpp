@@ -1,6 +1,8 @@
 #include"texture.h"
 #include"../SOIL2/SOIL2.h"
 #include"../debug.h"
+#include"../../gl_include.h"
+
 
 namespace sudo { namespace graphics {
 

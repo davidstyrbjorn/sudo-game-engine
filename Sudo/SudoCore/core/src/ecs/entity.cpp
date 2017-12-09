@@ -2,6 +2,9 @@
 #include"../systems/world_system.h"
 #include"../debug.h"
 
+#include"transform_component.h"
+#include"component.h"
+
 namespace sudo { namespace ecs {
 
 	Entity::~Entity()

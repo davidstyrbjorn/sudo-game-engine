@@ -4,7 +4,6 @@
 #include"sudo_system.h"
 
 #include<map>
-#include<memory>
 
 // Forward decleration
 namespace sudo {

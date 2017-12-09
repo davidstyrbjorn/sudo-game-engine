@@ -1,15 +1,13 @@
 #pragma once
 
 #include<vector>
-#include"component.h"
-
 #include<type_traits>
-
 #include<string>
 
-#include"transform_component.h"
-
 namespace sudo { namespace ecs {
+
+	class Component;
+	class Transform;
 
 	class Entity {
 	private:

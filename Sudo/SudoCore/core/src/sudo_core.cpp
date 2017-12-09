@@ -11,7 +11,7 @@ SudoCore::SudoCore()
 
 }
 
-void SudoCore::init(const math::Vector2& a_windowSize, char* a_windowCaption, SudoClass *a_engineInstance)
+void SudoCore::init(const math::Vector2 a_windowSize, char* a_windowCaption, SudoClass *a_engineInstance)
 {
 	/* Print the current version of the engine */
 	std::cout << GetSudoVersion() << std::endl;

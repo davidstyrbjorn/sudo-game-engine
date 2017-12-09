@@ -1,14 +1,15 @@
 #pragma once
 
 #include"sudo_system.h"
+
 #include<vector>
 #include<map>
-#include"../graphics/text_label.h"
-#include"../graphics/text_character.h"
-#include<string.h>
 
 #include<ft2build.h>
 #include FT_FREETYPE_H
+
+#include"../graphics/text_label.h"
+#include"../graphics/text_character.h"
 
 // Forward declerations
 namespace sudo {

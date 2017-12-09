@@ -1,7 +1,9 @@
 #include "shader.h"
 
 #include"../../gl_include.h"
-#include"../../sudo.h"
+
+#include"../utility/utility.h"
+
 #include<vector>
 
 namespace sudo { namespace graphics {

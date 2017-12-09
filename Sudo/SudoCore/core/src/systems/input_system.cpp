@@ -1,6 +1,7 @@
 #include "input_system.h"
-#include"../../sudo.h"
-#include<time.h>
+
+#include"../math/vector2.h"
+#include"../utility/sudo_random.h"
 
 namespace sudo { namespace sudo_system {
 
@@ -35,7 +36,6 @@ namespace sudo { namespace sudo_system {
 
 	void InputSystem::Enable()
 	{
-		srand(time(NULL));
 		populateKeyList();
 
 		/* Set the GLFW callbacks */

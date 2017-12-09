@@ -1,5 +1,12 @@
 #include"box_collider2D.h"
-#include"../../sudo.h"
+
+#include"entity.h"
+#include"transform_component.h"
+
+#include"../systems/settings_system.h"
+#include"../debug.h"
+
+#include"../graphics/renderable2d.h"
 
 namespace sudo { namespace ecs {
 

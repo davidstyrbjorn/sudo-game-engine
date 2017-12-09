@@ -1,7 +1,7 @@
 #pragma once
 
 #include"sudo_system.h"
-#include"../graphics/renderable2d.h"
+
 #include"../../definitions.h"
 #include<vector>
 
@@ -10,8 +10,10 @@ namespace sudo {
 		class Shader;
 		class IndexBuffer;
 		class VertexArrayBuffer;
-
+		class Renderable2D;
 		class Texture;
+
+		struct VertexData;
 	}
 }
 
@@ -55,10 +57,9 @@ namespace sudo { namespace sudo_system {
 		void Flush();
 		void End();
 
-
 	private:
 		/* Batch Renderer data */
-		GLuint m_vertexArray;
+		uint m_vertexArray;
 		graphics::Shader *m_shader;
 		graphics::VertexData *m_mapBuffer;
 

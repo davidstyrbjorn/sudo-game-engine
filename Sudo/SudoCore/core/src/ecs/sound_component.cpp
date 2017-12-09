@@ -12,6 +12,9 @@
 #include"../math/vector2.h"
 #include"../graphics/renderable2d.h"
 
+#include"../ecs/entity.h"
+#include"../ecs/transform_component.h"
+
 namespace sudo { namespace ecs {
 
 SoundComponent::SoundComponent(const char * a_soundPath)

@@ -1,6 +1,5 @@
 #pragma once
 
-#include"../../gl_include.h"
 typedef unsigned int uint;
 
 namespace sudo { namespace graphics {
@@ -27,7 +26,7 @@ namespace sudo { namespace graphics {
 
 	public:
 		/* Texture data */
-		GLuint m_texId;
+		uint m_texId;
 		int m_width, m_height;
 	};
 		

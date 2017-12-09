@@ -1,9 +1,8 @@
 #include "sprite_component.h"
 #include"../../gl_include.h"
 
-#include"../../sudo.h"
-
-#include"../SOIL2/SOIL2.h"
+#include"../graphics/texture.h"
+#include"entity.h"
 
 namespace sudo { namespace ecs {
 

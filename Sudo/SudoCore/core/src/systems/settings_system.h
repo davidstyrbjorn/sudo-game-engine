@@ -5,11 +5,6 @@
 #include"../math/vector2.h"
 #include"../math/vector4.h"
 
-namespace sudo {
-	namespace utility {
-		class SudoString;
-} }
-
 namespace sudo { namespace sudo_system {
 
 	class SettingsSystem : SudoSystem {

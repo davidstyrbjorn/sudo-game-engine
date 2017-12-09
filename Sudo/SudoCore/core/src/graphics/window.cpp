@@ -1,6 +1,9 @@
 #include "window.h"
 
-#include"../../sudo.h"
+#include"../../gl_include.h"
+
+#include"../math/vector2.h"
+#include"../systems/settings_system.h"
 
 /* Window.cpp */
 sudo::graphics::Window::Window(uint a_width, uint a_height, char *a_caption)

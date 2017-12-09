@@ -2,9 +2,15 @@
 
 #include"../../../definitions.h"
 
-#include"../renderable2d.h"
+namespace sudo {
+	namespace math {
+		class Vector4;
+	}
+}
 
 namespace sudo { namespace graphics { 
+
+	class VertexData;
 
 	class VertexBuffer
 	{

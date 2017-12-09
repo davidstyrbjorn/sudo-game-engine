@@ -1,7 +1,19 @@
 #include"batch_render_system.h"
-#include"../../sudo.h"
-
 #include"../../gl_include.h"
+
+#include"../graphics/shader.h"
+#include"../graphics/buffers/index_buffer.h"
+#include"../graphics/buffers/vertex_array_buffer.h"
+#include"../graphics/renderable2d.h"
+#include"../graphics/texture.h"
+
+#include"settings_system.h"
+
+#include"../math/mat4.h"
+#include"../math/color.h"
+#include"../math/vector3.h"
+
+#include"../ecs/transform_component.h"
 
 namespace sudo { namespace sudo_system { 
 
@@ -27,7 +39,7 @@ namespace sudo { namespace sudo_system {
 		glEnable(GL_BLEND);
 
 		// Creating shader 
-		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_fragment.txt");
+		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\shader_fragment.txt");
 		m_shader->enable();
 
 		int texIds[] = { 0,1,2,3,4,5,6,7,8,9 };

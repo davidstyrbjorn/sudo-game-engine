@@ -23,10 +23,18 @@ SoundSource::~SoundSource()
 	alDeleteBuffers(1, &source);
 }
 
+
+
+const math::Vector3 & SoundSource::getPosition()
+{
+	float x, y, z;
+	alGetSource3f(source, AL_POSITION, &x, &y, &z);
+	return math::Vector3(x, y, z);
+}
+
 void SoundSource::setPosition(const math::Vector3 & a_position)
 {
-	m_position = a_position;
-	alSource3f(source, AL_POSITION, m_position.x, m_position.y, m_position.z);
+	alSource3f(source, AL_POSITION, a_position.x, a_position.y, a_position.z);
 }
 
 void SoundSource::setVolume(const float a_gain)

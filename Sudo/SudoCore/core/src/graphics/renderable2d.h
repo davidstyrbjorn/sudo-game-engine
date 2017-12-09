@@ -11,9 +11,6 @@
 
 #include<vector>
 
-// Texture 
-#include"texture.h"
-
 // Forward decleration
 namespace sudo { 
 	namespace ecs {
@@ -26,6 +23,7 @@ namespace sudo {
 		class VertexArrayBuffer;
 		class VertexBuffer;
 		class Buffer;
+		class Texture;
 	}
 }
 
@@ -70,7 +68,7 @@ namespace sudo { namespace graphics {
 		void SizeDown(const float a_magnitude);
 
 		/* Get the renderables texture id, return 0 if ther is no texture on the renderable */
-		inline const uint getTID() const { return m_texture == nullptr ? 0 : m_texture->getID(); }
+		const uint getTID() const;
 
 	protected:	
 		/* Renderable2D shared data */

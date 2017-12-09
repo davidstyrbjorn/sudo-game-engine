@@ -1,12 +1,13 @@
 #pragma once
 
-#include"../../gl_include.h"
 #include"graphics_framework.h"   
 
-#include"../math/vector3.h"
-#include"../math/vector2.h"
+class GLFWwindow;
 
 namespace sudo {
+	namespace math {
+		class Vector2;
+	}
 	namespace sudo_system {
 		class SettingsSystem;
 	}

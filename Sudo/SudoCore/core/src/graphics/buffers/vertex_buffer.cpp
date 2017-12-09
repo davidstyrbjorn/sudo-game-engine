@@ -7,6 +7,10 @@
 #include<cassert>
 #include<cstdint>
 
+#include"../renderable2d.h"
+
+#include"../../math/vector4.h"
+
 namespace sudo { namespace graphics { 
 
 	VertexBuffer::VertexBuffer(VertexData* a_data, uint a_size)

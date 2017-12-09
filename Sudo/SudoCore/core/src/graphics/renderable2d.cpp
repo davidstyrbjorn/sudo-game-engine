@@ -1,5 +1,7 @@
 #include"renderable2d.h"
 
+#include"texture.h"
+
 namespace sudo { namespace graphics {
 
 	void Renderable2D::SetSize(const math::Vector2 &a_newSize) 
@@ -22,6 +24,11 @@ namespace sudo { namespace graphics {
 	{
 		m_sizeBeforeReisze = m_size;
 		m_size = math::Vector2(m_size.x - a_magnitude, m_size.y - a_magnitude);
+	}
+
+	const uint Renderable2D::getTID() const
+	{
+		return m_texture == nullptr ? 0 : m_texture->getID();
 	}
 	
 } }

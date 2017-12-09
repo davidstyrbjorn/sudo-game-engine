@@ -11,15 +11,7 @@ private:
 	SudoCore coreEngine;
 
 	ecs::Entity *shape, *shape2;
-
 	graphics::Texture *texture1, *texture2;
-
-	std::vector<ecs::RectangleComponent*> m_rectangleComponentEntities;
-
-	sudo_system::ParticleSystem *particleSystem = sudo_system::ParticleSystem::Instance();
-	sudo_system::TextSystem *textSystem = sudo_system::TextSystem::Instance();
-
-	int offset = 22;
 
 public:
 	App() 
@@ -29,7 +21,7 @@ public:
 
 	void Update(float deltaTime) override
 	{
-		textSystem->DrawText("Viktor.net", math::Vector2(0, 0), math::Color(200, 20, 160));
+		textRenderer->DrawText("Viktor.net", math::Vector2(0, 0), math::Color(200, 20, 160));
 		renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
 	
 		if (input->GetKey("space")) {
@@ -59,19 +51,6 @@ public:
 
 	void Start() override
 	{
-		// Genereate alot of rectangles
-		for (int x = 0; x < 36; x++)
-		{
-			for (int y = 0; y < 23; y++) 
-			{
-				ecs::Entity *thing = new ecs::Entity("thing_thing");
-				thing->AddComponent(new ecs::RectangleComponent(math::Vector2(20, 20), math::Color(255,0,0,255)));
-				thing->transform->position = math::Vector3(x*offset, y*offset, 0);
-
-				m_rectangleComponentEntities.push_back(thing->GetComponent<ecs::RectangleComponent>());
-			}
-		}
-
 		shape = new ecs::Entity("shape");
 		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(10, 10), math::Color(255, 100, 10, 255)));
 		shape->transform->position = math::Vector3(400, 300, 0);
@@ -87,7 +66,7 @@ public:
 	}
 };
 
-int main() {
+int madawin() {
 	App* app = new App();
 
 	return 0;

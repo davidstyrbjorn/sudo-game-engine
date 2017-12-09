@@ -1,7 +1,9 @@
 #include"triangle_component.h"
 
-#include"../../sudo.h"
 #include"../../gl_include.h"
+
+#include"transform_component.h"
+#include"entity.h"
 
 namespace sudo { namespace ecs {
 

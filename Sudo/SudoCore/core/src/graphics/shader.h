@@ -1,7 +1,6 @@
 #pragma once
 
 #include"../../definitions.h"
-#include"../../gl_include.h"
 
 // Forward declerations
 namespace sudo {

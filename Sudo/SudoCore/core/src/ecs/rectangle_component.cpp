@@ -1,8 +1,10 @@
 #include"rectangle_component.h"
 
-#include"../../sudo.h"
 #include"../../gl_include.h"
 #include"../../definitions.h"
+
+#include"transform_component.h"
+#include"entity.h"
 
 namespace sudo { namespace ecs {
 

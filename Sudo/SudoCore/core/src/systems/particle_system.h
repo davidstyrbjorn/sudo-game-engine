@@ -2,7 +2,6 @@
 
 #include"sudo_system.h"
 #include<array>
-#include<vector>
 #include"../../definitions.h"
 
 #include"../utility/timer.h"

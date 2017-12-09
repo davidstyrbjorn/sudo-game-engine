@@ -5,9 +5,7 @@
 
 // Forward decleration
 namespace sudo { namespace ecs {
-
 		class Entity;
-
 } }
 
 namespace sudo { namespace sudo_system {

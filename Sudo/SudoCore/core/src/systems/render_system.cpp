@@ -1,6 +1,14 @@
 #include "render_system.h"
-#include"../../sudo.h"
 #include"../../gl_include.h"
+
+#include"../math/mat4.h"
+
+#include"../graphics/shader.h"
+#include"../graphics/renderable2d.h"
+
+#include"../ecs/transform_component.h"
+
+#include"settings_system.h"
 
 namespace sudo { namespace sudo_system {
 

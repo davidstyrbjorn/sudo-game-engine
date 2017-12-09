@@ -1,7 +1,5 @@
 #pragma once
 
-#include"math\vector2.h"
-#include"math\vector3.h"
 #include"utility\timer.h"
 
 namespace sudo {
@@ -21,10 +19,13 @@ namespace sudo {
 		class ParticleSystem;
 		class TextSystem;
 	}
+	namespace math {
+		class Vector2;
+		class Vector3;
+	}
 	class SudoClass;
 	class CoreSettings;
-	
-	
+
 	class SudoCore {
 	private:
 		/* ======================================================================= */
@@ -64,11 +65,10 @@ namespace sudo {
 		graphics::Window &GetWindow();
 
 		/* takes in all required data and instances the engine */
-		void init(const math::Vector2& a_windowSize, char* a_windowCaption, SudoClass *a_engineInstance);
+		void init(math::Vector2 a_windowSize, char* a_windowCaption, SudoClass *a_engineInstance);
 
 		/* Default Constructor */
-		SudoCore(
-		);
+		SudoCore();
 	};
 
 }

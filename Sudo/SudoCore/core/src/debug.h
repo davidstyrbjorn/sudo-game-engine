@@ -23,7 +23,6 @@ namespace sudo {
 
 		/* Prints the error message to the console */
 		void printMessage(const char* a_message, LogType a_type = LogType::Debug);
-		void printMessage(utility::SudoString a_message, LogType a_type = LogType::Debug);
 
 	private:
 		DEBUG() { }
