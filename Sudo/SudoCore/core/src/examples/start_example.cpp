@@ -33,7 +33,7 @@ public:
 void MyGame::Start() 
 {
 	// Create the player entity
-	player = new Entity("player");
+	player = new Entity();
 	player->AddComponent(new RectangleComponent(Vector2(100, 100), Color(255, 255, 0, 255)));
 }
 

@@ -15,7 +15,7 @@ namespace sudo { namespace ecs {
 		m_components.clear();
 	}
 
-	Entity::Entity(char* a_name) : m_name(a_name) 
+	Entity::Entity()
 	{
 		/* Adding the entity to the WorldSystem list */
 		sudo_system::WorldSystem *world = sudo_system::WorldSystem::Instance();
@@ -54,7 +54,7 @@ namespace sudo { namespace ecs {
 		}
 	}
 
-	Component* Entity::AddComponent(Component *a_component) 
+	Component* Entity::AddComponent(Component *a_component)
 	{
 		/* Set the components entity holder */
 		a_component->SetEntityHolder(this);
@@ -64,16 +64,6 @@ namespace sudo { namespace ecs {
 
 		/* Return the created component for the user to possibly store */
 		return a_component;
-	}
-
-	void Entity::SetName(char* a_name)
-	{
-		m_name = a_name;
-	}
-
-	char* Entity::GetName() 
-	{
-		return m_name;
 	}
 	
 } }

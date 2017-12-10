@@ -12,14 +12,13 @@ namespace sudo { namespace ecs {
 	class Entity {
 	private:
 		std::vector<Component*> m_components;  
-		char* m_name;
 
 	public:
 		Transform *transform;
 
 	public:
 		/* Entity Constructor */
-		Entity(char* a_name);
+		Entity();
 
 		/* Entity Destructor */
 		~Entity();
@@ -53,12 +52,6 @@ namespace sudo { namespace ecs {
 
 		/* Getter for this->components */
 		const std::vector<Component*> GetComponentList() { return m_components; }
-
-		/* Sets m_name */
-		void SetName(char* a_name);
-
-		/* Returns m_name */
-		char* GetName();
 	};
 	
 } }

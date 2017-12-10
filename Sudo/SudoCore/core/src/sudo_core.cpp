@@ -62,6 +62,8 @@ void SudoCore::init(const math::Vector2 a_windowSize, char* a_windowCaption, Sud
 
 	/* ========================================= */
 
+	m_textSystem->Start();
+
 	/* User-end stuff, important we call this last after all the init stuff is done! */
 	/* Call the Start method for the end-user */
 	m_engineInstance->Start();
@@ -70,7 +72,6 @@ void SudoCore::init(const math::Vector2 a_windowSize, char* a_windowCaption, Sud
 	m_worldSystem->Start();
 	m_batchRenderer->Start();
 	m_particleSystem->Start();
-	m_textSystem->Start();
 
 	/* Start the game_loop; This means Start gets called before any Update calls */
 	game_loop();
@@ -99,6 +100,9 @@ void SudoCore::game_loop()
 {
 	timer = new utility::Timer();
 	timer->Start();
+
+	fixedUpdateTimer = new utility::Timer();
+	fixedUpdateTimer->Start();
 
 	deltaTimer = new utility::Timer();
 	deltaTimer->Start();
@@ -135,9 +139,10 @@ void SudoCore::game_loop()
 		// Call the Update method for the end-user 
 		if(_deltaTime == 0) m_engineInstance->Update(1.0f);
 		else				m_engineInstance->Update(_deltaTime);
-		if (timer->GetTicks() >= FIXED_UPDATE_MS) {
+		// Check if we've stepped over the timestep for triggering the fixed update
+		if (fixedUpdateTimer->GetTicks() >= FIXED_UPDATE_MS) {
 			m_engineInstance->FixedUpdate();
-			timer->Reset();
+			fixedUpdateTimer->Reset();
 		}
 
 		// Update the WorldSystem holding all game entities 

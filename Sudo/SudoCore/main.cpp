@@ -28,32 +28,27 @@ public:
 			sudo_system::ParticleConfiguration config = sudo_system::ParticleConfiguration();
 			config.DoFade = true;
 			config.GravitySimulated = true;
-			config.GravityScale = -0.001f * sin(deltaTime);
+			config.GravityScale = 0.001f;
 
 			particleSystem->Submit(shape->transform->position,
 				math::Vector2(3, 3),
 				math::Color(utility::SudoRandomNumber::GetRandomInteger(0,255), utility::SudoRandomNumber::GetRandomInteger(0, 255), utility::SudoRandomNumber::GetRandomInteger(0, 255), 255),
 				1000,
-				math::Vector2(utility::SudoRandomNumber::GetRandomFloatingPoint(-0.5f, 0.5f), utility::SudoRandomNumber::GetRandomFloatingPoint(-0.5f, 0.5f)),
+				math::Vector2(utility::SudoRandomNumber::GetRandomFloatingPoint(-0.5f, 0.5f)+0.1f, utility::SudoRandomNumber::GetRandomFloatingPoint(-0.5f, 0.5f)+0.1f),
 				config
 			);
 		}
-
-		if (input->GetKey("d"))
-			shape->transform->Move(math::Vector3::Right() * 0.25f * deltaTime);
-		if (input->GetKey("a"))
-			shape->transform->Move(math::Vector3::Left() * 0.25f * deltaTime);
-		if (input->GetKey("s"))
-			shape->transform->Move(math::Vector3::Down() * 0.25f * deltaTime);
-		if (input->GetKey("w"))
-			shape->transform->Move(math::Vector3::Up() * 0.25f * deltaTime);
 	}	
 
 	void Start() override
 	{
-		shape = new ecs::Entity("shape");
+		shape = new ecs::Entity();
 		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(10, 10), math::Color(255, 100, 10, 255)));
 		shape->transform->position = math::Vector3(400, 300, 0);
+		shape->AddComponent(new ecs::FourWayMoveComponent(math::Vector2(0.3f, 0.3f), "up", "down", "right", "left"));
+
+		textRenderer->LoadFont("C:\\Windows\\Fonts\\arial.ttf", 1);
+		textRenderer->SetFont(1);
 
 		//config->SetFPS(60);
 		config->SetBackgroundColor(math::Vector4(0.05f, 0.0f, 0.05f, 1));
@@ -66,7 +61,7 @@ public:
 	}
 };
 
-int madawin() {
+int main() {
 	App* app = new App();
 
 	return 0;

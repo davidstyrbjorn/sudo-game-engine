@@ -1,6 +1,9 @@
 #pragma once
 
-#include"utility\timer.h"
+namespace sudo {
+	namespace utility {
+		class Timer;
+} }
 
 namespace sudo {
 
@@ -43,7 +46,7 @@ namespace sudo {
 		sudo_system::ParticleSystem		*m_particleSystem;
 		sudo_system::TextSystem			*m_textSystem;
 
-		utility::Timer *timer, *deltaTimer;
+		utility::Timer *timer, *deltaTimer, *fixedUpdateTimer;
 #if PRINT_FPS
 		utility::Timer *realTimer;
 #endif

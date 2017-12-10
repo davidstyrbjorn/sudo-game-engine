@@ -1,5 +1,5 @@
 #include"core\sudo.h"
-
+#include<gl\GLU.h>
 using namespace sudo;
 
 class Game : SudoClass {

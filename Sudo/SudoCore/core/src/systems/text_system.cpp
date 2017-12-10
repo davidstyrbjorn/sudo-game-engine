@@ -11,7 +11,64 @@
 
 #include"../graphics/shader.h"
 
+#if defined(_WIN32)
+
+#endif
+#if defined(_APPLE_) && defined(_MACH_)
+	#define DEFAULT_FONT_PATH "/Library/Fonts/arial.ttf"
+#endif
+
 namespace sudo { namespace sudo_system { 
+
+	struct Font {
+		FT_Face m_face;
+		std::map<char, graphics::GlyphCharacter> m_characters;
+
+		Font(const char* a_path, FT_Library *a_ftLib) 
+		{
+			if (FT_Init_FreeType(a_ftLib)) {
+				DEBUG::getInstance()->printMessage("Failed to init FreeType library", LogType::Error);
+			}
+
+			if (FT_New_Face(*a_ftLib, a_path, 0, &m_face)) {
+				DEBUG::getInstance()->printMessage("Failed to init FreeType face", LogType::Error);
+			}
+
+			FT_Set_Pixel_Sizes(m_face, 0, 48);
+
+			// Fill the m_character map
+			for (GLubyte c = 0; c < 128; c++) {
+				// Load the charcter glyph
+				if (FT_Load_Char(m_face, c, FT_LOAD_RENDER)) {
+					DEBUG::getInstance()->printMessage("Failed to load FreeType character glyph", LogType::Error);
+					continue;
+				}
+
+				// Generate texture
+				GLuint texture;
+				glGenTextures(1, &texture);
+				glBindTexture(GL_TEXTURE_2D, texture);
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, m_face->glyph->bitmap.width, m_face->glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, m_face->glyph->bitmap.buffer);
+				// Set texture options
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+				// Create the glyph struct and store it
+				graphics::GlyphCharacter character = {
+					texture,
+					math::Vector2(m_face->glyph->bitmap.width, m_face->glyph->bitmap.rows),
+					math::Vector2(m_face->glyph->bitmap_left, m_face->glyph->bitmap_top),
+					m_face->glyph->advance.x
+				};
+				m_characters.insert(std::pair<char, graphics::GlyphCharacter>(c, character));
+			}
+
+			FT_Done_Face(m_face);
+			FT_Done_FreeType(*a_ftLib);
+		}
+	};
 
 	TextSystem * TextSystem::_instance = nullptr;
 
@@ -81,6 +138,19 @@ namespace sudo { namespace sudo_system {
 		m_textToRender.push_back(graphics::TextLabel(a_string, a_position.x, a_position.y, a_color.r/255, a_color.g/255, a_color.b/255));
 	}
 
+	void TextSystem::LoadFont(const char * a_path, int a_index)
+	{
+		m_fonts.insert(std::pair<int, Font*>(1, new Font(a_path, &m_ftLib)));
+	}
+
+	void TextSystem::SetFont(int a_index)
+	{
+		if (FT_Init_FreeType(&m_ftLib)) {
+			DEBUG::getInstance()->printMessage("Failed to init FreeType library", LogType::Error);
+		}
+		//FT_Set_Pixel_Sizes(m_fonts.at(1)->m_face, 0, 90);
+	}
+
 	void TextSystem::Update() 
 	{
 
@@ -95,12 +165,13 @@ namespace sudo { namespace sudo_system {
 		if (FT_Init_FreeType(&m_ftLib)) {
 			DEBUG::getInstance()->printMessage("Failed to init FreeType library", LogType::Error);
 		}
-		if (FT_New_Face(m_ftLib, "C:\\Windows\\Fonts\\arial.ttf", 0, &m_ftFace)) {
+
+		if (FT_New_Face(m_ftLib, "C:\\Windows\\Fonts\\comicbd.ttf", 0, &m_ftFace)) {
 			DEBUG::getInstance()->printMessage("Failed to init FreeType face", LogType::Error);
 		}
 
 		// 0 width will set the width dynamic
-		FT_Set_Pixel_Sizes(m_ftFace, 0, 48);
+		FT_Set_Pixel_Sizes(m_ftFace, 0, 90);
 
 		if (FT_Load_Char(m_ftFace, 'X', FT_LOAD_RENDER)) {
 			DEBUG::getInstance()->printMessage("Failed to create FreeType charcter glyph", LogType::Error);
@@ -109,7 +180,7 @@ namespace sudo { namespace sudo_system {
 		// Disables byte sized alignment restriction
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-		// Fill the m_character vector 
+		// Fill the m_character map
 		for (GLubyte c = 0; c < 128; c++) {
 			// Load the charcter glyph
 			if (FT_Load_Char(m_ftFace, c, FT_LOAD_RENDER)) {

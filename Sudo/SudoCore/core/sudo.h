@@ -15,6 +15,7 @@
 #include"src\ecs\triangle_component.h"
 #include"src\ecs\sprite_component.h"
 #include"src\ecs\sound_component.h"
+#include"src\ecs\four_way_move_component.h"
 
 #include"src\ecs\box_collider2D.h"
 #include"src\ecs\component.h"
@@ -55,8 +56,8 @@
 namespace sudo {
 
 #define SUDO_FINAL_VERSION 0
-#define SUDO_MAJOR_VERSION 5
-#define SUDO_MINOR_VERSION 2
+#define SUDO_MAJOR_VERSION 8
+#define SUDO_MINOR_VERSION 0
 
 static std::string GetSudoVersion() {	
 	return "[Sudo Game Engine] \nVersion: " + std::to_string(SUDO_FINAL_VERSION) + "." + std::to_string(SUDO_MAJOR_VERSION) + "." + std::to_string(SUDO_MINOR_VERSION) + "!"; }

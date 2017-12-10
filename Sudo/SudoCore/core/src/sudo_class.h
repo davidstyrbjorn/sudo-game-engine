@@ -33,6 +33,8 @@ namespace sudo {
 		/* Gets called on a fixed time pattern */
 		virtual void FixedUpdate() { } 
 
+		virtual void LateUpdate(float deltaTime) { }
+
 		/* Gets called when application ends, after the engine is done un-initilazing */
 		virtual void OnApplicationQuit() { }
 
