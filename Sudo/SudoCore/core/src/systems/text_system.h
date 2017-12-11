@@ -19,12 +19,11 @@ namespace sudo {
 	}
 	namespace graphics {
 		class Shader;
+		class Font;
 	}
 }
 
 namespace sudo { namespace sudo_system { 
-
-	class Font;
 
 	class TextSystem : SudoSystem {
 	private:
@@ -49,20 +48,21 @@ namespace sudo { namespace sudo_system {
 
 		// Method called by user 
 		void DrawText(std::string a_string, math::Vector2 a_position, math::Color a_color);
-		void LoadFont(const char* a_path, int a_index);
-		void SetFont(int a_index);	
+		void LoadFont(const char* a_path, const char* a_fontName);
+		void SetFont(const char* a_name);	
 	
 	private:
 		std::map<char, graphics::GlyphCharacter> m_characters;
 		std::vector<graphics::TextLabel> m_textToRender;
 		graphics::Shader *m_shader;
+		char* m_currentFont;
 
 		unsigned int VAO, VBO;
 
 		// FreeType members
 		FT_Library m_ftLib;
-		FT_Face m_ftFace;
-		std::map<int, Font*> m_fonts;
+		//FT_Face m_ftFace;
+		std::map<const char*, graphics::Font*> m_fonts;
 	};
 
 } } 

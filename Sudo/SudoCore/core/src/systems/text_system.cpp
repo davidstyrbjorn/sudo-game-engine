@@ -10,7 +10,9 @@
 #include"../debug.h"
 
 #include"../graphics/shader.h"
+#include"../graphics/font.h"
 
+// @ TODO (Default font path)
 #if defined(_WIN32)
 
 #endif
@@ -19,56 +21,6 @@
 #endif
 
 namespace sudo { namespace sudo_system { 
-
-	struct Font {
-		FT_Face m_face;
-		std::map<char, graphics::GlyphCharacter> m_characters;
-
-		Font(const char* a_path, FT_Library *a_ftLib) 
-		{
-			if (FT_Init_FreeType(a_ftLib)) {
-				DEBUG::getInstance()->printMessage("Failed to init FreeType library", LogType::Error);
-			}
-
-			if (FT_New_Face(*a_ftLib, a_path, 0, &m_face)) {
-				DEBUG::getInstance()->printMessage("Failed to init FreeType face", LogType::Error);
-			}
-
-			FT_Set_Pixel_Sizes(m_face, 0, 48);
-
-			// Fill the m_character map
-			for (GLubyte c = 0; c < 128; c++) {
-				// Load the charcter glyph
-				if (FT_Load_Char(m_face, c, FT_LOAD_RENDER)) {
-					DEBUG::getInstance()->printMessage("Failed to load FreeType character glyph", LogType::Error);
-					continue;
-				}
-
-				// Generate texture
-				GLuint texture;
-				glGenTextures(1, &texture);
-				glBindTexture(GL_TEXTURE_2D, texture);
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, m_face->glyph->bitmap.width, m_face->glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, m_face->glyph->bitmap.buffer);
-				// Set texture options
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-				// Create the glyph struct and store it
-				graphics::GlyphCharacter character = {
-					texture,
-					math::Vector2(m_face->glyph->bitmap.width, m_face->glyph->bitmap.rows),
-					math::Vector2(m_face->glyph->bitmap_left, m_face->glyph->bitmap_top),
-					m_face->glyph->advance.x
-				};
-				m_characters.insert(std::pair<char, graphics::GlyphCharacter>(c, character));
-			}
-
-			FT_Done_Face(m_face);
-			FT_Done_FreeType(*a_ftLib);
-		}
-	};
 
 	TextSystem * TextSystem::_instance = nullptr;
 
@@ -96,8 +48,9 @@ namespace sudo { namespace sudo_system {
 
 			// Iterate through all characters 
 			std::string::const_iterator c;
-			for (c = temp.m_textLiteral.begin(); c != temp.m_textLiteral.end(); c++) {
-				graphics::GlyphCharacter ch = m_characters[*c];
+			for (c = temp.m_textLiteral.begin(); c != temp.m_textLiteral.end(); c++) 
+			{
+				graphics::GlyphCharacter ch = m_fonts.at(m_currentFont)->m_characters[*c];
 
 				float xpos = temp.x + ch.m_bearings.x;
 				float ypos = temp.y - (ch.m_size.y - ch.m_bearings.y);
@@ -138,22 +91,16 @@ namespace sudo { namespace sudo_system {
 		m_textToRender.push_back(graphics::TextLabel(a_string, a_position.x, a_position.y, a_color.r/255, a_color.g/255, a_color.b/255));
 	}
 
-	void TextSystem::LoadFont(const char * a_path, int a_index)
+	void TextSystem::LoadFont(const char * a_path, const char* a_fontName)
 	{
-		m_fonts.insert(std::pair<int, Font*>(1, new Font(a_path, &m_ftLib)));
+		// Insert new font with a_fontName
+		m_fonts.insert(std::pair<const char*, graphics::Font*>(a_fontName, new graphics::Font(a_path)));
 	}
 
-	void TextSystem::SetFont(int a_index)
+	void TextSystem::SetFont(const char* a_name)
 	{
-		if (FT_Init_FreeType(&m_ftLib)) {
-			DEBUG::getInstance()->printMessage("Failed to init FreeType library", LogType::Error);
-		}
-		//FT_Set_Pixel_Sizes(m_fonts.at(1)->m_face, 0, 90);
-	}
-
-	void TextSystem::Update() 
-	{
-
+		// Set the local variable so we know what font to use when we render
+		m_currentFont = (char*)a_name;
 	}
 
 	void TextSystem::Start()
@@ -161,63 +108,17 @@ namespace sudo { namespace sudo_system {
 		glewInit();
 		glewExperimental = true;
 
-		// Initalize everything
-		if (FT_Init_FreeType(&m_ftLib)) {
-			DEBUG::getInstance()->printMessage("Failed to init FreeType library", LogType::Error);
-		}
+		// Create default font
+		m_fonts.insert(std::pair<const char*, graphics::Font*>("default", new graphics::Font("C:\\Windows\\Fonts\\arial.ttf")));
+		m_currentFont = "default";
 
-		if (FT_New_Face(m_ftLib, "C:\\Windows\\Fonts\\comicbd.ttf", 0, &m_ftFace)) {
-			DEBUG::getInstance()->printMessage("Failed to init FreeType face", LogType::Error);
-		}
-
-		// 0 width will set the width dynamic
-		FT_Set_Pixel_Sizes(m_ftFace, 0, 90);
-
-		if (FT_Load_Char(m_ftFace, 'X', FT_LOAD_RENDER)) {
-			DEBUG::getInstance()->printMessage("Failed to create FreeType charcter glyph", LogType::Error);
-		}
-
-		// Disables byte sized alignment restriction
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-		// Fill the m_character map
-		for (GLubyte c = 0; c < 128; c++) {
-			// Load the charcter glyph
-			if (FT_Load_Char(m_ftFace, c, FT_LOAD_RENDER)) {
-				DEBUG::getInstance()->printMessage("Failed to load FreeType character glyph", LogType::Error);
-				continue;
-			}
-
-			// Generate texture
-			GLuint texture;
-			glGenTextures(1, &texture);
-			glBindTexture(GL_TEXTURE_2D, texture);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, m_ftFace->glyph->bitmap.width, m_ftFace->glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, m_ftFace->glyph->bitmap.buffer);
-			// Set texture options
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-			// Create the glyph struct and store it
-			graphics::GlyphCharacter character = {
-				texture,
-				math::Vector2(m_ftFace->glyph->bitmap.width, m_ftFace->glyph->bitmap.rows),
-				math::Vector2(m_ftFace->glyph->bitmap_left, m_ftFace->glyph->bitmap_top),
-				m_ftFace->glyph->advance.x
-			};
-			m_characters.insert(std::pair<char, graphics::GlyphCharacter>(c, character));
-		}
-
-		FT_Done_Face(m_ftFace);
-		FT_Done_FreeType(m_ftLib);
-
+		// Start OpenGL setup
 		// Enable OpenGL blending
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		// Construct the shader
-		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\font_shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\font_shader_fragment.txt");
+		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\font_shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\font_shader_fragment.txt");
 		m_shader->enable();
 		m_shader->setUniformMatrix4x4("projection", math::Matrix4x4::Orthographic(0, 800, 0, 600, -1, 1));
 
@@ -236,14 +137,13 @@ namespace sudo { namespace sudo_system {
 		glBindVertexArray(0);
 	}
 
-	void TextSystem::Enable() { }
-
-	void TextSystem::Disable() { }
-
 	void TextSystem::CleanUp()
 	{
 		glDeleteVertexArrays(1, &VAO);
 		glDeleteBuffers(1, &VBO);
 	}
 
+	void TextSystem::Update() { }
+	void TextSystem::Enable() { }
+	void TextSystem::Disable() { }
 } } 

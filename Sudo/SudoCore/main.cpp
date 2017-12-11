@@ -21,7 +21,7 @@ public:
 
 	void Update(float deltaTime) override
 	{
-		textRenderer->DrawText("Viktor.net", math::Vector2(0, 0), math::Color(200, 20, 160));
+		textRenderer->DrawText("Viktor.net", math::Vector2(shape->transform->position.x, 0), math::Color(200, 20, 160));
 		renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
 	
 		if (input->GetKey("space")) {
@@ -38,6 +38,12 @@ public:
 				config
 			);
 		}
+
+		// Font test
+		if (input->GetKey("f")) 
+		{
+			textRenderer->SetFont("CAPITAL HILL FONT PLEASE");
+		}
 	}	
 
 	void Start() override
@@ -47,12 +53,11 @@ public:
 		shape->transform->position = math::Vector3(400, 300, 0);
 		shape->AddComponent(new ecs::FourWayMoveComponent(math::Vector2(0.3f, 0.3f), "up", "down", "right", "left"));
 
-		//textRenderer->LoadFont("C:\\Windows\\Fonts\\arial.ttf", 1);
-		//textRenderer->SetFont(1);
+		textRenderer->LoadFont("C:\\Windows\\Fonts\\comic.ttf", "CAPITAL HILL FONT PLEASE");
 
 		//config->SetFPS(60);
 		config->SetBackgroundColor(math::Vector4(0.05f, 0.0f, 0.05f, 1));
-	}
+	} 
 
 	void OnApplicationQuit() override 
 	{

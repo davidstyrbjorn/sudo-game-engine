@@ -26,13 +26,13 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -143,6 +143,7 @@
     <ClCompile Include="core\src\graphics\buffers\index_buffer.cpp" />
     <ClCompile Include="core\src\graphics\buffers\vertex_array_buffer.cpp" />
     <ClCompile Include="core\src\graphics\buffers\vertex_buffer.cpp" />
+    <ClCompile Include="core\src\graphics\font.cpp" />
     <ClCompile Include="core\src\graphics\renderable2d.cpp" />
     <ClCompile Include="core\src\graphics\texture.cpp" />
     <ClCompile Include="core\src\math\color.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="core\src\graphics\buffers\index_buffer.h" />
     <ClInclude Include="core\src\graphics\buffers\vertex_array_buffer.h" />
     <ClInclude Include="core\src\graphics\buffers\vertex_buffer.h" />
+    <ClInclude Include="core\src\graphics\font.h" />
     <ClInclude Include="core\src\graphics\particle.h" />
     <ClInclude Include="core\src\graphics\renderable2d.h" />
     <ClInclude Include="core\src\graphics\texture.h" />
