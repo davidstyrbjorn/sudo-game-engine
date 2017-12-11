@@ -47,8 +47,8 @@ public:
 		shape->transform->position = math::Vector3(400, 300, 0);
 		shape->AddComponent(new ecs::FourWayMoveComponent(math::Vector2(0.3f, 0.3f), "up", "down", "right", "left"));
 
-		textRenderer->LoadFont("C:\\Windows\\Fonts\\arial.ttf", 1);
-		textRenderer->SetFont(1);
+		//textRenderer->LoadFont("C:\\Windows\\Fonts\\arial.ttf", 1);
+		//textRenderer->SetFont(1);
 
 		//config->SetFPS(60);
 		config->SetBackgroundColor(math::Vector4(0.05f, 0.0f, 0.05f, 1));
