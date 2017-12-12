@@ -49,8 +49,7 @@ namespace sudo { namespace sudo_system {
 		// Method called by user 
 		void DrawText(std::string a_string, math::Vector2 a_position, math::Color a_color);
 		void LoadFont(const char* a_path, const char* a_fontName, const int a_size);
-		void SetFont(const char* a_name);	
-		graphics::Font* GetCurrentFont();
+		void SetFont(const char* a_name, const int a_size = -1);	
 	
 	private:
 		std::map<char, graphics::GlyphCharacter> m_characters;
@@ -60,9 +59,6 @@ namespace sudo { namespace sudo_system {
 
 		unsigned int VAO, VBO;
 
-		// FreeType members
-		FT_Library m_ftLib;
-		//FT_Face m_ftFace;
 		std::map<const char*, graphics::Font*> m_fonts;
 	};
 

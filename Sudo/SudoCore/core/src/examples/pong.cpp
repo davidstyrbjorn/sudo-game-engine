@@ -62,8 +62,6 @@ private:
 	int leftScore = 0, rightScore = 0;
 	utility::Timer gameClock;
 
-	sudo_system::ParticleSystem *particleSystem = sudo_system::ParticleSystem::Instance();
-
 public:
 	Game()
 	{
@@ -108,6 +106,9 @@ public:
 		ball_x_change = BALL_SPEED;
 		ball_y_change = BALL_SPEED;
 
+		textRenderer->LoadFont("C:\\Windows\\Fonts\\comic.ttf", "comicsans", 34);
+		textRenderer->SetFont("comicsans");
+
 		config->SetFPS(60);
 	}
 
@@ -141,7 +142,7 @@ public:
 			renderer->Submit(ballEntity->GetComponent<ecs::SpriteComponent>());
 
 			// Draw text
-			textRenderer->DrawText(std::to_string(leftScore) + " - " + std::to_string(rightScore), math::Vector2(350, 550), math::Color(255,255,255,255));
+			textRenderer->DrawText(std::to_string(leftScore) + " - " + std::to_string(rightScore), math::Vector2(350, 550), math::Color(57, 171, 233, 255));
 		}
 	}
 
@@ -263,7 +264,7 @@ public:
 	}
 };
 
-int mdawadwain()
+int madawdawin()
 {
 	Game *g = new Game();
 

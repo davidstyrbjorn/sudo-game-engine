@@ -11,7 +11,6 @@ private:
 	SudoCore coreEngine;
 
 	ecs::Entity *shape, *shape2;
-	graphics::Texture *texture1, *texture2;
 
 public:
 	App() 
@@ -21,8 +20,9 @@ public:
 
 	void Update(float deltaTime) override
 	{
-		textRenderer->DrawText("Viktor.net", math::Vector2(shape->transform->position.x, 0), math::Color(200, 20, 160));
+		textRenderer->DrawText("Viktor.net", math::Vector2(shape->transform->position.x, 0), math::Color(57, 171, 233));
 		renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
+		renderer->Submit(shape2->GetComponent<ecs::SpriteComponent>());
 	
 		if (input->GetKey("space")) {
 			sudo_system::ParticleConfiguration config = sudo_system::ParticleConfiguration();
@@ -42,13 +42,18 @@ public:
 		// Font test
 		if (input->GetKey("f")) 
 		{
-			textRenderer->SetFont("CAPITAL HILL FONT PLEASE");
+			textRenderer->SetFont("CAPITAL HILL FONT PLEASE", 50);
 		}
 		if (input->GetKey("d"))
 		{
-			textRenderer->SetFont("default");
+			textRenderer->SetFont("default", 20);
 		}
 	}	
+
+	void FixedUpdate() override
+	{
+		shape2->transform->angle += 0.01f;
+	}
 
 	void Start() override
 	{
@@ -57,20 +62,17 @@ public:
 		shape->transform->position = math::Vector3(400, 300, 0);
 		shape->AddComponent(new ecs::FourWayMoveComponent(math::Vector2(0.3f, 0.3f), "up", "down", "right", "left"));
 
-		textRenderer->LoadFont("C:\\Windows\\Fonts\\MATURASC.ttf", "CAPITAL HILL FONT PLEASE", 30);
+		shape2 = new ecs::Entity();
+		shape2->AddComponent(new ecs::SpriteComponent("D:\\temp\\cat.png"));
+
+		textRenderer->LoadFont("C:\\Windows\\Fonts\\comic.ttf", "CAPITAL HILL FONT PLEASE", 50);
 
 		//config->SetFPS(60);
-		config->SetBackgroundColor(math::Vector4(0.05f, 0.0f, 0.05f, 1));
+		config->SetBackgroundColor(math::Color(0.05f*255, 0.0f, 0.05f*255, 1));
 	} 
-
-	void OnApplicationQuit() override 
-	{
-		delete texture1;
-		delete texture2;
-	}
 };
 
-int main() {
+int maidwdwn() {
 	App* app = new App();
 
 	return 0;

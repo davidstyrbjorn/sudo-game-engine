@@ -38,7 +38,7 @@ void SudoCore::init(const math::Vector2 a_windowSize, char* a_windowCaption, Sud
 	m_settingsSystem->Enable();
 	m_settingsSystem->SetFPS(DEFAULT_FPS_CAP);
 	m_settingsSystem->SetWindowSize((math::Vector2&)a_windowSize);
-	m_settingsSystem->SetBackgroundColor(math::Vector4(0, 0, 0, 1));
+	m_settingsSystem->SetBackgroundColor(math::Color(0, 0, 0, 255));
 
 	/* Input system */
 	m_inputSystem = sudo_system::InputSystem::Instance();
@@ -79,6 +79,9 @@ void SudoCore::init(const math::Vector2 a_windowSize, char* a_windowCaption, Sud
 
 void SudoCore::clean_up()
 {
+	/* Call it the instant the window is closed */
+	m_engineInstance->OnWindowClose();
+
 	/* This destroys  everything related to the GLFW library */
 	glfwTerminate();
 
@@ -93,7 +96,8 @@ void SudoCore::clean_up()
 
 	delete m_window;
 
-	m_engineInstance->OnApplicationQuit();
+	/* After this point everything should be clear */
+	m_engineInstance->OnApplicationClose();
 }
 
 void SudoCore::game_loop()
@@ -136,9 +140,9 @@ void SudoCore::game_loop()
 		m_batchRenderer->Begin();
 		m_particleSystem->Begin();
 
-		// Call the Update method for the end-user 
-		if(_deltaTime == 0) m_engineInstance->Update(1.0f);
-		else				m_engineInstance->Update(_deltaTime);
+		// Call the user-end Update methods
+		m_engineInstance->Update(_deltaTime);
+		m_engineInstance->LateUpdate(_deltaTime);
 		// Check if we've stepped over the timestep for triggering the fixed update
 		if (fixedUpdateTimer->GetTicks() >= FIXED_UPDATE_MS) {
 			m_engineInstance->FixedUpdate();

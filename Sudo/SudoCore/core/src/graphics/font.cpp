@@ -14,14 +14,11 @@ namespace sudo { namespace graphics {
 		glewInit();
 		glewExperimental = true;
 
-		if (FT_Init_FreeType(&m_lib)) {
-			DEBUG::getInstance()->printMessage("Failed to init FreeType library", LogType::Error);
-		}
+		// Init lib and face
+		if (FT_Init_FreeType(&m_lib)) DEBUG::getInstance()->printMessage("Failed to init FreeType library", LogType::Error);
+		if (FT_New_Face(m_lib, a_path, 0, &m_face)) DEBUG::getInstance()->printMessage("Failed to init FreeType face", LogType::Error);
 
-		if (FT_New_Face(m_lib, a_path, 0, &m_face)) {
-			DEBUG::getInstance()->printMessage("Failed to init FreeType face", LogType::Error);
-		}
-
+		m_fontSize = a_size;
 		FT_Set_Pixel_Sizes(m_face, 0, a_size);
 
 		// Disables byte sized alignment restriction
@@ -31,7 +28,7 @@ namespace sudo { namespace graphics {
 		for (GLubyte c = 0; c < 128; c++) {
 			// Load the charcter glyph
 			if (FT_Load_Char(m_face, c, FT_LOAD_RENDER)) {
-				DEBUG::getInstance()->printMessage("Failejklöjklsdd to load FreeType character glyph", LogType::Error);
+				DEBUG::getInstance()->printMessage("Failed to load FreeType character glyph", LogType::Error);
 				continue;
 			}
 
@@ -55,12 +52,14 @@ namespace sudo { namespace graphics {
 			};
 			m_characters.insert(std::pair<char, graphics::GlyphCharacter>(c, character));
 		}
-
 	}
 
 	void Font::SetFontSize(const int a_size)
 	{
-		FT_Set_Pixel_Sizes(m_face, 0, a_size);
+		if (m_fontSize != a_size && a_size != -1) {
+			m_fontSize = a_size;
+			FT_Set_Pixel_Sizes(m_face, 0, a_size);
+		}	
+		return void();
 	}
-	
 }}

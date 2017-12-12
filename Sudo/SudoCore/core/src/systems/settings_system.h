@@ -4,6 +4,7 @@
 
 #include"../math/vector2.h"
 #include"../math/vector4.h"
+#include"../math/color.h"
 
 namespace sudo { namespace sudo_system {
 
@@ -38,14 +39,14 @@ namespace sudo { namespace sudo_system {
 		double GetMS() const;
 
 		/* Returns the current window background color */
-		const math::Vector4& GetBackgroundColor();
+		const math::Color& GetBackgroundColor();
 		#pragma endregion
 		#pragma region Setters
 		/* Sets m_windowSize to a new size */
 		void SetWindowSize(math::Vector2& a_newWindowSize);
 
 		/* Sets window background color */
-		void SetBackgroundColor(const math::Vector4& a_newBackgroundColor);
+		void SetBackgroundColor(const math::Color& a_newBackgroundColor);
 		void SetBackgroundColor(const double a_newBackgroundColor);
 
 		void SetWindowCaption(const char* a_newCaption);
@@ -57,7 +58,7 @@ namespace sudo { namespace sudo_system {
 	private:
 		/* Settings data */
 		math::Vector2 m_windowSize;
-		math::Vector4 m_backgroundColor;
+		math::Color m_backgroundColor;
 		unsigned int m_fps;
 		double m_msPerFrame;
 

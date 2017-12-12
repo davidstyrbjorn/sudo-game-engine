@@ -19,7 +19,7 @@ namespace sudo { namespace sudo_system {
 		return m_windowSize;
 	}
 
-	const math::Vector4& SettingsSystem::GetBackgroundColor()
+	const math::Color& SettingsSystem::GetBackgroundColor()
 	{
 		return m_backgroundColor;
 	}
@@ -49,14 +49,14 @@ namespace sudo { namespace sudo_system {
 		alListener3f(AL_POSITION, a_newWindowSize.x/2, a_newWindowSize.y/2, -1);
 	}
 
-	void SettingsSystem::SetBackgroundColor(const math::Vector4& a_newBackgroundColor)
+	void SettingsSystem::SetBackgroundColor(const math::Color& a_newBackgroundColor)
 	{
 		m_backgroundColor = a_newBackgroundColor;
 	}
 
 	void SettingsSystem::SetBackgroundColor(const double a_newBackgroundColor)
 	{
-		m_backgroundColor = math::Vector4(a_newBackgroundColor, a_newBackgroundColor,a_newBackgroundColor,1);
+		m_backgroundColor = math::Color(a_newBackgroundColor, a_newBackgroundColor,a_newBackgroundColor, 255);
 	}
 
 	void SettingsSystem::SetWindowCaption(const char* a_newCaption)

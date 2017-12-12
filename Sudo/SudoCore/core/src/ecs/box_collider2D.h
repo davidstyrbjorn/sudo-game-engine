@@ -1,7 +1,5 @@
 #pragma once
 
-#pragma once
-
 #include"../math/vector2.h"
 #include"component.h"
 

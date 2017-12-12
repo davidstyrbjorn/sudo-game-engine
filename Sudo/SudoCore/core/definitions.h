@@ -52,7 +52,7 @@ enum SudoBufferType {
 // Time macros
 #define TIME_API
 #define DEFAULT_FPS_CAP 60
-#define FIXED_UPDATE_MS 1000 / DEFAULT_FPS_CAP
+#define FIXED_UPDATE_MS 1000 / DEFAULT_FPS_CAP // ~0.16~
 
 // Particle macros
 #define PARTICLE_GRAVITY_Y 0.001f

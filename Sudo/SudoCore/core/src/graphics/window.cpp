@@ -43,7 +43,7 @@ void sudo::graphics::Window::clear()
 {
 	glfwPollEvents();
 
-	glClearColor(settings->GetBackgroundColor().x, settings->GetBackgroundColor().y, settings->GetBackgroundColor().z, settings->GetBackgroundColor().w);
+	glClearColor(settings->GetBackgroundColor().r/255, settings->GetBackgroundColor().g/255, settings->GetBackgroundColor().b/255, settings->GetBackgroundColor().a/255);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 

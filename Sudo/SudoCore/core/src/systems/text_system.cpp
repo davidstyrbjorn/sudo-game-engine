@@ -95,16 +95,14 @@ namespace sudo { namespace sudo_system {
 	{
 		// Insert new font with a_fontName
 		m_fonts.insert(std::pair<const char*, graphics::Font*>(a_fontName, new graphics::Font(a_path, a_size)));
-
 	}
 
-	void TextSystem::SetFont(const char* a_name)
+	void TextSystem::SetFont(const char* a_name, const int a_size)
 	{
 		// Set the local variable so we know what font to use when we render
 		m_currentFont = (char*)a_name;
+		m_fonts.at(a_name)->SetFontSize(a_size);
 	}
-
-
 
 	void TextSystem::Start()
 	{
@@ -121,7 +119,7 @@ namespace sudo { namespace sudo_system {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		// Construct the shader
-		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\font_shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\font_shader_fragment.txt");
+		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\font_shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\font_shader_fragment.txt");
 		m_shader->enable();
 		m_shader->setUniformMatrix4x4("projection", math::Matrix4x4::Orthographic(0, 800, 0, 600, -1, 1));
 

@@ -33,10 +33,14 @@ namespace sudo {
 		/* Gets called on a fixed time pattern */
 		virtual void FixedUpdate() { } 
 
+		/* Gets called after Update, no exceptions */
 		virtual void LateUpdate(float deltaTime) { }
 
-		/* Gets called when application ends, after the engine is done un-initilazing */
-		virtual void OnApplicationQuit() { }
+		/* Gets called the instant the OpenGL context window is closed */
+		virtual void OnWindowClose() { }
+
+		/* Gets called after the engine is done uninitializing */
+		virtual void OnApplicationClose() { }
 
 		/* Time between frames, is set by the engine game loop */
 		double deltaTime;
