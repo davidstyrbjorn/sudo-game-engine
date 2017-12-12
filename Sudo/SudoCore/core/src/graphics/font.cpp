@@ -8,7 +8,7 @@
 
 namespace sudo { namespace graphics {
 
-	Font::Font(const char * a_path)
+	Font::Font(const char * a_path, const int a_size)
 	{
 		// Glew
 		glewInit();
@@ -22,7 +22,7 @@ namespace sudo { namespace graphics {
 			DEBUG::getInstance()->printMessage("Failed to init FreeType face", LogType::Error);
 		}
 
-		FT_Set_Pixel_Sizes(m_face, 0, 48);
+		FT_Set_Pixel_Sizes(m_face, 0, a_size);
 
 		// Disables byte sized alignment restriction
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -56,6 +56,11 @@ namespace sudo { namespace graphics {
 			m_characters.insert(std::pair<char, graphics::GlyphCharacter>(c, character));
 		}
 
+	}
+
+	void Font::SetFontSize(const int a_size)
+	{
+		FT_Set_Pixel_Sizes(m_face, 0, a_size);
 	}
 	
 }}

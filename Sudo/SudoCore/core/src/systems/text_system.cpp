@@ -91,10 +91,11 @@ namespace sudo { namespace sudo_system {
 		m_textToRender.push_back(graphics::TextLabel(a_string, a_position.x, a_position.y, a_color.r/255, a_color.g/255, a_color.b/255));
 	}
 
-	void TextSystem::LoadFont(const char * a_path, const char* a_fontName)
+	void TextSystem::LoadFont(const char * a_path, const char* a_fontName, const int a_size)
 	{
 		// Insert new font with a_fontName
-		m_fonts.insert(std::pair<const char*, graphics::Font*>(a_fontName, new graphics::Font(a_path)));
+		m_fonts.insert(std::pair<const char*, graphics::Font*>(a_fontName, new graphics::Font(a_path, a_size)));
+
 	}
 
 	void TextSystem::SetFont(const char* a_name)
@@ -103,13 +104,15 @@ namespace sudo { namespace sudo_system {
 		m_currentFont = (char*)a_name;
 	}
 
+
+
 	void TextSystem::Start()
 	{
 		glewInit();
 		glewExperimental = true;
 
 		// Create default font
-		m_fonts.insert(std::pair<const char*, graphics::Font*>("default", new graphics::Font("C:\\Windows\\Fonts\\arial.ttf")));
+		m_fonts.insert(std::pair<const char*, graphics::Font*>("default", new graphics::Font("C:\\Windows\\Fonts\\arial.ttf", 24)));
 		m_currentFont = "default";
 
 		// Start OpenGL setup
@@ -118,7 +121,7 @@ namespace sudo { namespace sudo_system {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		// Construct the shader
-		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\font_shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\font_shader_fragment.txt");
+		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\font_shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\font_shader_fragment.txt");
 		m_shader->enable();
 		m_shader->setUniformMatrix4x4("projection", math::Matrix4x4::Orthographic(0, 800, 0, 600, -1, 1));
 

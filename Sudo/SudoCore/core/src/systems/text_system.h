@@ -48,8 +48,9 @@ namespace sudo { namespace sudo_system {
 
 		// Method called by user 
 		void DrawText(std::string a_string, math::Vector2 a_position, math::Color a_color);
-		void LoadFont(const char* a_path, const char* a_fontName);
+		void LoadFont(const char* a_path, const char* a_fontName, const int a_size);
 		void SetFont(const char* a_name);	
+		graphics::Font* GetCurrentFont();
 	
 	private:
 		std::map<char, graphics::GlyphCharacter> m_characters;
