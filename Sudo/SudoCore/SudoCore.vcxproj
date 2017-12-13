@@ -184,6 +184,7 @@
     <ClInclude Include="core\src\ecs\sprite_component.h" />
     <ClInclude Include="core\src\ecs\transform_component.h" />
     <ClInclude Include="core\src\ecs\triangle_component.h" />
+    <ClInclude Include="core\src\examples\asteroids_components.h" />
     <ClInclude Include="core\src\graphics\buffers\buffer.h" />
     <ClInclude Include="core\src\graphics\buffers\index_buffer.h" />
     <ClInclude Include="core\src\graphics\buffers\vertex_array_buffer.h" />

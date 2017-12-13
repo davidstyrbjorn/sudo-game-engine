@@ -22,8 +22,11 @@ namespace sudo { namespace ecs {
 		/* Updates the component behaviour */
 		virtual void Update(float deltaTime) = 0;
 
-		/* Starts, updates the necc behvaiours at start */
+		/* Gets called at start if m_entityHolder is active */
 		virtual void Start() = 0;
+
+		/* Gets called at start */
+		virtual void Awake() { } 
 
 		/* Sets the component state */
 		void SetComponentState(ComponentState a_newState) { m_componentState = a_newState; }

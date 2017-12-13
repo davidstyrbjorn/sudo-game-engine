@@ -2,6 +2,10 @@
 
 namespace sudo { namespace math { 
 	
+// One degree is equal 0.01745329252 radians
+#define SUDO_PI 3.14159265359
+#define DEG2RAD SUDO_PI/180 
+
 static void ClampFloat(float &a_value, const float &a_max, const float &a_min)
 {
 	if ( (a_value) > (a_max) )

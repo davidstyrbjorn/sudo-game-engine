@@ -2,7 +2,6 @@
 
 #include<vector>
 #include<type_traits>
-#include<string>
 
 namespace sudo { namespace ecs {
 
@@ -12,6 +11,8 @@ namespace sudo { namespace ecs {
 	class Entity {
 	private:
 		std::vector<Component*> m_components;  
+		bool m_isActive;
+		bool m_removeMe;
 
 	public:
 		Transform *transform;
@@ -28,6 +29,9 @@ namespace sudo { namespace ecs {
 
 		/* Calls start on all components inside m_components list */
 		void Start();
+
+		/* Same as start but gets called regardless of state */
+		void Awake();
 
 		/* Adds a_component to the components list */
 		Component* AddComponent(Component *a_component);
@@ -52,6 +56,14 @@ namespace sudo { namespace ecs {
 
 		/* Getter for this->components */
 		const std::vector<Component*> GetComponentList() { return m_components; }
+
+		/* State methods (m_isActive) */
+		__forceinline void Disable()   { m_isActive = false; }
+		__forceinline void Enable()	   { m_isActive = true;  }
+		__forceinline bool IsActive()  { return m_isActive; }
+
+		__forceinline void Destroy()   { m_removeMe = true; }
+		__forceinline bool DestroyMe() { return m_removeMe; }
 	};
 	
 } }

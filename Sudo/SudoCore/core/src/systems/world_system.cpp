@@ -36,7 +36,20 @@ namespace sudo { namespace sudo_system {
 	{
 		if (m_isActive) {
 			for (unsigned int i = 0; i < m_entityList.size(); i++) {
-				m_entityList[i]->Update(deltaTime);
+				if (m_entityList[i]->IsActive()) {
+					m_entityList[i]->Update(deltaTime);
+				}
+			}
+
+			std::vector<ecs::Entity*>::iterator it;
+			for (it = m_entityList.begin(); it != m_entityList.end(); ) {
+				if ((*it)->DestroyMe()) {
+					delete *it;
+					it = m_entityList.erase(it);
+				}
+				else {
+					++it;
+				}
 			}
 		}
 	}
@@ -45,7 +58,9 @@ namespace sudo { namespace sudo_system {
 	{
 		if (m_isActive) {
 			for (unsigned int i = 0; i < m_entityList.size(); i++) {
-				m_entityList[i]->Start();
+				if(m_entityList[i]->IsActive())
+					m_entityList[i]->Start();
+				m_entityList[i]->Awake();
 			}
 		}
 	}
@@ -54,4 +69,10 @@ namespace sudo { namespace sudo_system {
 	{
 		m_entityList.push_back(a_entityToAdd);
 	}
+
+	void WorldSystem::RemoveEntity(ecs::Entity * a_entityToRemove)
+	{
+		a_entityToRemove->Destroy();
+	}
+
 } }

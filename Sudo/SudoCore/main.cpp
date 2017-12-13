@@ -12,6 +12,8 @@ private:
 
 	ecs::Entity *shape, *shape2;
 
+	ecs::Entity *REMOVABLE_ENTITY;
+
 public:
 	App() 
 	{
@@ -22,7 +24,9 @@ public:
 	{
 		textRenderer->DrawText("Viktor.net", math::Vector2(shape->transform->position.x, 0), math::Color(57, 171, 233));
 		renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
-		renderer->Submit(shape2->GetComponent<ecs::SpriteComponent>());
+		if (!shape2->DestroyMe()) {
+			renderer->Submit(shape2->GetComponent<ecs::SpriteComponent>());
+		}
 	
 		if (input->GetKey("space")) {
 			sudo_system::ParticleConfiguration config = sudo_system::ParticleConfiguration();
@@ -39,20 +43,20 @@ public:
 			);
 		}
 
-		// Font test
-		if (input->GetKey("f")) 
+		// test
+		if (input->GetKey("f"))
 		{
-			textRenderer->SetFont("CAPITAL HILL FONT PLEASE", 50);
+			shape2->Destroy();
 		}
-		if (input->GetKey("d"))
-		{
-			textRenderer->SetFont("default", 20);
+		if (input->GetKey("x")) {
+			std::cout << "break" << std::endl;
 		}
 	}	
 
 	void FixedUpdate() override
 	{
-		shape2->transform->angle += 0.01f;
+		if (!shape2->DestroyMe()) 
+			shape2->transform->angle += 0.1f;
 	}
 
 	void Start() override
@@ -65,6 +69,8 @@ public:
 		shape2 = new ecs::Entity();
 		shape2->AddComponent(new ecs::SpriteComponent("D:\\temp\\cat.png"));
 
+		REMOVABLE_ENTITY = new ecs::Entity();
+
 		textRenderer->LoadFont("C:\\Windows\\Fonts\\comic.ttf", "CAPITAL HILL FONT PLEASE", 50);
 
 		//config->SetFPS(60);
@@ -72,7 +78,7 @@ public:
 	} 
 };
 
-int maidwdwn() {
+int dwjakdmain() {
 	App* app = new App();
 
 	return 0;

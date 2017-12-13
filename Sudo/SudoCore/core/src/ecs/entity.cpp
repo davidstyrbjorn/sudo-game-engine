@@ -24,6 +24,10 @@ namespace sudo { namespace ecs {
 		/* Create the transform component */
 		transform = new Transform();
 		transform->SetEntityHolder(this);
+
+		/* Default active state */
+		m_isActive = true;
+		m_removeMe = false;
 	}
 
 	void Entity::Update(float deltaTime)
@@ -51,6 +55,16 @@ namespace sudo { namespace ecs {
 			if (m_components[i]->GetComponentState() == ComponentState::ACTIVE) { // Check if the component is active
 				m_components[i]->Start();
 			}
+		}
+	}
+
+	void Entity::Awake()
+	{
+		transform->Awake();
+
+		/* Call awake on all the components */
+		for (unsigned int i = 0; i < m_components.size(); i++) {
+			m_components[i]->Awake();
 		}
 	}
 

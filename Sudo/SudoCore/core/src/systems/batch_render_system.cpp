@@ -12,6 +12,7 @@
 #include"../math/mat4.h"
 #include"../math/color.h"
 #include"../math/vector3.h"
+#include"../math/math.h"
 
 #include"../ecs/transform_component.h"
 
@@ -147,8 +148,10 @@ namespace sudo { namespace sudo_system {
 			// All the vertex positions
 			math::Vector3 pos1, pos2, pos3, pos4;
 
-			// Test for rotation
+			// Rotation calculation
 			float angle = a_primitive->GetEntityTransform()->angle;
+			float angleInRads = angle * DEG2RAD;
+
 			// cx, cy - center for the rectangle
 			float cx = a_primitive->GetEntityTransform()->position.x + (a_primitive->GetSize().x / 2);
 			float cy = a_primitive->GetEntityTransform()->position.y + (a_primitive->GetSize().y / 2);
@@ -158,8 +161,8 @@ namespace sudo { namespace sudo_system {
 			float tempX = _position.x - cx;
 			float tempY = _position.y - cy;
 			// apply rotation
-			float rotatedX = tempX*cos(angle) - tempY*sin(angle);
-			float rotatedY = tempX*sin(angle) + tempY*cos(angle);
+			float rotatedX = tempX*cos(angleInRads) - tempY*sin(angleInRads);
+			float rotatedY = tempX*sin(angleInRads) + tempY*cos(angleInRads);
 			pos1 = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
 
 			// Vertex 2 rotation
@@ -167,8 +170,8 @@ namespace sudo { namespace sudo_system {
 			tempX = _position.x - cx;
 			tempY = (_position.y + _size.y) - cy;
 			// apply rotation
-			rotatedX = tempX*cos(angle) - tempY*sin(angle);
-			rotatedY = tempX*sin(angle) + tempY*cos(angle);
+			rotatedX = tempX*cos(angleInRads) - tempY*sin(angleInRads);
+			rotatedY = tempX*sin(angleInRads) + tempY*cos(angleInRads);
 			pos2 = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
 
 			// Vertex 3 rotation
@@ -176,8 +179,8 @@ namespace sudo { namespace sudo_system {
 			tempX = (_position.x + _size.x) - cx;
 			tempY = (_position.y + _size.y) - cy;
 			// apply rotation
-			rotatedX = tempX*cos(angle) - tempY*sin(angle);
-			rotatedY = tempX*sin(angle) + tempY*cos(angle);
+			rotatedX = tempX*cos(angleInRads) - tempY*sin(angleInRads);
+			rotatedY = tempX*sin(angleInRads) + tempY*cos(angleInRads);
 			pos3 = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
 
 			// Vertex 4 rotation
@@ -185,8 +188,8 @@ namespace sudo { namespace sudo_system {
 			tempX = (_position.x + _size.x) - cx;
 			tempY = _position.y - cy;
 			// apply rotation
-			rotatedX = tempX*cos(angle) - tempY*sin(angle);
-			rotatedY = tempX*sin(angle) + tempY*cos(angle);
+			rotatedX = tempX*cos(angleInRads) - tempY*sin(angleInRads);
+			rotatedY = tempX*sin(angleInRads) + tempY*cos(angleInRads);
 			pos4 = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
 
 			// ============================================================ //

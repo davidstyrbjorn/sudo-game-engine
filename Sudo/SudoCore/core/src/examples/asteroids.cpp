@@ -1,4 +1,5 @@
 #include"../../sudo.h"
+#include"asteroids_components.h"
 
 using namespace sudo;
 
@@ -9,9 +10,9 @@ class PlayerMove : public ecs::Component {
 private:
 	sudo_system::InputSystem *input = sudo_system::InputSystem::Instance();
 	ecs::Transform *transform;
-	float angleVelocity;
-	const float maxAngleVelocity = 0.01f;
-	const float maxVelocity = 0.1f;
+	float angleVelocity, linearVelocity;
+	const float maxAngleVelocity = 0.25f;
+	const float maxVelocity = 0.35f;
 
 public:
 	void Start() override {
@@ -21,34 +22,58 @@ public:
 	void Update(float deltaTime) override {
 		// Angular velocity and cool gameplay stuff
 		if (input->GetKey("right")) {
-			angleVelocity += 0.000005f;
+			angleVelocity = maxAngleVelocity;
 		}
 		else if (input->GetKey("left")) {
-			angleVelocity -= 0.000005f;
+			angleVelocity = -maxAngleVelocity;
 		}
 		else {
-			if (angleVelocity > 0) {
-				angleVelocity -= 0.000005f;
-			}
-			if (angleVelocity < 0) {
-				angleVelocity += 0.000005f;
-			}
+			angleVelocity = 0;
 		}
-		transform->angle += ( angleVelocity * deltaTime );
+		transform->angle += (angleVelocity * deltaTime);
 
-		// trigonometry takes input in radians
 		// Moving forward and cool stuff
 		if (input->GetKey("up")) {
-			transform->position = math::Vector3(transform->position.x + (maxVelocity * sin(transform->angle+1.57) * deltaTime), transform->position.y + (maxVelocity * cos(transform->angle+1.57) * deltaTime), 0);
+			if (linearVelocity < maxVelocity) {
+				linearVelocity += 0.0005f;
+			}
 		}
+		else {
+			if (linearVelocity > 0) {
+				linearVelocity -= 0.00005f;
+			}
+			else {
+				linearVelocity = 0;
+			}
+		}
+		float angleInRadians = transform->angle * DEG2RAD;
+		transform->position = math::Vector3(transform->position.x + (linearVelocity * -sin(angleInRadians) * deltaTime), transform->position.y + (linearVelocity * cos(angleInRadians) * deltaTime), 0);
+	}
+};
 
-		/*
-		moveForward(float angle)
-		{
-		x += speed * sin(angle);
-		y += speed * cos(angle);
+class Projectile : public ecs::Component {
+private:
+	ecs::Transform *transform;
+	const float velocity = 0.5f;
+	sudo_system::BatchRendererSystem *renderer = sudo_system::BatchRendererSystem::Instance();
+	ecs::RectangleComponent *rectangleComponent;
+
+public:
+	void Start() override {
+		transform = m_entityHolder->transform;
+		rectangleComponent = m_entityHolder->GetComponent<ecs::RectangleComponent>();
+	}
+
+	void Update(float deltaTime) override {
+		float angleInRadians = transform->angle * DEG2RAD;
+		transform->position = math::Vector3(transform->position.x + (velocity * -sin(angleInRadians) * deltaTime), transform->position.y + (velocity * cos(angleInRadians) * deltaTime), 0);
+
+		if (transform->position.x < -5 || transform->position.x > WINDOW_WIDTH || transform->position.y < -5 || transform->position.y > WINDOW_HEIGHT) {
+			m_entityHolder->Destroy();
 		}
-		*/
+		else {
+			renderer->Submit(rectangleComponent);
+		}
 	}
 };
 
@@ -73,6 +98,7 @@ private:
 	// Entities
 	ecs::Entity *backgroundEntity;
 	ecs::Entity *player;
+	bool canShoot = true;
 };
 
 void MyGame::Start()
@@ -121,6 +147,28 @@ void MyGame::MenuUpdate(float deltaTime)
 void MyGame::PlayingUpdate(float deltaTime) 
 {
 	renderer->Submit(player->GetComponent<ecs::RectangleComponent>());
+
+	if (input->GetKey("f")) {
+		std::cout << "break";
+	}
+
+	#pragma region Projectile Input
+	if (input->GetKeyDown("space") && canShoot) {
+		canShoot = false;
+
+		ecs::Entity *temp = new ecs::Entity();
+		temp->Start();
+		temp->AddComponent(new ecs::RectangleComponent(math::Vector2(5, 5), math::Color::Red()))->Start();
+		temp->AddComponent(new Projectile())->Start();
+
+		temp->transform->position = player->transform->position;
+		temp->transform->angle = player->transform->angle;
+	}
+	if (!input->GetKey("space"))
+	{
+		canShoot = true;	
+	}
+	#pragma endregion
 }
 
 MyGame::MyGame()
