@@ -1,6 +1,7 @@
 #pragma once
 
 #include"sudo_system.h"
+#include"../sudo_behaviour.h"
 
 #include<al.h>
 #include<alc.h>
@@ -13,7 +14,7 @@ namespace sudo {
 
 namespace sudo { namespace sudo_system {
 
-	class SoundSystem : public SudoSystem {
+	class SoundSystem : public SudoSystem, public SudoBehaviour {
 	private:
 		SoundSystem();
 		static SoundSystem *_instance;
@@ -26,10 +27,9 @@ namespace sudo { namespace sudo_system {
 			return _instance;
 		}
 		
-		// Must be overiden (spelling)
 		#pragma region Base Class Methods
 		void Start() override;
-		void Update() override { }
+		void Update(float deltaTime) override { }
 
 		void Enable() override { m_isActive = true; }
 		void Disable() override { m_isActive = false; }

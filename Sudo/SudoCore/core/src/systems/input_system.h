@@ -2,6 +2,7 @@
 
 #include"../../gl_include.h"
 #include"sudo_system.h"
+#include"../sudo_behaviour.h"
 
 #include<map>
 
@@ -14,7 +15,7 @@ namespace sudo {
 
 namespace sudo { namespace sudo_system {
 
-	class InputSystem : public SudoSystem {
+	class InputSystem : public SudoSystem, public SudoBehaviour {
 	private:
 		/* Private constructor since this is a singleton class */
 		InputSystem() { }
@@ -40,10 +41,12 @@ namespace sudo { namespace sudo_system {
 		static InputSystem *Instance();
 
 		/* Methods from the SudoSystem base class */
-		void Update() override;
 		void Enable() override;
 		void Disable() override;
 		void CleanUp() override;
+
+		/* SudoBehaviour */
+		void Update(float deltaTime) override;
 
 		/* end-user methods */
 		/* Returns true if a_keycode is down */

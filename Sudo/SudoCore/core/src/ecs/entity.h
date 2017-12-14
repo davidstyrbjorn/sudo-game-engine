@@ -3,6 +3,12 @@
 #include<vector>
 #include<type_traits>
 
+namespace sudo { namespace graphics { 
+
+	class Renderable2D;
+
+} } 
+
 namespace sudo { namespace ecs {
 
 	class Component;
@@ -27,6 +33,12 @@ namespace sudo { namespace ecs {
 		/* Updates all components inside m_components list */
 		void Update(float deltaTime);
 
+		/* Calls LateUpdate on all components */
+		void LateUpdate(float deltaTime);
+
+		/* Calls Render on every component */
+		void Render();
+
 		/* Calls start on all components inside m_components list */
 		void Start();
 
@@ -38,6 +50,7 @@ namespace sudo { namespace ecs {
 
 		// class sudo::ecs::class_name
 		/* Returns the component inside the components list with a_name */
+		// @ TODO tempalte<Component*> ? type to be returned is always a derivative of component class
 		template<typename TemplateClass>
 		TemplateClass* GetComponent()
 		{			
@@ -53,6 +66,9 @@ namespace sudo { namespace ecs {
 
 			return nullptr;
 		}
+
+		/* Return Renderable2D component */
+		graphics::Renderable2D *GetRenderableComponent() const;
 
 		/* Getter for this->components */
 		const std::vector<Component*> GetComponentList() { return m_components; }

@@ -24,6 +24,11 @@ namespace sudo { namespace sudo_system {
 		return m_backgroundColor;
 	}
 
+	const bool SettingsSystem::DoAutoRender()
+	{
+		return m_autoRender;
+	}
+
 	unsigned int SettingsSystem::GetFPS() const
 	{
 		return m_fps;
@@ -68,6 +73,11 @@ namespace sudo { namespace sudo_system {
 	{
 		m_fps = a_newFPS;
 		this->NewFpsValue();
+	}
+
+	void SettingsSystem::SetAutoRender(bool a_value) 
+	{
+		m_autoRender = a_value;
 	}
 
 }}

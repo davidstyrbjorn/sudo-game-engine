@@ -39,6 +39,7 @@ void SudoCore::init(const math::Vector2 a_windowSize, char* a_windowCaption, Sud
 	m_settingsSystem->SetFPS(DEFAULT_FPS_CAP);
 	m_settingsSystem->SetWindowSize((math::Vector2&)a_windowSize);
 	m_settingsSystem->SetBackgroundColor(math::Color(0, 0, 0, 255));
+	m_settingsSystem->SetAutoRender(false);
 
 	/* Input system */
 	m_inputSystem = sudo_system::InputSystem::Instance();
@@ -105,9 +106,6 @@ void SudoCore::game_loop()
 	timer = new utility::Timer();
 	timer->Start();
 
-	fixedUpdateTimer = new utility::Timer();
-	fixedUpdateTimer->Start();
-
 	deltaTimer = new utility::Timer();
 	deltaTimer->Start();
 	float _frameStartTime = deltaTimer->GetTicks();
@@ -120,58 +118,68 @@ void SudoCore::game_loop()
 	unsigned int framesPerSecond = 0;
 #endif
 
-	while (m_window->is_open()) 
+	while (m_window->is_open())
 	{
-		#if PRINT_FPS
-		if (realTimer->GetTicks() > 1000) {
+#if PRINT_FPS
+		if (realTimer->GetTicks() >= 1000) {
 			std::cout << framesPerSecond << std::endl;
 			framesPerSecond = 0;
 			realTimer->Reset();
 		}
-		#endif
-
+#endif
 		// Set the time at the start of the frame
 		_frameStartTime = deltaTimer->GetTicks();
 
-		// Swap buffers and clear the screen 
-		m_window->clear();
-
-		// Reset renderer data 
-		m_batchRenderer->Begin();
-		m_particleSystem->Begin();
-
 		// Call the user-end Update methods
 		m_engineInstance->Update(_deltaTime);
-		m_engineInstance->LateUpdate(_deltaTime);
-		// Check if we've stepped over the timestep for triggering the fixed update
-		if (fixedUpdateTimer->GetTicks() >= FIXED_UPDATE_MS) {
-			m_engineInstance->FixedUpdate();
-			fixedUpdateTimer->Reset();
-		}
 
 		// Update the WorldSystem holding all game entities 
 		m_worldSystem->Update(_deltaTime);
 		// Update particle system
 		m_particleSystem->Update(_deltaTime);
-
-		// Render w/OpenGL 
-		m_batchRenderer->End();
-		m_batchRenderer->Flush();
-		m_particleSystem->Flush();
-		m_textSystem->Flush();
-
-		// Display the current drawns elements 
-		m_window->display();
-
 		// Update input | Currently only does window shake effect 
-		m_inputSystem->Update();
+		m_inputSystem->Update(_deltaTime);
+
+		if (timer->GetTicks() >= m_settingsSystem->GetMS()) 
+		{
+			// Clear the screen 
+			m_window->clear();
+
+			// Reset renderer data 
+			m_batchRenderer->Begin();
+			m_particleSystem->Begin();
+			m_textSystem->Begin();
+
+			// Call update on renderers
+			m_batchRenderer->Update(_deltaTime);
+
+			// User end
+			m_engineInstance->Render();
+
+			// System (components)
+			m_worldSystem->Render();
+
+			// Render w/OpenGL 
+			m_batchRenderer->End();
+			m_batchRenderer->Flush();
+			m_particleSystem->Flush();
+			m_textSystem->Flush();
+
+			// Display the current drawns elements 
+			m_window->display();
+
+			// Reset the loop timer
+			timer->Reset();
+#if PRINT_FPS
+			framesPerSecond++;
+#endif
+		}
+
+		m_worldSystem->LateUpdate(_deltaTime);
+		m_engineInstance->LateUpdate(_deltaTime);
 
 		// Calculate the time it took to get this frame done and set it to _deltaTime
 		_deltaTime = deltaTimer->GetTicks() - _frameStartTime;
-
-		#if PRINT_FPS
-		framesPerSecond++;
-		#endif
 	}
 
 	clean_up();

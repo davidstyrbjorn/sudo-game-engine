@@ -67,7 +67,9 @@ public:
 	void Update(float deltaTime) override {
 		float angleInRadians = transform->angle * DEG2RAD;
 		transform->position = math::Vector3(transform->position.x + (velocity * -sin(angleInRadians) * deltaTime), transform->position.y + (velocity * cos(angleInRadians) * deltaTime), 0);
+	}
 
+	void Render() override {
 		if (transform->position.x < -5 || transform->position.x > WINDOW_WIDTH || transform->position.y < -5 || transform->position.y > WINDOW_HEIGHT) {
 			m_entityHolder->Destroy();
 		}
@@ -90,9 +92,12 @@ public:
 	// Behaviour overrides
 	void Start() override;
 	void Update(float deltaTime) override;
+	void Render() override;
 	// MyGame methods
 	void MenuUpdate(float deltaTime);
+	void MenuDraw();
 	void PlayingUpdate(float deltaTime);
+	void PlayingDraw();
 
 private:
 	// Entities
@@ -133,11 +138,30 @@ void MyGame::Update(float deltaTime)
 	}
 }
 
+void MyGame::Render() 
+{
+	switch (state) {
+	case GameState::MENU:
+		MenuDraw();
+		break;
+	case GameState::PLAYING:
+		PlayingDraw();
+		break;
+	}
+}
+
+void MyGame::MenuDraw()
+{
+	renderer->Submit(backgroundEntity->GetComponent<ecs::SpriteComponent>());
+}
+
+void MyGame::PlayingDraw()
+{
+	renderer->Submit(player->GetComponent<ecs::RectangleComponent>());
+}
+
 void MyGame::MenuUpdate(float deltaTime)
 {
-	// Render
-	renderer->Submit(backgroundEntity->GetComponent<ecs::SpriteComponent>());
-
 	// Look for input to start game
 	if (input->GetKey("x")) {
 		state = GameState::PLAYING;
@@ -146,13 +170,6 @@ void MyGame::MenuUpdate(float deltaTime)
 
 void MyGame::PlayingUpdate(float deltaTime) 
 {
-	renderer->Submit(player->GetComponent<ecs::RectangleComponent>());
-
-	if (input->GetKey("f")) {
-		std::cout << "break";
-	}
-
-	#pragma region Projectile Input
 	if (input->GetKeyDown("space") && canShoot) {
 		canShoot = false;
 
@@ -168,7 +185,6 @@ void MyGame::PlayingUpdate(float deltaTime)
 	{
 		canShoot = true;	
 	}
-	#pragma endregion
 }
 
 MyGame::MyGame()

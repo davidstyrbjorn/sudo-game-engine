@@ -14,7 +14,7 @@ namespace sudo { namespace sudo_system {
 		return _instance;
 	}
 
-	void InputSystem::Update()
+	void InputSystem::Update(float deltaTime)
 	{
 		/* Window Shake Code */
 		if (m_doWindowShake) {

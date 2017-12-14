@@ -1,7 +1,9 @@
 #pragma once
 
 #include"sudo_system.h"
+#include"../sudo_behaviour.h"
 
+#include"../graphics/renderer_base.h"
 #include"../../definitions.h"
 #include<vector>
 
@@ -14,6 +16,10 @@ namespace sudo {
 		class Texture;
 
 		struct VertexData;
+	}
+	namespace sudo_system {
+		class WorldSystem;
+		class SettingsSystem;
 	}
 }
 
@@ -34,7 +40,7 @@ namespace sudo { namespace sudo_system {
 #define BUFFER_SIZE PRIMITIVE_SIZE * MAX_PRIMITIVES 
 #define INDICES_COUNT MAX_PRIMITIVES * 6
 
-	class BatchRendererSystem : public SudoSystem {
+	class BatchRendererSystem : public SudoSystem, public graphics::RendererBase, public SudoBehaviour {
 	private:
 		/* Private constructor, singleton class */
 		BatchRendererSystem();
@@ -48,14 +54,16 @@ namespace sudo { namespace sudo_system {
 		void Enable() { m_isActive = true; }
 		void Disable() { m_isActive = false; }
 		void CleanUp() override;
-		void Update() override { }
+
+		/* SudoBehaviour */
+		void Update(float deltaTime) override;
 		void Start() override;
 			
 		// Renderer routines
-		void Begin();
+		void Begin() override;
 		void Submit(graphics::Renderable2D *a_primitive);
-		void Flush();
-		void End();
+		void Flush() override;
+		void End() override;
 
 	private:
 		/* Batch Renderer data */
@@ -65,6 +73,12 @@ namespace sudo { namespace sudo_system {
 
 		// Texture 
 		std::vector<uint> m_textureSlots;
+
+		// Settings system, used to determine if we should auto render entities or not
+		SettingsSystem *m_settingsSystem;
+
+		// World system, used to get acess to entities
+		WorldSystem *m_worldSystem;
 
 #if USE_INDEX_BUFFER
 		graphics::IndexBuffer *m_indexBuffer;

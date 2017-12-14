@@ -46,7 +46,7 @@ namespace sudo {
 		sudo_system::ParticleSystem		*m_particleSystem;
 		sudo_system::TextSystem			*m_textSystem;
 
-		utility::Timer *timer, *deltaTimer, *fixedUpdateTimer;
+		utility::Timer *timer, *deltaTimer;
 #if PRINT_FPS
 		utility::Timer *realTimer;
 #endif

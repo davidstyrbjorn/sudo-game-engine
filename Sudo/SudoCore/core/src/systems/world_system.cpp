@@ -32,6 +32,11 @@ namespace sudo { namespace sudo_system {
 		m_entityList.clear();
 	}
 
+	const std::vector<ecs::Entity*> WorldSystem::GetEntityList()
+	{
+		return m_entityList;
+	}
+
 	void WorldSystem::Update(float deltaTime)
 	{
 		if (m_isActive) {
@@ -50,6 +55,26 @@ namespace sudo { namespace sudo_system {
 				else {
 					++it;
 				}
+			}
+		}
+	}
+
+	void WorldSystem::LateUpdate(float deltaTime)
+	{
+		if (m_isActive) {
+			for (unsigned int i = 0; i < m_entityList.size(); i++) {
+				if (m_entityList[i]->IsActive()) {
+					m_entityList[i]->LateUpdate(deltaTime);
+				}
+			}
+		}
+	}
+
+	void WorldSystem::Render()
+	{
+		for (unsigned int i = 0; i < m_entityList.size(); i++) {
+			if (m_entityList[i]->IsActive()) {
+				m_entityList[i]->Render();
 			}
 		}
 	}

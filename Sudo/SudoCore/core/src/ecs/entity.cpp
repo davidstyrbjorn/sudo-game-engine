@@ -1,6 +1,7 @@
 #include"entity.h"
 #include"../systems/world_system.h"
 #include"../debug.h"
+#include"../graphics/renderable2d.h"
 
 #include"transform_component.h"
 #include"component.h"
@@ -46,6 +47,28 @@ namespace sudo { namespace ecs {
 		}
 	}
 
+	void Entity::LateUpdate(float deltaTime)
+	{
+		for (unsigned int i = 0; i < m_components.size(); i++) {
+
+			// Check if component is up for being updated
+			if (m_components[i]->GetComponentState() == ComponentState::ACTIVE) { // Check if the component is active
+				m_components[i]->LateUpdate(deltaTime);
+			}
+		}
+	}
+
+	void Entity::Render()
+	{
+		for (unsigned int i = 0; i < m_components.size(); i++) {
+
+			// Check if component is up for being updated
+			if (m_components[i]->GetComponentState() == ComponentState::ACTIVE) { // Check if the component is active
+				m_components[i]->Render();
+			}
+		}
+	}
+
 	void Entity::Start() 
 	{
 		transform->Start();
@@ -78,6 +101,19 @@ namespace sudo { namespace ecs {
 
 		/* Return the created component for the user to possibly store */
 		return a_component;
+	}
+
+	graphics::Renderable2D * Entity::GetRenderableComponent() const
+	{
+		if (m_isActive) {
+			for (int i = 0; i < m_components.size(); i++) {
+				auto temp = dynamic_cast<graphics::Renderable2D*>(m_components[i]);
+				if (temp != nullptr) {
+					return temp;
+				}
+			}
+		}
+		return nullptr;
 	}
 	
 } }

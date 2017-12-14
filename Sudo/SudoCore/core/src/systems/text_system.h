@@ -1,6 +1,7 @@
 #pragma once
 
 #include"sudo_system.h"
+#include"../sudo_behaviour.h"
 
 #include<vector>
 #include<map>
@@ -10,6 +11,7 @@
 
 #include"../graphics/text_label.h"
 #include"../graphics/text_character.h"
+#include"../graphics/renderer_base.h"
 
 // Forward declerations
 namespace sudo {
@@ -25,7 +27,7 @@ namespace sudo {
 
 namespace sudo { namespace sudo_system { 
 
-	class TextSystem : SudoSystem {
+	class TextSystem : public SudoSystem, public graphics::RendererBase, public SudoBehaviour {
 	private:
 		// Private constructor since this is a singleton class
 		TextSystem() { }
@@ -36,15 +38,19 @@ namespace sudo { namespace sudo_system {
 	public:
 		static TextSystem *Instance();
 
-		// Methods from the SudoSystem base class 
-		void Update() override;
+		// SudoBehaviour
+		void Update(float deltaTime) override { }
 		void Start() override;
-		void Enable() override;
-		void Disable() override;
+
+		// Methods from the SudoSystem base class 
+		void Enable() override { m_isActive = true; }
+		void Disable() override { m_isActive = false; }
 		void CleanUp() override;
 
 		// Render routines
-		void Flush();
+		void Begin() override { };
+		void End() override { };
+		void Flush() override;
 
 		// Method called by user 
 		void DrawText(std::string a_string, math::Vector2 a_position, math::Color a_color);
@@ -52,13 +58,12 @@ namespace sudo { namespace sudo_system {
 		void SetFont(const char* a_name, const int a_size = -1);	
 	
 	private:
+		bool m_isActive;
 		std::map<char, graphics::GlyphCharacter> m_characters;
 		std::vector<graphics::TextLabel> m_textToRender;
 		graphics::Shader *m_shader;
 		char* m_currentFont;
-
 		unsigned int VAO, VBO;
-
 		std::map<const char*, graphics::Font*> m_fonts;
 	};
 

@@ -39,8 +39,6 @@ namespace sudo { namespace sudo_system {
 
 	ParticleSystem::ParticleSystem() 
 	{
-		timer = new utility::Timer();
-		timer->Start();
 	}
 
 	void ParticleSystem::Start()

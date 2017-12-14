@@ -2,9 +2,9 @@
 
 #include"sudo_system.h"
 #include<array>
+#include"../graphics/renderer_base.h"
 #include"../../definitions.h"
-
-#include"../utility/timer.h"
+#include"../sudo_behaviour.h"
 
 /*
 * This class system will basically work as a glorified renderer
@@ -47,7 +47,7 @@ struct ParticleConfiguration {
 	}
 };
 
-class ParticleSystem : public SudoSystem {
+class ParticleSystem : public SudoSystem, public graphics::RendererBase, public SudoBehaviour {
 	private:
 		/* Private constructor */
 		ParticleSystem();
@@ -65,21 +65,20 @@ class ParticleSystem : public SudoSystem {
 		/* Virtual Destructor */
 		virtual ~ParticleSystem() { }
 
-		/* Gets called on engine initialization */
-		void Start();
-		/* Gets called on engine update */
-		void Update() { }
-		void Update(float deltaTime);
+		/* SudoBehaviour */
+		void Start() override;
+		void Update(float deltaTime) override;
 		
-		/* Enables system */
-		void Enable() { m_isActive = true; }
-		/* Disable system */
-		void Disable() { m_isActive = false; }
-		/* Cleans up the necessary thing to prevent memory leaks when quitting */
-		void CleanUp();
+		/* SudoSystem */
+		void Enable() override { m_isActive = true; }
+		void Disable() override { m_isActive = false; }
+		void CleanUp() override;
 
 		// Renderer routines
-		void Begin();
+		void Begin() override;
+		void Flush() override;
+		void End() override { }
+
 		// Base constructor   
 		void Submit(
 			math::Vector3 a_spawnPosition,
@@ -89,7 +88,6 @@ class ParticleSystem : public SudoSystem {
 			math::Vector2 a_velocity,
 			ParticleConfiguration a_config
 		);
-		void Flush();
 
 	private:
 		void disableDeadParticles();
@@ -102,7 +100,6 @@ class ParticleSystem : public SudoSystem {
 		int m_particleCount;
 		graphics::Shader *m_shader;
 		graphics::IndexBuffer *m_indexBuffer;
-		utility::Timer *timer;
 
 		/* Streamline method for init work */
 		void setUpVAO_VBO();

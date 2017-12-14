@@ -12,8 +12,6 @@ private:
 
 	ecs::Entity *shape, *shape2;
 
-	ecs::Entity *REMOVABLE_ENTITY;
-
 public:
 	App() 
 	{
@@ -23,10 +21,6 @@ public:
 	void Update(float deltaTime) override
 	{
 		textRenderer->DrawText("Viktor.net", math::Vector2(shape->transform->position.x, 0), math::Color(57, 171, 233));
-		renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
-		if (!shape2->DestroyMe()) {
-			renderer->Submit(shape2->GetComponent<ecs::SpriteComponent>());
-		}
 	
 		if (input->GetKey("space")) {
 			sudo_system::ParticleConfiguration config = sudo_system::ParticleConfiguration();
@@ -48,28 +42,22 @@ public:
 		{
 			shape2->Destroy();
 		}
-		if (input->GetKey("x")) {
-			std::cout << "break" << std::endl;
+		if (input->GetKey("x")) 
+		{
+			shape2->Enable();
 		}
 	}	
-
-	void FixedUpdate() override
-	{
-		if (!shape2->DestroyMe()) 
-			shape2->transform->angle += 0.1f;
-	}
 
 	void Start() override
 	{
 		shape = new ecs::Entity();
-		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(10, 10), math::Color(255, 100, 10, 255)));
+		//shape->AddComponent(new ecs::RectangleComponent(math::Vector2(10, 10), math::Color(255, 100, 10, 255)));
 		shape->transform->position = math::Vector3(400, 300, 0);
 		shape->AddComponent(new ecs::FourWayMoveComponent(math::Vector2(0.3f, 0.3f), "up", "down", "right", "left"));
 
 		shape2 = new ecs::Entity();
 		shape2->AddComponent(new ecs::SpriteComponent("D:\\temp\\cat.png"));
-
-		REMOVABLE_ENTITY = new ecs::Entity();
+		shape2->transform->Move(math::Vector3(25, 25, 0));
 
 		textRenderer->LoadFont("C:\\Windows\\Fonts\\comic.ttf", "CAPITAL HILL FONT PLEASE", 50);
 
@@ -78,7 +66,7 @@ public:
 	} 
 };
 
-int dwjakdmain() {
+int madwdwin() {
 	App* app = new App();
 
 	return 0;

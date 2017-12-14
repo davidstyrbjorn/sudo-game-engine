@@ -30,11 +30,11 @@ namespace sudo {
 		/* Gets called once every frame, before renderer flushes and entities gets updated */
 		virtual void Update(float deltaTime) { }
 
-		/* Gets called on a fixed time pattern */
-		virtual void FixedUpdate() { } 
-
 		/* Gets called after Update, no exceptions */
 		virtual void LateUpdate(float deltaTime) { }
+
+		/* Gets called before the renderer's flush gets called */
+		virtual void Render() { };
 
 		/* Gets called the instant the OpenGL context window is closed */
 		virtual void OnWindowClose() { }

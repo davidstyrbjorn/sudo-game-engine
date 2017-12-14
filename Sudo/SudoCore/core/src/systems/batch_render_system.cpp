@@ -8,6 +8,7 @@
 #include"../graphics/texture.h"
 
 #include"settings_system.h"
+#include"world_system.h"
 
 #include"../math/mat4.h"
 #include"../math/color.h"
@@ -15,6 +16,9 @@
 #include"../math/math.h"
 
 #include"../ecs/transform_component.h"
+#include"../ecs/rectangle_component.h"
+#include"../ecs/sprite_component.h"
+#include"../ecs/entity.h"
 
 namespace sudo { namespace sudo_system { 
 
@@ -28,7 +32,8 @@ namespace sudo { namespace sudo_system {
 
 	BatchRendererSystem::BatchRendererSystem()
 	{
-
+		m_worldSystem = WorldSystem::Instance();
+		m_settingsSystem = SettingsSystem::Instance();
 	}
 
 	void BatchRendererSystem::Start()
@@ -90,6 +95,19 @@ namespace sudo { namespace sudo_system {
 		}
 		m_indexBuffer = new graphics::IndexBuffer(m_indices,  sizeof(m_indices));
 #endif
+	}
+
+	void BatchRendererSystem::Update(float deltaTime)
+	{
+		if (m_settingsSystem->DoAutoRender()) {
+			// This code auto renders every entity which has a renderable2D component 
+			for (int i = 0; i < m_worldSystem->GetEntityList().size(); i++) {
+				graphics::Renderable2D *temp = m_worldSystem->GetEntityList()[i]->GetRenderableComponent();
+				if (temp != nullptr) {
+					this->Submit(temp);
+				}
+			}
+		}
 	}
 
 	void BatchRendererSystem::Begin()

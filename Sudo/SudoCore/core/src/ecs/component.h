@@ -1,6 +1,7 @@
 #pragma once
 
 #include<iostream>
+#include"../sudo_behaviour.h"
 
 namespace sudo { namespace ecs {
 
@@ -11,19 +12,13 @@ namespace sudo { namespace ecs {
 
 	class Entity;
 
-	class Component
+	class Component : public SudoBehaviour
 	{
 	public:
 		/* Virtual Destructor */
-		virtual ~Component() { 
+		virtual ~Component() {
 			//std::cout << "Component Removed" << std::endl;
 		}
-		
-		/* Updates the component behaviour */
-		virtual void Update(float deltaTime) = 0;
-
-		/* Gets called at start if m_entityHolder is active */
-		virtual void Start() = 0;
 
 		/* Gets called at start */
 		virtual void Awake() { } 

@@ -33,56 +33,58 @@ namespace sudo { namespace sudo_system {
 
 	void TextSystem::Flush()
 	{
-		// Bind
-		m_shader->enable();
-		glActiveTexture(GL_TEXTURE0);
-		glBindVertexArray(VAO);
+		if (m_isActive) {
+			// Bind
+			m_shader->enable();
+			glActiveTexture(GL_TEXTURE0);
+			glBindVertexArray(VAO);
 
-		// Draw all the text inside the m_textToRender vector
-		while (!m_textToRender.empty()) 
-		{
-			graphics::TextLabel temp = m_textToRender.back();
-
-			// Draw text
-			m_shader->setUniform3f("textColor", math::Vector3(temp.r, temp.g, temp.b));
-
-			// Iterate through all characters 
-			std::string::const_iterator c;
-			for (c = temp.m_textLiteral.begin(); c != temp.m_textLiteral.end(); c++) 
+			// Draw all the text inside the m_textToRender vector
+			while (!m_textToRender.empty())
 			{
-				graphics::GlyphCharacter ch = m_fonts.at(m_currentFont)->m_characters[*c];
+				graphics::TextLabel temp = m_textToRender.back();
 
-				float xpos = temp.x + ch.m_bearings.x;
-				float ypos = temp.y - (ch.m_size.y - ch.m_bearings.y);
+				// Draw text
+				m_shader->setUniform3f("textColor", math::Vector3(temp.r, temp.g, temp.b));
 
-				float width = ch.m_size.x;
-				float height = ch.m_size.y;
+				// Iterate through all characters 
+				std::string::const_iterator c;
+				for (c = temp.m_textLiteral.begin(); c != temp.m_textLiteral.end(); c++)
+				{
+					graphics::GlyphCharacter ch = m_fonts.at(m_currentFont)->m_characters[*c];
 
-				// Update VBO 
-				float vertices[6][4] = {
-					{ xpos,			ypos + height,   0.0, 0.0 },
-					{ xpos,			ypos,			 0.0, 1.0 },
-					{ xpos + width, ypos,			 1.0, 1.0 },
+					float xpos = temp.x + ch.m_bearings.x;
+					float ypos = temp.y - (ch.m_size.y - ch.m_bearings.y);
 
-					{ xpos,			ypos + height,   0.0, 0.0 },
-					{ xpos + width, ypos,			 1.0, 1.0 },
-					{ xpos + width, ypos + height,   1.0, 0.0 }
-				};
-				glBindTexture(GL_TEXTURE_2D, ch.m_textureID);
+					float width = ch.m_size.x;
+					float height = ch.m_size.y;
 
-				glBindBuffer(GL_ARRAY_BUFFER, VBO);
-				glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
-				
-				glDrawArrays(GL_TRIANGLES, 0, 6);
+					// Update VBO 
+					float vertices[6][4] = {
+						{ xpos,			ypos + height,   0.0, 0.0 },
+						{ xpos,			ypos,			 0.0, 1.0 },
+						{ xpos + width, ypos,			 1.0, 1.0 },
 
-				// Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-				temp.x += (ch.offset >> 6); // Bitshift by 6 to get value in pixels (2^6 = 64)
+						{ xpos,			ypos + height,   0.0, 0.0 },
+						{ xpos + width, ypos,			 1.0, 1.0 },
+						{ xpos + width, ypos + height,   1.0, 0.0 }
+					};
+					glBindTexture(GL_TEXTURE_2D, ch.m_textureID);
+
+					glBindBuffer(GL_ARRAY_BUFFER, VBO);
+					glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+
+					glDrawArrays(GL_TRIANGLES, 0, 6);
+
+					// Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+					temp.x += (ch.offset >> 6); // Bitshift by 6 to get value in pixels (2^6 = 64)
+				}
+
+				m_textToRender.pop_back();
+
+				//glBindVertexArray(0);
+				//glBindTexture(GL_TEXTURE_2D, 0);
 			}
-
-			m_textToRender.pop_back();
-
-			//glBindVertexArray(0);
-			//glBindTexture(GL_TEXTURE_2D, 0);
 		}
 	}
 
@@ -143,8 +145,4 @@ namespace sudo { namespace sudo_system {
 		glDeleteVertexArrays(1, &VAO);
 		glDeleteBuffers(1, &VBO);
 	}
-
-	void TextSystem::Update() { }
-	void TextSystem::Enable() { }
-	void TextSystem::Disable() { }
 } } 
