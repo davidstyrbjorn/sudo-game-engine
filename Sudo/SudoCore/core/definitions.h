@@ -36,6 +36,8 @@ enum SudoBufferType {
 /* ===================================================== */
 /* ===================================================== */
 
+#define SUDO_BEHAVIOUR override
+
 // System macros
 #define SYSTEM_API
 

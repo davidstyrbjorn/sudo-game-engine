@@ -273,9 +273,11 @@ MyGame::MyGame()
 	engine.init(math::Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), "ASSteroids", this);
 }
 
-int main()
+/*
+int madwdwin()
 {
 	MyGame *game = new MyGame();
 
 	return EXIT_SUCCESS;
 }
+*/

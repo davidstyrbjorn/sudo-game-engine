@@ -139,6 +139,7 @@
     <ClCompile Include="core\src\ecs\sprite_component.cpp" />
     <ClCompile Include="core\src\ecs\triangle_component.cpp" />
     <ClCompile Include="core\src\examples\asteroids.cpp" />
+    <ClCompile Include="core\src\examples\start_example.cpp" />
     <ClCompile Include="core\src\graphics\buffers\buffer.cpp" />
     <ClCompile Include="core\src\graphics\buffers\index_buffer.cpp" />
     <ClCompile Include="core\src\graphics\buffers\vertex_array_buffer.cpp" />
