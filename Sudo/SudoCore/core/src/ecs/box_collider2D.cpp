@@ -45,7 +45,6 @@ namespace sudo { namespace ecs {
 		for (int i = 0; i < m_entityHolder->GetComponentList().size(); i++) {
 			if (dynamic_cast<graphics::Renderable2D*>(m_entityHolder->GetComponentList()[i]) != nullptr) {
 				m_entityRenderableComponent = dynamic_cast<graphics::Renderable2D*>(m_entityHolder->GetComponentList()[i]);
-
 				m_origin = math::Vector2(m_entityHolder->transform->position.x, m_entityHolder->transform->position.y);
 				m_bounds = m_entityRenderableComponent->GetSize();
 			}

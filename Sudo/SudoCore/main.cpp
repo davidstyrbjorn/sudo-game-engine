@@ -56,7 +56,7 @@ public:
 		shape->AddComponent(new ecs::FourWayMoveComponent(math::Vector2(0.3f, 0.3f), "up", "down", "right", "left"));
 
 		shape2 = new ecs::Entity();
-		shape2->AddComponent(new ecs::SpriteComponent("D:\\temp\\cat.png"));
+		shape2->AddComponent(new ecs::SpriteComponent("C:\\temp\\cat.png"));
 		shape2->transform->Move(math::Vector3(25, 25, 0));
 
 		textRenderer->LoadFont("C:\\Windows\\Fonts\\comic.ttf", "CAPITAL HILL FONT PLEASE", 50);

@@ -16,6 +16,7 @@ namespace sudo { namespace ecs {
 
 		/* Methods */
 		void Move(const math::Vector3& a_vector);
+		void Rotate(const float a_angle);
 
 		void Start() override;
 		void Update(float deltaTime) override;

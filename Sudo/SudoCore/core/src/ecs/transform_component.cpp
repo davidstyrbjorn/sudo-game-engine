@@ -13,6 +13,11 @@ void Transform::Move(const math::Vector3 & a_vector)
 	position = math::Vector3(position.x + a_vector.x, position.y + a_vector.y, position.z + a_vector.z);
 }
 
+void Transform::Rotate(const float a_angle)
+{
+	angle += a_angle;
+}
+
 void Transform::Start()
 {
 
