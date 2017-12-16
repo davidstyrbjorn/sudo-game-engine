@@ -10,6 +10,38 @@ using namespace sudo;
 #define ASTEROID_MAX_HEIGHT 60
 #define ASTEROID_MIN_HEIGHT 40
 
+class MyGame : SudoClass {
+public:
+	SudoCore engine;
+
+	enum GameState { MENU, PLAYING };
+	GameState state;
+
+	// Constructor 
+	MyGame();
+
+	// Behaviour overrides
+	void Start() override;
+	void Update(float deltaTime) override;
+	void Render() override;
+	// MyGame methods
+	void MenuUpdate(float deltaTime);
+	void MenuDraw();
+	void PlayingUpdate(float deltaTime);
+	void PlayingDraw();
+	void TookHit();
+
+public:
+	// Entities
+	ecs::Entity *backgroundEntity;
+	ecs::Entity *player;
+	ecs::BoxCollider2D *playerCollider;
+	bool canShoot = true;
+	utility::Timer *asteroidsTimer;
+	const float asteroidSpawnTime = 2500; // In milliseconds
+	int extraLifes = 3;
+};
+
 class PlayerMove : public ecs::Component {
 private:
 	sudo_system::InputSystem *input = sudo_system::InputSystem::Instance();
@@ -60,6 +92,7 @@ class Asteroid : public ecs::Component
 private:
 	ecs::Transform *transform;
 	sudo_system::BatchRendererSystem *renderer = sudo_system::BatchRendererSystem::Instance();
+	sudo_system::SettingsSystem *config = sudo_system::SettingsSystem::Instance();
 	ecs::RectangleComponent *rectangleComponent;
 	ecs::BoxCollider2D *thisCollider, *playerCollider;
 
@@ -96,6 +129,7 @@ public:
 		// Check for collision with player
 		if (thisCollider->Intersects(*playerCollider)) {
 			m_entityHolder->Destroy();
+			static_cast<MyGame*>(config->instancePtr)->TookHit();
 			return;
 		}
 
@@ -120,36 +154,6 @@ public:
 	}
 };
 
-class MyGame : SudoClass {
-public:
-	SudoCore engine;
-
-	enum GameState { MENU, PLAYING };
-	GameState state;
-
-	// Constructor 
-	MyGame();
-
-	// Behaviour overrides
-	void Start() override;
-	void Update(float deltaTime) override;
-	void Render() override;
-	// MyGame methods
-	void MenuUpdate(float deltaTime);
-	void MenuDraw();
-	void PlayingUpdate(float deltaTime);
-	void PlayingDraw();
-
-private:
-	// Entities
-	ecs::Entity *backgroundEntity;
-	ecs::Entity *player;
-	ecs::BoxCollider2D *playerCollider;
-	bool canShoot = true;
-	utility::Timer *asteroidsTimer;
-	const float asteroidSpawnTime = 2500; // In milliseconds
-};
-
 void MyGame::Start()
 {
 	// Initial game state 
@@ -157,7 +161,7 @@ void MyGame::Start()
 
 	// Creating entities
 	backgroundEntity = new ecs::Entity();
-	backgroundEntity->AddComponent(new ecs::SpriteComponent("C:\\SudoGameEngine\\images\\_asteroids_assets\\menu_image.png"));
+	backgroundEntity->AddComponent(new ecs::SpriteComponent("D:\\SudoGameEngine\\images\\_asteroids_assets\\menu_image.png"));
 
 	// Player
 	player = new ecs::Entity();
@@ -172,6 +176,8 @@ void MyGame::Start()
 	asteroidsTimer->Start();
 
 	// Configurations
+	textRenderer->LoadFont("C:\\Windows\\Fonts\\arial.ttf", "arial", 40);
+	textRenderer->SetFont("arial");
 	config->SetFPS(60);
 	config->SetBackgroundColor(math::Color(20, 20, 20, 255));
 }
@@ -208,6 +214,7 @@ void MyGame::MenuDraw()
 void MyGame::PlayingDraw()
 {
 	renderer->Submit(player->GetComponent<ecs::RectangleComponent>());
+	textRenderer->DrawText("Life " + std::to_string(extraLifes), math::Vector2(0, 0), math::Color(10, 120, 79));
 }
 
 void MyGame::MenuUpdate(float deltaTime)
@@ -231,6 +238,7 @@ void MyGame::PlayingUpdate(float deltaTime)
 				asteroid->Start();
 				asteroid->transform->position = math::Vector3(-ASTEROID_MAX_WIDTH, utility::SudoRandomNumber::GetRandomInteger(0, WINDOW_HEIGHT), 0);
 				asteroid->AddComponent(new ecs::RectangleComponent(math::Vector2(ASTEROID_MAX_WIDTH, ASTEROID_MAX_WIDTH), math::Color::Green()))->Start();
+				asteroid->AddComponent(new ecs::BoxCollider2D())->Start();
 				asteroid->AddComponent(new Asteroid(utility::SudoRandomNumber::GetRandomFloatingPoint(0.1f, 0.5f), 0, "left", playerCollider))->Start();
 			}
 			else if (side < 50) {
@@ -239,6 +247,7 @@ void MyGame::PlayingUpdate(float deltaTime)
 				asteroid->Start();
 				asteroid->transform->position = math::Vector3(WINDOW_WIDTH + ASTEROID_MAX_WIDTH, utility::SudoRandomNumber::GetRandomInteger(0, WINDOW_HEIGHT), 0);
 				asteroid->AddComponent(new ecs::RectangleComponent(math::Vector2(ASTEROID_MAX_WIDTH, ASTEROID_MAX_WIDTH), math::Color::Green()))->Start();
+				asteroid->AddComponent(new ecs::BoxCollider2D())->Start();
 				asteroid->AddComponent(new Asteroid(utility::SudoRandomNumber::GetRandomFloatingPoint(-0.5f, -0.1f), 0, "right", playerCollider))->Start();
 			}
 			else if (side < 75) {
@@ -247,6 +256,7 @@ void MyGame::PlayingUpdate(float deltaTime)
 				asteroid->Start();
 				asteroid->transform->position = math::Vector3(utility::SudoRandomNumber::GetRandomInteger(0, WINDOW_WIDTH), -ASTEROID_MAX_HEIGHT, 0);
 				asteroid->AddComponent(new ecs::RectangleComponent(math::Vector2(ASTEROID_MAX_WIDTH, ASTEROID_MAX_WIDTH), math::Color::Green()))->Start();
+				asteroid->AddComponent(new ecs::BoxCollider2D())->Start();
 				asteroid->AddComponent(new Asteroid(0, utility::SudoRandomNumber::GetRandomFloatingPoint(0.1f, 0.5f), "top", playerCollider))->Start();
 			}
 			else {
@@ -255,6 +265,7 @@ void MyGame::PlayingUpdate(float deltaTime)
 				asteroid->Start();
 				asteroid->transform->position = math::Vector3(utility::SudoRandomNumber::GetRandomInteger(0, WINDOW_WIDTH), WINDOW_HEIGHT+ASTEROID_MAX_HEIGHT, 0);
 				asteroid->AddComponent(new ecs::RectangleComponent(math::Vector2(ASTEROID_MAX_WIDTH, ASTEROID_MAX_WIDTH), math::Color::Green()))->Start();
+				asteroid->AddComponent(new ecs::BoxCollider2D())->Start();
 				asteroid->AddComponent(new Asteroid(0, utility::SudoRandomNumber::GetRandomFloatingPoint(-0.5f, -0.1f), "bottom", playerCollider))->Start();
 			}
 		}
@@ -268,16 +279,22 @@ void MyGame::PlayingUpdate(float deltaTime)
 	}
 }
 
+void MyGame::TookHit()
+{
+	extraLifes--;
+	input->WindowShake(350, 5);
+	if (extraLifes <= 0)
+		state = GameState::MENU;
+}
+
 MyGame::MyGame()
 {
 	engine.init(math::Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), "ASSteroids", this);
 }
 
-/*
-int madwdwin()
+int main()
 {
 	MyGame *game = new MyGame();
 
 	return EXIT_SUCCESS;
 }
-*/

@@ -20,13 +20,6 @@ public:
 	void Render() SUDO_BEHAVIOUR { }
 };
 
-int main()
-{
-	YourGame *game = new YourGame();
-
-	return 0;
-}
-
 
 
 

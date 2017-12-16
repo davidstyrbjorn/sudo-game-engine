@@ -40,6 +40,7 @@ void SudoCore::init(const math::Vector2 a_windowSize, char* a_windowCaption, Sud
 	m_settingsSystem->SetWindowSize((math::Vector2&)a_windowSize);
 	m_settingsSystem->SetBackgroundColor(math::Color(0, 0, 0, 255));
 	m_settingsSystem->SetAutoRender(false);
+	m_settingsSystem->instancePtr = m_engineInstance;
 
 	/* Input system */
 	m_inputSystem = sudo_system::InputSystem::Instance();

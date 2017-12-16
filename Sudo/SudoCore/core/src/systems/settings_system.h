@@ -60,6 +60,8 @@ namespace sudo { namespace sudo_system {
 		void SetFPS(const unsigned int a_newFPS);
 		#pragma endregion
 
+		void* instancePtr; // Ugly pointer to current engine instance
+
 	private:
 		/* Settings data */
 		math::Vector2 m_windowSize;

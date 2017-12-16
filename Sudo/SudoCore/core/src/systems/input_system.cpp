@@ -25,8 +25,8 @@ namespace sudo { namespace sudo_system {
 			// Set the window's position accordingly
 			glfwSetWindowPos(glfwGetCurrentContext(), m_windowOrgX + _x, m_windowOrgY + _y);
 
-			// Decrease the length of the window shake (in frames) 
-			m_windowShakeLength--;
+			// Decrease the length of the window shake 
+			m_windowShakeLength -= deltaTime;
 			if (m_windowShakeLength <= 0) {
 				m_doWindowShake = false;
 				glfwSetWindowPos(glfwGetCurrentContext(), m_windowOrgX, m_windowOrgY);
