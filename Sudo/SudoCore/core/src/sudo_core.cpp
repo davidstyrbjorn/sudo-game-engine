@@ -154,11 +154,10 @@ void SudoCore::game_loop()
 			// Call update on renderers
 			m_batchRenderer->Update(_deltaTime);
 
-			// User end
-			m_engineInstance->Render();
-
 			// System (components)
 			m_worldSystem->Render();
+			// User end
+			m_engineInstance->Render();
 
 			// Render w/OpenGL 
 			m_batchRenderer->End();

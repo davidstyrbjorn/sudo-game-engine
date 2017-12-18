@@ -10,9 +10,9 @@
 
 namespace sudo {
 
-	/* User class have to inherit from this class and then override Start and Update */
 	class SudoClass {
 	public:
+		// Getting all the systems for the user to exploit
 		sudo_system::InputSystem *input = sudo_system::InputSystem::Instance();
 		sudo_system::BatchRendererSystem *renderer = sudo_system::BatchRendererSystem::Instance();
 		sudo_system::WorldSystem *world = sudo_system::WorldSystem::Instance();
@@ -24,25 +24,13 @@ namespace sudo {
 	public:
 		virtual ~SudoClass() { }
 
-		/* Gets called upon engine init */
+		// Behaviour methods
 		virtual void Start() { }
-
-		/* Gets called once every frame, before renderer flushes and entities gets updated */
 		virtual void Update(float deltaTime) { }
-
-		/* Gets called after Update, no exceptions */
 		virtual void LateUpdate(float deltaTime) { }
-
-		/* Gets called before the renderer's flush gets called */
 		virtual void Render() { };
-
-		/* Gets called the instant the OpenGL context window is closed */
 		virtual void OnWindowClose() { }
-
-		/* Gets called after the engine is done uninitializing */
 		virtual void OnApplicationClose() { }
-
-		/* Time between frames, is set by the engine game loop */
-		double deltaTime;
 	};
+
 }

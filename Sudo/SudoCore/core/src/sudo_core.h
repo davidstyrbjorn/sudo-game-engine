@@ -7,7 +7,7 @@ namespace sudo {
 
 namespace sudo {
 
-	#define PRINT_FPS 0
+	#define PRINT_FPS 1
 
 	// Forward declarations
 	namespace graphics {
@@ -30,14 +30,22 @@ namespace sudo {
 	class CoreSettings;
 
 	class SudoCore {
-	private:
-		/* ======================================================================= */
-		/* ======================> CORE ENGINE DATA <============================= */
-		/* ======================================================================= */
-		SudoClass *m_engineInstance;
-		graphics::Window *m_window;
+	
+	public:		
+		// Constructor 
+		SudoCore();
+		void init(math::Vector2 a_windowSize, char* a_windowCaption, SudoClass *a_engineInstance);
 
-		/* Systems */
+		graphics::Window &GetWindow();
+
+		// Destructor calls clean_up 
+		~SudoCore() { clean_up(); }
+
+	private:
+		graphics::Window *m_window;  // GLFW window class
+		SudoClass *m_engineInstance; // User-end class
+
+		// All systems updated by the engine itself
 		sudo_system::InputSystem		*m_inputSystem;
 		sudo_system::WorldSystem		*m_worldSystem;
 		sudo_system::SettingsSystem		*m_settingsSystem;
@@ -47,31 +55,10 @@ namespace sudo {
 		sudo_system::TextSystem			*m_textSystem;
 
 		utility::Timer *timer, *deltaTimer;
-#if PRINT_FPS
 		utility::Timer *realTimer;
-#endif
 
-		/* ======================================================================= */
-		/* ======================> CORE ENGINE METHODS <========================== */
-		/* ======================================================================= */
-		/* Does the necc clean up */
 		void clean_up();
-		
-		/* Runs the game loop */
 		void game_loop();
-	
-	public:		
-		/* Destructor */
-		~SudoCore() { clean_up(); }
-
-		/* Returns the reference adress to the window object */
-		graphics::Window &GetWindow();
-
-		/* takes in all required data and instances the engine */
-		void init(math::Vector2 a_windowSize, char* a_windowCaption, SudoClass *a_engineInstance);
-
-		/* Default Constructor */
-		SudoCore();
 	};
 
 }

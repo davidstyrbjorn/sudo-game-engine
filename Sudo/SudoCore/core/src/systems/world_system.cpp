@@ -100,4 +100,24 @@ namespace sudo { namespace sudo_system {
 		a_entityToRemove->Destroy();
 	}
 
+	void WorldSystem::RemoveAllEntitiesWithID(const unsigned char a_id)
+	{
+		for (int i = 0; i < m_entityList.size(); i++) {
+			if (m_entityList[i]->GetID() == a_id) {
+				m_entityList[i]->Destroy();
+			}
+		}
+	}
+
+	std::vector<ecs::Entity*> WorldSystem::GetEntitiesWithID(const unsigned char a_id)
+	{
+		std::vector<ecs::Entity*> _list;
+		for (ecs::Entity* temp : m_entityList) {
+			if (temp->GetID() == a_id) {
+				_list.push_back(temp);
+			}
+		}
+		return _list;
+	}
+
 } }

@@ -16,7 +16,7 @@ namespace sudo { namespace ecs {
 		m_components.clear();
 	}
 
-	Entity::Entity()
+	void Entity::init()
 	{
 		/* Adding the entity to the WorldSystem list */
 		sudo_system::WorldSystem *world = sudo_system::WorldSystem::Instance();

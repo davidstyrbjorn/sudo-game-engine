@@ -10,6 +10,13 @@ using namespace sudo;
 #define ASTEROID_MAX_HEIGHT 60
 #define ASTEROID_MIN_HEIGHT 40
 
+#define PROJECTILE_SIZE 5 
+
+enum ENTITY_ID {
+	ASTEROID = 0x01,
+	PROJECTILE = 0x02,
+};
+
 class MyGame : SudoClass {
 public:
 	SudoCore engine;
@@ -29,7 +36,9 @@ public:
 	void MenuDraw();
 	void PlayingUpdate(float deltaTime);
 	void PlayingDraw();
+
 	void TookHit();
+	void ResetGame();
 
 public:
 	// Entities
@@ -38,7 +47,7 @@ public:
 	ecs::BoxCollider2D *playerCollider;
 	bool canShoot = true;
 	utility::Timer *asteroidsTimer;
-	const float asteroidSpawnTime = 2500; // In milliseconds
+	float asteroidSpawnTime = 2500; // In milliseconds
 	int extraLifes = 3;
 };
 
@@ -47,7 +56,7 @@ private:
 	sudo_system::InputSystem *input = sudo_system::InputSystem::Instance();
 	ecs::Transform *transform;
 	float angleVelocity, linearVelocity;
-	const float maxAngleVelocity = 0.25f;
+	const float maxAngleVelocity = 0.4f;
 	const float maxVelocity = 0.35f;
 
 public:
@@ -87,14 +96,66 @@ public:
 	}
 };
 
+class Projectile : public ecs::Component
+{
+private:
+	ecs::Transform *transform;
+	ecs::RectangleComponent *rectangleComponent;
+	sudo_system::BatchRendererSystem *renderer = sudo_system::BatchRendererSystem::Instance();
+	float angle;
+	float xDirection, yDirection;
+	const float velocity = 0.8f;
+
+public:
+	Projectile(float angle)
+	{
+		this->angle = angle * DEG2RAD;
+		xDirection = velocity * ( -sin(this->angle));
+		yDirection = velocity * (  cos(this->angle));
+	}
+
+	void Start() override 
+	{
+		transform = m_entityHolder->transform;
+		rectangleComponent = m_entityHolder->GetComponent<ecs::RectangleComponent>();
+	}
+
+	void Update(float deltaTime) override
+	{
+		transform->Move(math::Vector3(xDirection, yDirection, 0) * deltaTime);
+
+		// OOB
+		if (transform->position.x > WINDOW_WIDTH) {
+			m_entityHolder->Destroy();
+		}
+		else if (transform->position.x < -PROJECTILE_SIZE) {
+			m_entityHolder->Destroy();
+		}
+		else if (transform->position.y > WINDOW_HEIGHT) {
+			m_entityHolder->Destroy();
+		}
+		else if (transform->position.y < -PROJECTILE_SIZE) {
+			m_entityHolder->Destroy();
+		}
+	}
+
+	void Render() override
+	{
+		renderer->Submit(rectangleComponent);
+	}
+};
+
 class Asteroid : public ecs::Component
 {
 private:
 	ecs::Transform *transform;
 	sudo_system::BatchRendererSystem *renderer = sudo_system::BatchRendererSystem::Instance();
 	sudo_system::SettingsSystem *config = sudo_system::SettingsSystem::Instance();
+	sudo_system::WorldSystem *world = sudo_system::WorldSystem::Instance();
 	ecs::RectangleComponent *rectangleComponent;
 	ecs::BoxCollider2D *thisCollider, *playerCollider;
+
+	std::vector<ecs::BoxCollider2D*> projectileList;
 
 	float randomAngularVelocity;
 	math::Vector3 moveDirection;
@@ -150,6 +211,14 @@ public:
 
 	void Render() override
 	{
+		projectileList.clear();
+		std::vector<ecs::Entity*> temp = world->GetEntitiesWithID(ENTITY_ID::PROJECTILE);
+		for (int i = 0; i < temp.size(); i++) {
+			if (thisCollider->Intersects(*temp[i]->GetComponent<ecs::BoxCollider2D>())) {
+				m_entityHolder->Destroy();
+				temp[i]->Destroy();
+			}
+		}
 		renderer->Submit(rectangleComponent);
 	}
 };
@@ -221,20 +290,36 @@ void MyGame::MenuUpdate(float deltaTime)
 {
 	// Look for input to start game
 	if (input->GetKey("x")) {
+		ResetGame();
 		state = GameState::PLAYING;
 	}
-}
+} 
 
 void MyGame::PlayingUpdate(float deltaTime) 
 {
+	if (input->GetKey("space") && canShoot) {
+		canShoot = false;
+		ecs::Entity* temp = new ecs::Entity(ENTITY_ID::PROJECTILE);
+		temp->Start();
+		temp->AddComponent(new ecs::RectangleComponent(math::Vector2(PROJECTILE_SIZE, PROJECTILE_SIZE), math::Color::Red()))->Start();
+		temp->AddComponent(new Projectile(player->transform->angle))->Start();
+		temp->transform->position = player->transform->position;
+		temp->AddComponent(new ecs::BoxCollider2D())->Start();	
+	}
+	else if (!input->GetKey("space")) {
+		canShoot = true;
+	}
+
 	// Spawning asteroids
 	if (asteroidsTimer->GetTicks() >= asteroidSpawnTime) {
+		if(asteroidSpawnTime > 600)
+			asteroidSpawnTime -= 400;
 		int spawnCount = utility::SudoRandomNumber::GetRandomInteger(1, 4);
 		for (int i = 0; i < spawnCount; i++) {
 			int side = utility::SudoRandomNumber::GetRandomInteger(0, 100);
 			if (side < 25) {
 				// Left
-				ecs::Entity *asteroid = new ecs::Entity();
+				ecs::Entity *asteroid = new ecs::Entity(ENTITY_ID::ASTEROID);
 				asteroid->Start();
 				asteroid->transform->position = math::Vector3(-ASTEROID_MAX_WIDTH, utility::SudoRandomNumber::GetRandomInteger(0, WINDOW_HEIGHT), 0);
 				asteroid->AddComponent(new ecs::RectangleComponent(math::Vector2(ASTEROID_MAX_WIDTH, ASTEROID_MAX_WIDTH), math::Color::Green()))->Start();
@@ -243,7 +328,7 @@ void MyGame::PlayingUpdate(float deltaTime)
 			}
 			else if (side < 50) {
 				// Right
-				ecs::Entity *asteroid = new ecs::Entity();
+				ecs::Entity *asteroid = new ecs::Entity(ENTITY_ID::ASTEROID);
 				asteroid->Start();
 				asteroid->transform->position = math::Vector3(WINDOW_WIDTH + ASTEROID_MAX_WIDTH, utility::SudoRandomNumber::GetRandomInteger(0, WINDOW_HEIGHT), 0);
 				asteroid->AddComponent(new ecs::RectangleComponent(math::Vector2(ASTEROID_MAX_WIDTH, ASTEROID_MAX_WIDTH), math::Color::Green()))->Start();
@@ -252,7 +337,7 @@ void MyGame::PlayingUpdate(float deltaTime)
 			}
 			else if (side < 75) {
 				// Top
-				ecs::Entity *asteroid = new ecs::Entity();
+				ecs::Entity *asteroid = new ecs::Entity(ENTITY_ID::ASTEROID);
 				asteroid->Start();
 				asteroid->transform->position = math::Vector3(utility::SudoRandomNumber::GetRandomInteger(0, WINDOW_WIDTH), -ASTEROID_MAX_HEIGHT, 0);
 				asteroid->AddComponent(new ecs::RectangleComponent(math::Vector2(ASTEROID_MAX_WIDTH, ASTEROID_MAX_WIDTH), math::Color::Green()))->Start();
@@ -261,7 +346,7 @@ void MyGame::PlayingUpdate(float deltaTime)
 			}
 			else {
 				// Bottom
-				ecs::Entity *asteroid = new ecs::Entity();
+				ecs::Entity *asteroid = new ecs::Entity(ENTITY_ID::ASTEROID);
 				asteroid->Start();
 				asteroid->transform->position = math::Vector3(utility::SudoRandomNumber::GetRandomInteger(0, WINDOW_WIDTH), WINDOW_HEIGHT+ASTEROID_MAX_HEIGHT, 0);
 				asteroid->AddComponent(new ecs::RectangleComponent(math::Vector2(ASTEROID_MAX_WIDTH, ASTEROID_MAX_WIDTH), math::Color::Green()))->Start();
@@ -275,7 +360,10 @@ void MyGame::PlayingUpdate(float deltaTime)
 
 	if (input->GetKey("f"))
 	{
-		std::cout << "xhsk" << std::endl;
+		// wow! 12/18/2017
+		//std::vector<ecs::Entity*> temp = world->GetEntitiesWithID(ENTITY_ID::ASTEROID);		
+		// wow! 12/18/2017
+		// world->RemoveAllEntitiesWithID(ENTITY_ID::ASTEROID);
 	}
 }
 
@@ -285,6 +373,14 @@ void MyGame::TookHit()
 	input->WindowShake(350, 5);
 	if (extraLifes <= 0)
 		state = GameState::MENU;
+}
+
+void MyGame::ResetGame()
+{
+	asteroidSpawnTime = 2500;
+	extraLifes = 3;
+	player->transform->position = math::Vector3((WINDOW_WIDTH / 2) - 5, (WINDOW_HEIGHT / 2) - 20, 0);
+	world->RemoveAllEntitiesWithID(ENTITY_ID::ASTEROID);
 }
 
 MyGame::MyGame()
