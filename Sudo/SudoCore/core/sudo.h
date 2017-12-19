@@ -43,8 +43,7 @@
 
 #include"src\utility\utility.h"
 #include"src\utility\timer.h"
-#include"src\utility\linked_list.h"
-#include"src\utility\string.h"
+#include"src\utility\sudo_string.h"
 #include"src\utility\sudo_random.h"
 
 #include"src\sound\sound_buffer.h"

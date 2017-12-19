@@ -41,6 +41,13 @@ namespace sudo { namespace sudo_system {
 	{
 	}
 
+	ParticleSystem * ParticleSystem::Instance()
+	{
+		if (_instance == nullptr)
+			_instance = new ParticleSystem();
+		return _instance;
+	}
+
 	void ParticleSystem::Start()
 	{
 		glewInit();
@@ -54,7 +61,7 @@ namespace sudo { namespace sudo_system {
 		m_particleCount = 0;
 
 		// Creating the shader
-		m_shader = new graphics::Shader("C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_vertex.txt", "C:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_fragment.txt");
+		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_fragment.txt");
 		m_shader->enable();
 
 		m_shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(

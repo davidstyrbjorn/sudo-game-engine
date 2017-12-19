@@ -1,7 +1,5 @@
 #pragma once
 
-#include"utility\string.h"
-
 namespace sudo {
 
 	enum LogType {

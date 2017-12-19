@@ -1,6 +1,7 @@
 #pragma once
 
 #include"component.h"
+#include<map>
 
 namespace sudo {
 	namespace sound {
@@ -14,21 +15,24 @@ namespace sudo {
 
 namespace sudo { namespace ecs { 
 
-	class SoundComponent : public Component {
-	private:
+	struct SoundStruct {
 		sound::SoundBuffer *soundBuffer;
 		sound::SoundSource *soundSource;
+	};
 
-		graphics::Renderable2D *m_entityRenderableComponent;
-
-		const char* m_soundPath;
+	class SoundComponent : public Component {
+	private:
+		std::map<const char*, SoundStruct*> m_soundList;
 
 	public:
-		/* Default constructor takes in path to .wav file for initalizing */
-		SoundComponent(const char* a_soundPath);
+		// Default constructor, adds sound with a_soundName to m_soundList
+		SoundComponent(const char* a_soundName, const char* a_soundPath);
 
-		/* Returns raw pointer to the audio source */
-		sound::SoundSource *GetSoundSource();
+		// Adds sound with a_soundName to m_soundList
+		void AddSound(const char* a_soundName, const char* a_soundPath);
+
+		// Returns raw pointer to the audio source 
+		sound::SoundSource *GetSoundSource(const char* a_name);
 
 		/* Component base methods */
 		void Update(float deltaTime) override;

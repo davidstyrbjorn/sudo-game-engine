@@ -16,14 +16,13 @@ SoundSource::SoundSource(ALuint a_buffer)
 
 	// Attatch the sound buffer to this source
 	alSourcei(source, AL_BUFFER, a_buffer);
+	alSourcei(source, AL_SOURCE_RELATIVE, AL_TRUE);
 }
 
 SoundSource::~SoundSource()
 {
 	alDeleteBuffers(1, &source);
 }
-
-
 
 const math::Vector3 & SoundSource::getPosition()
 {
@@ -52,12 +51,15 @@ void SoundSource::setPitch(const float a_pitch)
 	alSourcef(source, AL_PITCH, a_pitch);
 }
 
-void SoundSource::play()
+void SoundSource::play(bool a_override)
 {
-	ALint state;
-	alGetSourcei(source, AL_SOURCE_STATE, &state);
-	if(state != AL_PLAYING)
-		alSourcePlay(source);
+	if (!a_override) {
+		ALint state;
+		alGetSourcei(source, AL_SOURCE_STATE, &state);
+		if (state == AL_PLAYING)
+			return;
+	}
+	alSourcePlay(source);
 }
 
 void SoundSource::pause() 

@@ -10,17 +10,17 @@ namespace sudo { namespace sound {
 		ALuint buffer;
 
 	public:
-		/* Default constructor */
+		// Constructor
 		SoundBuffer();
 		
-		/* Destructor */
+		// Destructor 
 		~SoundBuffer();
 
-		/* Sets the sound buffers data */
+		// Sets the sound buffers data 
 		void setData(int a_format, char* a_data, int a_size, int a_sampleRate);
 
-		/* Getter for the sound buffers id */
-		ALuint getBufferId() { return buffer; }
+		// Returns sound buffer
+		ALuint getBufferId() const { return buffer; }
 	};
 
 } } 

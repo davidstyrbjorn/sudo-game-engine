@@ -27,7 +27,7 @@ namespace sudo { namespace sudo_system {
 
 #define USE_INDEX_BUFFER 1
 
-	// Renderer pre-processor data
+// Renderer pre-processor data
 #define MAX_PRIMITIVES 2000
 #define VERTEX_SIZE sizeof(graphics::VertexData)
 
@@ -42,20 +42,20 @@ namespace sudo { namespace sudo_system {
 
 	class BatchRendererSystem : public SudoSystem, public graphics::RendererBase, public SudoBehaviour {
 	private:
-		/* Private constructor, singleton class */
+		// Private constructor 
 		BatchRendererSystem();
 		static BatchRendererSystem *_instance;
 
 	public:
-		/* Method to get pointer to system */
+		// Singleton connection
 		static BatchRendererSystem *Instance();
 
-		/* Method from SudoSystem base class */
+		// Method from SudoSystem base class 
 		void Enable() { m_isActive = true; }
 		void Disable() { m_isActive = false; }
 		void CleanUp() override;
 
-		/* SudoBehaviour */
+		// SudoBehaviour 
 		void Update(float deltaTime) override;
 		void Start() override;
 			
@@ -66,7 +66,7 @@ namespace sudo { namespace sudo_system {
 		void End() override;
 
 	private:
-		/* Batch Renderer data */
+		// Batch Renderer data 
 		uint m_vertexArray;
 		graphics::Shader *m_shader;
 		graphics::VertexData *m_mapBuffer;
@@ -74,10 +74,7 @@ namespace sudo { namespace sudo_system {
 		// Texture 
 		std::vector<uint> m_textureSlots;
 
-		// Settings system, used to determine if we should auto render entities or not
 		SettingsSystem *m_settingsSystem;
-
-		// World system, used to get acess to entities
 		WorldSystem *m_worldSystem;
 
 #if USE_INDEX_BUFFER

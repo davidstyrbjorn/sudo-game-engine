@@ -13,25 +13,24 @@ namespace sudo { namespace sudo_system {
 
 	class WorldSystem : public SudoSystem, public SudoBehaviour {
 	private:
-		std::vector<ecs::Entity*> m_entityList; // vector list of all the entities
+		std::vector<ecs::Entity*> m_entityList; 
 		unsigned char m_isActive;
 
 	private:
-		/* Private constructor, singleton class */
+		// Private constructor, singleton class 
 		WorldSystem() { }
 		static WorldSystem *_instance;
 
 	public:
-		/* Method to get pointer to system */
+		// Singleton connection
 		static WorldSystem *Instance();
 
-		/* Base class methods */
+		// Base class methods 
 		void Enable() override;
 		void Disable() override;
 		void CleanUp() override;
 
-
-		// Behaviour methods
+		// SudoBehaviour methods
 		void Start() override;
 		void Update(float deltaTime) override;
 		void LateUpdate(float deltaTime) override;

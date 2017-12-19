@@ -17,49 +17,45 @@
 
 namespace sudo { namespace ecs {
 
-SoundComponent::SoundComponent(const char * a_soundPath)
+SoundComponent::SoundComponent(const char* a_soundName, const char * a_soundPath)
 {
-	m_soundPath = a_soundPath;
-
 	// Loading .wav file
 	int format, size, sampleRate, channel, bps;
-	char* data = loadWAV(m_soundPath, channel, sampleRate, bps, size, format);
+	char* data = loadWAV(a_soundPath, channel, sampleRate, bps, size, format);
 
-	// Creating the sound buffer
-	soundBuffer = new sound::SoundBuffer();
-	soundBuffer->setData(format, data, size, sampleRate);
+	sound::SoundBuffer *buffer = new sound::SoundBuffer;
+	buffer->setData(format, data, size, sampleRate);
+	sound::SoundSource *source = new sound::SoundSource(buffer->getBufferId());
+	
+	m_soundList.insert(std::pair<const char*, SoundStruct*>(a_soundName, new SoundStruct{buffer, source} ));
+}
 
-	// Creating the sound source
-	soundSource = new sound::SoundSource(soundBuffer->getBufferId());
+void SoundComponent::AddSound(const char * a_soundName, const char * a_soundPath)
+{
+	// Loading .wav file
+	int format, size, sampleRate, channel, bps;
+	char* data = loadWAV(a_soundPath, channel, sampleRate, bps, size, format);
+
+	sound::SoundBuffer *buffer = new sound::SoundBuffer;
+	buffer->setData(format, data, size, sampleRate);
+	sound::SoundSource *source = new sound::SoundSource(buffer->getBufferId());
+
+	m_soundList.insert(std::pair<const char*, SoundStruct*>(a_soundName, new SoundStruct{ buffer, source }));
 }
 
 void SoundComponent::Start() 
 {
-	/* Get the Renderable2D component attatched to m_entityHolder */
-	/*
-	for (int i = 0; i < m_entityHolder->GetComponentList().size(); i++) {
-		if (dynamic_cast<graphics::Renderable2D*>(m_entityHolder->GetComponentList()[i]) != nullptr) {
-			m_entityRenderableComponent = dynamic_cast<graphics::Renderable2D*>(m_entityHolder->GetComponentList()[i]);
-		}
-	}
-	*/
+
 }
 
 void SoundComponent::Update(float deltaTime) 
 {
-	// Update the source's position to be identical to the m_entityHolder-transform->position! 
-	// Important for the dynamic sound OpenAL provides
-	/*
-	math::Vector2 ratioPosition = math::Vector2(m_entityHolder->transform->position.x/800, m_entityHolder->transform->position.y/600);
-	if (soundSource->getPosition() != m_entityHolder->transform->position) {
-		soundSource->setPosition(m_entityHolder->transform->position);
-	}
-	*/
+
 }
 
-sound::SoundSource *SoundComponent::GetSoundSource() 
+sound::SoundSource *SoundComponent::GetSoundSource(const char* a_name) 
 {
-	return soundSource;
+	return m_soundList.at(a_name)->soundSource;
 }
 
 } } 

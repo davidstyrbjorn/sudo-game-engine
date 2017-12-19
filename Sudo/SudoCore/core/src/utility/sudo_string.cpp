@@ -1,4 +1,4 @@
-#include "string.h"
+#include "sudo_string.h"
 
 namespace sudo { namespace utility {
 

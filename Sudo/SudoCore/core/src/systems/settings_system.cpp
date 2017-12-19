@@ -75,6 +75,14 @@ namespace sudo { namespace sudo_system {
 		this->NewFpsValue();
 	}
 
+	void SettingsSystem::NewFpsValue()
+	{
+		if (m_fps > 0)
+			m_msPerFrame = 1000 / m_fps;
+		else
+			m_msPerFrame = 0;
+	}
+
 	void SettingsSystem::SetAutoRender(bool a_value) 
 	{
 		m_autoRender = a_value;

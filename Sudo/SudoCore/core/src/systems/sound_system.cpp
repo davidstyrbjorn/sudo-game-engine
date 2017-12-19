@@ -28,8 +28,14 @@ namespace sudo { namespace sudo_system {
 		}
 
 		alListenerf(AL_GAIN, 1);
-		//alListener3f(AL_POSITION, 0, 0, 0);
 		this->SetListenerPosition(math::Vector3(0, 0, 0));
+	}
+
+	SoundSystem * SoundSystem::Instance()
+	{
+		if (_instance == nullptr)
+			_instance = new SoundSystem();
+		return _instance;
 	}
 
 	void SoundSystem::Start()

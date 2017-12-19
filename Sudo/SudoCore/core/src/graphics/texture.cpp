@@ -2,7 +2,7 @@
 #include"../SOIL2/SOIL2.h"
 #include"../debug.h"
 #include"../../gl_include.h"
-
+#include<string>
 
 namespace sudo { namespace graphics {
 

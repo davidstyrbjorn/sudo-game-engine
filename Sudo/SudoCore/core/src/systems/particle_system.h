@@ -49,27 +49,19 @@ struct ParticleConfiguration {
 
 class ParticleSystem : public SudoSystem, public graphics::RendererBase, public SudoBehaviour {
 	private:
-		/* Private constructor */
+		// Private constructor 
 		ParticleSystem();
-
-		/* Static instance of class */
 		static ParticleSystem* _instance;
 
 	public:
-		static ParticleSystem* Instance() {
-			if (_instance == nullptr)
-				_instance = new ParticleSystem();
-			return _instance;
-		}
-
-		/* Virtual Destructor */
-		virtual ~ParticleSystem() { }
-
-		/* SudoBehaviour */
+		// Singleton connection
+		static ParticleSystem* Instance();
+		
+		// SudoBehaviour
 		void Start() override;
 		void Update(float deltaTime) override;
 		
-		/* SudoSystem */
+		// SudoSystem
 		void Enable() override { m_isActive = true; }
 		void Disable() override { m_isActive = false; }
 		void CleanUp() override;
@@ -79,7 +71,7 @@ class ParticleSystem : public SudoSystem, public graphics::RendererBase, public 
 		void Flush() override;
 		void End() override { }
 
-		// Base constructor   
+		// Submits particle
 		void Submit(
 			math::Vector3 a_spawnPosition,
 			math::Vector2 a_particleSize,
@@ -90,10 +82,12 @@ class ParticleSystem : public SudoSystem, public graphics::RendererBase, public 
 		);
 
 	private:
+		// Private methods
 		void disableDeadParticles();
+		void setUpVAO_VBO();
 
 	private:
-		/* Particle system data members */
+		// Data
 		bool m_isActive;
 		uint m_vbo, m_vao;
 		std::array<graphics::Particle*, MAX_PARTICLES> m_particlePool;
@@ -101,8 +95,6 @@ class ParticleSystem : public SudoSystem, public graphics::RendererBase, public 
 		graphics::Shader *m_shader;
 		graphics::IndexBuffer *m_indexBuffer;
 
-		/* Streamline method for init work */
-		void setUpVAO_VBO();
 	};
 
 } } 

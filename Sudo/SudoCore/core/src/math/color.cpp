@@ -1,5 +1,7 @@
 #include "color.h"
 
+#include"../utility/sudo_random.h"
+
 namespace sudo {
 	namespace math {
 
@@ -53,6 +55,11 @@ namespace sudo {
 		Color & Color::operator*=(const float scalar)
 		{
 			return Color(this->r*scalar, this->g*scalar, this->b*scalar, this->a*scalar);
+		}
+
+		Color Color::GetRandomColor()
+		{
+			return Color(utility::SudoRandomNumber::GetRandomInteger(0, 255), utility::SudoRandomNumber::GetRandomInteger(0, 255), utility::SudoRandomNumber::GetRandomInteger(0, 255));
 		}
 
 		std::ostream & math::operator<<(std::ostream & os, const Color & other)

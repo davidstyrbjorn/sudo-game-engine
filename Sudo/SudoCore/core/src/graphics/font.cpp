@@ -47,7 +47,7 @@ namespace sudo { namespace graphics {
 			graphics::GlyphCharacter character = {
 				texture,
 				math::Vector2(m_face->glyph->bitmap.width, m_face->glyph->bitmap.rows),
-				math::Vector2(m_face->glyph->bitmap_left, m_face->glyph->bitmap_top),
+				math::Vector2(m_face->glyph->bitmap_left,  m_face->glyph->bitmap_top),
 				m_face->glyph->advance.x
 			};
 			m_characters.insert(std::pair<char, graphics::GlyphCharacter>(c, character));

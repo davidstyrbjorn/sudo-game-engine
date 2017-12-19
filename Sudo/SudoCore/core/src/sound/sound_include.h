@@ -31,6 +31,9 @@ char* loadWAV(const char* fn, int& chan, int& samplerate, int& bps, int& size, i
 {
 	char buffer[4];
 	std::ifstream in(fn, std::ios::binary);
+	if (!in.is_open()) {
+		std::cout << "Failed to open .wav file" << std::endl;
+	}
 
 	// Master riff chunk at the first 4 bytes should be "RIFF" if it's a .wav file
 	in.read(buffer, 4);
