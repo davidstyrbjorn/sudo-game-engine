@@ -19,7 +19,7 @@ namespace sudo { namespace sound {
 		alBufferData(buffer, a_format, a_data, a_size, a_sampleRate);
 
 		if (alGetError() != AL_NO_ERROR) {
-			DEBUG::getInstance()->printMessage("Eror generating sound buffer inside sound_buffer.cpp", LogType::Error);
+			DEBUG::getInstance()->printMessage("Error generating sound buffer inside sound_buffer.cpp", LogType::Error);
 			alDeleteBuffers(1, &buffer);
 			return;
 		}

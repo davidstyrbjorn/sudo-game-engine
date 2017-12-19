@@ -19,11 +19,3 @@ public:
 	void Update(float deltaTime) SUDO_BEHAVIOUR { }
 	void Render() SUDO_BEHAVIOUR { }
 };
-
-
-
-
-
-
-
-

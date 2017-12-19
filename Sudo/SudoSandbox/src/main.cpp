@@ -1,5 +1,6 @@
 #include"core\sudo.h"
-#include<gl\GLU.h>
+
+/*
 using namespace sudo;
 
 class Game : SudoClass {
@@ -12,22 +13,20 @@ public:
 
 	void Start() override
 	{
-		config->SetBackgroundColor(math::Vector4(0.5, 1, 0.1, 1));
+
 	}
 
 	void Update(float deltaTime) override 
 	{
 
 	}
-
-	void OnApplicationQuit() override
-	{
-
-	}
 };
+*/
 
 int main() {
-	Game *game = new Game();
+	//Game *game = new Game();
+
+	printf("alan");
 
 	return 0;
 }
