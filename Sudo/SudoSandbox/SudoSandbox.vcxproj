@@ -18,6 +18,10 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\examples\asteroids.cpp" />
+    <ClCompile Include="src\examples\pong.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{D2DF2CEA-D536-471F-87F8-EAD36553BF70}</ProjectGuid>
@@ -80,11 +84,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\SudoGameEngine\Sudo\SudoCore\Libraries\freetype\include;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\include;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;C:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\include;C:\SudoGameEngine\Sudo\SudoCore\core\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SudoGameEngine\Sudo\SudoCore\Libraries\freetype\include;D:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\include;D:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;D:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\include;D:\SudoGameEngine\SudoReleaseFolder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\temp\sudo\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SudoCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\SudoGameEngine\SudoReleaseFolder\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SudoCore_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -101,12 +105,12 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\SudoGameEngine\Sudo\SudoCore\Libraries\freetype\include;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\include;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;C:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\include;C:\SudoGameEngine\Sudo\SudoCore\core\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SudoGameEngine\Sudo\SudoCore\Libraries\freetype\include;D:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\include;D:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;D:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\include;D:\SudoGameEngine\SudoReleaseFolder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\temp\sudo\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\SudoGameEngine\SudoReleaseFolder\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SudoCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -123,9 +127,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="src\main.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

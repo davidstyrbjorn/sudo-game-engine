@@ -80,7 +80,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;$(SolutionDir)SudoCore\Libraries\OpenAL\include;$(SolutionDir)\SudoCore\Libraries\freetype\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;$(SolutionDir)SudoCore\Libraries\OpenAL\include;$(SolutionDir)SudoCore\Libraries\freetype\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -92,8 +92,11 @@
     </Link>
     <Lib>
       <AdditionalDependencies>openal32.lib;glfw3.lib;glew32s.lib;opengl32.lib;soil2-debug.lib;freetype281.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\SudoGameEngine\Sudo\SudoCore\Libraries\freetype\lib;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;C:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\libs\Win32;C:\SudoGameEngine\Sudo\SudoCore\Libraries\SOIL2\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)SudoCore\Libraries\freetype\lib;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;$(SolutionDir)SudoCore\Libraries\OpenAL\libs\Win32;$(SolutionDir)SudoCore\Libraries\SOIL2\lib</AdditionalLibraryDirectories>
     </Lib>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -109,7 +112,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;$(SolutionDir)SudoCore\Libraries\OpenAL\include;$(SolutionDir)\SudoCore\Libraries\freetype\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;$(SolutionDir)SudoCore\Libraries\OpenAL\include;$(SolutionDir)SudoCore\Libraries\freetype\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -123,7 +126,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>openal32.lib;glfw3.lib;glew32s.lib;opengl32.lib;soil2-debug.lib;freetype281.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\SudoGameEngine\Sudo\SudoCore\Libraries\freetype\lib;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;C:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\libs\Win32;C:\SudoGameEngine\Sudo\SudoCore\Libraries\SOIL2\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)SudoCore\Libraries\freetype\lib;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;$(SolutionDir)SudoCore\Libraries\OpenAL\libs\Win32;$(SolutionDir)SudoCore\Libraries\SOIL2\lib</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -146,8 +149,6 @@
     <ClCompile Include="core\src\sound_component.cpp" />
     <ClCompile Include="core\src\sprite_component.cpp" />
     <ClCompile Include="core\src\triangle_component.cpp" />
-    <ClCompile Include="core\src\examples\asteroids.cpp" />
-    <ClCompile Include="core\src\examples\start_example.cpp" />
     <ClCompile Include="core\src\buffer.cpp" />
     <ClCompile Include="core\src\index_buffer.cpp" />
     <ClCompile Include="core\src\vertex_array_buffer.cpp" />
@@ -178,8 +179,6 @@
     <ClCompile Include="core\src\sudo_string.cpp" />
     <ClCompile Include="core\src\sudo_random.cpp" />
     <ClCompile Include="core\src\timer.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="core\src\examples\pong.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\include\ecs\box_collider2D.h" />
@@ -191,7 +190,6 @@
     <ClInclude Include="core\include\ecs\sprite_component.h" />
     <ClInclude Include="core\include\ecs\transform_component.h" />
     <ClInclude Include="core\include\ecs\triangle_component.h" />
-    <ClInclude Include="core\src\examples\asteroids_components.h" />
     <ClInclude Include="core\include\graphics\buffers\buffer.h" />
     <ClInclude Include="core\include\graphics\buffers\index_buffer.h" />
     <ClInclude Include="core\include\graphics\buffers\vertex_array_buffer.h" />
