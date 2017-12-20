@@ -1,4 +1,4 @@
-#include"../../sudo.h"
+#include"../../include/sudo.h"
 #include"asteroids_components.h"
 
 using namespace sudo;
@@ -263,14 +263,14 @@ void MyGame::Start()
 
 	// Creating entities
 	backgroundEntity = new ecs::Entity();
-	backgroundEntity->AddComponent(new ecs::SpriteComponent("D:\\SudoGameEngine\\images\\_asteroids_assets\\menu_image.png"));
+	backgroundEntity->AddComponent(new ecs::SpriteComponent("C:\\SudoGameEngine\\images\\_asteroids_assets\\menu_image.png"));
 
 	// Player
 	player = new ecs::Entity();
 	player->AddComponent(new ecs::BoxCollider2D());
-	player->AddComponent(new ecs::SoundComponent("shot", "D:\\SudoGameEngine\\images\\_asteroids_assets\\projectile.wav"));
-	player->GetComponent<ecs::SoundComponent>()->AddSound("hurt", "D:\\SudoGameEngine\\images\\_asteroids_assets\\hurt.wav");
-	player->GetComponent<ecs::SoundComponent>()->AddSound("scored", "D:\\SudoGameEngine\\images\\_asteroids_assets\\scored.wav");
+	player->AddComponent(new ecs::SoundComponent("shot", "C:\\SudoGameEngine\\images\\_asteroids_assets\\projectile.wav"));
+	player->GetComponent<ecs::SoundComponent>()->AddSound("hurt", "C:\\SudoGameEngine\\images\\_asteroids_assets\\hurt.wav");
+	player->GetComponent<ecs::SoundComponent>()->AddSound("scored", "C:\\SudoGameEngine\\images\\_asteroids_assets\\scored.wav");
 	playerCollider = player->GetComponent<ecs::BoxCollider2D>();
 	player->AddComponent(new ecs::RectangleComponent(math::Vector2(10, 40), math::Color(255, 0, 155, 255)));
 	player->transform->position = math::Vector3((WINDOW_WIDTH / 2) - 5, (WINDOW_HEIGHT / 2) - 20, 0);
@@ -420,6 +420,7 @@ void MyGame::Scored()
 {
 	score++;
 	player->GetComponent<ecs::SoundComponent>()->GetSoundSource("scored")->play();
+	input->WindowShake(100, 4);
 }
 
 void MyGame::ResetGame()

@@ -1,32 +1,28 @@
-#include"core\sudo.h"
+#include"sudo.h"
 
-/*
 using namespace sudo;
 
-class Game : SudoClass {
+class Game : sudo::SudoClass {
+private:
+	sudo::SudoCore engine;
+
 public:
-	SudoCore engine;
-
 	Game() {
-		engine.init(math::Vector2(100, 100), "wow", this);
+		engine.init(math::Vector2(300, 300), "Sudo", this);
 	}
 
-	void Start() override
-	{
-
+	void Update(float deltaTime) override {
+		std::cout << "sun is shining in the sky" << std::endl;
 	}
 
-	void Update(float deltaTime) override 
-	{
-
+	void Start() {
+		config->SetBackgroundColor(math::Color::Red());
 	}
 };
-*/
 
 int main() {
-	//Game *game = new Game();
+	Game *game = new Game();
 
-	printf("alan");
-
+	system("pause>null");
 	return 0;
 }

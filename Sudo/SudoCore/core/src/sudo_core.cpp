@@ -1,8 +1,8 @@
-#include "sudo_core.h"
+#include "../include/sudo_core.h"
 
-#include"../sudo.h"
-#include"../gl_include.h"
-#include"../definitions.h"
+#include"../include/sudo.h"
+#include"../include/gl_include.h"
+#include"../include/definitions.h"
 
 namespace sudo { 
 

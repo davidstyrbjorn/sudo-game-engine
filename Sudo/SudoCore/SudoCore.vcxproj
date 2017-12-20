@@ -26,13 +26,13 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -92,7 +92,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>openal32.lib;glfw3.lib;glew32s.lib;opengl32.lib;soil2-debug.lib;freetype281.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\SudoGameEngine\Sudo\SudoCore\Libraries\freetype\lib;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;C:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\libs\Win32\EFX-Util_MT;C:\SudoGameEngine\Sudo\SudoCore\Libraries\SOIL2\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\SudoGameEngine\Sudo\SudoCore\Libraries\freetype\lib;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;C:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\libs\Win32;C:\SudoGameEngine\Sudo\SudoCore\Libraries\SOIL2\lib</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -123,7 +123,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>openal32.lib;glfw3.lib;glew32s.lib;opengl32.lib;soil2-debug.lib;freetype281.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\SudoGameEngine\Sudo\SudoCore\Libraries\freetype\lib;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;C:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\libs\Win32\EFX-Util_MT;C:\SudoGameEngine\Sudo\SudoCore\Libraries\SOIL2\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\SudoGameEngine\Sudo\SudoCore\Libraries\freetype\lib;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;C:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;C:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\libs\Win32;C:\SudoGameEngine\Sudo\SudoCore\Libraries\SOIL2\lib</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -140,103 +140,103 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="core\src\ecs\box_collider2D.cpp" />
-    <ClCompile Include="core\src\ecs\four_way_move_component.cpp" />
-    <ClCompile Include="core\src\ecs\rectangle_component.cpp" />
-    <ClCompile Include="core\src\ecs\sound_component.cpp" />
-    <ClCompile Include="core\src\ecs\sprite_component.cpp" />
-    <ClCompile Include="core\src\ecs\triangle_component.cpp" />
+    <ClCompile Include="core\src\box_collider2D.cpp" />
+    <ClCompile Include="core\src\four_way_move_component.cpp" />
+    <ClCompile Include="core\src\rectangle_component.cpp" />
+    <ClCompile Include="core\src\sound_component.cpp" />
+    <ClCompile Include="core\src\sprite_component.cpp" />
+    <ClCompile Include="core\src\triangle_component.cpp" />
     <ClCompile Include="core\src\examples\asteroids.cpp" />
     <ClCompile Include="core\src\examples\start_example.cpp" />
-    <ClCompile Include="core\src\graphics\buffers\buffer.cpp" />
-    <ClCompile Include="core\src\graphics\buffers\index_buffer.cpp" />
-    <ClCompile Include="core\src\graphics\buffers\vertex_array_buffer.cpp" />
-    <ClCompile Include="core\src\graphics\buffers\vertex_buffer.cpp" />
-    <ClCompile Include="core\src\graphics\font.cpp" />
-    <ClCompile Include="core\src\graphics\renderable2d.cpp" />
-    <ClCompile Include="core\src\graphics\texture.cpp" />
-    <ClCompile Include="core\src\math\color.cpp" />
-    <ClCompile Include="core\src\sound\sound_buffer.cpp" />
-    <ClCompile Include="core\src\sound\sound_source.cpp" />
+    <ClCompile Include="core\src\buffer.cpp" />
+    <ClCompile Include="core\src\index_buffer.cpp" />
+    <ClCompile Include="core\src\vertex_array_buffer.cpp" />
+    <ClCompile Include="core\src\vertex_buffer.cpp" />
+    <ClCompile Include="core\src\font.cpp" />
+    <ClCompile Include="core\src\renderable2d.cpp" />
+    <ClCompile Include="core\src\texture.cpp" />
+    <ClCompile Include="core\src\color.cpp" />
+    <ClCompile Include="core\src\sound_buffer.cpp" />
+    <ClCompile Include="core\src\sound_source.cpp" />
     <ClCompile Include="core\src\sudo_core.cpp" />
     <ClCompile Include="core\src\debug.cpp" />
-    <ClCompile Include="core\src\ecs\entity.cpp" />
-    <ClCompile Include="core\src\ecs\transform_component.cpp" />
-    <ClCompile Include="core\src\graphics\shader.cpp" />
-    <ClCompile Include="core\src\graphics\window.cpp" />
-    <ClCompile Include="core\src\math\vector4.cpp" />
-    <ClCompile Include="core\src\systems\batch_render_system.cpp" />
-    <ClCompile Include="core\src\systems\input_system.cpp" />
-    <ClCompile Include="core\src\math\mat4.cpp" />
-    <ClCompile Include="core\src\math\vector2.cpp" />
-    <ClCompile Include="core\src\math\vector3.cpp" />
-    <ClCompile Include="core\src\systems\particle_system.cpp" />
-    <ClCompile Include="core\src\systems\settings_system.cpp" />
-    <ClCompile Include="core\src\systems\sound_system.cpp" />
-    <ClCompile Include="core\src\systems\text_system.cpp" />
-    <ClCompile Include="core\src\systems\world_system.cpp" />
-    <ClCompile Include="core\src\utility\sudo_string.cpp" />
-    <ClCompile Include="core\src\utility\sudo_random.cpp" />
-    <ClCompile Include="core\src\utility\timer.cpp" />
+    <ClCompile Include="core\src\entity.cpp" />
+    <ClCompile Include="core\src\transform_component.cpp" />
+    <ClCompile Include="core\src\shader.cpp" />
+    <ClCompile Include="core\src\window.cpp" />
+    <ClCompile Include="core\src\vector4.cpp" />
+    <ClCompile Include="core\src\batch_render_system.cpp" />
+    <ClCompile Include="core\src\input_system.cpp" />
+    <ClCompile Include="core\src\mat4.cpp" />
+    <ClCompile Include="core\src\vector2.cpp" />
+    <ClCompile Include="core\src\vector3.cpp" />
+    <ClCompile Include="core\src\particle_system.cpp" />
+    <ClCompile Include="core\src\settings_system.cpp" />
+    <ClCompile Include="core\src\sound_system.cpp" />
+    <ClCompile Include="core\src\text_system.cpp" />
+    <ClCompile Include="core\src\world_system.cpp" />
+    <ClCompile Include="core\src\sudo_string.cpp" />
+    <ClCompile Include="core\src\sudo_random.cpp" />
+    <ClCompile Include="core\src\timer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="core\src\examples\pong.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="core\src\ecs\box_collider2D.h" />
-    <ClInclude Include="core\src\ecs\component.h" />
-    <ClInclude Include="core\src\ecs\entity.h" />
-    <ClInclude Include="core\src\ecs\four_way_move_component.h" />
-    <ClInclude Include="core\src\ecs\rectangle_component.h" />
-    <ClInclude Include="core\src\ecs\sound_component.h" />
-    <ClInclude Include="core\src\ecs\sprite_component.h" />
-    <ClInclude Include="core\src\ecs\transform_component.h" />
-    <ClInclude Include="core\src\ecs\triangle_component.h" />
+    <ClInclude Include="core\include\ecs\box_collider2D.h" />
+    <ClInclude Include="core\include\ecs\component.h" />
+    <ClInclude Include="core\include\ecs\entity.h" />
+    <ClInclude Include="core\include\ecs\four_way_move_component.h" />
+    <ClInclude Include="core\include\ecs\rectangle_component.h" />
+    <ClInclude Include="core\include\ecs\sound_component.h" />
+    <ClInclude Include="core\include\ecs\sprite_component.h" />
+    <ClInclude Include="core\include\ecs\transform_component.h" />
+    <ClInclude Include="core\include\ecs\triangle_component.h" />
     <ClInclude Include="core\src\examples\asteroids_components.h" />
-    <ClInclude Include="core\src\graphics\buffers\buffer.h" />
-    <ClInclude Include="core\src\graphics\buffers\index_buffer.h" />
-    <ClInclude Include="core\src\graphics\buffers\vertex_array_buffer.h" />
-    <ClInclude Include="core\src\graphics\buffers\vertex_buffer.h" />
-    <ClInclude Include="core\src\graphics\font.h" />
-    <ClInclude Include="core\src\graphics\particle.h" />
-    <ClInclude Include="core\src\graphics\renderable2d.h" />
-    <ClInclude Include="core\src\graphics\renderer_base.h" />
-    <ClInclude Include="core\src\graphics\texture.h" />
-    <ClInclude Include="core\src\graphics\text_character.h" />
-    <ClInclude Include="core\src\graphics\text_label.h" />
-    <ClInclude Include="core\src\math\color.h" />
-    <ClInclude Include="core\src\math\math.h" />
-    <ClInclude Include="core\src\math\vector4.h" />
-    <ClInclude Include="core\src\sound\sound_buffer.h" />
-    <ClInclude Include="core\src\sound\sound_include.h" />
-    <ClInclude Include="core\src\sound\sound_source.h" />
-    <ClInclude Include="core\src\sudo_behaviour.h" />
-    <ClInclude Include="core\src\sudo_class.h" />
+    <ClInclude Include="core\include\graphics\buffers\buffer.h" />
+    <ClInclude Include="core\include\graphics\buffers\index_buffer.h" />
+    <ClInclude Include="core\include\graphics\buffers\vertex_array_buffer.h" />
+    <ClInclude Include="core\include\graphics\buffers\vertex_buffer.h" />
+    <ClInclude Include="core\include\graphics\font.h" />
+    <ClInclude Include="core\include\graphics\particle.h" />
+    <ClInclude Include="core\include\graphics\renderable2d.h" />
+    <ClInclude Include="core\include\graphics\renderer_base.h" />
+    <ClInclude Include="core\include\graphics\texture.h" />
+    <ClInclude Include="core\include\graphics\text_character.h" />
+    <ClInclude Include="core\include\graphics\text_label.h" />
+    <ClInclude Include="core\include\math\color.h" />
+    <ClInclude Include="core\include\math\math.h" />
+    <ClInclude Include="core\include\math\vector4.h" />
+    <ClInclude Include="core\include\sound\sound_buffer.h" />
+    <ClInclude Include="core\include\sound\sound_include.h" />
+    <ClInclude Include="core\include\sound\sound_source.h" />
+    <ClInclude Include="core\include\sudo_behaviour.h" />
+    <ClInclude Include="core\include\sudo_class.h" />
     <ClInclude Include="core\src\core_settings.h" />
-    <ClInclude Include="core\definitions.h" />
-    <ClInclude Include="core\src\debug.h" />
-    <ClInclude Include="core\src\graphics\shader.h" />
-    <ClInclude Include="core\src\systems\batch_render_system.h" />
-    <ClInclude Include="core\src\systems\particle_system.h" />
-    <ClInclude Include="core\src\systems\settings_system.h" />
-    <ClInclude Include="core\src\systems\sound_system.h" />
-    <ClInclude Include="core\src\systems\sudo_system.h" />
-    <ClInclude Include="core\src\systems\text_system.h" />
-    <ClInclude Include="core\src\systems\world_system.h" />
-    <ClInclude Include="core\src\utility\sudo_string.h" />
-    <ClInclude Include="core\src\utility\sudo_random.h" />
+    <ClInclude Include="core\include\definitions.h" />
+    <ClInclude Include="core\include\debug.h" />
+    <ClInclude Include="core\include\graphics\shader.h" />
+    <ClInclude Include="core\include\systems\batch_render_system.h" />
+    <ClInclude Include="core\include\systems\particle_system.h" />
+    <ClInclude Include="core\include\systems\settings_system.h" />
+    <ClInclude Include="core\include\systems\sound_system.h" />
+    <ClInclude Include="core\include\systems\sudo_system.h" />
+    <ClInclude Include="core\include\systems\text_system.h" />
+    <ClInclude Include="core\include\systems\world_system.h" />
+    <ClInclude Include="core\include\utility\sudo_string.h" />
+    <ClInclude Include="core\include\utility\sudo_random.h" />
     <ClInclude Include="src\core\core_engine_interface.h" />
-    <ClInclude Include="core\src\sudo_core.h" />
-    <ClInclude Include="core\src\systems\input_system.h" />
-    <ClInclude Include="core\src\math\mat4.h" />
-    <ClInclude Include="core\src\utility\timer.h" />
-    <ClInclude Include="core\src\utility\utility.h" />
-    <ClInclude Include="core\gl_include.h" />
-    <ClInclude Include="core\sudo.h" />
-    <ClInclude Include="core\src\graphics\graphics_framework.h" />
-    <ClInclude Include="core\src\graphics\window.h" />
+    <ClInclude Include="core\include\sudo_core.h" />
+    <ClInclude Include="core\include\systems\input_system.h" />
+    <ClInclude Include="core\include\math\mat4.h" />
+    <ClInclude Include="core\include\utility\timer.h" />
+    <ClInclude Include="core\include\utility\utility.h" />
+    <ClInclude Include="core\include\gl_include.h" />
+    <ClInclude Include="core\include\sudo.h" />
+    <ClInclude Include="core\include\graphics\graphics_framework.h" />
+    <ClInclude Include="core\include\graphics\window.h" />
     <ClInclude Include="src\core\math\math.h" />
-    <ClInclude Include="core\src\math\vector2.h" />
-    <ClInclude Include="core\src\math\vector3.h" />
+    <ClInclude Include="core\include\math\vector2.h" />
+    <ClInclude Include="core\include\math\vector3.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="core\src\shaders\unlit_shader_fragment_hsv.txt" />
