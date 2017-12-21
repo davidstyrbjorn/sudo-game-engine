@@ -8,21 +8,36 @@
 
 namespace sudo { namespace graphics {
 
+	Shader::~Shader()
+	{
+		glDeleteProgram(m_shaderProgram);
+	}
+
 	Shader::Shader(const char* a_vertexPath, const char* a_fragmentPath) 
 	{
 		std::string vertex_shader_source = utility::GetFileContent(a_vertexPath);
 		std::string fragment_shader_source = utility::GetFileContent(a_fragmentPath);
-		
+	
+		CreateShader(vertex_shader_source.c_str(), fragment_shader_source.c_str());
+	}
+
+	Shader::Shader(const char* a_vertexFileData, const char* a_fragmentFileData, int x) 
+	{
+		CreateShader(a_vertexFileData, a_fragmentFileData);
+	}
+
+	void Shader::CreateShader(const char* a_vertexFileData, const char* a_fragmentFileData)
+	{
 		// Loading and compiling vertex shader
 		uint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-		const char* vertexShaderSource = vertex_shader_source.c_str();
+		const char* vertexShaderSource = a_vertexFileData;
 		glShaderSource(vertexShader, 1, &vertexShaderSource, 0);
 		glCompileShader(vertexShader);
 		didCompile(vertexShader);
 
 		// Loading and compiling fragment shader
 		uint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-		const char* fragmentShaderSource = fragment_shader_source.c_str();
+		const char* fragmentShaderSource = a_fragmentFileData;
 		glShaderSource(fragmentShader, 1, &fragmentShaderSource, 0);
 		glCompileShader(fragmentShader);
 		didCompile(fragmentShader);

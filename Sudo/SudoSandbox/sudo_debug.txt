@@ -1,0 +1,47 @@
+[Thu Dec 21 21:24](ERROR: 0(1) : error C0000: syntax error, unexpected integer constant, expecting "::" at token "<int-const>"
+0(11) : warning C7532: global function texture requires "#version 130" or later
+)
+[Thu Dec 21 21:24](ERROR: 0(1) : error C0000: syntax error, unexpected $undefined at token "<undefined>"
+)
+[Thu Dec 21 21:24](ERROR: 0(1) : error C0000: syntax error, unexpected $undefined at token "<undefined>"
+)
+[Thu Dec 21 21:27](ERROR: 0(1) : error C0000: syntax error, unexpected $undefined at token "<undefined>"
+)
+[Thu Dec 21 21:27](ERROR: 0(1) : error C0000: syntax error, unexpected $undefined at token "<undefined>"
+)
+[Thu Dec 21 21:27](ERROR: 0(1) : error C0000: syntax error, unexpected integer constant, expecting "::" at token "<int-const>"
+0(11) : warning C7532: global function texture requires "#version 130" or later
+)
+[Thu Dec 21 21:27](ERROR: 0(1) : error C0000: syntax error, unexpected $undefined at token "<undefined>"
+)
+[Thu Dec 21 21:27](ERROR: 0(1) : error C0000: syntax error, unexpected $undefined at token "<undefined>"
+)
+[Thu Dec 21 21:28](ERROR: 0(1) : error C0000: syntax error, unexpected $undefined at token "<undefined>"
+)
+[Thu Dec 21 21:28](ERROR: 0(1) : error C0000: syntax error, unexpected $undefined at token "<undefined>"
+)
+[Thu Dec 21 21:28](ERROR: 0(1) : error C0000: syntax error, unexpected $undefined at token "<undefined>"
+)
+[Thu Dec 21 21:28](ERROR: 0(1) : error C0000: syntax error, unexpected $undefined at token "<undefined>"
+)
+[Thu Dec 21 21:28](ERROR: 0(1) : error C0000: syntax error, unexpected $undefined at token "<undefined>"
+)
+[Thu Dec 21 21:28](ERROR: 0(1) : error C0000: syntax error, unexpected $undefined at token "<undefined>"
+)
+[Thu Dec 21 21:28](ERROR: 0(1) : error C0000: syntax error, unexpected $undefined at token "<undefined>"
+)
+[Thu Dec 21 21:28](ERROR: 0(1) : error C0000: syntax error, unexpected $undefined at token "<undefined>"
+)
+[Thu Dec 21 21:34](ERROR: 0(1) : error C0000: syntax error, unexpected $undefined at token "<undefined>"
+)
+[Thu Dec 21 21:34](ERROR: 0(1) : error C0000: syntax error, unexpected $undefined at token "<undefined>"
+)
+[Thu Dec 21 21:35](ERROR: 0(2) : error C0000: syntax error, unexpected identifier, expecting '{' at token "TexCoords"
+)
+[Thu Dec 21 21:35](ERROR: 0(1) : error C0000: syntax error, unexpected $undefined at token "<undefined>"
+)
+[Thu Dec 21 21:35](ERROR: 0(1) : error C0000: syntax error, unexpected $undefined at token "<undefined>"
+)
+[Thu Dec 21 21:45](ERROR: 0(9) : error C1008: undefined variable "out_color"
+0(9) : error C1008: undefined variable "color"
+)

@@ -60,7 +60,10 @@ namespace sudo { namespace sudo_system {
 		m_particleCount = 0;
 
 		// Creating the shader
-		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_fragment.txt");
+		const char *vertex = "#version 330 core \n layout(location = 0) in vec2 in_pos; \n layout(location = 1) in vec4 in_color; \n uniform mat4 projection_matrix; \n uniform mat4 view_matrix = mat4(1.0); \n uniform mat4 model_matrix = mat4(1.0); \n out vec4 out_color; \n void main() { \n gl_Position = projection_matrix * view_matrix * model_matrix * vec4(in_pos.x, in_pos.y, 0, 1.0); \n out_color = in_color; \n }";
+		const char* fragment = "#version 330 core \n in vec4 out_color; \n void main() \n { \n gl_FragColor = out_color; \n }";
+		m_shader = new graphics::Shader(vertex, fragment, 1);
+		//m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\particle_shader_fragment.txt");
 		m_shader->enable();
 
 		m_shader->setUniformMatrix4x4("projection_matrix", math::Matrix4x4::Orthographic(

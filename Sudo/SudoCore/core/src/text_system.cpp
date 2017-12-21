@@ -15,7 +15,6 @@
 
 // @ TODO (Default font path)
 #if defined(_WIN32)
-
 #endif
 #if defined(_APPLE_) && defined(_MACH_)
 	#define DEFAULT_FONT_PATH "/Library/Fonts/arial.ttf"
@@ -113,7 +112,8 @@ namespace sudo { namespace sudo_system {
 		glewExperimental = true;
 
 		// Create default font
-		m_fonts.insert(std::pair<const char*, graphics::Font*>("default", new graphics::Font("C:\\Windows\\Fonts\\arial.ttf", 24)));
+		char *sysDrive = getenv("SystemDrive"); 
+		m_fonts.insert(std::pair<const char*, graphics::Font*>("default", new graphics::Font((std::string(sysDrive) + "\\Windows\\Fonts\\arial.ttf").c_str(), 24)));
 		m_currentFont = "default";
 
 		// Start OpenGL setup
@@ -121,8 +121,12 @@ namespace sudo { namespace sudo_system {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		// Construct the shader
-		m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\font_shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\font_shader_fragment.txt");
+		// Construct the shader																			
+		const char* vertex = "#version 330 core \n layout(location = 0) in vec4 vertex; \n out vec2 TexCoords; \n uniform mat4 projection; \n void main() \n { \n gl_Position = projection * vec4(vertex.xy, 0, 1); \n TexCoords = vertex.zw; \n }";
+		const char* fragment = "#version 330 core \n in vec2 TexCoords; \n uniform sampler2D texture; \n uniform vec3 textColor; \n out vec4 color; \n void main() \n { \n color = vec4(1,1,1,texture2D(texture, TexCoords).r) * vec4(textColor,1); \n }";
+
+		m_shader = new graphics::Shader(vertex, fragment, 1);
+		//m_shader = new graphics::Shader("D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\font_shader_vertex.txt", "D:\\SudoGameEngine\\Sudo\\SudoCore\\core\\src\\shaders\\font_shader_fragment.txt");
 		m_shader->enable();
 		m_shader->setUniformMatrix4x4("projection", math::Matrix4x4::Orthographic(
 			0,

@@ -28,6 +28,15 @@ namespace sudo { namespace graphics {
 		/* Call bind() to install shader as part of the current rendering state*/
 		Shader(const char* a_vertexPath, const char* a_fragmentPath);
 
+		// Same as a_vertexPath but takes in the file data directly
+		Shader(const char* a_vertexFileData, const char* a_fragmentFileData, int x);
+
+		// Destructor 
+		~Shader();
+
+		// Creates shader
+		void CreateShader(const char* a_vertexFileData, const char* a_fragmentFileData);
+
 		/* Calls glUseProgram on this shader */
 		/* glUseProgram — Installs a program object as part of current rendering state */
 		void enable()		const;
