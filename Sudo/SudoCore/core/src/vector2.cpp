@@ -1,4 +1,5 @@
 #include "../include/math/vector2.h"
+#include"../include/utility/sudo_random.h"
 
 namespace sudo { namespace math {
 
@@ -40,6 +41,12 @@ namespace sudo { namespace math {
 	unsigned char Vector2::operator<(const Vector2 & rhs)
 	{
 		return !operator>(rhs);
+	}
+
+	Vector2 Vector2::GetRandomVector(float a_minMagnitude, float a_maxMagnitude)
+	{
+		Vector2 temp(utility::SudoRandomNumber::GetRandomFloatingPoint(a_minMagnitude, a_maxMagnitude), utility::SudoRandomNumber::GetRandomFloatingPoint(a_minMagnitude, a_maxMagnitude));
+		return temp;
 	}
 
 	Vector2 Vector2::operator=(const Vector2 &rhs)

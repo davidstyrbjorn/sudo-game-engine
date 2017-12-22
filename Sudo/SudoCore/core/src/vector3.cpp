@@ -1,4 +1,5 @@
 #include "../include/math/vector3.h"
+#include"../include/utility/sudo_random.h"
 
 namespace sudo {
 	namespace math {
@@ -75,6 +76,12 @@ namespace sudo {
 		unsigned char Vector3::operator<(const Vector3 & rhs)
 		{
 			return !operator>(rhs);
+		}
+
+		Vector3 Vector3::GetRandomVector(float a_minMagnitude, float a_maxMagnitude)
+		{
+			Vector3 temp(utility::SudoRandomNumber::GetRandomFloatingPoint(a_minMagnitude, a_maxMagnitude), utility::SudoRandomNumber::GetRandomFloatingPoint(a_minMagnitude, a_maxMagnitude), utility::SudoRandomNumber::GetRandomFloatingPoint(a_minMagnitude, a_maxMagnitude));
+			return temp;
 		}
 
 		std::ostream & math::operator<<(std::ostream & os, const Vector3 & other)

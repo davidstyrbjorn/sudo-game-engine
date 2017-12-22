@@ -15,8 +15,19 @@ namespace sudo { namespace graphics {
 		glewExperimental = true;
 
 		// Init lib and face
-		if (FT_Init_FreeType(&m_lib)) DEBUG::getInstance()->printMessage("Failed to init FreeType library", LogType::Error);
-		if (FT_New_Face(m_lib, a_path, 0, &m_face)) DEBUG::getInstance()->printMessage("Failed to init FreeType face", LogType::Error);
+		if (FT_Init_FreeType(&m_lib))
+		{
+			DEBUG::getInstance()->printMessage("Failed to init FreeType library (library init failed)", LogType::Error);
+			return;
+		}
+		if (FT_New_Face(m_lib, a_path, 0, &m_face))
+		{
+			DEBUG::getInstance()->printMessage("Failed to init FreeType face (font path wrong)", LogType::Error);
+
+			// The font path we got failed so use the default arial.ttf 
+			char *sysDrive = getenv("SystemDrive"); // C:, D:, E:, etc the drive letter of the system 
+			FT_New_Face(m_lib, (std::string(sysDrive) + "\\Windows\\Fonts\\arial.ttf").c_str(), 0, &m_face);  
+		}
 
 		m_fontSize = a_size;
 		FT_Set_Pixel_Sizes(m_face, 0, a_size);

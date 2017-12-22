@@ -13,12 +13,7 @@
 #include"../include/graphics/shader.h"
 #include"../include/graphics/font.h"
 
-// @ TODO (Default font path)
-#if defined(_WIN32)
-#endif
-#if defined(_APPLE_) && defined(_MACH_)
-	#define DEFAULT_FONT_PATH "/Library/Fonts/arial.ttf"
-#endif
+#include"../include/definitions.h"
 
 namespace sudo { namespace sudo_system { 
 
@@ -112,7 +107,7 @@ namespace sudo { namespace sudo_system {
 		glewExperimental = true;
 
 		// Create default font
-		char *sysDrive = getenv("SystemDrive"); 
+		char *sysDrive = getenv("SystemDrive"); // C:, D:, E:, etc the drive letter of the system 
 		m_fonts.insert(std::pair<const char*, graphics::Font*>("default", new graphics::Font((std::string(sysDrive) + "\\Windows\\Fonts\\arial.ttf").c_str(), 24)));
 		m_currentFont = "default";
 

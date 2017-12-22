@@ -126,7 +126,14 @@ namespace sudo { namespace sudo_system {
 		}
 	}
 
-	void BatchRendererSystem::Submit(graphics::Renderable2D *a_primitive)
+	void BatchRendererSystem::Submit(graphics::Renderable2D *a_primitive, graphics::Renderable2D *a_primitive2, graphics::Renderable2D *a_primitive3)
+	{
+		_Submit(a_primitive);
+		if (a_primitive2 != nullptr) _Submit(a_primitive2);
+		if (a_primitive3 != nullptr) _Submit(a_primitive3);
+	}
+
+	void BatchRendererSystem::_Submit(graphics::Renderable2D *a_primitive)
 	{
 		// Only submit data if the renderer is active
 		if (m_isActive) {
