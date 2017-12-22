@@ -10,6 +10,7 @@
 #include"../definitions.h"
 
 #include<vector>
+#include<array>
 
 // Forward decleration
 namespace sudo { 
@@ -69,6 +70,10 @@ namespace sudo { namespace graphics {
 
 		/* Get the renderables texture id, return 0 if ther is no texture on the renderable */
 		const uint getTID() const;
+
+		/* Returns the vertex positions of renderable */
+		virtual const math::Vector3* GetPrimitivePoints() = 0;
+		virtual std::array<math::Vector3, 4> GetPrimitiveData_std() { return {}; }
 
 	protected:	
 		/* Renderable2D shared data */

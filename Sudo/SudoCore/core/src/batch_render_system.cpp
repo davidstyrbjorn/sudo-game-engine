@@ -62,7 +62,7 @@ namespace sudo { namespace sudo_system {
 			-1, 1));
 		m_shader->disable();
 
-		// =============== START ===================
+		// OpenGL starts here
 		glGenVertexArrays(1, &m_vertexArray);
 		glBindVertexArray(m_vertexArray);
 
@@ -70,7 +70,8 @@ namespace sudo { namespace sudo_system {
 		glGenBuffers(1, &m_buffer);
 		glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
 		glBufferData(GL_ARRAY_BUFFER, BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
-		// Structure the buffer layout
+
+		// Structure the buffer layout - bound to m_vertexArray
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(graphics::VertexData), nullptr); // Vertex position
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(graphics::VertexData), reinterpret_cast<GLvoid*>(offsetof(graphics::VertexData, color))); // Vertex color
@@ -81,7 +82,6 @@ namespace sudo { namespace sudo_system {
 		glEnableVertexAttribArray(3);
 
 		// index buffer
-#if USE_INDEX_BUFFER
 		int m_indicesOffset = 0;
 		uint m_indices[INDICES_COUNT];
 		for (int i = 0; i < INDICES_COUNT; i += 6) 
@@ -97,20 +97,6 @@ namespace sudo { namespace sudo_system {
 			m_indicesOffset += 4;
 		}
 		m_indexBuffer = new graphics::IndexBuffer(m_indices,  sizeof(m_indices));
-#endif
-	}
-
-	void BatchRendererSystem::Update(float deltaTime)
-	{
-		if (m_settingsSystem->DoAutoRender()) {
-			// This code auto renders every entity which has a renderable2D component 
-			for (int i = 0; i < m_worldSystem->GetEntityList().size(); i++) {
-				graphics::Renderable2D *temp = m_worldSystem->GetEntityList()[i]->GetRenderableComponent();
-				if (temp != nullptr) {
-					this->Submit(temp);
-				}
-			}
-		}
 	}
 
 	void BatchRendererSystem::Begin()
@@ -224,29 +210,31 @@ namespace sudo { namespace sudo_system {
 			// ================= Update the actual buffer ================= //
 			// ============================================================ //
 
+			math::Vector3 _x = a_primitive->GetPrimitiveData_std()[0];
 			// Vertex 1
-			m_mapBuffer->pos = pos1;
+			m_mapBuffer->pos = a_primitive->GetPrimitiveData_std()[0];
 			m_mapBuffer->color = _color;
 			m_mapBuffer->uv = math::Vector2(0, 0);
 			m_mapBuffer->tid = ts;
 			m_mapBuffer++;
 
+			math::Vector3 _y = a_primitive->GetPrimitiveData_std()[1];
 			// Vertex 2
-			m_mapBuffer->pos = pos2;
+			m_mapBuffer->pos = a_primitive->GetPrimitiveData_std()[1];
 			m_mapBuffer->color = _color;
 			m_mapBuffer->uv = math::Vector2(0, 1);
 			m_mapBuffer->tid = ts;
 			m_mapBuffer++;
 
 			// Vertex 3
-			m_mapBuffer->pos = pos3;
+			m_mapBuffer->pos = a_primitive->GetPrimitiveData_std()[2];
 			m_mapBuffer->color = _color;
 			m_mapBuffer->uv = math::Vector2(1, 1);
 			m_mapBuffer->tid = ts;
 			m_mapBuffer++;
 
 			// Vertex 4
-			m_mapBuffer->pos = pos4;
+			m_mapBuffer->pos = a_primitive->GetPrimitiveData_std()[3];
 			m_mapBuffer->color = _color;
 			m_mapBuffer->uv = math::Vector2(1, 0);
 			m_mapBuffer->tid = ts;
@@ -260,7 +248,6 @@ namespace sudo { namespace sudo_system {
 	void BatchRendererSystem::Flush()
 	{
 		if (m_primitiveCount != 0) {
-#if USE_INDEX_BUFFER
 			// Enable this shader
 			m_shader->enable();
 			// Bind the vertex array
@@ -278,10 +265,19 @@ namespace sudo { namespace sudo_system {
 
 			// Unbind
 			glBindVertexArray(0);
-#else
-			glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
-			glDrawArrays(GL_TRIANGLES, 0, 6 * m_primitiveCount);
-#endif
+		}
+	}
+
+	void BatchRendererSystem::Update(float deltaTime)
+	{
+		if (m_settingsSystem->DoAutoRender()) {
+			// This code auto renders every entity which has a renderable2D component 
+			for (int i = 0; i < m_worldSystem->GetEntityList().size(); i++) {
+				graphics::Renderable2D *temp = m_worldSystem->GetEntityList()[i]->GetRenderableComponent();
+				if (temp != nullptr) {
+					this->Submit(temp);
+				}
+			}
 		}
 	}
 

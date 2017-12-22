@@ -4,15 +4,12 @@
 #include"../graphics/renderable2d.h"
 
 namespace sudo {
-	namespace graphics {
-		struct VertexData;
+	namespace math {
+		class Vector3;
 	}
 }
 
 namespace sudo { namespace ecs {
-
-	// Forward decleration
-	class Transform;
 
 	class RectangleComponent : public Component, public graphics::Renderable2D {
 	public:
@@ -26,8 +23,9 @@ namespace sudo { namespace ecs {
 		void Start()	override;
 		void Update(float deltaTime)	override { }
 
-		/* Renderable2D virtual methods */
-		std::vector<graphics::VertexData> GetPrimitiveData();
+		// Returns the 4 vertex positions of the rectangle
+		const math::Vector3* GetPrimitivePoints();
+		std::array<math::Vector3, 4> GetPrimitiveData_std() override;
 	};
 	
 } }

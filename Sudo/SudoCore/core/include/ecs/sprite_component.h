@@ -3,6 +3,12 @@
 #include"component.h"
 #include"../graphics/renderable2d.h"
 
+namespace sudo {
+	namespace math {
+		class Vector3;
+	}
+}
+
 namespace sudo { namespace ecs {
 
 	class SpriteComponent : public Component, public graphics::Renderable2D {
@@ -19,6 +25,9 @@ namespace sudo { namespace ecs {
 		/* Component virtual methods */
 		void Start()	override;
 		void Update(float deltaTime)	override { }
+
+		// Returns the 4 vertex positions of the sprite
+		const math::Vector3* GetPrimitivePoints() override;
 	};
 	
 } } 

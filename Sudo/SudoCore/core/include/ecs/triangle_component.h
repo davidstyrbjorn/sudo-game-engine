@@ -26,8 +26,10 @@ namespace sudo {
 			void Start()	override;
 			void Update(float deltaTime)	override { }
 
-			/* Renderable2D virtual methods */
-			std::vector<graphics::VertexData> GetPrimitiveData();
+			// Returns the 3 vertex positions of the sprite
+			const math::Vector3* GetPrimitivePoints() override {
+				return nullptr;
+			}
 		};
 
 	}

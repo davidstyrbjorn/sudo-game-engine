@@ -2,9 +2,12 @@
 
 #include"../include/gl_include.h"
 #include"../include/definitions.h"
+#include"../include/math/math.h"
 
 #include"../include/ecs/transform_component.h"
 #include"../include/ecs/entity.h"
+
+#include"../include/math/vector3.h"
 
 namespace sudo { namespace ecs {
 
@@ -25,30 +28,94 @@ namespace sudo { namespace ecs {
 		m_entityTransform = m_entityHolder->transform;
 	}
 
-	std::vector<graphics::VertexData> RectangleComponent::GetPrimitiveData() 
+	const math::Vector3 * RectangleComponent::GetPrimitivePoints()
 	{
-		std::vector<graphics::VertexData> vertices = {
-			// Triangle 1
-			
-			graphics::VertexData(math::Vector3((m_entityTransform->position.x),			   (m_entityTransform->position.y),				0), m_color, math::Vector2(0,0)),
-			graphics::VertexData(math::Vector3((m_entityTransform->position.x),			   (m_entityTransform->position.y + m_size.y),  0), m_color, math::Vector2(0,1)),
-			graphics::VertexData(math::Vector3((m_entityTransform->position.x + m_size.x), (m_entityTransform->position.y + m_size.y),  0), m_color, math::Vector2(1,1)),
+		math::Vector3 points[4];
 
-			// Triangle 2
-			graphics::VertexData(math::Vector3((m_entityTransform->position.x + m_size.x), (m_entityTransform->position.y + m_size.y),  0), m_color, math::Vector2(1,1)),
-			graphics::VertexData(math::Vector3((m_entityTransform->position.x + m_size.x), (m_entityTransform->position.y),				0), m_color, math::Vector2(1,0)),
-			graphics::VertexData(math::Vector3((m_entityTransform->position.x),			   (m_entityTransform->position.y),				0), m_color, math::Vector2(0,0))
-			
+		// Base values
+		const Transform* transform = m_entityHolder->transform;
+		const math::Vector2 size = this->m_size;
+		const math::Vector3 position = m_entityHolder->transform->position;
+		const float angle = m_entityHolder->transform->angle * DEG2RAD;
 
-			/*
-			graphics::VertexData(m_entityTransform->position, m_color, math::Vector2(0,0)),
-			graphics::VertexData(math::Vector3(m_entityTransform->position.x, m_entityTransform->position.y + m_size.y, 0), m_color, math::Vector2(1,0)),
-			graphics::VertexData(math::Vector3(m_entityTransform->position.x + m_size.x, m_entityTransform->position.y + m_size.y, 0), m_color, math::Vector2(1,1)),
-			graphics::VertexData(math::Vector3(m_entityTransform->position.x + m_size.x, m_entityTransform->position.y, 0), m_color, math::Vector2(0,1))
-			*/
-		};
+		// Center of the rectangle
+		float cx = transform->position.x + (size.x / 2);
+		float cy = transform->position.y + (size.y / 2);
 
-		return vertices;
+		// Position 1
+		float tempX = transform->position.x - cx;
+		float tempY = transform->position.y - cy;
+		float rotatedX = tempX * cos(angle) - tempY * sin(angle);
+		float rotatedY = tempX * sin(angle) + tempY * cos(angle);
+		points[0] = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
+																
+		// Position 2											
+		tempX = position.x - cx;								
+		tempY = (position.y + size.y) - cx;						
+		rotatedX = tempX * cos(angle) - tempY * sin(angle);		
+		rotatedY = tempX * sin(angle) + tempY * cos(angle);		
+		points[1] = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
+																
+		// Position 3											
+		tempX = (position.x + size.x) - cx;						
+		tempY = (position.y + size.y) - cy;						
+		rotatedX = tempX * cos(angle) - tempY * sin(angle);		
+		rotatedY = tempX * sin(angle) + tempY * cos(angle);		
+		points[2] = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
+																
+		// Position 4											
+		tempX = (position.x + size.x) - cx;						
+		tempY = position.y - cy;								
+		rotatedX = tempX * cos(angle) - tempY * sin(angle);		
+		rotatedY = tempX * sin(angle) + tempY * cos(angle);		
+		points[3] = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
+
+		// Return the positions
+		return points;
 	}
+	std::array<math::Vector3, 4> RectangleComponent::GetPrimitiveData_std()
+	{
+		std::array<math::Vector3, 4> points;
 
+		// Base values
+		const Transform* transform = m_entityHolder->transform;
+		const math::Vector2 size = this->m_size;
+		const math::Vector3 position = m_entityHolder->transform->position;
+		const float angle = m_entityHolder->transform->angle * DEG2RAD;
+
+		// Center of the rectangle
+		float cx = transform->position.x + (size.x / 2);
+		float cy = transform->position.y + (size.y / 2);
+
+		// Position 1
+		float tempX = transform->position.x - cx;
+		float tempY = transform->position.y - cy;
+		float rotatedX = tempX * cos(angle) - tempY * sin(angle);
+		float rotatedY = tempX * sin(angle) + tempY * cos(angle);
+		points[0] = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
+
+		// Position 2											
+		tempX = position.x - cx;
+		tempY = (position.y + size.y) - cy;
+		rotatedX = tempX * cos(angle) - tempY * sin(angle);
+		rotatedY = tempX * sin(angle) + tempY * cos(angle);
+		points[1] = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
+
+		// Position 3											
+		tempX = (position.x + size.x) - cx;
+		tempY = (position.y + size.y) - cy;
+		rotatedX = tempX * cos(angle) - tempY * sin(angle);
+		rotatedY = tempX * sin(angle) + tempY * cos(angle);
+		points[2] = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
+
+		// Position 4											
+		tempX = (position.x + size.x) - cx;
+		tempY = position.y - cy;
+		rotatedX = tempX * cos(angle) - tempY * sin(angle);
+		rotatedY = tempX * sin(angle) + tempY * cos(angle);
+		points[3] = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
+
+		// Return the positions
+		return points;
+	}
 } } 

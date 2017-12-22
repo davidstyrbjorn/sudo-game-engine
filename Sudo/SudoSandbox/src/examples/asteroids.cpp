@@ -437,9 +437,45 @@ MyGame::MyGame()
 	engine.init(math::Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), "ASSteroids", this);
 }
 
+class Game : SudoClass {
+private:
+	SudoCore engine;
+
+	ecs::Entity *shape;
+	ecs::Entity *shape2;
+
+public:
+	Game() {
+		engine.init(math::Vector2(400, 400), "s", this);
+	}
+
+	void Start() {
+		shape = new ecs::Entity();
+		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(100, 100), math::Color::Red()));
+		shape->transform->Move(math::Vector3(50, 50, 0));
+		//shape->transform->angle = 45;
+
+		shape2 = new ecs::Entity();
+		shape2->AddComponent(new ecs::RectangleComponent(math::Vector2(100, 100), math::Color::Green()));
+		shape2->transform->Move(math::Vector3(100, 200, 0));
+		//shape2->transform->angle = 45;
+	}
+
+	void Render() {
+		renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
+		renderer->Submit(shape2->GetComponent<ecs::RectangleComponent>());
+
+		if (input->GetKey("space")) {
+			shape->transform->angle += 1;
+		}
+		shape2->transform->angle += 4;
+	}
+};
+
 int main()
 {
-	MyGame *game = new MyGame();
+	//MyGame *game = new MyGame();
+	Game *game = new Game();
 
 	return EXIT_SUCCESS;
 }
