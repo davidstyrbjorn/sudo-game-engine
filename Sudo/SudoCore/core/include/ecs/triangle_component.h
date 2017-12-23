@@ -27,9 +27,7 @@ namespace sudo {
 			void Update(float deltaTime)	override { }
 
 			// Returns the 3 vertex positions of the sprite
-			const math::Vector3* GetPrimitivePoints() override {
-				return nullptr;
-			}
+			std::array<math::Vector3, 4> GetPrimitivePoints() override;
 		};
 
 	}

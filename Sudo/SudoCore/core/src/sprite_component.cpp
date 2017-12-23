@@ -21,6 +21,8 @@ namespace sudo { namespace ecs {
 		m_texture = new graphics::Texture(a_imagePath);
 
 		m_size = math::Vector2(m_texture->getWidth(), m_texture->getHeight());
+
+		c_pointCount = 4;
 	}
 
 	void SpriteComponent::Start()
@@ -28,10 +30,9 @@ namespace sudo { namespace ecs {
 		m_entityTransform = m_entityHolder->transform;
 	}
 
-	const math::Vector3 * SpriteComponent::GetPrimitivePoints()
+	std::array<math::Vector3, 4> SpriteComponent::GetPrimitivePoints()
 	{
-		// Final return value
-		math::Vector3 points[4];
+		std::array<math::Vector3, 4> points;
 
 		// Base values
 		const Transform* transform = m_entityHolder->transform;
@@ -41,9 +42,9 @@ namespace sudo { namespace ecs {
 
 		if (angle == 0) {
 			points[0] = transform->position;
-			points[1] = math::Vector3(transform->position.x, transform->position.y + size.y, transform->position.z);
-			points[2] = math::Vector3(transform->position.x + size.x, transform->position.y + size.y, transform->position.z);
-			points[3] = math::Vector3(transform->position.x + size.x, transform->position.y, transform->position.z);
+			points[1] = math::Vector3(position.x, position.y + size.y, position.z);
+			points[2] = math::Vector3(position.x + size.x, position.y + size.y, position.z);
+			points[3] = math::Vector3(position.x + size.x, position.y, position.z);
 			return points;
 		}
 
@@ -56,28 +57,28 @@ namespace sudo { namespace ecs {
 		float tempY = transform->position.y - cy;
 		float rotatedX = tempX * cos(angle) - tempY * sin(angle);
 		float rotatedY = tempX * sin(angle) + tempY * cos(angle);
-		points[0] = math::Vector3(rotatedX - cx, rotatedY - cy, transform->position.y);
+		points[0] = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
 
-		// Position 2
+		// Position 2											
 		tempX = position.x - cx;
-		tempY = (position.y + size.y) - cx;
+		tempY = (position.y + size.y) - cy;
 		rotatedX = tempX * cos(angle) - tempY * sin(angle);
 		rotatedY = tempX * sin(angle) + tempY * cos(angle);
-		points[1] = math::Vector3(rotatedX - cx, rotatedY - cy, transform->position.y);
+		points[1] = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
 
-		// Position 3
+		// Position 3											
 		tempX = (position.x + size.x) - cx;
 		tempY = (position.y + size.y) - cy;
 		rotatedX = tempX * cos(angle) - tempY * sin(angle);
 		rotatedY = tempX * sin(angle) + tempY * cos(angle);
-		points[2] = math::Vector3(rotatedX - cx, rotatedY - cy, transform->position.y);
+		points[2] = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
 
-		// Position 4
+		// Position 4											
 		tempX = (position.x + size.x) - cx;
 		tempY = position.y - cy;
 		rotatedX = tempX * cos(angle) - tempY * sin(angle);
 		rotatedY = tempX * sin(angle) + tempY * cos(angle);
-		points[3] = math::Vector3(rotatedX - cx, rotatedY - cy, transform->position.y);
+		points[3] = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
 
 		// Return the positions
 		return points;

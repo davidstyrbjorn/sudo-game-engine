@@ -6,6 +6,9 @@ namespace sudo {
 /* ===================================================== */
 
 typedef unsigned int uint;
+typedef unsigned int uint16;
+typedef unsigned char uint8;
+
 typedef char GLchar;
 typedef unsigned int GLenum;
 typedef unsigned int GLbitfield;

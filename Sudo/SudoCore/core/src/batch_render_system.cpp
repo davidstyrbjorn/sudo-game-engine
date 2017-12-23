@@ -63,25 +63,25 @@ namespace sudo { namespace sudo_system {
 		m_shader->disable();
 
 		// OpenGL starts here
-		glGenVertexArrays(1, &m_vertexArray);
-		glBindVertexArray(m_vertexArray);
+		glGenVertexArrays(1, &m_quadVAO);
+		glBindVertexArray(m_quadVAO);
 
-		// Create and bind buffer
-		glGenBuffers(1, &m_buffer);
-		glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
-		glBufferData(GL_ARRAY_BUFFER, BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
+		// Create and bind quad buffer
+		glGenBuffers(1, &m_quadVBO);
+		glBindBuffer(GL_ARRAY_BUFFER, m_quadVBO);
+		glBufferData(GL_ARRAY_BUFFER, QUAD_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
 
-		// Structure the buffer layout - bound to m_vertexArray
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(graphics::VertexData), nullptr); // Vertex position
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(graphics::VertexData), reinterpret_cast<GLvoid*>(offsetof(graphics::VertexData, color))); // Vertex color
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(graphics::VertexData), reinterpret_cast<GLvoid*>(offsetof(graphics::VertexData, uv))); // Vertex texture coordinates
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(graphics::VertexData), reinterpret_cast<GLvoid*>(offsetof(graphics::VertexData, tid)));
+		// Structure the quad buffer layout - bound to m_vertexArray
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(graphics::QuadVertexData), nullptr); // Vertex position
+		glEnableVertexAttribArray(0);									 
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(graphics::QuadVertexData), reinterpret_cast<GLvoid*>(offsetof(graphics::QuadVertexData, color))); // Vertex color
+		glEnableVertexAttribArray(1);									 
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(graphics::QuadVertexData), reinterpret_cast<GLvoid*>(offsetof(graphics::QuadVertexData, uv))); // Vertex texture coordinates
+		glEnableVertexAttribArray(2);									 
+		glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(graphics::QuadVertexData), reinterpret_cast<GLvoid*>(offsetof(graphics::QuadVertexData, tid)));
 		glEnableVertexAttribArray(3);
 
-		// index buffer
+		// quad index buffer
 		int m_indicesOffset = 0;
 		uint m_indices[INDICES_COUNT];
 		for (int i = 0; i < INDICES_COUNT; i += 6) 
@@ -97,18 +97,38 @@ namespace sudo { namespace sudo_system {
 			m_indicesOffset += 4;
 		}
 		m_indexBuffer = new graphics::IndexBuffer(m_indices,  sizeof(m_indices));
+
+		// Triangle VAO
+		glGenVertexArrays(1, &m_triangleVAO);
+		glBindVertexArray(m_triangleVAO);
+
+		// Triangle VBO
+		glGenBuffers(1, &m_triangleVBO);
+		glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
+		glBufferData(GL_ARRAY_BUFFER, TRIANGLE_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
+
+		// Structure the quad buffer layout - bound to m_triangleVAO
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(graphics::TriangleVertexData), nullptr); // Vertex position
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(graphics::TriangleVertexData), reinterpret_cast<GLvoid*>(offsetof(graphics::TriangleVertexData, color))); // Vertex color
+		glEnableVertexAttribArray(1);
 	}
 
 	void BatchRendererSystem::Begin()
 	{
 		// Reset primitive count
-		m_primitiveCount = 0;
+		m_quadCount = 0;
+		m_triangleCount = 0;
 
 		// Only map the buffer if the renderer is active
 		if (m_isActive) {
-			// Bind and reset buffer data
-			glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
-			m_mapBuffer = (graphics::VertexData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+			// Bind and reset quad buffer data
+			glBindBuffer(GL_ARRAY_BUFFER, m_quadVBO);
+			m_mapBuffer = (graphics::QuadVertexData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+
+			// Bind and reset triangle buffer data
+			glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
+			glBufferData(GL_ARRAY_BUFFER, TRIANGLE_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
 		}
 	}
 
@@ -122,9 +142,12 @@ namespace sudo { namespace sudo_system {
 	void BatchRendererSystem::_Submit(graphics::Renderable2D *a_primitive)
 	{
 		// Only submit data if the renderer is active
-		if (m_isActive) {
-			glBindVertexArray(m_vertexArray);
-			glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
+		if (m_isActive && (m_quadCount + m_triangleCount) < MAX_PRIMITIVES) 
+		{
+		// Rectangles and sprties
+		if (a_primitive->GetPointCount() == 4) {
+			glBindVertexArray(m_quadVAO);
+			glBindBuffer(GL_ARRAY_BUFFER, m_quadVBO);
 
 			// Texture
 			const uint tid = a_primitive->getTID();
@@ -155,117 +178,98 @@ namespace sudo { namespace sudo_system {
 				}
 			}
 
-			const math::Vector3 &_position = a_primitive->GetEntityTransform()->position;
-			const math::Vector2 &_size = a_primitive->GetSize();
 			// Clamp it to 0-1 for the shader
-			const math::Color &_color = a_primitive->GetColor()/255;
-			// All the vertex positions
-			math::Vector3 pos1, pos2, pos3, pos4;
+			const math::Color &_color = a_primitive->GetColor() / 255;
 
-			// Rotation calculation
-			float angle = a_primitive->GetEntityTransform()->angle;
-			float angleInRads = angle * DEG2RAD;
+			// Update the buffer
 
-			// cx, cy - center for the rectangle
-			float cx = a_primitive->GetEntityTransform()->position.x + (a_primitive->GetSize().x / 2);
-			float cy = a_primitive->GetEntityTransform()->position.y + (a_primitive->GetSize().y / 2);
-
-			// Vertex 1 rotation
-			// Translate point to the origin
-			float tempX = _position.x - cx;
-			float tempY = _position.y - cy;
-			// apply rotation
-			float rotatedX = tempX*cos(angleInRads) - tempY*sin(angleInRads);
-			float rotatedY = tempX*sin(angleInRads) + tempY*cos(angleInRads);
-			pos1 = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
-
-			// Vertex 2 rotation
-			// Translate point to the origin
-			tempX = _position.x - cx;
-			tempY = (_position.y + _size.y) - cy;
-			// apply rotation
-			rotatedX = tempX*cos(angleInRads) - tempY*sin(angleInRads);
-			rotatedY = tempX*sin(angleInRads) + tempY*cos(angleInRads);
-			pos2 = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
-
-			// Vertex 3 rotation
-			// Translate point to the origin
-			tempX = (_position.x + _size.x) - cx;
-			tempY = (_position.y + _size.y) - cy;
-			// apply rotation
-			rotatedX = tempX*cos(angleInRads) - tempY*sin(angleInRads);
-			rotatedY = tempX*sin(angleInRads) + tempY*cos(angleInRads);
-			pos3 = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
-
-			// Vertex 4 rotation
-			// Translate point to the origin
-			tempX = (_position.x + _size.x) - cx;
-			tempY = _position.y - cy;
-			// apply rotation
-			rotatedX = tempX*cos(angleInRads) - tempY*sin(angleInRads);
-			rotatedY = tempX*sin(angleInRads) + tempY*cos(angleInRads);
-			pos4 = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
-
-			// ============================================================ //
-			// ================= Update the actual buffer ================= //
-			// ============================================================ //
-
-			math::Vector3 _x = a_primitive->GetPrimitiveData_std()[0];
 			// Vertex 1
-			m_mapBuffer->pos = a_primitive->GetPrimitiveData_std()[0];
+			m_mapBuffer->pos = a_primitive->GetPrimitivePoints()[0];
 			m_mapBuffer->color = _color;
 			m_mapBuffer->uv = math::Vector2(0, 0);
 			m_mapBuffer->tid = ts;
 			m_mapBuffer++;
 
-			math::Vector3 _y = a_primitive->GetPrimitiveData_std()[1];
 			// Vertex 2
-			m_mapBuffer->pos = a_primitive->GetPrimitiveData_std()[1];
+			m_mapBuffer->pos = a_primitive->GetPrimitivePoints()[1];
 			m_mapBuffer->color = _color;
 			m_mapBuffer->uv = math::Vector2(0, 1);
 			m_mapBuffer->tid = ts;
 			m_mapBuffer++;
 
 			// Vertex 3
-			m_mapBuffer->pos = a_primitive->GetPrimitiveData_std()[2];
+			m_mapBuffer->pos = a_primitive->GetPrimitivePoints()[2];
 			m_mapBuffer->color = _color;
 			m_mapBuffer->uv = math::Vector2(1, 1);
 			m_mapBuffer->tid = ts;
 			m_mapBuffer++;
 
 			// Vertex 4
-			m_mapBuffer->pos = a_primitive->GetPrimitiveData_std()[3];
+			m_mapBuffer->pos = a_primitive->GetPrimitivePoints()[3];
 			m_mapBuffer->color = _color;
 			m_mapBuffer->uv = math::Vector2(1, 0);
 			m_mapBuffer->tid = ts;
 			m_mapBuffer++;
 
 			// Increment the primitive count
-			m_primitiveCount++;
+			m_quadCount++;
+		}
+		// Triangles
+		if (a_primitive->GetPointCount() == 3) {
+			glBindVertexArray(m_triangleVAO);
+			glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
+
+			graphics::TriangleVertexData data[] = {
+				{ a_primitive->GetPrimitivePoints()[0], a_primitive->GetColor() },
+				{ a_primitive->GetPrimitivePoints()[1], a_primitive->GetColor() },
+				{ a_primitive->GetPrimitivePoints()[2], a_primitive->GetColor() }
+			};
+
+			glBufferSubData(GL_ARRAY_BUFFER, m_triangleCount * (sizeof(graphics::TriangleVertexData) * 3), sizeof(data), data);
+
+			m_triangleCount++;
+		}
 		}
 	}
 
 	void BatchRendererSystem::Flush()
 	{
-		if (m_primitiveCount != 0) {
-			// Enable this shader
-			m_shader->enable();
-			// Bind the vertex array
-			glBindVertexArray(m_vertexArray);
-			// Bind the textures
+		// Enable shader
+		m_shader->enable();
+
+		if (m_quadCount != 0) {
+			// Bind 
+			glBindVertexArray(m_quadVAO);
 			for (int i = 0; i < m_textureSlots.size(); i++) {
 				glActiveTexture(GL_TEXTURE0 + i);
 				glBindTexture(GL_TEXTURE_2D, m_textureSlots[i]);
 			}
 			m_indexBuffer->bind();
-			glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
+			glBindBuffer(GL_ARRAY_BUFFER, m_quadVBO);
 
 			// Draw call
-			glDrawElements(GL_TRIANGLES, 6 * m_primitiveCount, GL_UNSIGNED_INT, 0);
+			glDrawElements(GL_TRIANGLES, 6 * m_quadCount, GL_UNSIGNED_INT, 0);
 
-			// Unbind
-			glBindVertexArray(0);
 		}
+		if (m_triangleCount != 0) {
+			// Bind
+			glBindVertexArray(m_triangleVAO);
+			glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
+
+			// Draw call 
+			glDrawArrays(GL_TRIANGLES, 0, 3 * m_triangleCount);
+		}
+	}
+
+	void BatchRendererSystem::End()
+	{
+		// Empty the buffer
+		glUnmapBuffer(GL_ARRAY_BUFFER);
+
+		// Unbind
+		m_indexBuffer->unbind();
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
 	}
 
 	void BatchRendererSystem::Update(float deltaTime)
@@ -281,22 +285,16 @@ namespace sudo { namespace sudo_system {
 		}
 	}
 
-	void BatchRendererSystem::End()
-	{
-		// Empty the buffer
-		glUnmapBuffer(GL_ARRAY_BUFFER);
-	}
-
 	void BatchRendererSystem::CleanUp()
 	{
 		m_isActive = false;
 		glUnmapBuffer(GL_ARRAY_BUFFER);
-		glDeleteBuffers(1, &m_buffer);
+		glDeleteBuffers(1, &m_quadVBO);
+		glDeleteBuffers(1, &m_triangleVBO);
 
-#if USE_INDEX_BUFFER
 		delete m_indexBuffer;
-#endif
-		glDeleteVertexArrays(1, &m_vertexArray);
+		glDeleteVertexArrays(1, &m_quadVAO);
+		glDeleteVertexArrays(1, &m_triangleVAO);
 	}
 
 } } 

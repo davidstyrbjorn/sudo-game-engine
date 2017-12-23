@@ -441,8 +441,8 @@ class Game : SudoClass {
 private:
 	SudoCore engine;
 
-	ecs::Entity *shape;
 	ecs::Entity *shape2;
+	ecs::Entity *shape;
 
 public:
 	Game() {
@@ -451,24 +451,20 @@ public:
 
 	void Start() {
 		shape = new ecs::Entity();
-		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(100, 100), math::Color::Red()));
-		shape->transform->Move(math::Vector3(50, 50, 0));
-		//shape->transform->angle = 45;
+		shape->AddComponent(new ecs::TriangleComponent(math::Vector2(125, 70), math::Color::Red()));
+		shape->transform->Move(math::Vector3(150, 150, 0));
+		shape->transform->angle = 45;
 
 		shape2 = new ecs::Entity();
-		shape2->AddComponent(new ecs::RectangleComponent(math::Vector2(100, 100), math::Color::Green()));
-		shape2->transform->Move(math::Vector3(100, 200, 0));
-		//shape2->transform->angle = 45;
+		shape2->AddComponent(new ecs::RectangleComponent(math::Vector2(50, 50), math::Color::Green()));
+		//shape2->transform->angle = 120;
 	}
 
 	void Render() {
-		renderer->Submit(shape->GetComponent<ecs::RectangleComponent>());
+		renderer->Submit(shape->GetComponent<ecs::TriangleComponent>());
 		renderer->Submit(shape2->GetComponent<ecs::RectangleComponent>());
 
-		if (input->GetKey("space")) {
-			shape->transform->angle += 1;
-		}
-		shape2->transform->angle += 4;
+		shape->transform->Rotate(3);
 	}
 };
 

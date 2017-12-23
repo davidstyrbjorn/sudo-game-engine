@@ -15,7 +15,8 @@ namespace sudo {
 		class Renderable2D;
 		class Texture;
 
-		struct VertexData;
+		struct QuadVertexData;
+		struct TriangleVertexData;
 	}
 	namespace sudo_system {
 		class WorldSystem;
@@ -25,20 +26,17 @@ namespace sudo {
 
 namespace sudo { namespace sudo_system { 
 
-#define USE_INDEX_BUFFER 1
-
 // Renderer pre-processor data
 #define MAX_PRIMITIVES 2000
-#define VERTEX_SIZE sizeof(graphics::VertexData)
+#define QUAD_VERTEX_SIZE sizeof(graphics::QuadVertexData)
+#define TRIANGLE_VERTEX_SIZE sizeof(graphics::TriangleVertexData)
 
-#if USE_INDEX_BUFFER
-#define PRIMITIVE_SIZE VERTEX_SIZE * 4 // 6 verts in a quad
-#else
-#define PRIMITIVE_SIZE VERTEX_SIZE * 6
-#endif
-
-#define BUFFER_SIZE PRIMITIVE_SIZE * MAX_PRIMITIVES 
+#define QUAD_SIZE QUAD_VERTEX_SIZE * 4
+#define QUAD_BUFFER_SIZE QUAD_SIZE * MAX_PRIMITIVES 
 #define INDICES_COUNT MAX_PRIMITIVES * 6
+
+#define TRIANGLE_SIZE TRIANGLE_VERTEX_SIZE * 3
+#define TRIANGLE_BUFFER_SIZE TRIANGLE_SIZE * MAX_PRIMITIVES
 
 	class BatchRendererSystem : public SudoSystem, public graphics::RendererBase, public SudoBehaviour {
 	private:
@@ -68,23 +66,22 @@ namespace sudo { namespace sudo_system {
 
 	private:
 		// Batch Renderer data 
-		uint m_vertexArray;
+		uint m_quadVAO, m_triangleVAO;
 		graphics::Shader *m_shader;
-		graphics::VertexData *m_mapBuffer;
+
+		graphics::QuadVertexData *m_mapBuffer;
+		graphics::IndexBuffer *m_indexBuffer;
+		uint m_quadVBO, m_triangleVBO;
 
 		// Texture 
 		std::vector<uint> m_textureSlots;
 
+		// System references
 		SettingsSystem *m_settingsSystem;
 		WorldSystem *m_worldSystem;
 
-#if USE_INDEX_BUFFER
-		graphics::IndexBuffer *m_indexBuffer;
-#endif
-
 		bool m_isActive;
-		unsigned int m_buffer;
-		unsigned short int m_primitiveCount;
+		unsigned short int m_quadCount, m_triangleCount;
 	};
 
 } } 

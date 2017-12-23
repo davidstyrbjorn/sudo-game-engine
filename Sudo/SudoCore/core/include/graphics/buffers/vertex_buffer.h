@@ -10,7 +10,7 @@ namespace sudo {
 
 namespace sudo { namespace graphics { 
 
-	class VertexData;
+	class QuadVertexData;
 
 	class VertexBuffer
 	{
@@ -20,7 +20,7 @@ namespace sudo { namespace graphics {
 
 	public:
 		/* Constructor */
-		VertexBuffer(VertexData* a_data, uint a_size);
+		VertexBuffer(QuadVertexData* a_data, uint a_size);
 
 		/* Destructor */
 		virtual ~VertexBuffer();

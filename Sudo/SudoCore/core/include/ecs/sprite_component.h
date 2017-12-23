@@ -27,7 +27,7 @@ namespace sudo { namespace ecs {
 		void Update(float deltaTime)	override { }
 
 		// Returns the 4 vertex positions of the sprite
-		const math::Vector3* GetPrimitivePoints() override;
+		std::array<math::Vector3, 4> GetPrimitivePoints() override;
 	};
 	
 } } 

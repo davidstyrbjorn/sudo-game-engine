@@ -30,19 +30,24 @@ namespace sudo {
 
 namespace sudo { namespace graphics { 
 
-	struct VertexData 
+	struct QuadVertexData 
 	{
 		math::Vector3 pos;
 		math::Color color;
 		math::Vector2 uv;
 		float tid;
 
-		VertexData(const math::Vector3 &a_pos, const math::Color &a_color, const math::Vector2 &a_uv)
+		QuadVertexData(const math::Vector3 &a_pos, const math::Color &a_color, const math::Vector2 &a_uv)
 		{
 			pos = a_pos;
 			color = a_color;
 			uv = a_uv;
 		}
+	};
+
+	struct TriangleVertexData {
+		math::Vector3 pos;
+		math::Color color;
 	};
 
 	/* Base class for 2D renderable shapes */
@@ -71,15 +76,18 @@ namespace sudo { namespace graphics {
 		/* Get the renderables texture id, return 0 if ther is no texture on the renderable */
 		const uint getTID() const;
 
+		/* Return the number of points for this renderable */
+		const uint8 GetPointCount() { return c_pointCount; }
+
 		/* Returns the vertex positions of renderable */
-		virtual const math::Vector3* GetPrimitivePoints() = 0;
-		virtual std::array<math::Vector3, 4> GetPrimitiveData_std() { return {}; }
+		virtual std::array<math::Vector3, 4> GetPrimitivePoints() = 0;
 
 	protected:	
 		/* Renderable2D shared data */
 		ecs::Transform *m_entityTransform;
 		math::Vector2 m_size;
 		math::Color m_color;
+		uint8 c_pointCount; // 8-bit integer
 
 		math::Vector2 m_sizeBeforeReisze;
 

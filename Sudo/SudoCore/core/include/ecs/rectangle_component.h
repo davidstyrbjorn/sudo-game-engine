@@ -24,8 +24,7 @@ namespace sudo { namespace ecs {
 		void Update(float deltaTime)	override { }
 
 		// Returns the 4 vertex positions of the rectangle
-		const math::Vector3* GetPrimitivePoints();
-		std::array<math::Vector3, 4> GetPrimitiveData_std() override;
+		std::array<math::Vector3, 4> GetPrimitivePoints() override;
 	};
 	
 } }
