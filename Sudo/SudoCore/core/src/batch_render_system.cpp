@@ -122,13 +122,14 @@ namespace sudo { namespace sudo_system {
 
 		// Only map the buffer if the renderer is active
 		if (m_isActive) {
+			// Bind and reset triangle buffer data
+			//glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
+			//glBufferData(GL_ARRAY_BUFFER, TRIANGLE_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
+
 			// Bind and reset quad buffer data
+			glBindVertexArray(m_quadVAO);
 			glBindBuffer(GL_ARRAY_BUFFER, m_quadVBO);
 			m_mapBuffer = (graphics::QuadVertexData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-
-			// Bind and reset triangle buffer data
-			glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
-			glBufferData(GL_ARRAY_BUFFER, TRIANGLE_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
 		}
 	}
 
@@ -141,13 +142,30 @@ namespace sudo { namespace sudo_system {
 
 	void BatchRendererSystem::_Submit(graphics::Renderable2D *a_primitive)
 	{
-		// Only submit data if the renderer is active
-		if (m_isActive && (m_quadCount + m_triangleCount) < MAX_PRIMITIVES) 
+		// Only submit data if the renderer is active and we have space for the primitive
+		if (m_isActive && (m_quadCount + m_trianglesToRender.size()) < MAX_PRIMITIVES) 
 		{
-		// Rectangles and sprties
-		if (a_primitive->GetPointCount() == 4) {
+			// Rectangles and sprties
+			if (a_primitive->GetPointCount() == 4) {
+				m_quadsToRender.push_back(a_primitive);
+			}
+			// Triangles
+			if (a_primitive->GetPointCount() == 3) {
+				m_trianglesToRender.push_back(a_primitive);
+			}
+		}
+	}
+
+	void BatchRendererSystem::PrepareQuad()
+	{
+		// Rectangles and sprites
+		while (!m_quadsToRender.empty()) 
+		{
 			glBindVertexArray(m_quadVAO);
 			glBindBuffer(GL_ARRAY_BUFFER, m_quadVBO);
+
+			// Get the primitive to be rendered
+			graphics::Renderable2D* a_primitive = m_quadsToRender.front();
 
 			// Texture
 			const uint tid = a_primitive->getTID();
@@ -181,8 +199,6 @@ namespace sudo { namespace sudo_system {
 			// Clamp it to 0-1 for the shader
 			const math::Color &_color = a_primitive->GetColor() / 255;
 
-			// Update the buffer
-
 			// Vertex 1
 			m_mapBuffer->pos = a_primitive->GetPrimitivePoints()[0];
 			m_mapBuffer->color = _color;
@@ -211,24 +227,33 @@ namespace sudo { namespace sudo_system {
 			m_mapBuffer->tid = ts;
 			m_mapBuffer++;
 
-			// Increment the primitive count
+			// Pop the front of the deque
+			m_quadsToRender.pop_front();
 			m_quadCount++;
 		}
-		// Triangles
-		if (a_primitive->GetPointCount() == 3) {
+	}
+
+	void BatchRendererSystem::PrepareTriangle()
+	{
+		while (!m_trianglesToRender.empty())
+		{
 			glBindVertexArray(m_triangleVAO);
 			glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
 
+			// Get the primitive to be rendered
+			graphics::Renderable2D* a_primitive = m_trianglesToRender.front();
+
 			graphics::TriangleVertexData data[] = {
-				{ a_primitive->GetPrimitivePoints()[0], a_primitive->GetColor() },
-				{ a_primitive->GetPrimitivePoints()[1], a_primitive->GetColor() },
-				{ a_primitive->GetPrimitivePoints()[2], a_primitive->GetColor() }
+				{ a_primitive->GetPrimitivePoints()[0], a_primitive->GetColor() / 255 },
+				{ a_primitive->GetPrimitivePoints()[1], a_primitive->GetColor() / 255 },
+				{ a_primitive->GetPrimitivePoints()[2], a_primitive->GetColor() / 255 }
 			};
 
 			glBufferSubData(GL_ARRAY_BUFFER, m_triangleCount * (sizeof(graphics::TriangleVertexData) * 3), sizeof(data), data);
 
+			// Pop the front of the deque 
+			m_trianglesToRender.pop_front();
 			m_triangleCount++;
-		}
 		}
 	}
 
@@ -267,9 +292,9 @@ namespace sudo { namespace sudo_system {
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 
 		// Unbind
-		m_indexBuffer->unbind();
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindVertexArray(0);
+		//m_indexBuffer->unbind();
+		//glBindBuffer(GL_ARRAY_BUFFER, 0);
+		//glBindVertexArray(0);
 	}
 
 	void BatchRendererSystem::Update(float deltaTime)

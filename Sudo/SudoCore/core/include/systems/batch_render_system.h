@@ -6,6 +6,7 @@
 #include"../graphics/renderer_base.h"
 #include"../definitions.h"
 #include<vector>
+#include<deque>
 
 namespace sudo {
 	namespace graphics {
@@ -59,8 +60,12 @@ namespace sudo { namespace sudo_system {
 			
 		// Renderer routines
 		void Begin() override;
+
 		void Submit(graphics::Renderable2D *a_primitive, graphics::Renderable2D *a_primitive2 = nullptr, graphics::Renderable2D *a_primitive3 = nullptr);
 		void _Submit(graphics::Renderable2D *a_primitive);
+
+		void PrepareQuad();
+		void PrepareTriangle();
 		void Flush() override;
 		void End() override;
 
@@ -73,7 +78,9 @@ namespace sudo { namespace sudo_system {
 		graphics::IndexBuffer *m_indexBuffer;
 		uint m_quadVBO, m_triangleVBO;
 
-		// Texture 
+		// Lists
+		std::deque<graphics::Renderable2D*> m_quadsToRender;
+		std::deque<graphics::Renderable2D*> m_trianglesToRender;
 		std::vector<uint> m_textureSlots;
 
 		// System references

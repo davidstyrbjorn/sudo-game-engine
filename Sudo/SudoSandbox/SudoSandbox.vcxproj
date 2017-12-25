@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\examples\asteroids.cpp" />
     <ClCompile Include="src\examples\pong.cpp" />
+    <ClCompile Include="src\examples\shapes.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

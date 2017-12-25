@@ -27,7 +27,7 @@ enum ENTITY_ID {
 	PROJECTILE = 0x02,
 };
 
-class MyGame : SudoClass {
+class AsteroidsGame : SudoClass {
 public:
 	SudoCore engine;
 
@@ -35,13 +35,13 @@ public:
 	GameState state;
 
 	// Constructor 
-	MyGame();
+	AsteroidsGame();
 
 	// Behaviour overrides
 	void Start() override;
 	void Update(float deltaTime) override;
 	void Render() override;
-	// MyGame methods
+	// Game methods
 	void MenuUpdate(float deltaTime);
 	void MenuDraw();
 	void PlayingUpdate(float deltaTime);
@@ -220,7 +220,7 @@ public:
 		// Check for collision with player
 		if (thisCollider->Intersects(*playerCollider)) {
 			m_entityHolder->Destroy();
-			config->GetGameClass<MyGame>()->TookHit();
+			config->GetGameClass<AsteroidsGame>()->TookHit();
 			return;
 		}
 
@@ -230,7 +230,7 @@ public:
 			if (thisCollider->Intersects(*temp[i]->GetComponent<ecs::BoxCollider2D>())) {
 				m_entityHolder->Destroy();
 				temp[i]->Destroy();
-				config->GetGameClass<MyGame>()->Scored();
+				config->GetGameClass<AsteroidsGame>()->Scored();
 
 				sudo_system::ParticleConfiguration _x;
 				_x.DoFade = true;
@@ -255,7 +255,7 @@ public:
 	}
 };
 
-void MyGame::Start()
+void AsteroidsGame::Start()
 {
 	// Initial game state 
 	state = GameState::MENU;
@@ -286,7 +286,7 @@ void MyGame::Start()
 	config->SetBackgroundColor(math::Color(0, 0, 0, 255));
 }
 
-void MyGame::Update(float deltaTime)
+void AsteroidsGame::Update(float deltaTime)
 {
 	switch (state) {
 	case GameState::MENU:
@@ -298,7 +298,7 @@ void MyGame::Update(float deltaTime)
 	}
 }
 
-void MyGame::Render()
+void AsteroidsGame::Render()
 {
 	switch (state) {
 	case GameState::MENU:
@@ -310,12 +310,12 @@ void MyGame::Render()
 	}
 }
 
-void MyGame::MenuDraw()
+void AsteroidsGame::MenuDraw()
 {
 	renderer->Submit(backgroundEntity->GetComponent<ecs::SpriteComponent>());
 }
 
-void MyGame::PlayingDraw()
+void AsteroidsGame::PlayingDraw()
 {
 	renderer->Submit(player->GetComponent<ecs::RectangleComponent>());
 	// Render life & score text
@@ -323,7 +323,7 @@ void MyGame::PlayingDraw()
 	textRenderer->DrawText("Life: " + std::to_string(extraLifes), math::Vector2(0, 0), math::Color(255, 20, 40));
 }
 
-void MyGame::MenuUpdate(float deltaTime)
+void AsteroidsGame::MenuUpdate(float deltaTime)
 {
 	// Look for input to start game
 	if (input->GetKey("x")) {
@@ -332,7 +332,7 @@ void MyGame::MenuUpdate(float deltaTime)
 	}
 }
 
-void MyGame::PlayingUpdate(float deltaTime)
+void AsteroidsGame::PlayingUpdate(float deltaTime)
 {
 	if (input->GetKey("space") && canShoot) {
 		canShoot = false;
@@ -406,7 +406,7 @@ void MyGame::PlayingUpdate(float deltaTime)
 	}
 }
 
-void MyGame::TookHit()
+void AsteroidsGame::TookHit()
 {
 	player->GetComponent<ecs::SoundComponent>()->GetSoundSource("hurt")->play();
 	extraLifes--;
@@ -415,14 +415,14 @@ void MyGame::TookHit()
 		state = GameState::MENU;
 }
 
-void MyGame::Scored()
+void AsteroidsGame::Scored()
 {
 	score++;
 	player->GetComponent<ecs::SoundComponent>()->GetSoundSource("scored")->play();
 	input->WindowShake(100, 4);
 }
 
-void MyGame::ResetGame()
+void AsteroidsGame::ResetGame()
 {
 	asteroidSpawnTime = 2500;
 	score = 0;
@@ -432,46 +432,14 @@ void MyGame::ResetGame()
 	world->RemoveAllEntitiesWithID(ENTITY_ID::PROJECTILE);
 }
 
-MyGame::MyGame()
+AsteroidsGame::AsteroidsGame()
 {
 	engine.init(math::Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), "ASSteroids", this);
 }
 
-class Game : SudoClass {
-private:
-	SudoCore engine;
-
-	ecs::Entity *shape2;
-	ecs::Entity *shape;
-
-public:
-	Game() {
-		engine.init(math::Vector2(400, 400), "s", this);
-	}
-
-	void Start() {
-		shape = new ecs::Entity();
-		shape->AddComponent(new ecs::TriangleComponent(math::Vector2(125, 70), math::Color::Red()));
-		shape->transform->Move(math::Vector3(150, 150, 0));
-		shape->transform->angle = 45;
-
-		shape2 = new ecs::Entity();
-		shape2->AddComponent(new ecs::RectangleComponent(math::Vector2(50, 50), math::Color::Green()));
-		//shape2->transform->angle = 120;
-	}
-
-	void Render() {
-		renderer->Submit(shape->GetComponent<ecs::TriangleComponent>());
-		renderer->Submit(shape2->GetComponent<ecs::RectangleComponent>());
-
-		shape->transform->Rotate(3);
-	}
-};
-
-int main()
+int mdwdwdwain()
 {
-	//MyGame *game = new MyGame();
-	Game *game = new Game();
+	AsteroidsGame *game = new AsteroidsGame();
 
 	return EXIT_SUCCESS;
 }

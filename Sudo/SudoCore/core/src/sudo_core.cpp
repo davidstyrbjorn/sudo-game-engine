@@ -158,6 +158,7 @@ void SudoCore::game_loop()
 			m_worldSystem->Render();
 			// User end
 			m_engineInstance->Render();
+			m_batchRenderer->PrepareQuad();
 
 			// Render w/OpenGL 
 			m_batchRenderer->End();
