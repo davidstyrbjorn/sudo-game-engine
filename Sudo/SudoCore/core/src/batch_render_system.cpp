@@ -108,10 +108,12 @@ namespace sudo { namespace sudo_system {
 		glBufferData(GL_ARRAY_BUFFER, TRIANGLE_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
 
 		// Structure the quad buffer layout - bound to m_triangleVAO
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(graphics::TriangleVertexData), nullptr); // Vertex position
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(graphics::TriangleVertexData), reinterpret_cast<GLvoid*>(offsetof(graphics::TriangleVertexData, color))); // Vertex color
 		glEnableVertexAttribArray(1);
+		glEnableVertexAttribArray(0);
+		//glEnableVertexAttribArray(2);
+		//glEnableVertexAttribArray(3);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(graphics::TriangleVertexData), nullptr); // Vertex position
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(graphics::TriangleVertexData), reinterpret_cast<GLvoid*>(offsetof(graphics::TriangleVertexData, color))); // Vertex color
 	}
 
 	void BatchRendererSystem::Begin()
@@ -123,8 +125,8 @@ namespace sudo { namespace sudo_system {
 		// Only map the buffer if the renderer is active
 		if (m_isActive) {
 			// Bind and reset triangle buffer data
-			//glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
-			//glBufferData(GL_ARRAY_BUFFER, TRIANGLE_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
+			glBufferData(GL_ARRAY_BUFFER, TRIANGLE_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
 
 			// Bind and reset quad buffer data
 			glBindVertexArray(m_quadVAO);
@@ -135,7 +137,7 @@ namespace sudo { namespace sudo_system {
 
 	void BatchRendererSystem::Submit(graphics::Renderable2D *a_primitive, graphics::Renderable2D *a_primitive2, graphics::Renderable2D *a_primitive3)
 	{
-		_Submit(a_primitive);
+		if (a_primitive  != nullptr) _Submit(a_primitive);
 		if (a_primitive2 != nullptr) _Submit(a_primitive2);
 		if (a_primitive3 != nullptr) _Submit(a_primitive3);
 	}
@@ -158,43 +160,18 @@ namespace sudo { namespace sudo_system {
 
 	void BatchRendererSystem::PrepareQuad()
 	{
+		glBindVertexArray(m_quadVAO);
+		glBindBuffer(GL_ARRAY_BUFFER, m_quadVBO);
 		// Rectangles and sprites
 		while (!m_quadsToRender.empty()) 
 		{
-			glBindVertexArray(m_quadVAO);
-			glBindBuffer(GL_ARRAY_BUFFER, m_quadVBO);
-
 			// Get the primitive to be rendered
 			graphics::Renderable2D* a_primitive = m_quadsToRender.front();
 
 			// Texture
 			const uint tid = a_primitive->getTID();
 			float ts = 0.0f; // texture slot
-			if (tid > 0)
-			{
-				bool found = false;
-				for (int i = 0; i < m_textureSlots.size(); i++)
-				{
-					if (m_textureSlots[i] == tid)
-					{
-						found = true;
-						ts = (float)(i + 1);
-						break;
-					}
-				}
-
-				if (!found)
-				{
-					// GL_TEXTURE0 -> GL_TEXTURE32
-					if (m_textureSlots.size() >= 32) {
-						End();
-						Flush();
-						Begin();
-					}
-					m_textureSlots.push_back(tid);
-					ts = (float)(m_textureSlots.size());
-				}
-			}
+			ts = GetTextureSlot(tid);
 
 			// Clamp it to 0-1 for the shader
 			const math::Color &_color = a_primitive->GetColor() / 255;
@@ -235,18 +212,18 @@ namespace sudo { namespace sudo_system {
 
 	void BatchRendererSystem::PrepareTriangle()
 	{
+		glBindVertexArray(m_triangleVAO);
+		glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
 		while (!m_trianglesToRender.empty())
 		{
-			glBindVertexArray(m_triangleVAO);
-			glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
-
 			// Get the primitive to be rendered
 			graphics::Renderable2D* a_primitive = m_trianglesToRender.front();
+			const math::Color color = a_primitive->GetColor() / 255;
 
 			graphics::TriangleVertexData data[] = {
-				{ a_primitive->GetPrimitivePoints()[0], a_primitive->GetColor() / 255 },
-				{ a_primitive->GetPrimitivePoints()[1], a_primitive->GetColor() / 255 },
-				{ a_primitive->GetPrimitivePoints()[2], a_primitive->GetColor() / 255 }
+				{ a_primitive->GetPrimitivePoints()[0], color },
+				{ a_primitive->GetPrimitivePoints()[1], color },
+				{ a_primitive->GetPrimitivePoints()[2], color }
 			};
 
 			glBufferSubData(GL_ARRAY_BUFFER, m_triangleCount * (sizeof(graphics::TriangleVertexData) * 3), sizeof(data), data);
@@ -274,7 +251,6 @@ namespace sudo { namespace sudo_system {
 
 			// Draw call
 			glDrawElements(GL_TRIANGLES, 6 * m_quadCount, GL_UNSIGNED_INT, 0);
-
 		}
 		if (m_triangleCount != 0) {
 			// Bind
@@ -308,6 +284,38 @@ namespace sudo { namespace sudo_system {
 				}
 			}
 		}
+	}
+
+	float BatchRendererSystem::GetTextureSlot(int a_textureID) 
+	{
+		float _ts = 0.0f;
+		if (a_textureID > 0)
+		{
+			bool found = false;
+			for (int i = 0; i < m_textureSlots.size(); i++)
+			{
+				if (m_textureSlots[i] == a_textureID)
+				{
+					found = true;
+					_ts = (float)(i + 1);
+					break;
+				}
+			}
+
+			if (!found)
+			{
+				// GL_TEXTURE0 -> GL_TEXTURE32
+				if (m_textureSlots.size() >= 32) {
+					End();
+					Flush();
+					Begin();
+				}
+				m_textureSlots.push_back(a_textureID);
+				_ts = (float)(m_textureSlots.size());
+			}
+		}
+
+		return _ts;
 	}
 
 	void BatchRendererSystem::CleanUp()

@@ -11,17 +11,13 @@ namespace sudo { namespace ecs {
 
 	SpriteComponent::SpriteComponent(char* a_imagePath)
 	{
-		// Used when loading the image
-		m_imagePath = a_imagePath;
-
-		// m_size is set when loading the texture 
-		m_color = math::Color(255, 255, 255, 255);
-
 		// Initialize sprite texture
+		m_imagePath = a_imagePath;
 		m_texture = new graphics::Texture(a_imagePath);
 
+		// Arbitary shape values
+		m_color = math::Color(255, 255, 255, 255);
 		m_size = math::Vector2(m_texture->getWidth(), m_texture->getHeight());
-
 		c_pointCount = 4;
 	}
 

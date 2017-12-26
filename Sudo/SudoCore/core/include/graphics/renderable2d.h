@@ -48,6 +48,12 @@ namespace sudo { namespace graphics {
 	struct TriangleVertexData {
 		math::Vector3 pos;
 		math::Color color;
+
+		TriangleVertexData(const math::Vector3 &a_pos, const math::Color &a_color) 
+		{
+			pos = a_pos;
+			color = a_color;
+		}
 	};
 
 	/* Base class for 2D renderable shapes */

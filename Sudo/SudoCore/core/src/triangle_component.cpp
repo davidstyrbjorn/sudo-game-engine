@@ -12,7 +12,6 @@ namespace sudo { namespace ecs {
 		// Arbitary shape values
 		m_size = a_size;
 		m_color = a_color;
-
 		c_pointCount = 3;
 	}
 

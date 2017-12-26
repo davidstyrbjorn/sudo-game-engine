@@ -146,22 +146,27 @@ void SudoCore::game_loop()
 			// Clear the screen 
 			m_window->clear();
 
-			// Reset renderer data 
-			m_batchRenderer->Begin();
+			// OpenGL calls here
 			m_particleSystem->Begin();
+			m_batchRenderer->Begin();
 			m_textSystem->Begin();
 
 			// Call update on renderers
 			m_batchRenderer->Update(_deltaTime);
 
-			// System (components)
-			m_worldSystem->Render();
-			// User end
-			m_engineInstance->Render();
+			// User end -> void Render() { }
+			m_worldSystem->Render(); // Components
+			m_engineInstance->Render(); // Instance class
+
+			// Pre rendering, OpenGL calls here
+			m_batchRenderer->PrepareTriangle();
 			m_batchRenderer->PrepareQuad();
 
-			// Render w/OpenGL 
+			// OpenGL calls here
 			m_batchRenderer->End();
+			m_particleSystem->End();
+			m_textSystem->End();
+
 			m_batchRenderer->Flush();
 			m_particleSystem->Flush();
 			m_textSystem->Flush();

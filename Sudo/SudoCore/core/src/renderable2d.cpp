@@ -4,7 +4,7 @@
 
 namespace sudo { namespace graphics {
 
-	void Renderable2D::SetSize(const math::Vector2 &a_newSize) 
+	void Renderable2D::SetSize(const math::Vector2 &a_newSize)
 	{
 		m_size = a_newSize; 
 	}

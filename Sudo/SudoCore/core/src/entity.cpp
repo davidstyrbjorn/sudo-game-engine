@@ -14,6 +14,10 @@ namespace sudo { namespace ecs {
 			delete (*it);
 		}
 		m_components.clear();
+
+		delete transform;
+		// This line is not needed because m_renderableComponent is deleted when
+		//delete m_renderableComponent;
 	}
 
 	void Entity::init()
@@ -25,6 +29,9 @@ namespace sudo { namespace ecs {
 		/* Create the transform component */
 		transform = new Transform();
 		transform->SetEntityHolder(this);
+
+		/* This is a nullptr until the user adds one */
+		m_renderableComponent = nullptr;
 
 		/* Default active state */
 		m_isActive = true;
@@ -99,21 +106,27 @@ namespace sudo { namespace ecs {
 		/* Push back the component into the list */
 		m_components.push_back(a_component);
 
+		/* Check if a_component is of type renderable2d */
+		graphics::Renderable2D *renderable = dynamic_cast<graphics::Renderable2D*>(a_component);
+		if (renderable != nullptr) {
+			m_renderableComponent = renderable;
+		}
+
 		/* Return the created component for the user to possibly store */
 		return a_component;
 	}
 
 	graphics::Renderable2D * Entity::GetRenderableComponent() const
 	{
-		if (m_isActive) {
-			for (int i = 0; i < m_components.size(); i++) {
-				auto temp = dynamic_cast<graphics::Renderable2D*>(m_components[i]);
-				if (temp != nullptr) {
-					return temp;
-				}
-			}
+		if (m_renderableComponent == nullptr) {
+			DEBUG::getInstance()->printMessage("Entity has no renderable component attatched");
 		}
-		return nullptr;
+		return m_renderableComponent;
+	}
+
+	void Entity::SetRenderableComponent(graphics::Renderable2D * a_renderable)
+	{
+		m_renderableComponent = a_renderable;
 	}
 	
 } }

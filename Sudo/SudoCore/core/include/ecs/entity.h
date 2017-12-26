@@ -17,6 +17,8 @@ namespace sudo { namespace ecs {
 	class Entity {
 	private:
 		std::vector<Component*> m_components;
+		graphics::Renderable2D *m_renderableComponent; 
+
 		bool m_isActive;
 		bool m_removeMe;
 		unsigned char m_id;
@@ -58,6 +60,7 @@ namespace sudo { namespace ecs {
 			return nullptr;
 		}
 		graphics::Renderable2D *GetRenderableComponent() const;
+		void SetRenderableComponent(graphics::Renderable2D* a_renderable);
 		const std::vector<Component*> GetComponentList() { return m_components; }
 
 		// State handling methods

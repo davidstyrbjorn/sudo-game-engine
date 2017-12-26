@@ -69,6 +69,9 @@ namespace sudo { namespace sudo_system {
 		void Flush() override;
 		void End() override;
 
+		// Other methods
+		float GetTextureSlot(int a_textureID);
+
 	private:
 		// Batch Renderer data 
 		uint m_quadVAO, m_triangleVAO;

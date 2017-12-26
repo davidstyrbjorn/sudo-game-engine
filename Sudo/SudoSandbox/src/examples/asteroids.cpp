@@ -317,7 +317,7 @@ void AsteroidsGame::MenuDraw()
 
 void AsteroidsGame::PlayingDraw()
 {
-	renderer->Submit(player->GetComponent<ecs::RectangleComponent>());
+	renderer->Submit(player->GetRenderableComponent());
 	// Render life & score text
 	textRenderer->DrawText("Score: " + std::to_string(score), math::Vector2(0, 35), math::Color(255, 215, 0));
 	textRenderer->DrawText("Life: " + std::to_string(extraLifes), math::Vector2(0, 0), math::Color(255, 20, 40));
@@ -437,7 +437,7 @@ AsteroidsGame::AsteroidsGame()
 	engine.init(math::Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), "ASSteroids", this);
 }
 
-int mdwdwdwain()
+int main()
 {
 	AsteroidsGame *game = new AsteroidsGame();
 
