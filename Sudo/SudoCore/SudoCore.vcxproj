@@ -26,7 +26,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -82,7 +82,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;$(SolutionDir)SudoCore\Libraries\OpenAL\include;$(SolutionDir)SudoCore\Libraries\freetype\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;$(SolutionDir)SudoCore\Libraries\OpenAL\include;$(SolutionDir)SudoCore\Libraries\freetype\include;$(SolutionDir)SudoCore\Libraries\glm</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -145,8 +145,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="core\include\ImGui\imgui.cpp" />
+    <ClCompile Include="core\include\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="core\include\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="core\include\ImGui\imgui_glfw.cpp" />
     <ClCompile Include="core\src\box_collider2D.cpp" />
     <ClCompile Include="core\src\four_way_move_component.cpp" />
+    <ClCompile Include="core\src\main.cpp" />
     <ClCompile Include="core\src\rectangle_component.cpp" />
     <ClCompile Include="core\src\sound_component.cpp" />
     <ClCompile Include="core\src\sprite_component.cpp" />
@@ -203,6 +208,13 @@
     <ClInclude Include="core\include\graphics\texture.h" />
     <ClInclude Include="core\include\graphics\text_character.h" />
     <ClInclude Include="core\include\graphics\text_label.h" />
+    <ClInclude Include="core\include\ImGui\imconfig.h" />
+    <ClInclude Include="core\include\ImGui\imgui.h" />
+    <ClInclude Include="core\include\ImGui\imgui_glfw.h" />
+    <ClInclude Include="core\include\ImGui\imgui_internal.h" />
+    <ClInclude Include="core\include\ImGui\stb_rect_pack.h" />
+    <ClInclude Include="core\include\ImGui\stb_textedit.h" />
+    <ClInclude Include="core\include\ImGui\stb_truetype.h" />
     <ClInclude Include="core\include\math\color.h" />
     <ClInclude Include="core\include\math\math.h" />
     <ClInclude Include="core\include\math\vector4.h" />

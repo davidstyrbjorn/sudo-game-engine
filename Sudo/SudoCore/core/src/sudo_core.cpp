@@ -147,29 +147,29 @@ void SudoCore::game_loop()
 			m_window->clear();
 
 			// OpenGL calls here
-			m_particleSystem->Begin();
-			m_batchRenderer->Begin();
-			m_textSystem->Begin();
-
-			// Call update on renderers
-			m_batchRenderer->Update(_deltaTime);
-
-			// User end -> void Render() { }
-			m_worldSystem->Render(); // Components
-			m_engineInstance->Render(); // Instance class
-
-			// Pre rendering, OpenGL calls here
-			m_batchRenderer->PrepareTriangle();
-			m_batchRenderer->PrepareQuad();
-
-			// OpenGL calls here
-			m_batchRenderer->End();
-			m_particleSystem->End();
-			m_textSystem->End();
-
-			m_batchRenderer->Flush();
-			m_particleSystem->Flush();
-			m_textSystem->Flush();
+			//m_particleSystem->Begin();
+			//m_batchRenderer->Begin();
+			//m_textSystem->Begin();
+			//
+			//// Call update on renderers
+			//m_batchRenderer->Update(_deltaTime);
+			//
+			//// User end -> void Render() { }
+			//m_worldSystem->Render(); // Components
+			//m_engineInstance->Render(); // Instance class
+			//
+			//// Pre rendering, OpenGL calls here
+			//m_batchRenderer->PrepareTriangle();
+			//m_batchRenderer->PrepareQuad();
+			//
+			//// OpenGL calls here
+			//m_batchRenderer->End();
+			//m_particleSystem->End();
+			//m_textSystem->End();
+			//
+			//m_batchRenderer->Flush();
+			//m_particleSystem->Flush();
+			//m_textSystem->Flush();
 
 			// Display the current drawns elements 
 			m_window->display();

@@ -2,7 +2,7 @@
 
 #include"graphics_framework.h"   
 
-class GLFWwindow;
+struct GLFWwindow;
 
 namespace sudo {
 	namespace math {

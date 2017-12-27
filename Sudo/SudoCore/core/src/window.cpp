@@ -3,7 +3,11 @@
 #include"../include/gl_include.h"
 
 #include"../include/math/vector2.h"
+
 #include"../include/systems/settings_system.h"
+
+#include"../include/ImGui/imgui.h"
+#include"../include/ImGui/imgui_glfw.h"
 
 /* Window.cpp */
 sudo::graphics::Window::Window(uint a_width, uint a_height, char *a_caption)
@@ -19,6 +23,8 @@ sudo::graphics::Window::Window(uint a_width, uint a_height, char *a_caption)
 	m_window = glfwCreateWindow(m_width, m_height, a_caption, NULL, NULL);
 	glfwMakeContextCurrent(m_window);
 	glfwSetWindowUserPointer(m_window, this);
+
+	ImGui_ImplGlfw_Init(m_window, false);
 
 	int width, height;
 	glfwGetFramebufferSize(m_window, &width, &height);
@@ -36,15 +42,29 @@ sudo::graphics::Window::Window(uint a_width, uint a_height, char *a_caption)
 
 sudo::graphics::Window::~Window()
 {
-
+	//ImGui_ImplGlfw_Shutdown();
 }
 
 void sudo::graphics::Window::clear() 
 {
-	glfwPollEvents();
-
-	glClearColor(settings->GetBackgroundColor().r/255, settings->GetBackgroundColor().g/255, settings->GetBackgroundColor().b/255, settings->GetBackgroundColor().a/255);
+	glClearColor(settings->GetBackgroundColor().r / 255, settings->GetBackgroundColor().g / 255, settings->GetBackgroundColor().b / 255, settings->GetBackgroundColor().a / 255);
 	glClear(GL_COLOR_BUFFER_BIT);
+	ImGui_ImplGlfw_NewFrame();
+
+	{
+		ImGui::Begin("x");
+		ImGui::Text("a");
+		ImGui::End();
+	}
+
+	ImGui::Render();
+	glfwSwapBuffers(m_window);
+
+	// ----------------------
+
+	//glClearColor(settings->GetBackgroundColor().r/255, settings->GetBackgroundColor().g/255, settings->GetBackgroundColor().b/255, settings->GetBackgroundColor().a/255);
+	//glClear(GL_COLOR_BUFFER_BIT);
+	glfwPollEvents();
 }
 
 void sudo::graphics::Window::display() 
