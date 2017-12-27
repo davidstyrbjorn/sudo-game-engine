@@ -98,22 +98,24 @@ namespace sudo { namespace sudo_system {
 		}
 		m_indexBuffer = new graphics::IndexBuffer(m_indices,  sizeof(m_indices));
 
+		//glBindVertexArray(0);
+
 		// Triangle VAO
-		glGenVertexArrays(1, &m_triangleVAO);
-		glBindVertexArray(m_triangleVAO);
-
-		// Triangle VBO
-		glGenBuffers(1, &m_triangleVBO);
-		glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
-		glBufferData(GL_ARRAY_BUFFER, TRIANGLE_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
-
-		// Structure the quad buffer layout - bound to m_triangleVAO
-		glEnableVertexAttribArray(1);
-		glEnableVertexAttribArray(0);
-		//glEnableVertexAttribArray(2);
-		//glEnableVertexAttribArray(3);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(graphics::TriangleVertexData), nullptr); // Vertex position
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(graphics::TriangleVertexData), reinterpret_cast<GLvoid*>(offsetof(graphics::TriangleVertexData, color))); // Vertex color
+		//glGenVertexArrays(1, &m_triangleVAO);
+		//glBindVertexArray(m_triangleVAO);
+		//
+		//// Triangle VBO
+		//glGenBuffers(1, &m_triangleVBO);
+		//glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
+		//glBufferData(GL_ARRAY_BUFFER, TRIANGLE_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
+		//
+		//// Structure the quad buffer layout - bound to m_triangleVAO
+		//glEnableVertexAttribArray(1);
+		//glEnableVertexAttribArray(0);
+		////glEnableVertexAttribArray(2);
+		////glEnableVertexAttribArray(3);
+		//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(graphics::TriangleVertexData), nullptr); // Vertex position
+		//glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(graphics::TriangleVertexData), reinterpret_cast<GLvoid*>(offsetof(graphics::TriangleVertexData, color))); // Vertex color
 	}
 
 	void BatchRendererSystem::Begin()
@@ -125,8 +127,8 @@ namespace sudo { namespace sudo_system {
 		// Only map the buffer if the renderer is active
 		if (m_isActive) {
 			// Bind and reset triangle buffer data
-			glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
-			glBufferData(GL_ARRAY_BUFFER, TRIANGLE_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
+			//glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
+			//glBufferData(GL_ARRAY_BUFFER, TRIANGLE_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
 
 			// Bind and reset quad buffer data
 			glBindVertexArray(m_quadVAO);
@@ -252,6 +254,7 @@ namespace sudo { namespace sudo_system {
 			// Draw call
 			glDrawElements(GL_TRIANGLES, 6 * m_quadCount, GL_UNSIGNED_INT, 0);
 		}
+		/*
 		if (m_triangleCount != 0) {
 			// Bind
 			glBindVertexArray(m_triangleVAO);
@@ -260,6 +263,7 @@ namespace sudo { namespace sudo_system {
 			// Draw call 
 			glDrawArrays(GL_TRIANGLES, 0, 3 * m_triangleCount);
 		}
+		*/
 	}
 
 	void BatchRendererSystem::End()
@@ -268,9 +272,9 @@ namespace sudo { namespace sudo_system {
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 
 		// Unbind
-		//m_indexBuffer->unbind();
-		//glBindBuffer(GL_ARRAY_BUFFER, 0);
-		//glBindVertexArray(0);
+		m_indexBuffer->unbind();
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
 	}
 
 	void BatchRendererSystem::Update(float deltaTime)

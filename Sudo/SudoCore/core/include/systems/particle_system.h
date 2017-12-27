@@ -65,6 +65,8 @@ class ParticleSystem : public SudoSystem, public graphics::RendererBase, public 
 		void Enable() override { m_isActive = true; }
 		void Disable() override { m_isActive = false; }
 		void CleanUp() override;
+		bool IsActive() override { return m_isActive; }
+		void Toggle() override { m_isActive = !m_isActive; }
 
 		// Renderer routines
 		void Begin() override;

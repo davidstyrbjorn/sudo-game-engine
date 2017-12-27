@@ -76,10 +76,10 @@ namespace sudo { namespace sudo_system {
 				}
 
 				m_textToRender.pop_back();
-
-				//glBindVertexArray(0);
-				//glBindTexture(GL_TEXTURE_2D, 0);
 			}
+
+			glBindVertexArray(0);
+			glBindTexture(GL_TEXTURE_2D, 0);
 		}
 	}
 

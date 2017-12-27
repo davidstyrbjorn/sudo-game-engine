@@ -11,6 +11,9 @@ namespace sudo {
 	namespace sudo_system {
 		class SettingsSystem;
 	}
+	namespace debug {
+		class SudoImGui;
+	}
 }
 
 namespace sudo { namespace graphics {
@@ -36,6 +39,7 @@ namespace sudo { namespace graphics {
 		// Window data
 		GLFWwindow *m_window;
 		uint m_width, m_height;
+		debug::SudoImGui *m_sudoDebugObject;
 		sudo_system::SettingsSystem *settings;
 
 		/* GLFW Callback functions */

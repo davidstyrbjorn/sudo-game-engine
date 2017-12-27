@@ -31,6 +31,8 @@ namespace sudo { namespace sudo_system {
 		void Enable() override { }
 		void Disable() override { } 
 		void CleanUp() override { }
+		bool IsActive() override { return true; }
+		void Toggle() override { }
 
 		// Getters
 		const math::Vector2& GetWindowSize();
@@ -38,6 +40,8 @@ namespace sudo { namespace sudo_system {
 		double GetMS() const;
 		const math::Color& GetBackgroundColor();
 		const bool DoAutoRender();
+		unsigned int GetCurrentFPS() const;
+		double GetCurrentMS() const;
 
 		// Setters
 		void SetWindowSize(math::Vector2& a_newWindowSize);
@@ -46,6 +50,8 @@ namespace sudo { namespace sudo_system {
 		void SetWindowCaption(const char* a_newCaption);
 		void SetAutoRender(bool a_value);
 		void SetFPS(const unsigned int a_newFPS);
+		void SetCurrentFPS(const unsigned int a_currentNewFps);
+		void SetCurrentMS(const double a_newMS);
 
 		// Game class 
 		template<typename GameClass>
@@ -63,6 +69,11 @@ namespace sudo { namespace sudo_system {
 
 	private:
 		/* Settings data */
+		// Varying data 
+		unsigned int m_currentFps;
+		double m_currentMS;
+
+		// Persistent Data
 		math::Vector2 m_windowSize;
 		math::Color m_backgroundColor;
 		unsigned int m_fps;

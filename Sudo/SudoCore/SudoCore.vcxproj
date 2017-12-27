@@ -149,6 +149,7 @@
     <ClCompile Include="core\include\ImGui\imgui_demo.cpp" />
     <ClCompile Include="core\include\ImGui\imgui_draw.cpp" />
     <ClCompile Include="core\include\ImGui\imgui_glfw.cpp" />
+    <ClCompile Include="core\include\ImGui\sudo_imgui_context.cpp" />
     <ClCompile Include="core\src\box_collider2D.cpp" />
     <ClCompile Include="core\src\four_way_move_component.cpp" />
     <ClCompile Include="core\src\main.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="core\include\ImGui\stb_rect_pack.h" />
     <ClInclude Include="core\include\ImGui\stb_textedit.h" />
     <ClInclude Include="core\include\ImGui\stb_truetype.h" />
+    <ClInclude Include="core\include\ImGui\sudo_imgui_context.h" />
     <ClInclude Include="core\include\math\color.h" />
     <ClInclude Include="core\include\math\math.h" />
     <ClInclude Include="core\include\math\vector4.h" />

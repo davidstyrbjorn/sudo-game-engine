@@ -43,11 +43,15 @@ namespace sudo { namespace sudo_system {
 		glfwSetKeyCallback(glfwGetCurrentContext(), key_callback);
 		glfwSetMouseButtonCallback(glfwGetCurrentContext(), mouse_button_callback);
 
+		m_isActive = true;
+
 		m_mousePos = new math::Vector2(0, 0);
 	}
 
 	void InputSystem::Disable() 
 	{
+		m_isActive = false;
+
 		/* Set the GLFW callbacks */
 		glfwSetCursorPosCallback(glfwGetCurrentContext(), nullptr);
 		glfwSetKeyCallback(glfwGetCurrentContext(), nullptr);

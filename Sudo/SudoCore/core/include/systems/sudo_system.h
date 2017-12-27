@@ -14,6 +14,12 @@ namespace sudo { namespace sudo_system {
 		/* Disable said system, pure virtual */
 		virtual void Disable() = 0;
 
+		/* Return a value based on state of the system */
+		virtual bool IsActive() = 0;
+
+		/* Toggles the active state */
+		virtual void Toggle() = 0;
+
 		/* Cleans up the necessary thing to prevent memory leaks when quitting */
 		virtual void CleanUp() = 0;
 	};

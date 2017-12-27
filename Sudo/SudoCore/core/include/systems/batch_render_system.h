@@ -53,6 +53,8 @@ namespace sudo { namespace sudo_system {
 		void Enable() { m_isActive = true; }
 		void Disable() { m_isActive = false; }
 		void CleanUp() override;
+		bool IsActive() { return m_isActive; }
+		void Toggle() override { m_isActive = !m_isActive; }
 
 		// SudoBehaviour 
 		void Update(float deltaTime) override;

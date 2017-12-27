@@ -9,6 +9,8 @@
 #include"../include/ImGui/imgui.h"
 #include"../include/ImGui/imgui_glfw.h"
 
+#include"../include/ImGui/sudo_imgui_context.h"
+
 /* Window.cpp */
 sudo::graphics::Window::Window(uint a_width, uint a_height, char *a_caption)
 {
@@ -24,7 +26,8 @@ sudo::graphics::Window::Window(uint a_width, uint a_height, char *a_caption)
 	glfwMakeContextCurrent(m_window);
 	glfwSetWindowUserPointer(m_window, this);
 
-	ImGui_ImplGlfw_Init(m_window, false);
+	ImGui_ImplGlfwGL3_Init(m_window, true);
+	m_sudoDebugObject = new debug::SudoImGui();
 
 	int width, height;
 	glfwGetFramebufferSize(m_window, &width, &height);
@@ -42,28 +45,20 @@ sudo::graphics::Window::Window(uint a_width, uint a_height, char *a_caption)
 
 sudo::graphics::Window::~Window()
 {
-	//ImGui_ImplGlfw_Shutdown();
+	//ImGui_ImplGlfwGL3_Shutdown();
 }
 
 void sudo::graphics::Window::clear() 
 {
 	glClearColor(settings->GetBackgroundColor().r / 255, settings->GetBackgroundColor().g / 255, settings->GetBackgroundColor().b / 255, settings->GetBackgroundColor().a / 255);
 	glClear(GL_COLOR_BUFFER_BIT);
-	ImGui_ImplGlfw_NewFrame();
-
-	{
-		ImGui::Begin("x");
-		ImGui::Text("a");
-		ImGui::End();
-	}
-
-	ImGui::Render();
-	glfwSwapBuffers(m_window);
-
-	// ----------------------
-
-	//glClearColor(settings->GetBackgroundColor().r/255, settings->GetBackgroundColor().g/255, settings->GetBackgroundColor().b/255, settings->GetBackgroundColor().a/255);
-	//glClear(GL_COLOR_BUFFER_BIT);
+	ImGui_ImplGlfwGL3_NewFrame();
+	
+	m_sudoDebugObject->ShowMetricsWindow();
+	m_sudoDebugObject->ShowEntitiesWindow();
+	m_sudoDebugObject->ShowEntityInspector();
+	m_sudoDebugObject->ShowSystemsWindow();
+	
 	glfwPollEvents();
 }
 
@@ -71,6 +66,7 @@ void sudo::graphics::Window::display()
 {
 	if (glfwGetCurrentContext() != nullptr)
 	{
+		ImGui::Render();
 		glfwSwapBuffers(m_window);
 	}
 }

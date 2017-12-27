@@ -22,6 +22,8 @@ namespace sudo { namespace sudo_system {
 		static InputSystem *_instance;
 
 		// Input class data
+		bool m_isActive = false;
+
 		std::map<const char*, int> keyCodeToLiteral;
 
 		float m_windowShakeLength;
@@ -41,6 +43,8 @@ namespace sudo { namespace sudo_system {
 		void Enable() override;
 		void Disable() override;
 		void CleanUp() override;
+		bool IsActive() override { return m_isActive; }
+		void Toggle() override { m_isActive = !m_isActive; }
 
 		// SudoBehaviour 
 		void Update(float deltaTime) override;

@@ -24,27 +24,27 @@ public:
 		shape6 = new ecs::Entity();
 
 		// Add components and move them around
-		shape1->AddComponent(new ecs::RectangleComponent(math::Vector2(80, 80), math::Color::Green()));
-		shape1->transform->Move(math::Vector3(5, 10, 0));
+		shape1->AddComponent(new ecs::RectangleComponent(math::Vector2(80, 80), math::Color::GetRandomColor()));
+		shape1->transform->Move(math::Vector3(400, 300, 0));
 
-		shape2->AddComponent(new ecs::RectangleComponent(math::Vector2(90, 120), math::Color::Green()));
+		shape2->AddComponent(new ecs::RectangleComponent(math::Vector2(90, 120), math::Color::GetRandomColor()));
 		shape2->transform->Move(math::Vector3(85, 110, 0));
 
-		shape3->AddComponent(new ecs::RectangleComponent(math::Vector2(10, 220), math::Color::Green()));
+		shape3->AddComponent(new ecs::RectangleComponent(math::Vector2(10, 220), math::Color::GetRandomColor()));
 		shape3->transform->Move(math::Vector3(300, 110, 0));
 
-		shape4->AddComponent(new ecs::RectangleComponent(math::Vector2(90, 120), math::Color::Green()));
+		shape4->AddComponent(new ecs::RectangleComponent(math::Vector2(90, 120), math::Color::GetRandomColor()));
 		shape4->transform->Move(math::Vector3(290, 290, 0));
 
-		config->SetBackgroundColor(math::Color(0, 204, 204));
+		config->SetBackgroundColor(math::Color(255, 50, 70));
 	}
 
 	void Render() override
 	{
-		//renderer->Submit(shape1->GetComponent<ecs::RectangleComponent>());
-		//renderer->Submit(shape2->GetComponent<ecs::RectangleComponent>());
-		//renderer->Submit(shape3->GetComponent<ecs::RectangleComponent>());
-		//renderer->Submit(shape4->GetComponent<ecs::RectangleComponent>());
+		renderer->Submit(shape1->GetComponent<ecs::RectangleComponent>());
+		renderer->Submit(shape2->GetComponent<ecs::RectangleComponent>());
+		renderer->Submit(shape3->GetComponent<ecs::RectangleComponent>());
+		renderer->Submit(shape4->GetComponent<ecs::RectangleComponent>());
 	}
 };
 

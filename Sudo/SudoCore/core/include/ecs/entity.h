@@ -21,15 +21,15 @@ namespace sudo { namespace ecs {
 
 		bool m_isActive;
 		bool m_removeMe;
-		unsigned char m_id;
+		const char* m_id;
 
 	public:
 		Transform *transform;
 
 	public:
 		// Constructor
-		Entity() : m_id(0) { init(); }
-		Entity(const unsigned char a_id) : m_id(a_id) { init(); }
+		Entity() : m_id("unnamed") { init(); }
+		Entity(const char* a_id) : m_id(a_id) { init(); }
 		void init();
 
 		// Destructor 
@@ -66,12 +66,13 @@ namespace sudo { namespace ecs {
 		// State handling methods
 		inline void Disable() { m_isActive = false; }
 		inline void Enable() { m_isActive = true; }
+		inline void Toggle() { m_isActive = !m_isActive; }
 		inline bool IsActive() { return m_isActive; }
 		inline void Destroy() { m_removeMe = true; }
 		inline bool DestroyMe() { return m_removeMe; }
 
 		// Getters 
-		const unsigned char GetID() { return m_id; }
+		const char* GetID() { return m_id; }
 	};
 	
 } }

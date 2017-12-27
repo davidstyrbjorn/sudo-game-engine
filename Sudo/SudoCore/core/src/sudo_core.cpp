@@ -113,21 +113,22 @@ void SudoCore::game_loop()
 
 	float _deltaTime = deltaTimer->GetTicks() - _frameStartTime;
 
-#if PRINT_FPS
 	realTimer = new utility::Timer;
 	realTimer->Start();
 	unsigned int framesPerSecond = 0;
-#endif
 
 	while (m_window->is_open())
 	{
-#if PRINT_FPS
 		if (realTimer->GetTicks() >= 1000) {
+#if PRINT_FPS
 			std::cout << framesPerSecond << std::endl;
+#endif
+			m_settingsSystem->SetCurrentFPS(framesPerSecond);
+
 			framesPerSecond = 0;
 			realTimer->Reset();
 		}
-#endif
+
 		// Set the time at the start of the frame
 		_frameStartTime = deltaTimer->GetTicks();
 
@@ -147,38 +148,37 @@ void SudoCore::game_loop()
 			m_window->clear();
 
 			// OpenGL calls here
-			//m_particleSystem->Begin();
-			//m_batchRenderer->Begin();
-			//m_textSystem->Begin();
-			//
-			//// Call update on renderers
-			//m_batchRenderer->Update(_deltaTime);
-			//
-			//// User end -> void Render() { }
-			//m_worldSystem->Render(); // Components
-			//m_engineInstance->Render(); // Instance class
-			//
-			//// Pre rendering, OpenGL calls here
-			//m_batchRenderer->PrepareTriangle();
-			//m_batchRenderer->PrepareQuad();
-			//
-			//// OpenGL calls here
-			//m_batchRenderer->End();
-			//m_particleSystem->End();
-			//m_textSystem->End();
-			//
-			//m_batchRenderer->Flush();
-			//m_particleSystem->Flush();
-			//m_textSystem->Flush();
+			m_particleSystem->Begin();
+			m_batchRenderer->Begin();
+			m_textSystem->Begin();
+			
+			// Call update on renderers
+			m_batchRenderer->Update(_deltaTime);
+			
+			// User end -> void Render() { }
+			m_worldSystem->Render(); // Components
+			m_engineInstance->Render(); // Instance class
+			
+			// Pre rendering, OpenGL calls here
+			m_batchRenderer->PrepareTriangle();
+			m_batchRenderer->PrepareQuad();
+			
+			// OpenGL calls here
+			m_batchRenderer->End();
+			m_particleSystem->End();
+			m_textSystem->End();
+			
+			m_batchRenderer->Flush();
+			m_particleSystem->Flush();
+			m_textSystem->Flush();
 
 			// Display the current drawns elements 
 			m_window->display();
 
 			// Reset the loop timer
 			timer->Reset();
-#if PRINT_FPS
+
 			framesPerSecond++;
-#endif
 		}
 
 		m_worldSystem->LateUpdate(_deltaTime);
@@ -186,6 +186,7 @@ void SudoCore::game_loop()
 
 		// Calculate the time it took to get this frame done and set it to _deltaTime
 		_deltaTime = deltaTimer->GetTicks() - _frameStartTime;
+		m_settingsSystem->SetCurrentMS(_deltaTime);
 	}
 
 	clean_up();

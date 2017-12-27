@@ -27,6 +27,16 @@ namespace sudo { namespace sudo_system {
 		return m_autoRender;
 	}
 
+	unsigned int SettingsSystem::GetCurrentFPS() const
+	{
+		return m_currentFps;
+	}
+
+	double SettingsSystem::GetCurrentMS() const
+	{
+		return m_currentMS;
+	}
+
 	unsigned int SettingsSystem::GetFPS() const
 	{
 		return m_fps;
@@ -71,6 +81,16 @@ namespace sudo { namespace sudo_system {
 	{
 		m_fps = a_newFPS;
 		this->NewFpsValue();
+	}
+
+	void SettingsSystem::SetCurrentFPS(const unsigned int a_currentNewFps)
+	{
+		m_currentFps = a_currentNewFps;
+	}
+
+	void SettingsSystem::SetCurrentMS(const double a_newMS)
+	{
+		m_currentMS = a_newMS;
 	}
 
 	void SettingsSystem::NewFpsValue()
