@@ -12,6 +12,10 @@
 #include"../systems/world_system.h"
 #include"../systems/batch_render_system.h"
 
+#include"../graphics/renderable2d.h"
+#include"../ecs/transform_component.h"
+#include"../math/color.h"
+
 #include<string>
 #include<vector>
 
@@ -59,7 +63,7 @@ void SudoImGui::ShowMetricsWindow()
 void SudoImGui::ShowEntitiesWindow() 
 {
 	ImGui::SetNextWindowPos(ImVec2(5, 160));
-	ImGui::Begin("Sudo Entities", false, ImVec2(200, 150), 0.7f, 
+	ImGui::Begin("Sudo Entities", false, ImVec2(250, 150), 0.7f, 
 		ImGuiWindowFlags_::ImGuiWindowFlags_NoResize |
 		ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse |
 		ImGuiWindowFlags_::ImGuiWindowFlags_NoMove
@@ -84,6 +88,9 @@ void SudoImGui::ShowEntitiesWindow()
 	}
 
 	ImGui::Separator();
+
+	std::string temp = "Count: " + std::to_string(entityList.size());
+	ImGui::Text(temp.c_str());
 
 	ImGui::End();
 }
@@ -153,7 +160,6 @@ void SudoImGui::ShowSystemsWindow()
 			m_worldSystem->Toggle();
 		}
 
-
 		ImGui::End();
 	}
 }
@@ -164,25 +170,54 @@ void SudoImGui::ShowEntityInspector()
 	{
 		ImGui::Begin("Entity Inspector", &m_showEntityInspector);
 
+		float position[2] = { m_clickedEntity->transform->position.x, m_clickedEntity->transform->position.y };
+
 		std::string id = "ID: " + std::string(m_clickedEntity->GetID());
 		ImGui::Text(id.c_str());
+		ImGui::Text("Position:");
+		ImGui::SliderFloat2("test", position, 0, m_settingsSystem->GetWindowSize().x, "%0.0f");
+		m_clickedEntity->transform->position = math::Vector3(position[0], position[1], m_clickedEntity->transform->position.z);
+		ImGui::Text("Rotation:");
+		ImGui::SliderFloat(" :z", &m_clickedEntity->transform->angle, -360, 360, "%0.0f");
 
-		if (m_clickedEntity->DestroyMe()) {
-			ImGui::Text("State: Destroyed");
-		}
-		else if (m_clickedEntity->IsActive()) {
+		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
+
+		// Active state text
+		if (m_clickedEntity->IsActive()) {
 			ImGui::Text("State: Active");
 		}
 		else {
 			ImGui::Text("State: Disabled");
 		}
 
+		// State Modification buttons
 		if (ImGui::Button("Toggle")) {
 			m_clickedEntity->Toggle();
 		}
 		if (ImGui::Button("Destroy")) {
 			m_clickedEntity->Destroy();
 			m_showEntityInspector = false;
+		}
+
+		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
+		
+		graphics::Renderable2D* renderable = m_clickedEntity->GetRenderableComponent();
+		bool hasRenderbale = renderable == nullptr ? false : true;
+		if (hasRenderbale) {
+			ImGui::Text("Renderable Component: true");
+			
+			float _x = renderable->GetSize().x;
+			float _y = renderable->GetSize().y;
+			ImGui::SliderFloat("Width", &_x, 0, m_settingsSystem->GetWindowSize().x, "%0.0f");
+			ImGui::SliderFloat("Height", &_y, 0, m_settingsSystem->GetWindowSize().y, "%0.0f");
+			renderable->SetSize(math::Vector2(_x, _y));
+			
+			ImVec4 color = ImColor(renderable->GetColor().r/255, renderable->GetColor().g/255, renderable->GetColor().b/255, renderable->GetColor().a/255);
+			ImGui::ColorEdit4("Renderable Color", (float*)&color);
+			renderable->SetColor(math::Color(color.x*255, color.y*255, color.z*255, color.w*255));
+		}
+		else {
+			ImGui::Text("Renderable Component: nullptr");
 		}
 		
 		ImGui::End();

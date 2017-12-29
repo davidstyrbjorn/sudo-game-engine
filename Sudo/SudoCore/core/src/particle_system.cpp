@@ -47,6 +47,35 @@ namespace sudo { namespace sudo_system {
 		return _instance;
 	}
 
+	void ParticleSystem::Toggle()
+	{
+		m_isActive = !m_isActive;
+		if (m_isActive)
+			Enable();
+		else
+			Disable();
+	}
+
+	void ParticleSystem::Enable()
+	{
+		m_isActive = true;
+	}
+
+	void ParticleSystem::Disable()
+	{
+		m_isActive = false;
+
+		// Initalize particle array
+		for (int i = 0; i < MAX_PARTICLES; i++) {
+			if (m_particlePool[i] != nullptr)
+				delete m_particlePool[i];
+
+			m_particlePool[i] = new graphics::Particle();
+			m_particlePool[i]->disable();
+		}
+		m_particleCount = 0;
+	}
+
 	void ParticleSystem::Start()
 	{
 		glewInit();
@@ -81,7 +110,7 @@ namespace sudo { namespace sudo_system {
 	void ParticleSystem::Update(float deltaTime)
 	{
 		for (int i = 0; i < MAX_PARTICLES; i++) {
-			if (m_particlePool[i]->m_active) {
+			if (m_particlePool[i]->m_active && m_isActive) {
 				m_particlePool[i]->update(deltaTime);
 			}
 		}
@@ -108,7 +137,7 @@ namespace sudo { namespace sudo_system {
 		math::Vector2 a_velocity, 
 		ParticleConfiguration a_config)
 	{
-		if (m_particleCount < MAX_PARTICLES) 
+		if (m_particleCount < MAX_PARTICLES && m_isActive) 
 		{
 			m_particlePool[m_particleCount]->init(math::Vector2(a_spawnPosition.x, a_spawnPosition.y), a_particleSize, a_particleColor, a_velocity, a_lifeTime);
 			// Configuration
@@ -123,10 +152,10 @@ namespace sudo { namespace sudo_system {
 	void ParticleSystem::Flush()
 	{
 		// Draw all the particles inside m_particlesToRender
-		if (m_particleCount != 0) {
+		if (m_particleCount != 0 && m_isActive) {
 
 			// Remove all dead particles before rendering
-			this->disableDeadParticles();
+			disableDeadParticles();
 			// Enable the particle shader
 			m_shader->enable();
 			// Bind

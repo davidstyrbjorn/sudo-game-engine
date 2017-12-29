@@ -62,11 +62,11 @@ class ParticleSystem : public SudoSystem, public graphics::RendererBase, public 
 		void Update(float deltaTime) override;
 		
 		// SudoSystem
-		void Enable() override { m_isActive = true; }
-		void Disable() override { m_isActive = false; }
+		void Enable() override;
+		void Disable() override;
 		void CleanUp() override;
 		bool IsActive() override { return m_isActive; }
-		void Toggle() override { m_isActive = !m_isActive; }
+		void Toggle() override;
 
 		// Renderer routines
 		void Begin() override;

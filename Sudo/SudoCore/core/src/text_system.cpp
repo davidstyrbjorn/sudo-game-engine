@@ -85,7 +85,8 @@ namespace sudo { namespace sudo_system {
 
 	void TextSystem::DrawText(std::string a_string, math::Vector2 a_position, math::Color a_color)
 	{
-		m_textToRender.push_back(graphics::TextLabel(a_string, a_position.x, a_position.y, a_color.r/255, a_color.g/255, a_color.b/255));
+		if(m_isActive)
+			m_textToRender.push_back(graphics::TextLabel(a_string, a_position.x, a_position.y, a_color.r/255, a_color.g/255, a_color.b/255));
 	}
 
 	void TextSystem::LoadFont(const char * a_path, const char* a_fontName, const int a_size)

@@ -3,6 +3,9 @@
 #include"../include/math/vector2.h"
 #include"../include/utility/sudo_random.h"
 
+#include"../include/ImGui/imgui.h"
+#include"../include/ImGui/imgui_glfw.h"
+
 namespace sudo { namespace sudo_system {
 
 	InputSystem* InputSystem::_instance = nullptr;
@@ -17,7 +20,7 @@ namespace sudo { namespace sudo_system {
 	void InputSystem::Update(float deltaTime)
 	{
 		/* Window Shake Code */
-		if (m_doWindowShake) {
+		if (m_doWindowShake && m_isActive) {
 			// Get the window's new position values for this frame
 			int _x = utility::SudoRandomNumber::GetRandomInteger(-m_windowShakeStrength, m_windowShakeStrength);
 			int _y = utility::SudoRandomNumber::GetRandomInteger(-m_windowShakeStrength, m_windowShakeStrength);
@@ -42,6 +45,7 @@ namespace sudo { namespace sudo_system {
 		glfwSetCursorPosCallback(glfwGetCurrentContext(), cursor_position_callback);
 		glfwSetKeyCallback(glfwGetCurrentContext(), key_callback);
 		glfwSetMouseButtonCallback(glfwGetCurrentContext(), mouse_button_callback);
+		glfwSetCharCallback(glfwGetCurrentContext(), character_callback);
 
 		m_isActive = true;
 
@@ -56,12 +60,27 @@ namespace sudo { namespace sudo_system {
 		glfwSetCursorPosCallback(glfwGetCurrentContext(), nullptr);
 		glfwSetKeyCallback(glfwGetCurrentContext(), nullptr);
 		glfwSetMouseButtonCallback(glfwGetCurrentContext(), nullptr);
+		// ImGui needs this so don't disable it!
+		//glfwSetCharCallback(glfwGetCurrentContext(), nullptr);
+
+		for (int i = 0; i < 1024; i++) {
+			m_keys[i] = 0;
+		}
 	}
 
 	void InputSystem::CleanUp() 
 	{
 		// Delete all the allocated memory
 		//delete m_mousePos;
+	}
+
+	void InputSystem::Toggle()
+	{
+		m_isActive = !m_isActive;
+		if (m_isActive)
+			Enable();
+		else
+			Disable();
 	}
 
 	bool InputSystem::GetKeyDown(const char* a_key)
@@ -97,6 +116,19 @@ namespace sudo { namespace sudo_system {
 	{
 		InputSystem* tmp = InputSystem::Instance();
 		tmp->m_keys[key] = action;
+
+		// ImGui needs this
+		ImGuiIO& io = ImGui::GetIO();
+		if (action == GLFW_PRESS)
+			io.KeysDown[key] = true;
+		if (action == GLFW_RELEASE)
+			io.KeysDown[key] = false;
+
+		(void)mods; // Modifiers are not reliable across systems
+		io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
+		io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
+		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
+		io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
 	}
 
 	void cursor_position_callback(GLFWwindow * window, double xpos, double ypos)
@@ -110,6 +142,13 @@ namespace sudo { namespace sudo_system {
 	{
 		InputSystem* tmp = InputSystem::Instance();
 		tmp->m_mouseKeys[button] = action;
+	}
+
+	void character_callback(GLFWwindow * window, unsigned int c)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		if (c > 0 && c < 0x10000)
+			io.AddInputCharacter((unsigned short)c);
 	}
 
 	void InputSystem::populateKeyList()

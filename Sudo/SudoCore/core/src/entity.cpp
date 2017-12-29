@@ -119,7 +119,7 @@ namespace sudo { namespace ecs {
 	graphics::Renderable2D * Entity::GetRenderableComponent() const
 	{
 		if (m_renderableComponent == nullptr) {
-			DEBUG::getInstance()->printMessage("Entity has no renderable component attatched");
+			//DEBUG::getInstance()->printMessage("Entity has no renderable component attatched");
 		}
 		return m_renderableComponent;
 	}

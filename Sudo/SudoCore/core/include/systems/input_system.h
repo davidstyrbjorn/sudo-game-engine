@@ -44,7 +44,7 @@ namespace sudo { namespace sudo_system {
 		void Disable() override;
 		void CleanUp() override;
 		bool IsActive() override { return m_isActive; }
-		void Toggle() override { m_isActive = !m_isActive; }
+		void Toggle() override;
 
 		// SudoBehaviour 
 		void Update(float deltaTime) override;
@@ -64,6 +64,7 @@ namespace sudo { namespace sudo_system {
 		friend static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 		friend static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 		friend static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+		friend static void character_callback(GLFWwindow* window, unsigned int codepoint);
 
 	};
 

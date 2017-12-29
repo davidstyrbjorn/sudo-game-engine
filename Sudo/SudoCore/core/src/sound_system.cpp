@@ -9,6 +9,12 @@
 namespace sudo { namespace sudo_system {
 
 	SoundSystem* SoundSystem::_instance = nullptr;
+	SoundSystem * SoundSystem::Instance()
+	{
+		if (_instance == nullptr)
+			_instance = new SoundSystem();
+		return _instance;
+	}
 
 	SoundSystem::SoundSystem()
 	{
@@ -31,11 +37,25 @@ namespace sudo { namespace sudo_system {
 		this->SetListenerPosition(math::Vector3(0, 0, 0));
 	}
 
-	SoundSystem * SoundSystem::Instance()
+	void SoundSystem::Enable()
 	{
-		if (_instance == nullptr)
-			_instance = new SoundSystem();
-		return _instance;
+		m_isActive = true;
+		alListenerf(AL_GAIN, 1);
+	}
+
+	void SoundSystem::Disable()
+	{
+		m_isActive = false;
+		alListenerf(AL_GAIN, 0);
+	}
+
+	void SoundSystem::Toggle()
+	{
+		m_isActive = !m_isActive;
+		if (m_isActive)
+			Enable();
+		else
+			Disable();
 	}
 
 	void SoundSystem::Start()
@@ -56,7 +76,8 @@ namespace sudo { namespace sudo_system {
 
 	void SoundSystem::SetListenerGain(const float a_gain)
 	{
-		alListenerf(AL_GAIN, a_gain);
+		if(m_isActive)
+			alListenerf(AL_GAIN, a_gain);
 	}
 	
 } }

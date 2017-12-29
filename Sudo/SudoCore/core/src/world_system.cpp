@@ -72,21 +72,21 @@ namespace sudo { namespace sudo_system {
 
 	void WorldSystem::Render()
 	{
-		for (unsigned int i = 0; i < m_entityList.size(); i++) {
-			if (m_entityList[i]->IsActive()) {
-				m_entityList[i]->Render();
+		if (m_isActive) {
+			for (unsigned int i = 0; i < m_entityList.size(); i++) {
+				if (m_entityList[i]->IsActive()) {
+					m_entityList[i]->Render();
+				}
 			}
 		}
 	}
 
 	void WorldSystem::Start() 
 	{
-		if (m_isActive) {
-			for (unsigned int i = 0; i < m_entityList.size(); i++) {
-				if(m_entityList[i]->IsActive())
-					m_entityList[i]->Start();
-				m_entityList[i]->Awake();
-			}
+		for (unsigned int i = 0; i < m_entityList.size(); i++) {
+			if(m_entityList[i]->IsActive())
+				m_entityList[i]->Start();
+			m_entityList[i]->Awake();
 		}
 	}
 

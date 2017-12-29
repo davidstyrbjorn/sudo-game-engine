@@ -58,7 +58,7 @@ void sudo::graphics::Window::clear()
 	m_sudoDebugObject->ShowEntitiesWindow();
 	m_sudoDebugObject->ShowEntityInspector();
 	m_sudoDebugObject->ShowSystemsWindow();
-	
+
 	glfwPollEvents();
 }
 
