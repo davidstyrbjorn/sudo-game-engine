@@ -63,9 +63,12 @@ namespace sudo { namespace graphics {
 		virtual ~Renderable2D() { }
 
 		/* Getters */
-		__forceinline const math::Vector2 &GetSize() { return m_size; }
-		__forceinline math::Color &GetColor() { return m_color; }
+		inline const math::Vector2 &GetSize() { return m_size; }
+		inline math::Color &GetColor() { return m_color; }
 		ecs::Transform* GetEntityTransform() { return m_entityTransform; }
+		graphics::Texture* GetTexture() { return m_texture; }
+		inline const uint8 GetPointCount() { return c_pointCount; }
+		virtual std::array<math::Vector3, 4> GetPrimitivePoints() { return {}; };
 
 		/* Sets m_size to a new specified size */
 		void SetSize(const math::Vector2 &a_newSize);
@@ -81,12 +84,6 @@ namespace sudo { namespace graphics {
 
 		/* Get the renderables texture id, return 0 if ther is no texture on the renderable */
 		const uint getTID() const;
-
-		/* Return the number of points for this renderable */
-		const uint8 GetPointCount() { return c_pointCount; }
-
-		/* Returns the vertex positions of renderable */
-		virtual std::array<math::Vector3, 4> GetPrimitivePoints() = 0;
 
 	protected:	
 		/* Renderable2D shared data */

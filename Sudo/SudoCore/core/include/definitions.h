@@ -62,4 +62,8 @@ enum SudoBufferType {
 // Particle macros
 #define PARTICLE_GRAVITY_Y 0.001f
 
+// Batch Renderer
+#define NEAR -1
+#define FAR 1000
+
 }

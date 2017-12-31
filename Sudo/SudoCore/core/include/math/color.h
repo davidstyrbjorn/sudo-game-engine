@@ -20,7 +20,6 @@ namespace sudo {
 			Color operator+(const Color rhs);
 			Color operator-(const Color rhs);
 			Color operator/(const float rhs);
-			Color operator=(const Color &rhs);
 			Color operator*(const float scalar);
 			Color& operator+=(const Color &rhs);
 			Color& operator-=(const Color &rhs);

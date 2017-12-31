@@ -116,7 +116,7 @@ namespace sudo { namespace sudo_system {
 	{
 		InputSystem* tmp = InputSystem::Instance();
 		tmp->m_keys[key] = action;
-
+		
 		// ImGui needs this
 		ImGuiIO& io = ImGui::GetIO();
 		if (action == GLFW_PRESS)

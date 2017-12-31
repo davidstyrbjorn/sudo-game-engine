@@ -56,4 +56,31 @@ void FourWayMoveComponent::Update(float deltaTime)
 	}
 }
 
+void FourWayMoveComponent::SetVelocity(const math::Vector2 & a_newVelocity)
+{
+	m_xSpeed = a_newVelocity.x;
+	m_ySpeed = a_newVelocity.y;
+}
+
+const math::Vector2 & FourWayMoveComponent::GetVelocity()
+{
+	return math::Vector2(m_xSpeed, m_ySpeed);
+}
+
+char * FourWayMoveComponent::GetKeys(char * a_keyName)
+{
+	if (a_keyName == "up") {
+		return m_up;
+	}
+	else if (a_keyName == "down") {
+		return m_down;
+	}
+	else if (a_keyName == "right") {
+		return m_right;
+	}
+	else if (a_keyName == "left") {
+		return m_left;
+	}
+}
+
 } } 

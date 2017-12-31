@@ -11,8 +11,10 @@ namespace sudo { namespace graphics {
 
 		}
 
-		Texture::Texture(char* a_imagePath) 
+		Texture::Texture(char* a_imagePath)
 		{
+			m_imagePath = a_imagePath;
+
 			unsigned char* m_imageData = SOIL_load_image(a_imagePath, &m_width, &m_height, 0, SOIL_LOAD_RGB);		
 			if (m_imageData == nullptr)
 			{

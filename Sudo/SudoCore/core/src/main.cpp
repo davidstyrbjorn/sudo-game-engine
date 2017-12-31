@@ -16,17 +16,18 @@ public:
 
 	void Start() {
 		// Create the shapes
-		shape1 = new ecs::Entity();
-		shape2 = new ecs::Entity();
-		shape3 = new ecs::Entity();
-		shape4 = new ecs::Entity();
-		shape5 = new ecs::Entity();
-		shape6 = new ecs::Entity();
+		shape1 = new ecs::Entity("shape1");
+		shape2 = new ecs::Entity("shape2");
+		shape3 = new ecs::Entity("shape3");
+		shape4 = new ecs::Entity("shape4");
+		shape5 = new ecs::Entity("shape5");
+		shape6 = new ecs::Entity("shape6");
 
 		// Add components and move them around
 		shape1->AddComponent(new ecs::RectangleComponent(math::Vector2(80, 80), math::Color::GetRandomColor()));
 		shape1->transform->Move(math::Vector3(500, 300, 0));
 		shape1->AddComponent(new ecs::SoundComponent("default", "D:\\temp\\sound.wav"));
+		shape1->AddComponent(new ecs::BoxCollider2D());
 
 		shape2->AddComponent(new ecs::RectangleComponent(math::Vector2(90, 120), math::Color::GetRandomColor()));
 		shape2->transform->Move(math::Vector3(250, 450, 0));
@@ -34,7 +35,7 @@ public:
 		shape3->AddComponent(new ecs::RectangleComponent(math::Vector2(10, 220), math::Color::GetRandomColor()));
 		shape3->transform->Move(math::Vector3(700, 110, 0));
 
-		shape4->AddComponent(new ecs::RectangleComponent(math::Vector2(90, 120), math::Color::GetRandomColor()));
+		shape4->AddComponent(new ecs::SpriteComponent("D:\\temp\\lbs.jpg"));
 		shape4->transform->Move(math::Vector3(350, 290, 0));
 
 		textRenderer->LoadFont("C:\\Windows\\Fonts\\arial.ttf", "arial", 50);
@@ -64,7 +65,7 @@ public:
 		renderer->Submit(shape1->GetComponent<ecs::RectangleComponent>());
 		renderer->Submit(shape2->GetComponent<ecs::RectangleComponent>());
 		renderer->Submit(shape3->GetComponent<ecs::RectangleComponent>());
-		renderer->Submit(shape4->GetComponent<ecs::RectangleComponent>());
+		renderer->Submit(shape4->GetComponent<ecs::SpriteComponent>());
 
 		textRenderer->DrawText("Debug Reeeest", math::Vector2(0, 0), math::Color(0, 255, 150));
 	}

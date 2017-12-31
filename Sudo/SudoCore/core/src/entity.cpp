@@ -98,6 +98,12 @@ namespace sudo { namespace ecs {
 		}
 	}
 
+	void Entity::Destroy()
+	{ 
+		m_removeMe = true; 
+		m_renderableComponent = nullptr;
+	}
+
 	Component* Entity::AddComponent(Component *a_component)
 	{
 		/* Set the components entity holder */

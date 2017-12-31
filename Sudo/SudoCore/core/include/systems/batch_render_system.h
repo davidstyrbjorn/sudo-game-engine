@@ -84,7 +84,8 @@ namespace sudo { namespace sudo_system {
 		uint m_quadVBO, m_triangleVBO;
 
 		// Lists
-		std::deque<graphics::Renderable2D*> m_quadsToRender;
+		std::vector<graphics::Renderable2D*> m_quadsToRender;
+		//std::deque<graphics::Renderable2D*> m_quadsToRender;
 		std::deque<graphics::Renderable2D*> m_trianglesToRender;
 		std::vector<uint> m_textureSlots;
 

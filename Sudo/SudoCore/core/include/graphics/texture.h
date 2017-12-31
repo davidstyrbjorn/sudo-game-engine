@@ -20,14 +20,16 @@ namespace sudo { namespace graphics {
 		void bind() const;
 
 		/* Size getters */
-		__forceinline uint getWidth() { return m_width; }
-		__forceinline uint getHeight() { return m_height; }
-		__forceinline uint getID() const { return m_texId; }
+		inline uint getWidth() { return m_width; }
+		inline uint getHeight() { return m_height; }
+		inline uint getID() const { return m_texId; }
+		inline char* getImagePath() { return m_imagePath; }
 
 	public:
 		/* Texture data */
 		uint m_texId;
 		int m_width, m_height;
+		char* m_imagePath;
 	};
 		
 } }

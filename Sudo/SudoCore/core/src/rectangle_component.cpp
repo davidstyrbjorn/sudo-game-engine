@@ -56,28 +56,28 @@ namespace sudo { namespace ecs {
 		float tempY = transform->position.y - cy;
 		float rotatedX = tempX * cos(angle) - tempY * sin(angle);
 		float rotatedY = tempX * sin(angle) + tempY * cos(angle);
-		points[0] = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
+		points[0] = math::Vector3(rotatedX + cx, rotatedY + cy, position.z);
 
 		// Position 2											
 		tempX = position.x - cx;
 		tempY = (position.y + size.y) - cy;
 		rotatedX = tempX * cos(angle) - tempY * sin(angle);
 		rotatedY = tempX * sin(angle) + tempY * cos(angle);
-		points[1] = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
+		points[1] = math::Vector3(rotatedX + cx, rotatedY + cy, position.z);
 
 		// Position 3											
 		tempX = (position.x + size.x) - cx;
 		tempY = (position.y + size.y) - cy;
 		rotatedX = tempX * cos(angle) - tempY * sin(angle);
 		rotatedY = tempX * sin(angle) + tempY * cos(angle);
-		points[2] = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
+		points[2] = math::Vector3(rotatedX + cx, rotatedY + cy, position.z);
 
 		// Position 4											
 		tempX = (position.x + size.x) - cx;
 		tempY = position.y - cy;
 		rotatedX = tempX * cos(angle) - tempY * sin(angle);
 		rotatedY = tempX * sin(angle) + tempY * cos(angle);
-		points[3] = math::Vector3(rotatedX + cx, rotatedY + cy, 0);
+		points[3] = math::Vector3(rotatedX + cx, rotatedY + cy, position.z);
 
 		// Return the positions
 		return points;

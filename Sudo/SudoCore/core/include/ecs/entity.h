@@ -68,7 +68,7 @@ namespace sudo { namespace ecs {
 		inline void Enable() { m_isActive = true; }
 		inline void Toggle() { m_isActive = !m_isActive; }
 		inline bool IsActive() { return m_isActive; }
-		inline void Destroy() { m_removeMe = true; }
+		void Destroy();
 		inline bool DestroyMe() { return m_removeMe; }
 
 		// Getters 

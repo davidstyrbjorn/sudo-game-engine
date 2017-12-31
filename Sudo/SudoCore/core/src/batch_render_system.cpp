@@ -20,6 +20,8 @@
 #include"../include/ecs/sprite_component.h"
 #include"../include/ecs/entity.h"
 
+#include<algorithm>
+
 namespace sudo { namespace sudo_system { 
 
 	BatchRendererSystem* BatchRendererSystem::_instance = nullptr;
@@ -59,7 +61,7 @@ namespace sudo { namespace sudo_system {
 			sudo_system::SettingsSystem::Instance()->GetWindowSize().x, 
 			sudo_system::SettingsSystem::Instance()->GetWindowSize().y,
 			0, 
-			-1, 1));
+			NEAR, FAR));
 		m_shader->disable();
 
 		// OpenGL starts here
@@ -139,9 +141,9 @@ namespace sudo { namespace sudo_system {
 
 	void BatchRendererSystem::Submit(graphics::Renderable2D *a_primitive, graphics::Renderable2D *a_primitive2, graphics::Renderable2D *a_primitive3)
 	{
-		if (a_primitive  != nullptr) _Submit(a_primitive);
-		if (a_primitive2 != nullptr) _Submit(a_primitive2);
-		if (a_primitive3 != nullptr) _Submit(a_primitive3);
+		if (a_primitive  != nullptr && a_primitive->GetEntityTransform()->GetEntityHolder()->IsActive())  _Submit(a_primitive);
+		if (a_primitive2 != nullptr && a_primitive2->GetEntityTransform()->GetEntityHolder()->IsActive()) _Submit(a_primitive2);
+		if (a_primitive3 != nullptr && a_primitive3->GetEntityTransform()->GetEntityHolder()->IsActive()) _Submit(a_primitive3);
 	}
 
 	void BatchRendererSystem::_Submit(graphics::Renderable2D *a_primitive)
@@ -160,15 +162,22 @@ namespace sudo { namespace sudo_system {
 		}
 	}
 
+	static bool layerCompare(graphics::Renderable2D *_1, graphics::Renderable2D *_2) {
+		return (_1->GetEntityTransform()->position.z > _2->GetEntityTransform()->position.z);
+	}
+
 	void BatchRendererSystem::PrepareQuad()
 	{
+		if(m_quadsToRender.size() > 1)
+			std::sort(m_quadsToRender.begin(), m_quadsToRender.end(), layerCompare);
+
 		glBindVertexArray(m_quadVAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_quadVBO);
 		// Rectangles and sprites
 		while (!m_quadsToRender.empty()) 
 		{
 			// Get the primitive to be rendered
-			graphics::Renderable2D* a_primitive = m_quadsToRender.front();
+			graphics::Renderable2D* a_primitive = m_quadsToRender.back();
 
 			// Texture
 			const uint tid = a_primitive->getTID();
@@ -207,7 +216,7 @@ namespace sudo { namespace sudo_system {
 			m_mapBuffer++;
 
 			// Pop the front of the deque
-			m_quadsToRender.pop_front();
+			m_quadsToRender.pop_back();
 			m_quadCount++;
 		}
 	}
