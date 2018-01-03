@@ -9,6 +9,8 @@
 #include "imgui.h"
 #include"imgui_glfw.h"
 
+#include<iostream>
+
 // GL3W/GLFW
 #include"GL\glew.h"
 #include <GLFW/glfw3.h>
@@ -170,8 +172,9 @@ void ImGui_ImplGlfwGL3_KeyCallback(GLFWwindow*, int key, int, int action, int mo
 void ImGui_ImplGlfwGL3_CharCallback(GLFWwindow*, unsigned int c)
 {
 	ImGuiIO& io = ImGui::GetIO();
-	if (c > 0 && c < 0x10000)
+	if (c > 0 && c < 0x10000) {
 		io.AddInputCharacter((unsigned short)c);
+	}
 }
 
 bool ImGui_ImplGlfwGL3_CreateFontsTexture()

@@ -20,6 +20,7 @@
 #include"ecs\component.h"
 #include"ecs\entity.h"
 
+#include"systems\window_system.h"
 #include"systems\input_system.h"
 #include"systems\world_system.h"
 #include"systems\settings_system.h"
@@ -29,7 +30,6 @@
 #include"systems\text_system.h"
 
 #include"graphics\shader.h"
-#include"graphics\window.h"
 #include"graphics\renderable2d.h"
 #include"graphics\texture.h"
 #include"graphics\buffers\vertex_array_buffer.h"

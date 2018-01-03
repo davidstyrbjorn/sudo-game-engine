@@ -15,7 +15,6 @@ namespace sudo { namespace ecs {
 		}
 		m_components.clear();
 
-		delete transform;
 		// This line is not needed because m_renderableComponent is deleted when
 		//delete m_renderableComponent;
 	}

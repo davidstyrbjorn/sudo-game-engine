@@ -56,15 +56,23 @@ void FourWayMoveComponent::Update(float deltaTime)
 	}
 }
 
-void FourWayMoveComponent::SetVelocity(const math::Vector2 & a_newVelocity)
+void FourWayMoveComponent::SetVelocity(math::Vector2 & a_newVelocity)
 {
 	m_xSpeed = a_newVelocity.x;
 	m_ySpeed = a_newVelocity.y;
 }
 
-const math::Vector2 & FourWayMoveComponent::GetVelocity()
+math::Vector2 FourWayMoveComponent::GetVelocity()
 {
 	return math::Vector2(m_xSpeed, m_ySpeed);
+}
+
+void FourWayMoveComponent::SetKeys(char * a_up, char * a_down, char * a_right, char * a_left)
+{
+	m_up = a_up;
+	m_down = a_down;
+	m_left = a_left;
+	m_right = a_right;
 }
 
 char * FourWayMoveComponent::GetKeys(char * a_keyName)

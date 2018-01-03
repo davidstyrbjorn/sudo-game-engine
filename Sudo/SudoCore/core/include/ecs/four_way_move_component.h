@@ -28,8 +28,9 @@ namespace sudo { namespace ecs {
 		void Update(float deltaTime) override;
 
 		// This components methods
-		void SetVelocity(const math::Vector2& a_newVelocity);
-		const math::Vector2& GetVelocity();
+		void SetVelocity(math::Vector2 &a_newVelocity);
+		math::Vector2 GetVelocity();
+		void SetKeys(char* a_up, char* a_down, char* a_right, char* a_left);
 		char* GetKeys(char* a_keyName);
 
 	private:

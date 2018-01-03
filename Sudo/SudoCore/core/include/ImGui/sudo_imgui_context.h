@@ -2,7 +2,9 @@
 
 namespace sudo {
 
+	// Forward declerations
 	namespace sudo_system {
+		class WindowSystem;
 		class SettingsSystem;
 		class InputSystem;
 		class ParticleSystem;
@@ -16,20 +18,19 @@ namespace sudo {
 	}
 
 	namespace debug {
-
 		class SudoImGui {
 		public:
 			// Constructor
 			SudoImGui();
 
-			// The various debug windows
+			// The various debug windows/widgets
 			void ShowMetricsWindow();
 			void ShowEntitiesWindow();
 			void ShowSystemsWindow();
-
 			void ShowEntityInspector();
 
 		private:
+			sudo_system::WindowSystem *m_windowSystem;
 			sudo_system::SettingsSystem *m_settingsSystem;
 			sudo_system::InputSystem *m_inputSystem;
 			sudo_system::ParticleSystem *m_particleSystem;
@@ -43,5 +44,4 @@ namespace sudo {
 			bool m_showEntityInspector = false;
 			ecs::Entity* m_clickedEntity;
 		};
-
 } }

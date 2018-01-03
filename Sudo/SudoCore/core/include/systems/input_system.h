@@ -26,11 +26,6 @@ namespace sudo { namespace sudo_system {
 
 		std::map<const char*, int> keyCodeToLiteral;
 
-		float m_windowShakeLength;
-		int m_windowShakeStrength;
-		int m_windowOrgX, m_windowOrgY;
-		bool m_doWindowShake;
-
 		int m_keys[1024];
 		int m_mouseKeys[24];
 		math::Vector2 *m_mousePos;
@@ -54,11 +49,9 @@ namespace sudo { namespace sudo_system {
 		bool GetKey(const char* a_key);
 		bool IsMouseButtonPressed(int a_mouse_button);
 
-		// Shakes GLFW window 
-		void WindowShake(float a_length, int a_intensity);
-
 		// Populates keyCodeToiteral map
 		void populateKeyList();
+		const char* GetLiteral(int a_code);
 
 		/* GLFW Callbacks */
 		friend static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);

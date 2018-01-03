@@ -28,6 +28,7 @@ public:
 		shape1->transform->Move(math::Vector3(500, 300, 0));
 		shape1->AddComponent(new ecs::SoundComponent("default", "D:\\temp\\sound.wav"));
 		shape1->AddComponent(new ecs::BoxCollider2D());
+		shape1->AddComponent(new ecs::FourWayMoveComponent(math::Vector2(0.5,0.5), "up", "down", "right", "left"));
 
 		shape2->AddComponent(new ecs::RectangleComponent(math::Vector2(90, 120), math::Color::GetRandomColor()));
 		shape2->transform->Move(math::Vector3(250, 450, 0));
@@ -35,7 +36,7 @@ public:
 		shape3->AddComponent(new ecs::RectangleComponent(math::Vector2(10, 220), math::Color::GetRandomColor()));
 		shape3->transform->Move(math::Vector3(700, 110, 0));
 
-		shape4->AddComponent(new ecs::SpriteComponent("D:\\temp\\lbs.jpg"));
+		shape4->AddComponent(new ecs::SpriteComponent("D:\\temp\\cat.png"));
 		shape4->transform->Move(math::Vector3(350, 290, 0));
 
 		textRenderer->LoadFont("C:\\Windows\\Fonts\\arial.ttf", "arial", 50);
@@ -47,7 +48,8 @@ public:
 	void Update(float deltaTime) {
 		if (input->GetKey("d")) {
 			shape1->transform->Move(math::Vector3(0.1f*deltaTime, 0, 0));
-			shape1->GetComponent<ecs::SoundComponent>()->GetSoundSource("default")->play(true);
+			//shape1->GetComponent<ecs::SoundComponent>()->GetSoundSource("default")->play(true);
+			window->WindowShake(3000, 6);
 		}
 		if (input->GetKey("a")) {
 			shape1->transform->Move(math::Vector3(-0.1f*deltaTime, 0, 0));

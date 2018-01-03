@@ -19,22 +19,7 @@ namespace sudo { namespace sudo_system {
 
 	void InputSystem::Update(float deltaTime)
 	{
-		/* Window Shake Code */
-		if (m_doWindowShake && m_isActive) {
-			// Get the window's new position values for this frame
-			int _x = utility::SudoRandomNumber::GetRandomInteger(-m_windowShakeStrength, m_windowShakeStrength);
-			int _y = utility::SudoRandomNumber::GetRandomInteger(-m_windowShakeStrength, m_windowShakeStrength);
 
-			// Set the window's position accordingly
-			glfwSetWindowPos(glfwGetCurrentContext(), m_windowOrgX + _x, m_windowOrgY + _y);
-
-			// Decrease the length of the window shake 
-			m_windowShakeLength -= deltaTime;
-			if (m_windowShakeLength <= 0) {
-				m_doWindowShake = false;
-				glfwSetWindowPos(glfwGetCurrentContext(), m_windowOrgX, m_windowOrgY);
-			}
-		}
 	}
 
 	void InputSystem::Enable()
@@ -57,11 +42,11 @@ namespace sudo { namespace sudo_system {
 		m_isActive = false;
 
 		/* Set the GLFW callbacks */
-		glfwSetCursorPosCallback(glfwGetCurrentContext(), nullptr);
 		glfwSetKeyCallback(glfwGetCurrentContext(), nullptr);
 		glfwSetMouseButtonCallback(glfwGetCurrentContext(), nullptr);
-		// ImGui needs this so don't disable it!
-		//glfwSetCharCallback(glfwGetCurrentContext(), nullptr);
+		// ImGui needs these so don't disable!
+		glfwSetCursorPosCallback(glfwGetCurrentContext(), nullptr);
+		glfwSetCharCallback(glfwGetCurrentContext(), nullptr);
 
 		for (int i = 0; i < 1024; i++) {
 			m_keys[i] = 0;
@@ -102,14 +87,6 @@ namespace sudo { namespace sudo_system {
 		if (m_mouseKeys[a_mouse_button] == GLFW_PRESS || m_mouseKeys[a_mouse_button] == GLFW_REPEAT)
 			return true;
 		return false;
-	}
-
-	void InputSystem::WindowShake(float a_length, int a_intensity)
-	{
-		m_doWindowShake = true;
-		m_windowShakeLength = a_length;
-		m_windowShakeStrength = a_intensity;
-		glfwGetWindowPos(glfwGetCurrentContext(), &m_windowOrgX, &m_windowOrgY);
 	}
 
 	void key_callback(GLFWwindow * window, int key, int scancode, int action, int mods)
@@ -254,6 +231,34 @@ namespace sudo { namespace sudo_system {
 		keyCodeToLiteral["f23"] = 312;
 		keyCodeToLiteral["f24"] = 313;
 		keyCodeToLiteral["f25"] = 314;
+	}
+
+	template<typename K, typename V>
+	bool findByValue(std::vector<K> & vec, std::map<K, V> mapOfElemen, V value)
+	{
+		bool bResult = false;
+		auto it = mapOfElemen.begin();
+		// Iterate through the map
+		while (it != mapOfElemen.end())
+		{
+			// Check if value of this entry matches with given value
+			if (it->second == value)
+			{
+				// Yes found
+				bResult = true;
+				// Push the key in given map
+				vec.push_back(it->first);
+			}
+			// Go to next entry in map
+			it++;
+		}
+		return bResult;
+	}
+
+	const char * InputSystem::GetLiteral(int a_code)
+	{
+		std::vector<int> temp;
+		bool result = findByValue<const char*, int>(temp, keyCodeToLiteral, a_code);
 	}
 }
 }

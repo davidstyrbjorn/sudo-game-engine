@@ -22,12 +22,13 @@ void SudoCore::init(const math::Vector2 a_windowSize, char* a_windowCaption, Sud
 	/* Setting the engine instance */
 	m_engineInstance = a_engineInstance;
 
+	// ENABLE SYSTEMS              
+	
 	/* Create the game window */
-	m_window = new graphics::Window(a_windowSize.x, a_windowSize.y, a_windowCaption);
-
-	/* ========================================= */
-	/*               ENABLE SYSTEMS              */
-	/* ========================================= */
+	//m_window = new graphics::Window(a_windowSize.x, a_windowSize.y, a_windowCaption);
+	m_windowSystem = sudo_system::WindowSystem::Instance();
+	m_windowSystem->Enable();
+	m_windowSystem->Init(a_windowSize.x, a_windowSize.y, a_windowCaption);
 
 	/* Sound System */
 	m_soundSystem = sudo_system::SoundSystem::Instance();
@@ -71,6 +72,7 @@ void SudoCore::init(const math::Vector2 a_windowSize, char* a_windowCaption, Sud
 	m_engineInstance->Start();
 
 	/* Call Start on systems */
+	m_windowSystem->Start();
 	m_worldSystem->Start();
 	m_batchRenderer->Start();
 	m_particleSystem->Start();
@@ -88,6 +90,7 @@ void SudoCore::clean_up()
 	glfwTerminate();
 
 	/* Call CleanUp() on all systems */
+	m_windowSystem->CleanUp();
 	m_inputSystem->CleanUp();
 	m_worldSystem->CleanUp();
 	m_batchRenderer->CleanUp();
@@ -95,8 +98,6 @@ void SudoCore::clean_up()
 	m_soundSystem->CleanUp();
 	m_particleSystem->CleanUp();
 	m_textSystem->CleanUp();
-
-	delete m_window;
 
 	/* After this point everything should be clear */
 	m_engineInstance->OnApplicationClose();
@@ -117,7 +118,7 @@ void SudoCore::game_loop()
 	realTimer->Start();
 	unsigned int framesPerSecond = 0;
 
-	while (m_window->is_open())
+	while (m_windowSystem->IsOpen())
 	{
 		if (realTimer->GetTicks() >= 1000) {
 #if PRINT_FPS
@@ -135,6 +136,8 @@ void SudoCore::game_loop()
 		// Call the user-end Update methods
 		m_engineInstance->Update(_deltaTime);
 
+		// Update the window 
+		m_windowSystem->Update(_deltaTime);
 		// Update the WorldSystem holding all game entities 
 		m_worldSystem->Update(_deltaTime);
 		// Update particle system
@@ -145,7 +148,7 @@ void SudoCore::game_loop()
 		if (timer->GetTicks() >= m_settingsSystem->GetMS()) 
 		{
 			// Clear the screen 
-			m_window->clear();
+			m_windowSystem->Clear();
 
 			// OpenGL calls here
 			m_particleSystem->Begin();
@@ -173,7 +176,7 @@ void SudoCore::game_loop()
 			m_textSystem->Flush();
 
 			// Display the current drawns elements 
-			m_window->display();
+			m_windowSystem->Display();
 
 			// Reset the loop timer
 			timer->Reset();
@@ -190,11 +193,6 @@ void SudoCore::game_loop()
 	}
 
 	clean_up();
-}
-
-graphics::Window& SudoCore::GetWindow() 
-{
-	return *m_window;
 }
 
 }

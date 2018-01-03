@@ -11,6 +11,7 @@
 #include"../systems/text_system.h"
 #include"../systems/world_system.h"
 #include"../systems/batch_render_system.h"
+#include"../systems/window_system.h"
 
 #include"../ecs/transform_component.h"
 #include"../ecs/four_way_move_component.h"
@@ -19,16 +20,21 @@
 #include"../graphics/renderable2d.h"
 #include"../graphics/texture.h"
 #include"../math/color.h"
+#include"../math/vector2.h"
 
 #include<string>
 #include<vector>
 
 #include"../ecs/entity.h"
 
+// Taken from imgui_demo.cpp!
+#define IM_ARRAYSIZE(_ARR)  ((int)(sizeof(_ARR)/sizeof(*_ARR)))
+
 namespace sudo { namespace debug { 
 
 SudoImGui::SudoImGui() 
 {
+	m_windowSystem = sudo_system::WindowSystem::Instance();
 	m_settingsSystem = sudo_system::SettingsSystem::Instance();
 	m_inputSystem = sudo_system::InputSystem::Instance();
 	m_particleSystem = sudo_system::ParticleSystem::Instance();
@@ -67,7 +73,7 @@ void SudoImGui::ShowMetricsWindow()
 void SudoImGui::ShowEntitiesWindow() 
 {
 	ImGui::SetNextWindowPos(ImVec2(5, 160));
-	ImGui::Begin("Sudo Entities", false, ImVec2(250, 150), 0.7f, 
+	ImGui::Begin("Sudo Entities", false, ImVec2(200, 150), 0.7f, 
 		ImGuiWindowFlags_::ImGuiWindowFlags_NoResize |
 		ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse |
 		ImGuiWindowFlags_::ImGuiWindowFlags_NoMove
@@ -76,10 +82,12 @@ void SudoImGui::ShowEntitiesWindow()
 	std::vector<ecs::Entity*> entityList = sudo_system::WorldSystem::Instance()->GetEntityList();
 
 	ImGui::Text("Entity List");
-	ImGui::Columns(3, "columns3", false);
+	ImGui::Columns(2, "columns2", true);
+	ImGui::SetColumnOffset(1, 70);
 	for (int i = 0; i < entityList.size(); i++) 
 	{
-		if (!entityList[i]->DestroyMe()) {
+		if (!entityList[i]->DestroyMe()) 
+		{
 			std::string button = std::string(entityList[i]->GetID()) + "##" + std::to_string(i);
 			//std::string button = "s";
 			if (ImGui::Button(button.c_str()))
@@ -104,7 +112,7 @@ void SudoImGui::ShowSystemsWindow()
 {
 	if (m_showSystemsWindow) 
 	{
-		ImGui::SetNextWindowSize(ImVec2(300, 200));
+		ImGui::SetNextWindowSize(ImVec2(200, 200));
 
 		ImGui::Begin("Sudo Systems", &m_showSystemsWindow, 
 			ImGuiWindowFlags_::ImGuiWindowFlags_NoResize |
@@ -113,6 +121,7 @@ void SudoImGui::ShowSystemsWindow()
 		);
 		/*
 		../systems/settings_system.h <- This one shouldn't be fucked with!
+		../systems/window_system.h
 		../systems/input_system.h
 		../systems/particle_system.h
 		../systems/sound_system.h
@@ -121,45 +130,63 @@ void SudoImGui::ShowSystemsWindow()
 		../systems/batch_render_system.h
 		*/
 		// List all the asshole-systems
-
-		if (m_renderSystem->IsActive()) ImGui::TextColored(ImVec4(0, 255, 0, 255), "Render System");
-		else						    ImGui::TextColored(ImVec4(255, 0, 0, 255), "Render System");
-		ImGui::SameLine(150);
-		if (ImGui::Button("Toggle##1")) {
-			m_renderSystem->Toggle();
+		if (m_windowSystem->IsActive())	ImGui::TextColored(ImVec4(0, 255, 0, 255), "Window System");
+		else							ImGui::TextColored(ImVec4(255, 0, 0, 255), "Window System");
+		if (ImGui::IsItemClicked(0))
+		{
+			// Show Window system widget
+		}
+		ImGui::SameLine(125);
+		if (ImGui::Button("Toggle##0")) {
+			m_windowSystem->Toggle();
 		}
 
-		if(m_inputSystem->IsActive()) ImGui::TextColored(ImVec4(0,255,0,255),    "Input System");
-		else						  ImGui::TextColored(ImVec4(255, 0, 0, 255), "Input System");
-		ImGui::SameLine(150);
+		if(m_inputSystem->IsActive())	ImGui::TextColored(ImVec4(0,255,0,255),    "Input System");
+		else							ImGui::TextColored(ImVec4(255, 0, 0, 255), "Input System");
+		ImGui::SameLine(125);
 		if (ImGui::Button("Toggle##2")) {
 			m_inputSystem->Toggle();
 		}
 
+		if (m_renderSystem->IsActive()) ImGui::TextColored(ImVec4(0, 255, 0, 255), "Render System");
+		else						    ImGui::TextColored(ImVec4(255, 0, 0, 255), "Render System");
+		if (ImGui::IsItemClicked(0))
+		{
+			// Show Render system widget
+		}
+		ImGui::SameLine(125);
+		if (ImGui::Button("Toggle##1")) {
+			m_renderSystem->Toggle();
+		}
+
 		if (m_particleSystem->IsActive()) ImGui::TextColored(ImVec4(0, 255, 0, 255), "Particle System");
 		else						      ImGui::TextColored(ImVec4(255, 0, 0, 255), "Particle System");
-		ImGui::SameLine(150);
+		if (ImGui::IsItemClicked(0))
+		{
+			// Show Particle system widget
+		}
+		ImGui::SameLine(125);
 		if (ImGui::Button("Toggle##3")) {
 			m_particleSystem->Toggle();
 		}
 
 		if (m_soundSystem->IsActive())  ImGui::TextColored(ImVec4(0, 255, 0, 255), "Sound System");
 		else						    ImGui::TextColored(ImVec4(255, 0, 0, 255), "Sound System");
-		ImGui::SameLine(150);
+		ImGui::SameLine(125);
 		if (ImGui::Button("Toggle##4")) {
 			m_soundSystem->Toggle();
 		}
 
 		if (m_textSystem->IsActive())  ImGui::TextColored(ImVec4(0, 255, 0, 255), "Text System");
 		else						   ImGui::TextColored(ImVec4(255, 0, 0, 255), "Text System");
-		ImGui::SameLine(150);
+		ImGui::SameLine(125);
 		if (ImGui::Button("Toggle##5")) {
 			m_textSystem->Toggle();
 		}
 
 		if (m_worldSystem->IsActive()) ImGui::TextColored(ImVec4(0, 255, 0, 255), "World System");
 		else						   ImGui::TextColored(ImVec4(255, 0, 0, 255), "World System");
-		ImGui::SameLine(150);
+		ImGui::SameLine(125);
 		if (ImGui::Button("Toggle##6")) {
 			m_worldSystem->Toggle();
 		}
@@ -172,7 +199,7 @@ void SudoImGui::ShowEntityInspector()
 {
 	if (m_showEntityInspector && !m_clickedEntity->DestroyMe()) 
 	{
-		ImGui::Begin("Entity Inspector", &m_showEntityInspector);
+		ImGui::Begin("Entity Inspector", &m_showEntityInspector, ImVec2(300,450), 0.8f);
 
 		// Core value
 		std::string id = "ID: " + std::string(m_clickedEntity->GetID());
@@ -195,13 +222,16 @@ void SudoImGui::ShowEntityInspector()
 
 		// Transform Component 
 		if (ImGui::CollapsingHeader("Transform")) {
-			float position[3] = { m_clickedEntity->transform->position.x, m_clickedEntity->transform->position.y, m_clickedEntity->transform->position.z };
-			ImGui::Text("Position:");
-			ImGui::SliderFloat3("x,y,z", position, 0, m_settingsSystem->GetWindowSize().x, "%0.0f");
-			m_clickedEntity->transform->position = math::Vector3(position[0], position[1], position[2]);
+			ImGui::Text("Position");
+			ImGui::PushItemWidth(70);
+			ImGui::InputFloat("X", &m_clickedEntity->transform->position.x, 0, 0, 2);
+			ImGui::SameLine(102);
+			ImGui::InputFloat("Y", &m_clickedEntity->transform->position.y, 0, 0, 2);
+			ImGui::SameLine(95*2);
+			ImGui::InputFloat("Z", &m_clickedEntity->transform->position.z, 0, 0, 2);
+			ImGui::PopItemWidth();
 
-			ImGui::Text("Rotation:");
-			ImGui::SliderFloat(" :z", &m_clickedEntity->transform->angle, -360, 360, "%0.0f");
+			ImGui::InputFloat("Rotation", &m_clickedEntity->transform->angle, 1.0f, 1.0f, 1);
 		}
 
 		// Renderable Component
@@ -212,7 +242,10 @@ void SudoImGui::ShowEntityInspector()
 			if (hasRenderbale) {
 				ImGui::Text("Renderable Component: true");
 
+				ImGui::Separator();
+
 				// Size
+				ImGui::BulletText("Size");
 				float _x = renderable->GetSize().x;
 				float _y = renderable->GetSize().y;
 				ImGui::SliderFloat("Width", &_x, 0, m_settingsSystem->GetWindowSize().x, "%0.0f");
@@ -222,6 +255,7 @@ void SudoImGui::ShowEntityInspector()
 				ImGui::Separator();
 
 				// Color
+				ImGui::BulletText("Color");
 				ImVec4 color = ImColor(renderable->GetColor().r / 255, renderable->GetColor().g / 255, renderable->GetColor().b / 255, renderable->GetColor().a / 255);
 				ImGui::ColorEdit4("Renderable Color", (float*)&color);
 				renderable->SetColor(math::Color(color.x * 255, color.y * 255, color.z * 255, color.w * 255));
@@ -231,8 +265,9 @@ void SudoImGui::ShowEntityInspector()
 				// Texture
 				auto _txtre = renderable->GetTexture();
 				if (_txtre != nullptr) {
-					ImGui::Text("Texture: true");
-					
+					//ImGui::Text("Texture: true");
+					ImGui::BulletText("Texture");
+
 					std::string _imagePath = std::string(_txtre->getImagePath());
 					int _index = _imagePath.find_last_of("\\")+1;
 					std::string _imageName = "Name: ";
@@ -276,6 +311,42 @@ void SudoImGui::ShowEntityInspector()
 			if (hasMove) {
 				ImGui::Text("Four-way Move Component: true");
 
+				ImGui::Separator(); ImGui::Spacing();
+
+				// Velocity
+				ImVec2 fwm_velocity = ImVec2(_fwm->GetVelocity().x, _fwm->GetVelocity().y);
+
+				//ImGui::SliderFloat2("Velocity", (float*)&fwm_velocity, 0, 10);
+				ImGui::InputFloat2("Velocity(x,y)", (float*)&fwm_velocity);
+
+				_fwm->SetVelocity(math::Vector2(fwm_velocity.x, fwm_velocity.y));
+
+				ImGui::Separator();
+
+				// Keys
+				ImGui::Text("Move Keys (right click to change!)");
+				int up_code 
+
+				// Moving up key 
+				ImGui::Text("Up");
+				ImGui::SameLine(0,-5.0f);
+
+
+				// Moving down key
+				ImGui::Text("Down");
+
+				ImGui::SameLine();
+
+				// Moving right key
+				ImGui::Text("Right");
+
+				ImGui::SameLine();
+
+				// Moving left key
+				ImGui::Text("Left");
+
+				if(ImGui::Button("Set##fwm")){
+					_fwm->SetKeys(up_buf, down, right, left);
 			}
 			else {
 				ImGui::Text("Four-way Move Component: nullptr");

@@ -1,9 +1,10 @@
 #pragma once
 
-#include"systems\batch_render_system.h"
+#include"systems\window_system.h"
 #include"systems\input_system.h"
 #include"systems\world_system.h"
 #include"systems\settings_system.h"
+#include"systems\batch_render_system.h"
 #include"systems\sound_system.h"
 #include"systems\text_system.h"
 #include"systems\particle_system.h"
@@ -13,6 +14,7 @@ namespace sudo {
 	class SudoClass {
 	public:
 		// Getting all the systems for the user to exploit
+		sudo_system::WindowSystem *window = sudo_system::WindowSystem::Instance();
 		sudo_system::InputSystem *input = sudo_system::InputSystem::Instance();
 		sudo_system::BatchRendererSystem *renderer = sudo_system::BatchRendererSystem::Instance();
 		sudo_system::WorldSystem *world = sudo_system::WorldSystem::Instance();
