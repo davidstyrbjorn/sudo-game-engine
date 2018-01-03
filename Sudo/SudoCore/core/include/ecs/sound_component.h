@@ -34,6 +34,9 @@ namespace sudo { namespace ecs {
 		// Returns raw pointer to the audio source 
 		sound::SoundSource *GetSoundSource(const char* a_name);
 
+		// Returns a copy of the sound map
+		std::map<const char*, SoundStruct*> GetSoundList();
+
 		/* Component base methods */
 		void Update(float deltaTime) override;
 		void Start() override;

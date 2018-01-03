@@ -28,7 +28,7 @@ public:
 		shape1->transform->Move(math::Vector3(500, 300, 0));
 		shape1->AddComponent(new ecs::SoundComponent("default", "D:\\temp\\sound.wav"));
 		shape1->AddComponent(new ecs::BoxCollider2D());
-		shape1->AddComponent(new ecs::FourWayMoveComponent(math::Vector2(0.5,0.5), "up", "down", "right", "left"));
+		shape1->AddComponent(new ecs::FourWayMoveComponent(math::Vector2(0.5,0.5), "w", "s", "d", "a"));
 
 		shape2->AddComponent(new ecs::RectangleComponent(math::Vector2(90, 120), math::Color::GetRandomColor()));
 		shape2->transform->Move(math::Vector3(250, 450, 0));
@@ -47,18 +47,15 @@ public:
 
 	void Update(float deltaTime) {
 		if (input->GetKey("d")) {
-			shape1->transform->Move(math::Vector3(0.1f*deltaTime, 0, 0));
-			//shape1->GetComponent<ecs::SoundComponent>()->GetSoundSource("default")->play(true);
-			window->WindowShake(3000, 6);
+			shape1->GetComponent<ecs::SoundComponent>()->GetSoundSource("default")->play(true);
+			//window->WindowShake(3000, 6);
 		}
 		if (input->GetKey("a")) {
-			shape1->transform->Move(math::Vector3(-0.1f*deltaTime, 0, 0));
-
-			sudo_system::ParticleConfiguration x;
-			x.DoFade = false;
-			x.GravitySimulated = false;
-
-			particleSystem->Submit(shape1->transform->position, math::Vector2(5, 5), math::Color::Green(), 1500, math::Vector2::GetRandomVector(-0.1f, 0.1f), x);
+			//sudo_system::ParticleConfiguration x;
+			//x.DoFade = false;
+			//x.GravitySimulated = false;
+			//
+			//particleSystem->Submit(shape1->transform->position, math::Vector2(5, 5), math::Color::Green(), 1500, math::Vector2::GetRandomVector(-0.1f, 0.1f), x);
 		}
 	}
 

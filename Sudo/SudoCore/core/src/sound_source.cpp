@@ -41,9 +41,14 @@ void SoundSource::setVolume(const float a_gain)
 	alSourcef(source, AL_GAIN, a_gain);
 }
 
-void SoundSource::setLooping(unsigned char a_loop) 
+void SoundSource::setLooping(bool a_loop) 
 {
 	alSourcei(source, AL_LOOPING, true);
+}
+
+bool SoundSource::isLooping()
+{
+	alGetSourcei(source, AL_LOOPING, )
 }
 
 void SoundSource::setPitch(const float a_pitch) 

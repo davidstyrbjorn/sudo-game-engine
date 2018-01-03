@@ -58,4 +58,9 @@ sound::SoundSource *SoundComponent::GetSoundSource(const char* a_name)
 	return m_soundList.at(a_name)->soundSource;
 }
 
+std::map<const char*, SoundStruct*> SoundComponent::GetSoundList()
+{
+	return m_soundList;
+}
+
 } } 

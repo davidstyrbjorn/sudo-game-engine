@@ -16,11 +16,15 @@
 #include"../ecs/transform_component.h"
 #include"../ecs/four_way_move_component.h"
 #include"../ecs/box_collider2D.h"
+#include"../ecs/sound_component.h"
 
 #include"../graphics/renderable2d.h"
 #include"../graphics/texture.h"
 #include"../math/color.h"
 #include"../math/vector2.h"
+
+//#include"../sound/sound_include.h"
+#include"../sound/sound_source.h"
 
 #include<string>
 #include<vector>
@@ -237,15 +241,15 @@ void SudoImGui::ShowEntityInspector()
 		// Renderable Component
 		if (ImGui::CollapsingHeader("Renderable"))
 		{
-			graphics::Renderable2D* renderable = m_clickedEntity->GetRenderableComponent();
+			auto renderable = m_clickedEntity->GetRenderableComponent();
 			bool hasRenderbale = renderable == nullptr ? false : true;
 			if (hasRenderbale) {
 				ImGui::Text("Renderable Component: true");
 
-				ImGui::Separator();
+				ImGui::Separator(); 
 
 				// Size
-				ImGui::BulletText("Size");
+				ImGui::Text("Size");
 				float _x = renderable->GetSize().x;
 				float _y = renderable->GetSize().y;
 				ImGui::SliderFloat("Width", &_x, 0, m_settingsSystem->GetWindowSize().x, "%0.0f");
@@ -255,7 +259,7 @@ void SudoImGui::ShowEntityInspector()
 				ImGui::Separator();
 
 				// Color
-				ImGui::BulletText("Color");
+				ImGui::Text("Color");
 				ImVec4 color = ImColor(renderable->GetColor().r / 255, renderable->GetColor().g / 255, renderable->GetColor().b / 255, renderable->GetColor().a / 255);
 				ImGui::ColorEdit4("Renderable Color", (float*)&color);
 				renderable->SetColor(math::Color(color.x * 255, color.y * 255, color.z * 255, color.w * 255));
@@ -265,8 +269,7 @@ void SudoImGui::ShowEntityInspector()
 				// Texture
 				auto _txtre = renderable->GetTexture();
 				if (_txtre != nullptr) {
-					//ImGui::Text("Texture: true");
-					ImGui::BulletText("Texture");
+					ImGui::Text("Texture: true");
 
 					std::string _imagePath = std::string(_txtre->getImagePath());
 					int _index = _imagePath.find_last_of("\\")+1;
@@ -278,6 +281,14 @@ void SudoImGui::ShowEntityInspector()
 
 					std::string imagePath = "Location: " + std::string(_txtre->getImagePath());
 					ImGui::Text(imagePath.c_str());
+
+					ImGui::Separator();
+
+					// Display the image
+					ImGui::Text("Texture");
+					int new_width = (int)(_txtre->getWidth() / 4);
+					int new_height = (int)(_txtre->getHeight() / 4);
+					ImGui::Image((void*)_txtre->getID(), ImVec2(new_width, new_height));
 				}
 				else {
 					ImGui::Text("Texture: nullptr");
@@ -291,15 +302,72 @@ void SudoImGui::ShowEntityInspector()
 		// BoxCollider2D component
 		if (ImGui::CollapsingHeader("BoxCollider2D")) {
 			// Check if entity has boxcollider2d component
-			ecs::BoxCollider2D* _bc2d = m_clickedEntity->GetComponent<ecs::BoxCollider2D>();
+			auto _bc2d = m_clickedEntity->GetComponent<ecs::BoxCollider2D>();
 			bool hasBC2D = (_bc2d == nullptr) ? false : true;
 			if (hasBC2D) {
 				ImGui::Text("BoxCollider2D Component: true");
 
-				ImGui::Text("Origin: (100, 25)");
+				ImGui::Separator(); 
+
+				ImVec2 bc_origin = ImVec2(_bc2d->GetOrigin().x, _bc2d->GetOrigin().y);
+				ImGui::InputFloat2("Origin", (float*)&bc_origin, 1);
+
+				ImVec2 bc_bounds = ImVec2(_bc2d->GetBounds().x, _bc2d->GetBounds().y);
+				ImGui::InputFloat2("Bounds", (float*)&bc_bounds, 1);
+
+				if (ImGui::IsAnyItemHovered()) {
+					ImGui::BeginTooltip();
+					ImGui::TextColored(ImVec4(1, 0, 0, 1), "Data not modifiable");
+					ImGui::EndTooltip();
+				}
 			}
 			else {
 				ImGui::Text("BoxCollider2D Component: nullptr");
+			}
+		}
+
+		// Sound Component
+		if (ImGui::CollapsingHeader("SoundComponent")) {
+			auto _sc = m_clickedEntity->GetComponent<ecs::SoundComponent>();
+			bool hasSC = (_sc == nullptr) ? false : true;
+			if (hasSC) {
+				ImGui::Text("Sound Component: true");
+
+				ImGui::Separator(); 
+
+				// List all of the sounds on the component
+				std::map<const char*, ecs::SoundStruct*> soundMap = _sc->GetSoundList();
+				int soundCount = 0;
+				for (auto const& x : soundMap) 
+				{
+					// Sound index and name
+					if (ImGui::CollapsingHeader(std::to_string(soundCount).c_str())) {
+						std::string sound1 = "Sound Name: " + std::string(x.first);
+						ImGui::Text(sound1.c_str());
+
+						// Sound state buttons
+						std::string play = "Play##" + std::to_string(soundCount);
+						if (ImGui::Button(play.c_str())) {
+							x.second->soundSource->play(true);
+						}
+						ImGui::SameLine(50);
+						std::string pause = "Pause##" + std::to_string(soundCount);
+						if (ImGui::Button(pause.c_str())) {
+							x.second->soundSource->pause();
+						}
+						ImGui::SameLine(100);
+						std::string stop = "Stop##" + std::to_string(soundCount);
+						if (ImGui::Button(stop.c_str())) {
+							x.second->soundSource->stop();
+						}
+
+						// Other sound values
+					}
+					soundCount++;
+				}
+			}
+			else {
+				ImGui::Text("Sound Component: nullptr");
 			}
 		}
 
@@ -311,42 +379,29 @@ void SudoImGui::ShowEntityInspector()
 			if (hasMove) {
 				ImGui::Text("Four-way Move Component: true");
 
-				ImGui::Separator(); ImGui::Spacing();
+				ImGui::Separator(); 
 
 				// Velocity
 				ImVec2 fwm_velocity = ImVec2(_fwm->GetVelocity().x, _fwm->GetVelocity().y);
 
 				//ImGui::SliderFloat2("Velocity", (float*)&fwm_velocity, 0, 10);
-				ImGui::InputFloat2("Velocity(x,y)", (float*)&fwm_velocity);
+				ImGui::InputFloat2("Velocity", (float*)&fwm_velocity);
 
 				_fwm->SetVelocity(math::Vector2(fwm_velocity.x, fwm_velocity.y));
 
 				ImGui::Separator();
 
 				// Keys
-				ImGui::Text("Move Keys (right click to change!)");
-				int up_code 
+				std::string fwm_up = "Up: " + std::string(_fwm->GetKeys("up"));
+				std::string fwm_down = "Down: " + std::string(_fwm->GetKeys("down"));
+				std::string fwm_right = "Right: " + std::string(_fwm->GetKeys("right"));
+				std::string fwm_left = "Left: " + std::string(_fwm->GetKeys("left"));
 
-				// Moving up key 
-				ImGui::Text("Up");
-				ImGui::SameLine(0,-5.0f);
-
-
-				// Moving down key
-				ImGui::Text("Down");
-
-				ImGui::SameLine();
-
-				// Moving right key
-				ImGui::Text("Right");
-
-				ImGui::SameLine();
-
-				// Moving left key
-				ImGui::Text("Left");
-
-				if(ImGui::Button("Set##fwm")){
-					_fwm->SetKeys(up_buf, down, right, left);
+				ImGui::Text("Move Keys");
+				ImGui::Text(fwm_up.c_str());
+				ImGui::Text(fwm_down.c_str());
+				ImGui::Text(fwm_right.c_str());
+				ImGui::Text(fwm_left.c_str());
 			}
 			else {
 				ImGui::Text("Four-way Move Component: nullptr");

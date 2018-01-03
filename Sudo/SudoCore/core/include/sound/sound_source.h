@@ -24,8 +24,13 @@ namespace sound {
 		const math::Vector3& getPosition();
 		void setPosition(const math::Vector3& a_position);
 		void setVolume(const float a_gain);
-		void setLooping(unsigned char a_loop);
+		void setLooping(bool a_loop);
 		void setPitch(const float a_pitch);
+
+		// Getters
+		float getVolume();
+		bool isLooping();
+		float getPitch();
 
 		// State modify methods 
 		void play(bool a_override = false);
