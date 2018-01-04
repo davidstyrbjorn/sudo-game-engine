@@ -46,17 +46,7 @@ public:
 	}
 
 	void Update(float deltaTime) {
-		if (input->GetKey("d")) {
-			shape1->GetComponent<ecs::SoundComponent>()->GetSoundSource("default")->play(true);
-			//window->WindowShake(3000, 6);
-		}
-		if (input->GetKey("a")) {
-			//sudo_system::ParticleConfiguration x;
-			//x.DoFade = false;
-			//x.GravitySimulated = false;
-			//
-			//particleSystem->Submit(shape1->transform->position, math::Vector2(5, 5), math::Color::Green(), 1500, math::Vector2::GetRandomVector(-0.1f, 0.1f), x);
-		}
+
 	}
 
 	void Render() override

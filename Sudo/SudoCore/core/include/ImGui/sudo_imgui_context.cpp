@@ -111,6 +111,29 @@ void SudoImGui::ShowEntitiesWindow()
 	ImGui::End();
 }
 
+void SudoImGui::ShowSystemWidgets()
+{
+	if (m_showRenderableWidget) 
+	{
+		ImGui::Begin("Renderer", &m_showRenderableWidget, ImVec2(250, 300), 0.9f);
+
+		ImGui::End();
+	}
+
+	if (m_showParicleWidget)
+	{
+		ImGui::Begin("Particles", &m_showParicleWidget, ImVec2(250, 300), 0.9f);
+
+		ImGui::End();
+	}
+
+	if (m_showWindoWidget)
+	{
+		ImGui::Begin("Window", &m_showWindoWidget, ImVec2(250, 300), 0.9f);
+
+		ImGui::End();
+	}
+}
 
 void SudoImGui::ShowSystemsWindow()
 {
@@ -139,6 +162,7 @@ void SudoImGui::ShowSystemsWindow()
 		if (ImGui::IsItemClicked(0))
 		{
 			// Show Window system widget
+			m_showWindoWidget = !m_showWindoWidget;
 		}
 		ImGui::SameLine(125);
 		if (ImGui::Button("Toggle##0")) {
@@ -157,6 +181,7 @@ void SudoImGui::ShowSystemsWindow()
 		if (ImGui::IsItemClicked(0))
 		{
 			// Show Render system widget
+			m_showRenderableWidget = !m_showRenderableWidget;
 		}
 		ImGui::SameLine(125);
 		if (ImGui::Button("Toggle##1")) {
@@ -168,6 +193,7 @@ void SudoImGui::ShowSystemsWindow()
 		if (ImGui::IsItemClicked(0))
 		{
 			// Show Particle system widget
+			m_showParicleWidget = !m_showParicleWidget;
 		}
 		ImGui::SameLine(125);
 		if (ImGui::Button("Toggle##3")) {
@@ -282,6 +308,12 @@ void SudoImGui::ShowEntityInspector()
 					std::string imagePath = "Location: " + std::string(_txtre->getImagePath());
 					ImGui::Text(imagePath.c_str());
 
+					static char newImage[128] = "";
+					ImGui::InputText("New Image", newImage, 128);
+					if (ImGui::Button("Load")) {
+						_txtre->loadImage(newImage);
+					}
+
 					ImGui::Separator();
 
 					// Display the image
@@ -361,7 +393,20 @@ void SudoImGui::ShowEntityInspector()
 							x.second->soundSource->stop();
 						}
 
+						ImGui::Separator();
+
 						// Other sound values
+						float volume = x.second->soundSource->getVolume();
+						float pitch = x.second->soundSource->getPitch();
+						bool isLooping = x.second->soundSource->isLooping();
+
+						ImGui::SliderFloat("Volume", &volume, 0, 1);
+						ImGui::SliderFloat("Pitch", &pitch, 0, 10);
+						ImGui::Checkbox("Looping", &isLooping);
+
+						x.second->soundSource->setVolume(volume);
+						x.second->soundSource->setPitch(pitch);
+						x.second->soundSource->setLooping(isLooping);
 					}
 					soundCount++;
 				}

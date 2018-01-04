@@ -57,6 +57,7 @@ namespace sudo { namespace sudo_system {
 		m_debugObject->ShowMetricsWindow();
 		m_debugObject->ShowEntityInspector();
 		m_debugObject->ShowSystemsWindow();
+		m_debugObject->ShowSystemWidgets();
 		m_debugObject->ShowEntitiesWindow();
 	}
 

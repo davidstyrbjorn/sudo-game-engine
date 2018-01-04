@@ -6,48 +6,53 @@
 
 namespace sudo { namespace graphics {
 
-		Texture::Texture() 
-		{
+	Texture::Texture()
+	{
 
+	}
+
+	Texture::Texture(char* a_imagePath)
+	{
+		this->loadImage(a_imagePath);
+	}
+
+	void Texture::loadImage(char * a_imagePath)
+	{
+		m_imagePath = a_imagePath;
+
+		unsigned char* m_imageData = SOIL_load_image(a_imagePath, &m_width, &m_height, 0, SOIL_LOAD_RGB);
+		if (m_imageData == nullptr)
+		{
+			DEBUG::getInstance()->printMessage((std::string("Failed to load image at path: \"") + std::string(a_imagePath)).c_str(), sudo::LogType::Error);
 		}
 
-		Texture::Texture(char* a_imagePath)
-		{
-			m_imagePath = a_imagePath;
+		// Generate and bind buffer
+		glGenTextures(1, &m_texId);
+		glBindTexture(GL_TEXTURE_2D, m_texId);
 
-			unsigned char* m_imageData = SOIL_load_image(a_imagePath, &m_width, &m_height, 0, SOIL_LOAD_RGB);		
-			if (m_imageData == nullptr)
-			{
-				DEBUG::getInstance()->printMessage((std::string("Failed to load image at path: \"") + std::string(a_imagePath)).c_str(), sudo::LogType::Error);
-			}
+		// Give the image to OpenGL
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_width, m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, m_imageData);
 
-			// Generate and bind buffer
-			glGenTextures(1, &m_texId);
-			glBindTexture(GL_TEXTURE_2D, m_texId);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-			// Give the image to OpenGL
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_width, m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, m_imageData);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-			//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-			//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		// End
+		glBindTexture(GL_TEXTURE_2D, 0);
+		SOIL_free_image_data(m_imageData);
+	}
 
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	Texture::~Texture()
+	{
+		glDeleteTextures(1, &m_texId);
+	}
 
-			// End
-			glBindTexture(GL_TEXTURE_2D, 0);
-			SOIL_free_image_data(m_imageData);
-		}
-
-		Texture::~Texture()
-		{
-			glDeleteTextures(1, &m_texId);
-		}
-
-		void Texture::bind() const
-		{
-			glBindTexture(GL_TEXTURE_2D, m_texId);
-		}
+	void Texture::bind() const
+	{
+		glBindTexture(GL_TEXTURE_2D, m_texId);
+	}
 } }

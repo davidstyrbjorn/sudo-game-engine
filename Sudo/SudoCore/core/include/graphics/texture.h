@@ -5,6 +5,8 @@ typedef unsigned int uint;
 namespace sudo { namespace graphics {
 
 	class Texture {
+	private:
+
 	public:
 		/* Default constructor */
 		Texture();
@@ -18,6 +20,9 @@ namespace sudo { namespace graphics {
 
 		/* Binds the texture buffer */
 		void bind() const;
+		
+		/* Internal */
+		void loadImage(char* a_imagePath);
 
 		/* Size getters */
 		inline uint getWidth() { return m_width; }
