@@ -19,6 +19,7 @@ namespace sudo { namespace ecs {
 	public:
 		// Constructor 
 		FourWayMoveComponent(math::Vector2& a_moveSpeed, char* a_up, char* a_down, char* a_right, char* a_left);
+		FourWayMoveComponent();
 
 		// Destructor 
 		~FourWayMoveComponent();

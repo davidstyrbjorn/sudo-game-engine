@@ -15,13 +15,14 @@ namespace sudo { namespace ecs {
 	public:
 		/* Constrcutor */
 		RectangleComponent(math::Vector2 &a_size, math::Color &a_color);
+		RectangleComponent();
 
 		/* Destructor */
 		~RectangleComponent();
 
 		/* Component virtual methods */
-		void Start()	override;
-		void Update(float deltaTime)	override { }
+		void Start() override;
+		void Update(float deltaTime) override { }
 
 		// Returns the 4 vertex positions of the rectangle
 		std::array<math::Vector3, 4> GetPrimitivePoints() override;

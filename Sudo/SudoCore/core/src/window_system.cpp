@@ -54,6 +54,7 @@ namespace sudo { namespace sudo_system {
 
 		// Updat debug layer
 		ImGui_ImplGlfwGL3_NewFrame();
+		//ImGui::ShowTestWindow();
 		m_debugObject->ShowMetricsWindow();
 		m_debugObject->ShowEntityInspector();
 		m_debugObject->ShowSystemsWindow();

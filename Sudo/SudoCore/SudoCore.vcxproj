@@ -87,8 +87,8 @@
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;$(SolutionDir)\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)\SudoCore\Libraries\SOIL2\lib;$(SolutionDir)\SudoCore\Libraries\OpenAL\libs\Win32;$(SolutionDir)\SudoCore\Libraries\freetype\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>openal32.lib;glfw3.lib;glew32s.lib;opengl32.lib;soil2-debug.lib;freetype281.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;$(SolutionDir)\SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)\SudoCore\Libraries\OpenAL\libs\Win32;$(SolutionDir)\SudoCore\Libraries\freetype\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>openal32.lib;glfw3.lib;glew32s.lib;opengl32.lib;freetype281.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
     </Link>
@@ -206,6 +206,7 @@
     <ClInclude Include="core\include\graphics\particle.h" />
     <ClInclude Include="core\include\graphics\renderable2d.h" />
     <ClInclude Include="core\include\graphics\renderer_base.h" />
+    <ClInclude Include="core\include\graphics\stb\stb_image.h" />
     <ClInclude Include="core\include\graphics\texture.h" />
     <ClInclude Include="core\include\graphics\text_character.h" />
     <ClInclude Include="core\include\graphics\text_label.h" />

@@ -7,7 +7,7 @@ private:
 	SudoCore engine;
 
 	ecs::Entity *shape1, *shape2, *shape3, *shape4;
-	ecs::Entity *shape5, *shape6;
+	ecs::Entity *shape5;
 
 public:
 	ShapesGame() {
@@ -16,12 +16,11 @@ public:
 
 	void Start() {
 		// Create the shapes
-		shape1 = new ecs::Entity("shape1");
-		shape2 = new ecs::Entity("shape2");
-		shape3 = new ecs::Entity("shape3");
-		shape4 = new ecs::Entity("shape4");
-		shape5 = new ecs::Entity("shape5");
-		shape6 = new ecs::Entity("shape6");
+		shape1 = new ecs::Entity("mieeh");
+		shape2 = new ecs::Entity("rect1");
+		shape3 = new ecs::Entity("rect2");
+		shape4 = new ecs::Entity("sprite");
+		shape5 = new ecs::Entity("empty");
 
 		// Add components and move them around
 		shape1->AddComponent(new ecs::RectangleComponent(math::Vector2(80, 80), math::Color::GetRandomColor()));
@@ -46,7 +45,10 @@ public:
 	}
 
 	void Update(float deltaTime) {
-
+		if (input->GetKey("f")) {
+			sudo_system::ParticleConfiguration x;
+			particleSystem->Submit(math::Vector3(300, 20, 0), math::Vector2(5, 5), math::Color::Red(), 1000, math::Vector2(0, 0), x);
+		}
 	}
 
 	void Render() override
@@ -55,6 +57,7 @@ public:
 		renderer->Submit(shape2->GetComponent<ecs::RectangleComponent>());
 		renderer->Submit(shape3->GetComponent<ecs::RectangleComponent>());
 		renderer->Submit(shape4->GetComponent<ecs::SpriteComponent>());
+		renderer->Submit(shape5->GetComponent<ecs::RectangleComponent>());
 
 		textRenderer->DrawText("Debug Reeeest", math::Vector2(0, 0), math::Color(0, 255, 150));
 	}

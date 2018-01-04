@@ -10,6 +10,12 @@
 
 namespace sudo { namespace ecs { 
 
+#define DEFAULT_SPEED 0.1f
+#define DEFAULT_UP "up"
+#define DEFAULT_DOWN "down"
+#define DEFAULT_RIGHT "right"
+#define DEFAULT_LEFT "left"
+
 FourWayMoveComponent::FourWayMoveComponent(math::Vector2 & a_moveSpeed, char* a_up, char* a_down, char* a_right, char* a_left)
 {
 	m_xSpeed = a_moveSpeed.x;
@@ -19,6 +25,17 @@ FourWayMoveComponent::FourWayMoveComponent(math::Vector2 & a_moveSpeed, char* a_
 	m_down = a_down;
 	m_right = a_right;
 	m_left = a_left;
+}
+
+FourWayMoveComponent::FourWayMoveComponent()
+{
+	m_xSpeed = DEFAULT_SPEED;
+	m_ySpeed = DEFAULT_SPEED;
+
+	m_up = DEFAULT_UP;
+	m_down = DEFAULT_DOWN;
+	m_right = DEFAULT_RIGHT;
+	m_left = DEFAULT_LEFT;
 }
 
 FourWayMoveComponent::~FourWayMoveComponent()

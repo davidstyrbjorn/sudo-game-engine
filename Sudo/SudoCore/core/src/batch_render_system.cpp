@@ -38,13 +38,23 @@ namespace sudo { namespace sudo_system {
 		m_settingsSystem = SettingsSystem::Instance();
 	}
 
+	void BatchRendererSystem::EnableBlend() const
+	{
+		glEnable(GL_BLEND);
+	}
+
+	void BatchRendererSystem::DisableBlend() const
+	{
+		glDisable(GL_BLEND);
+	}
+
 	void BatchRendererSystem::Start()
 	{
 		glewInit();
 		glewExperimental = true;
 
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glEnable(GL_BLEND);
+		EnableBlend();
 
 		// Creating shader 
 		const char* vertex = "#version 330 core \n layout(location = 0) in vec3 in_pos; \n layout(location = 1) in vec4 in_color; \n layout(location = 2) in vec2 in_texCoords; \n layout(location = 3) in float tid;  \n uniform mat4 projection_matrix;  \n uniform mat4 view_matrix = mat4(1.0);  \n uniform mat4 model_matrix = mat4(1.0);  \n out vec4 out_color;  \n out vec2 out_texCoords;  \n out float out_tid;  \n void main()  \n {  \n gl_Position = projection_matrix * view_matrix * model_matrix * vec4(in_pos.x, in_pos.y, in_pos.z, 1.0);  \n out_texCoords = in_texCoords;  \n out_color = in_color;  \n out_tid = tid;  \n }  \n";
@@ -125,6 +135,7 @@ namespace sudo { namespace sudo_system {
 		// Reset primitive count
 		m_quadCount = 0;
 		m_triangleCount = 0;
+		m_currentVertexCount = 0;
 
 		// Only map the buffer if the renderer is active
 		if (m_isActive) {
@@ -154,10 +165,12 @@ namespace sudo { namespace sudo_system {
 			// Rectangles and sprties
 			if (a_primitive->GetPointCount() == 4) {
 				m_quadsToRender.push_back(a_primitive);
+				m_currentVertexCount += 4;
 			}
 			// Triangles
 			if (a_primitive->GetPointCount() == 3) {
 				m_trianglesToRender.push_back(a_primitive);
+				m_currentVertexCount += 3;
 			}
 		}
 	}

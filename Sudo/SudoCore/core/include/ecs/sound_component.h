@@ -27,6 +27,7 @@ namespace sudo { namespace ecs {
 	public:
 		// Default constructor, adds sound with a_soundName to m_soundList
 		SoundComponent(const char* a_soundName, const char* a_soundPath);
+		SoundComponent();
 
 		// Adds sound with a_soundName to m_soundList
 		void AddSound(const char* a_soundName, const char* a_soundPath);

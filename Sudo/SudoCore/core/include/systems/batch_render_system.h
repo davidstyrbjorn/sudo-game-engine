@@ -73,6 +73,9 @@ namespace sudo { namespace sudo_system {
 
 		// Other methods
 		float GetTextureSlot(int a_textureID);
+		unsigned int GetVertexCount() { return m_currentVertexCount; }
+		void DisableBlend() const;
+		void EnableBlend() const;
 
 	private:
 		// Batch Renderer data 
@@ -95,6 +98,8 @@ namespace sudo { namespace sudo_system {
 
 		bool m_isActive;
 		unsigned short int m_quadCount, m_triangleCount;
+		// Vertex count from the last frame
+		unsigned int m_currentVertexCount;
 	};
 
 } } 

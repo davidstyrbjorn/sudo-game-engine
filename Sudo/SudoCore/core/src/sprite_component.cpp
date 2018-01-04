@@ -21,6 +21,10 @@ namespace sudo { namespace ecs {
 		c_pointCount = 4;
 	}
 
+	SpriteComponent::SpriteComponent()
+	{
+	}
+
 	void SpriteComponent::Start()
 	{
 		m_entityTransform = m_entityHolder->transform;

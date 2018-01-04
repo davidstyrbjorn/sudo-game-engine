@@ -18,6 +18,7 @@ namespace sudo { namespace ecs {
 	public:
 		/* Constructor */
 		SpriteComponent(char* a_imagePath);
+		SpriteComponent();
 
 		/* Destructor */
 		~SpriteComponent();

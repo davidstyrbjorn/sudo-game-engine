@@ -1,8 +1,11 @@
 #include"../include/graphics/texture.h"
-#include"../include/SOIL2/SOIL2.h"
 #include"../include/debug.h"
 #include"../include/gl_include.h"
+
 #include<string>
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "../include/graphics/stb/stb_image.h"
 
 namespace sudo { namespace graphics {
 
@@ -20,7 +23,8 @@ namespace sudo { namespace graphics {
 	{
 		m_imagePath = a_imagePath;
 
-		unsigned char* m_imageData = SOIL_load_image(a_imagePath, &m_width, &m_height, 0, SOIL_LOAD_RGB);
+		unsigned char* m_imageData = stbi_load(a_imagePath, &m_width, &m_height, 0, STBI_rgb);
+
 		if (m_imageData == nullptr)
 		{
 			DEBUG::getInstance()->printMessage((std::string("Failed to load image at path: \"") + std::string(a_imagePath)).c_str(), sudo::LogType::Error);
@@ -43,7 +47,8 @@ namespace sudo { namespace graphics {
 
 		// End
 		glBindTexture(GL_TEXTURE_2D, 0);
-		SOIL_free_image_data(m_imageData);
+
+		stbi_image_free(m_imageData);
 	}
 
 	Texture::~Texture()

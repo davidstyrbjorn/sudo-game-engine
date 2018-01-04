@@ -30,6 +30,10 @@ SoundComponent::SoundComponent(const char* a_soundName, const char * a_soundPath
 	m_soundList.insert(std::pair<const char*, SoundStruct*>(a_soundName, new SoundStruct{buffer, source} ));
 }
 
+SoundComponent::SoundComponent()
+{
+}
+
 void SoundComponent::AddSound(const char * a_soundName, const char * a_soundPath)
 {
 	// Loading .wav file

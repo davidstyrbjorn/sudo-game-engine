@@ -11,11 +11,21 @@
 
 namespace sudo { namespace ecs {
 
+#define DEFAULT_SIZE 50
+#define DEFAULT_COLOR math::Color::Red()
+
 	RectangleComponent::RectangleComponent(math::Vector2 &a_size, math::Color &a_color)
 	{
 		// Arbitary shape values
 		m_size = a_size;
 		m_color = a_color;
+		c_pointCount = 4;
+	}
+
+	RectangleComponent::RectangleComponent()
+	{
+		m_size = math::Vector2(DEFAULT_SIZE, DEFAULT_SIZE);
+		m_color = DEFAULT_COLOR;
 		c_pointCount = 4;
 	}
 
