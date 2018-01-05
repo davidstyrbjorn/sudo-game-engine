@@ -595,6 +595,7 @@ void SudoImGui::ShowEntityInspector()
 			// 2 - triangle?
 			static ImVec2 size = ImVec2(0,0);
 			static ImVec4 color = ImVec4(1,0,0,1);
+			static char imagePath[128] = "";
 
 			if (ImGui::Button("Type")) {
 				ImGui::OpenPopup("type");
@@ -620,15 +621,17 @@ void SudoImGui::ShowEntityInspector()
 				ImGui::ColorEdit4("Color", (float*)&color, true);
 			}
 			else if (type == 1) { // Sprite
-
+				ImGui::InputText("Image Path", imagePath, 128);
 			}
 
 			ImGui::Separator();
 
 			if (ImGui::Button("Add")) {
 				if (type == 0)
-					m_clickedEntity->AddComponent(new ecs::RectangleComponent(math::Vector2(size.x, size.y), math::Color(color.x, color.y, color.z, color.w) * 255));
-				m_showRendererWidget = false;
+					m_clickedEntity->AddComponent(new ecs::RectangleComponent(math::Vector2(size.x, size.y), math::Color(color.x, color.y, color.z, color.w) * 255))->Start();
+				else if (type == 1)
+					m_clickedEntity->AddComponent(new ecs::SpriteComponent(imagePath))->Start();
+				m_showAddRenderableWidget = false;
 			}
 
 			ImGui::SameLine(60);

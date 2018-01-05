@@ -11,7 +11,7 @@ private:
 
 public:
 	ShapesGame() {
-		engine.init(math::Vector2(900, 700), "Shapes!", this);
+		engine.init(math::Vector2(1200, 800), "Shapes!", this);
 	}
 
 	void Start() {
@@ -42,6 +42,7 @@ public:
 		textRenderer->SetFont("arial");
 
 		config->SetBackgroundColor(math::Color(30, 50, 30));
+		config->SetAutoRender(true);
 	}
 
 	void Update(float deltaTime) {
@@ -52,11 +53,11 @@ public:
 
 	void Render() override
 	{
-		renderer->Submit(shape1->GetComponent<ecs::RectangleComponent>());
-		renderer->Submit(shape2->GetComponent<ecs::RectangleComponent>());
-		renderer->Submit(shape3->GetComponent<ecs::RectangleComponent>());
-		renderer->Submit(shape4->GetComponent<ecs::SpriteComponent>());
-		renderer->Submit(shape5->GetComponent<ecs::RectangleComponent>());
+		//renderer->Submit(shape1->GetComponent<ecs::RectangleComponent>());
+		//renderer->Submit(shape2->GetComponent<ecs::RectangleComponent>());
+		//renderer->Submit(shape3->GetComponent<ecs::RectangleComponent>());
+		//renderer->Submit(shape4->GetComponent<ecs::SpriteComponent>());
+		//renderer->Submit(shape5->GetComponent<ecs::SpriteComponent>());
 
 		textRenderer->DrawText("Debug Reeeest", math::Vector2(0, 0), math::Color(0, 255, 150));
 	}
