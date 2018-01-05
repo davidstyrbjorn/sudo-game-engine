@@ -37,6 +37,11 @@ namespace sudo { namespace sudo_system {
 		return m_currentMS;
 	}
 
+	SudoRenderMode SettingsSystem::GetRenderMode() const
+	{
+		return m_renderMode;
+	}
+
 	unsigned int SettingsSystem::GetFPS() const
 	{
 		return m_fps;
@@ -91,6 +96,11 @@ namespace sudo { namespace sudo_system {
 	void SettingsSystem::SetCurrentMS(const double a_newMS)
 	{
 		m_currentMS = a_newMS;
+	}
+
+	void SettingsSystem::SetRenderMode(SudoRenderMode a_mode)
+	{
+		m_renderMode = a_mode;
 	}
 
 	void SettingsSystem::NewFpsValue()

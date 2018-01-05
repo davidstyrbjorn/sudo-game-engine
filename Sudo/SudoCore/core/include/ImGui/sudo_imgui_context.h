@@ -43,9 +43,10 @@ namespace sudo {
 			// C++11 thing with direct decleration, can be overriden in constructor!
 			bool m_showSystemsWindow = false;
 			bool m_showEntityInspector = false;
-			bool m_showRenderableWidget = false;
+			bool m_showRendererWidget = false;
 			bool m_showParicleWidget = false;
 			bool m_showWindoWidget = false;
+			bool m_showAddRenderableWidget = false;
 			ecs::Entity* m_clickedEntity;
 		};
 } }

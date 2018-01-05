@@ -115,9 +115,9 @@ void SudoImGui::ShowEntitiesWindow()
 
 void SudoImGui::ShowSystemWidgets()
 {
-	if (m_showRenderableWidget) 
+	if (m_showRendererWidget) 
 	{
-		ImGui::Begin("Renderer", &m_showRenderableWidget, ImVec2(250, 150), 0.9f, ImGuiWindowFlags_::ImGuiWindowFlags_NoResize | ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse);
+		ImGui::Begin("Renderer", &m_showRendererWidget, ImVec2(250, 200), 0.9f, ImGuiWindowFlags_::ImGuiWindowFlags_NoResize | ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse);
 
 		ImGui::Text("Metrics");
 
@@ -134,6 +134,17 @@ void SudoImGui::ShowSystemWidgets()
 		ImGui::SameLine(60);
 		if (ImGui::Button("Disable##blend")) {
 			m_renderSystem->DisableBlend();
+		}
+
+		ImGui::Separator();
+
+		ImGui::Text("Wireframe Mode");
+		if (ImGui::Button("Enable##wireframe")) {
+			m_settingsSystem->SetRenderMode(sudo_system::SudoRenderMode::WIRE_FRAME_MODE);
+		}
+		ImGui::SameLine(60);
+		if (ImGui::Button("Disable##wireframe")) {
+			m_settingsSystem->SetRenderMode(sudo_system::SudoRenderMode::NORMAL);
 		}
 
 		ImGui::End();
@@ -296,7 +307,7 @@ void SudoImGui::ShowSystemsWindow()
 		if (ImGui::IsItemClicked(0))
 		{
 			// Show Render system widget
-			m_showRenderableWidget = !m_showRenderableWidget;
+			m_showRendererWidget = !m_showRendererWidget;
 		}
 		ImGui::SameLine(125);
 		if (ImGui::Button("Toggle##1")) {
@@ -548,16 +559,13 @@ void SudoImGui::ShowEntityInspector()
 			ImGui::Separator();
 
 			if (!hasRenderable) {
-				if (ImGui::Selectable("Rectangle Component")) {
-					m_clickedEntity->AddComponent(new ecs::RectangleComponent())->Start();
-				}
-				else if (ImGui::Selectable("Sprite Component")) {
-					m_clickedEntity->AddComponent(new ecs::SpriteComponent())->Start();
+				if (ImGui::Selectable("Renderable Component")) {
+					m_showAddRenderableWidget = true;
 				}
 			}
 
 			if (!hasBC2D) {
-				if (ImGui::Selectable("BoxCollider2D")) {
+				if (ImGui::Selectable("BoxCollider2D Component")) {
 					m_clickedEntity->AddComponent(new ecs::BoxCollider2D())->Start();
 				}
 			}
@@ -575,6 +583,61 @@ void SudoImGui::ShowEntityInspector()
 			}
 
 			ImGui::EndPopup();
+
+		}
+
+		if (m_showAddRenderableWidget) {
+			ImGui::BeginChild("Add Renderable", ImVec2(250,250), true);
+
+			static int type = 0; 
+			// 0 - rectangle
+			// 1 - sprite
+			// 2 - triangle?
+			static ImVec2 size = ImVec2(0,0);
+			static ImVec4 color = ImVec4(1,0,0,1);
+
+			if (ImGui::Button("Type")) {
+				ImGui::OpenPopup("type");
+			}
+			if (ImGui::BeginPopup("type")) {
+				if(ImGui::Selectable("Rectangle")) type = 0;
+				if (ImGui::Selectable("Sprite")) type = 1;
+
+				ImGui::EndPopup();
+			}
+			ImGui::SameLine(50);
+			if (type == 0)
+				ImGui::Text("Type: Rectangle");
+			if (type == 1)
+				ImGui::Text("Type: Sprite");
+			if (type == 2)
+				ImGui::Text("Type: Triangle");
+
+			ImGui::Separator();
+
+			if (type == 0) { // Rectangle
+				ImGui::InputFloat2("Size", (float*)&size, 1);
+				ImGui::ColorEdit4("Color", (float*)&color, true);
+			}
+			else if (type == 1) { // Sprite
+
+			}
+
+			ImGui::Separator();
+
+			if (ImGui::Button("Add")) {
+				if (type == 0)
+					m_clickedEntity->AddComponent(new ecs::RectangleComponent(math::Vector2(size.x, size.y), math::Color(color.x, color.y, color.z, color.w) * 255));
+				m_showRendererWidget = false;
+			}
+
+			ImGui::SameLine(60);
+
+			if (ImGui::Button("Cancel")) {
+				m_showAddRenderableWidget = false;
+			}
+
+			ImGui::EndChild();
 		}
 
 		ImGui::End();

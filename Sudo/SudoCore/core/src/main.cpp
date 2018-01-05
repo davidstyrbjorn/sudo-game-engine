@@ -46,8 +46,7 @@ public:
 
 	void Update(float deltaTime) {
 		if (input->GetKey("f")) {
-			sudo_system::ParticleConfiguration x;
-			particleSystem->Submit(math::Vector3(300, 20, 0), math::Vector2(5, 5), math::Color::Red(), 1000, math::Vector2(0, 0), x);
+			config->SetRenderMode(sudo_system::SudoRenderMode::WIRE_FRAME_MODE);
 		}
 	}
 

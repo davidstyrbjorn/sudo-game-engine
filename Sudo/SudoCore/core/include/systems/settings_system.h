@@ -9,6 +9,11 @@
 
 namespace sudo { namespace sudo_system {
 
+	enum SudoRenderMode {
+		NORMAL,
+		WIRE_FRAME_MODE
+	};
+
 	class SettingsSystem : public SudoSystem, public SudoBehaviour {
 	private:
 		// Private construcotr since this is a singleton class
@@ -42,6 +47,7 @@ namespace sudo { namespace sudo_system {
 		const bool DoAutoRender();
 		unsigned int GetCurrentFPS() const;
 		double GetCurrentMS() const;
+		SudoRenderMode GetRenderMode() const;
 
 		// Setters
 		void SetWindowSize(math::Vector2& a_newWindowSize);
@@ -52,6 +58,7 @@ namespace sudo { namespace sudo_system {
 		void SetFPS(const unsigned int a_newFPS);
 		void SetCurrentFPS(const unsigned int a_currentNewFps);
 		void SetCurrentMS(const double a_newMS);
+		void SetRenderMode(SudoRenderMode a_mode);
 
 		// Game class 
 		template<typename GameClass>
@@ -72,6 +79,7 @@ namespace sudo { namespace sudo_system {
 		// Varying data 
 		unsigned int m_currentFps;
 		double m_currentMS;
+		SudoRenderMode m_renderMode;
 
 		// Persistent Data
 		math::Vector2 m_windowSize;

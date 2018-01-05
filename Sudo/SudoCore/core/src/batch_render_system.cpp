@@ -260,6 +260,10 @@ namespace sudo { namespace sudo_system {
 
 	void BatchRendererSystem::Flush()
 	{
+		if (m_settingsSystem->GetRenderMode() == sudo_system::SudoRenderMode::WIRE_FRAME_MODE) {
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		}
+
 		// Enable shader
 		m_shader->enable();
 
@@ -276,7 +280,6 @@ namespace sudo { namespace sudo_system {
 			// Draw call
 			glDrawElements(GL_TRIANGLES, 6 * m_quadCount, GL_UNSIGNED_INT, 0);
 		}
-		/*
 		if (m_triangleCount != 0) {
 			// Bind
 			glBindVertexArray(m_triangleVAO);
@@ -285,7 +288,8 @@ namespace sudo { namespace sudo_system {
 			// Draw call 
 			glDrawArrays(GL_TRIANGLES, 0, 3 * m_triangleCount);
 		}
-		*/
+
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
 	void BatchRendererSystem::End()
