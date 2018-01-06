@@ -29,6 +29,7 @@ namespace sudo {
 			void ShowSystemsWindow();
 			void ShowEntityInspector();
 			void ShowSystemWidgets();
+			void ShowAddEntityWidget();
 
 		private:
 			sudo_system::WindowSystem *m_windowSystem;
@@ -47,6 +48,7 @@ namespace sudo {
 			bool m_showParicleWidget = false;
 			bool m_showWindoWidget = false;
 			bool m_showAddRenderableWidget = false;
+			bool m_showAddEntityWidget = false;
 			ecs::Entity* m_clickedEntity;
 		};
 } }

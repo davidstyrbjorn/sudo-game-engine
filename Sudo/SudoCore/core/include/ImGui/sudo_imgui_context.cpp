@@ -69,17 +69,42 @@ void SudoImGui::ShowMetricsWindow()
 	if(ImGui::Button("Show Systems")) {
 		m_showSystemsWindow = !m_showSystemsWindow;
 	}
-	if (ImGui::Button("Show Window")) {
-
-	}
 
 	ImGui::End();
+}
+
+void SudoImGui::ShowAddEntityWidget()
+{
+	if(m_showAddEntityWidget)
+	{
+		ImGui::SetNextWindowPos(ImVec2(210, 160));
+		ImGui::Begin("Add Entity", &m_showAddEntityWidget, ImVec2(150, 150), 0.7f, 
+			ImGuiWindowFlags_::ImGuiWindowFlags_NoResize |
+			ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse |
+			ImGuiWindowFlags_::ImGuiWindowFlags_NoMove
+		);
+
+		static char entityName[128] = "new entity";
+		ImGui::InputText("ID", entityName, 128);
+		if (ImGui::Button("Create")) 
+		{
+			ecs::Entity *newEntity = new ecs::Entity(entityName);
+			newEntity->Start();
+
+			m_showAddEntityWidget = false;
+		}
+		if (ImGui::Button("Cancel")) {
+			m_showAddEntityWidget = false;
+		}
+
+		ImGui::End();
+	}
 }
 
 void SudoImGui::ShowEntitiesWindow() 
 {
 	ImGui::SetNextWindowPos(ImVec2(5, 160));
-	ImGui::Begin("Sudo Entities", false, ImVec2(200, 150), 0.7f, 
+	ImGui::Begin("Sudo Entities", false, ImVec2(200, 150), 0.7f,
 		ImGuiWindowFlags_::ImGuiWindowFlags_NoResize |
 		ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse |
 		ImGuiWindowFlags_::ImGuiWindowFlags_NoMove
@@ -88,6 +113,11 @@ void SudoImGui::ShowEntitiesWindow()
 	std::vector<ecs::Entity*> entityList = sudo_system::WorldSystem::Instance()->GetEntityList();
 
 	ImGui::Text("Entity List");
+	std::string temp = "Count: " + std::to_string(entityList.size());
+	ImGui::Text(temp.c_str());
+
+	ImGui::Separator();
+
 	ImGui::Columns(2, "columns2", true);
 	ImGui::SetColumnOffset(1, 70);
 	for (int i = 0; i < entityList.size(); i++) 
@@ -95,8 +125,7 @@ void SudoImGui::ShowEntitiesWindow()
 		if (!entityList[i]->DestroyMe()) 
 		{
 			std::string button = std::string(entityList[i]->GetID()) + "##" + std::to_string(i);
-			//std::string button = "s";
-			if (ImGui::Button(button.c_str()))
+			if (ImGui::Selectable(button.c_str()))
 			{
 				m_clickedEntity = entityList[i];
 				m_showEntityInspector = true;
@@ -105,10 +134,13 @@ void SudoImGui::ShowEntitiesWindow()
 		}
 	}
 
-	ImGui::Separator();
+	ImGui::Separator(); 
+	ImGui::Columns(); ImGui::Spacing();
 
-	std::string temp = "Count: " + std::to_string(entityList.size());
-	ImGui::Text(temp.c_str());
+	if (ImGui::Button("New Entity")) 
+	{
+		m_showAddEntityWidget = true;
+	}
 
 	ImGui::End();
 }
@@ -380,14 +412,14 @@ void SudoImGui::ShowEntityInspector()
 		if (ImGui::CollapsingHeader("Transform")) {
 			ImGui::Text("Position");
 			ImGui::PushItemWidth(70);
-			ImGui::InputFloat("X", &m_clickedEntity->transform->position.x, 0, 0, 2);
+			ImGui::DragFloat("X", &m_clickedEntity->transform->position.x, 1.0f, -600, m_settingsSystem->GetWindowSize().x+600, "%.1f");
 			ImGui::SameLine(102);
-			ImGui::InputFloat("Y", &m_clickedEntity->transform->position.y, 0, 0, 2);
+			ImGui::DragFloat("Y", &m_clickedEntity->transform->position.y, 1.0f, -600, m_settingsSystem->GetWindowSize().y + 600, "%.1f");
 			ImGui::SameLine(95*2);
 			ImGui::InputFloat("Z", &m_clickedEntity->transform->position.z, 0, 0, 2);
 			ImGui::PopItemWidth();
 
-			ImGui::InputFloat("Rotation", &m_clickedEntity->transform->angle, 1.0f, 1.0f, 1);
+			ImGui::InputFloat("Rotation", &m_clickedEntity->transform->angle, 1.0f, 10.0f, 1);
 		}
 
 		// Renderable Component
@@ -593,7 +625,7 @@ void SudoImGui::ShowEntityInspector()
 			// 0 - rectangle
 			// 1 - sprite
 			// 2 - triangle?
-			static ImVec2 size = ImVec2(0,0);
+			static ImVec2 size = ImVec2(50,50);
 			static ImVec4 color = ImVec4(1,0,0,1);
 			static char imagePath[128] = "";
 

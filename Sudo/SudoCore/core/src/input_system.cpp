@@ -45,8 +45,8 @@ namespace sudo { namespace sudo_system {
 		glfwSetKeyCallback(glfwGetCurrentContext(), nullptr);
 		glfwSetMouseButtonCallback(glfwGetCurrentContext(), nullptr);
 		// ImGui needs these so don't disable!
-		glfwSetCursorPosCallback(glfwGetCurrentContext(), nullptr);
-		glfwSetCharCallback(glfwGetCurrentContext(), nullptr);
+		//glfwSetCursorPosCallback(glfwGetCurrentContext(), nullptr);
+		//glfwSetCharCallback(glfwGetCurrentContext(), nullptr);
 
 		for (int i = 0; i < 1024; i++) {
 			m_keys[i] = 0;

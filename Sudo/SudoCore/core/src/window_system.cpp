@@ -60,6 +60,7 @@ namespace sudo { namespace sudo_system {
 		m_debugObject->ShowSystemsWindow();
 		m_debugObject->ShowSystemWidgets();
 		m_debugObject->ShowEntitiesWindow();
+		m_debugObject->ShowAddEntityWidget();
 	}
 
 	void WindowSystem::WindowShake(float a_length, int a_intensity)
