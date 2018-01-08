@@ -22,11 +22,6 @@ if (input->GetKey("f"))
 }
 */
 
-enum ENTITY_ID {
-	ASTEROID = 0x01,
-	PROJECTILE = 0x02,
-};
-
 class AsteroidsGame : SudoClass {
 public:
 	SudoCore engine;
@@ -225,7 +220,7 @@ public:
 		}
 
 		projectileList.clear();
-		std::vector<ecs::Entity*> temp = world->GetEntitiesWithID(ENTITY_ID::PROJECTILE);
+		std::vector<ecs::Entity*> temp = world->GetEntitiesWithID("projectile");
 		for (int i = 0; i < temp.size(); i++) {
 			if (thisCollider->Intersects(*temp[i]->GetComponent<ecs::BoxCollider2D>())) {
 				m_entityHolder->Destroy();
@@ -261,11 +256,12 @@ void AsteroidsGame::Start()
 	state = GameState::MENU;
 
 	// Creating entities
-	backgroundEntity = new ecs::Entity();
+	backgroundEntity = new ecs::Entity("background");
 	backgroundEntity->AddComponent(new ecs::SpriteComponent("D:\\SudoGameEngine\\images\\_asteroids_assets\\menu_image.png"));
+	backgroundEntity->transform->position = math::Vector3(0, 0, 10);
 
 	// Player
-	player = new ecs::Entity();
+	player = new ecs::Entity("player");
 	player->AddComponent(new ecs::BoxCollider2D());
 	player->AddComponent(new ecs::SoundComponent("shot", "D:\\SudoGameEngine\\images\\_asteroids_assets\\projectile.wav"));
 	player->GetComponent<ecs::SoundComponent>()->AddSound("hurt", "D:\\SudoGameEngine\\images\\_asteroids_assets\\hurt.wav");
@@ -341,7 +337,7 @@ void AsteroidsGame::PlayingUpdate(float deltaTime)
 		player->GetComponent<ecs::SoundComponent>()->GetSoundSource("shot")->play(true);
 
 		// Spawn projectile
-		ecs::Entity* temp = new ecs::Entity(ENTITY_ID::PROJECTILE);
+		ecs::Entity* temp = new ecs::Entity("projectile");
 		temp->Start();
 		temp->AddComponent(new ecs::RectangleComponent(math::Vector2(PROJECTILE_SIZE, PROJECTILE_SIZE), math::Color::Red()))->Start();
 		temp->AddComponent(new Projectile(player->transform->angle))->Start();
@@ -366,7 +362,7 @@ void AsteroidsGame::PlayingUpdate(float deltaTime)
 			math::Color _color = math::Color::GetRandomColor();
 			if (side < 25) {
 				// Left
-				ecs::Entity *asteroid = new ecs::Entity(ENTITY_ID::ASTEROID);
+				ecs::Entity *asteroid = new ecs::Entity("asteroid");
 				asteroid->Start();
 				asteroid->transform->position = math::Vector3(-ASTEROID_MAX_WIDTH, utility::SudoRandomNumber::GetRandomInteger(0, WINDOW_HEIGHT), 0);
 				asteroid->AddComponent(new ecs::RectangleComponent(_size, _color))->Start();
@@ -375,7 +371,7 @@ void AsteroidsGame::PlayingUpdate(float deltaTime)
 			}
 			else if (side < 50) {
 				// Right
-				ecs::Entity *asteroid = new ecs::Entity(ENTITY_ID::ASTEROID);
+				ecs::Entity *asteroid = new ecs::Entity("asteroid");
 				asteroid->Start();
 				asteroid->transform->position = math::Vector3(WINDOW_WIDTH + ASTEROID_MAX_WIDTH, utility::SudoRandomNumber::GetRandomInteger(0, WINDOW_HEIGHT), 0);
 				asteroid->AddComponent(new ecs::RectangleComponent(_size, _color))->Start();
@@ -384,7 +380,7 @@ void AsteroidsGame::PlayingUpdate(float deltaTime)
 			}
 			else if (side < 75) {
 				// Top
-				ecs::Entity *asteroid = new ecs::Entity(ENTITY_ID::ASTEROID);
+				ecs::Entity *asteroid = new ecs::Entity("asteroid");
 				asteroid->Start();
 				asteroid->transform->position = math::Vector3(utility::SudoRandomNumber::GetRandomInteger(0, WINDOW_WIDTH), -ASTEROID_MAX_HEIGHT, 0);
 				asteroid->AddComponent(new ecs::RectangleComponent(_size, _color))->Start();
@@ -393,7 +389,7 @@ void AsteroidsGame::PlayingUpdate(float deltaTime)
 			}
 			else {
 				// Bottom
-				ecs::Entity *asteroid = new ecs::Entity(ENTITY_ID::ASTEROID);
+				ecs::Entity *asteroid = new ecs::Entity("asteroid");
 				asteroid->Start();
 				asteroid->transform->position = math::Vector3(utility::SudoRandomNumber::GetRandomInteger(0, WINDOW_WIDTH), WINDOW_HEIGHT + ASTEROID_MAX_HEIGHT, 0);
 				asteroid->AddComponent(new ecs::RectangleComponent(_size, _color))->Start();
@@ -410,7 +406,7 @@ void AsteroidsGame::TookHit()
 {
 	player->GetComponent<ecs::SoundComponent>()->GetSoundSource("hurt")->play();
 	extraLifes--;
-	input->WindowShake(350, 5);
+	window->WindowShake(350, 5);
 	if (extraLifes <= 0)
 		state = GameState::MENU;
 }
@@ -419,7 +415,7 @@ void AsteroidsGame::Scored()
 {
 	score++;
 	player->GetComponent<ecs::SoundComponent>()->GetSoundSource("scored")->play();
-	input->WindowShake(100, 4);
+	window->WindowShake(100, 4);
 }
 
 void AsteroidsGame::ResetGame()
@@ -428,8 +424,8 @@ void AsteroidsGame::ResetGame()
 	score = 0;
 	extraLifes = 3;
 	player->transform->position = math::Vector3((WINDOW_WIDTH / 2) - 5, (WINDOW_HEIGHT / 2) - 20, 0);
-	world->RemoveAllEntitiesWithID(ENTITY_ID::ASTEROID);
-	world->RemoveAllEntitiesWithID(ENTITY_ID::PROJECTILE);
+	world->RemoveAllEntitiesWithID("asteroid");
+	world->RemoveAllEntitiesWithID("projectile");
 }
 
 AsteroidsGame::AsteroidsGame()

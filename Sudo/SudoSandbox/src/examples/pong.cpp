@@ -232,7 +232,7 @@ public:
 	void BallPaddleCollision(utility::SudoString paddle)
 	{
 		// Shake window
-		input->WindowShake(30, 4);
+		window->WindowShake(30, 4);
 
 		// Make the ball bounce
 		ball_x_change *= -1;

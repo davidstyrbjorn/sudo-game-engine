@@ -1,3 +1,5 @@
+
+/*
 #include"../include/sudo.h"
 
 using namespace sudo;
@@ -54,3 +56,4 @@ int main() {
 
 	return 0;
 }
+*/

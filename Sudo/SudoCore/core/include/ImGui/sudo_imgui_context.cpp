@@ -298,6 +298,7 @@ void SudoImGui::ShowSystemsWindow()
 	if (m_showSystemsWindow) 
 	{
 		ImGui::SetNextWindowSize(ImVec2(200, 200));
+		ImGui::SetNextWindowPos(ImVec2(5, 310));
 
 		ImGui::Begin("Sudo Systems", &m_showSystemsWindow, 
 			ImGuiWindowFlags_::ImGuiWindowFlags_NoResize |
