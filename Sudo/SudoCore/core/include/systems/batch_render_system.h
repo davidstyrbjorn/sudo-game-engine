@@ -45,6 +45,11 @@ namespace sudo { namespace sudo_system {
 		BatchRendererSystem();
 		static BatchRendererSystem *_instance;
 
+		// Private methods
+		static bool layerCompare(graphics::Renderable2D *_1, graphics::Renderable2D *_2);
+		void preRenderConfig();
+		void _Submit(graphics::Renderable2D *a_primitive);
+
 	public:
 		// Singleton connection
 		static BatchRendererSystem *Instance();
@@ -64,7 +69,6 @@ namespace sudo { namespace sudo_system {
 		void Begin() override;
 
 		void Submit(graphics::Renderable2D *a_primitive, graphics::Renderable2D *a_primitive2 = nullptr, graphics::Renderable2D *a_primitive3 = nullptr);
-		void _Submit(graphics::Renderable2D *a_primitive);
 
 		void PrepareQuad();
 		void PrepareTriangle();

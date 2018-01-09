@@ -1,6 +1,7 @@
 #pragma once
 
 #include"../math/vector3.h"
+#include"../math/vector2.h"
 #include"component.h"
 
 namespace sudo { namespace ecs { 
@@ -16,6 +17,7 @@ namespace sudo { namespace ecs {
 
 		/* Methods */
 		void Move(const math::Vector3& a_vector);
+		void Move(const math::Vector2& a_vector);
 		void Rotate(const float a_angle);
 
 		void Start() override;

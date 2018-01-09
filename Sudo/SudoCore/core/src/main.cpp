@@ -1,5 +1,3 @@
-
-/*
 #include"../include/sudo.h"
 
 using namespace sudo;
@@ -8,7 +6,7 @@ class ShapesGame : SudoClass {
 private:
 	SudoCore engine;
 
-	ecs::Entity *entity, *sprite, *shape;
+	ecs::Entity *entity, *sprite, *shape, *triangle;
 
 public:
 	ShapesGame() {
@@ -20,6 +18,7 @@ public:
 		entity = new ecs::Entity("entity");
 		sprite = new ecs::Entity("sprite");
 		shape = new ecs::Entity("shape");
+		triangle = new ecs::Entity("triangle");
 
 		// Add components and move them around
 		entity->AddComponent(new ecs::RectangleComponent(math::Vector2(80, 80), math::Color::GetRandomColor()));
@@ -34,6 +33,9 @@ public:
 		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(10, 220), math::Color::GetRandomColor()));
 		shape->transform->Move(math::Vector3(700, 110, 0));
 
+		//triangle->AddComponent(new ecs::TriangleComponent(math::Vector2(70, 70), math::Color::GetRandomColor()));
+		triangle->transform->Move(math::Vector2(300, 700));
+
 		textRenderer->LoadFont("C:\\Windows\\Fonts\\arial.ttf", "arial", 50);
 		textRenderer->SetFont("arial");
 
@@ -42,12 +44,12 @@ public:
 	}
 
 	void Update(float deltaTime) {
-
+		//renderer->Submit(triangle->GetComponent<ecs::TriangleComponent>());
 	}
 
 	void Render() override
 	{
-		textRenderer->DrawText("Debug Reeeest", math::Vector2(10, 15), math::Color(0, 255, 150));
+		textRenderer->DrawText("Fjarnskag thanks!", math::Vector2(10, 15), math::Color(0, 255, 150));
 	}
 };
 
@@ -56,4 +58,3 @@ int main() {
 
 	return 0;
 }
-*/

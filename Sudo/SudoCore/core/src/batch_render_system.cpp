@@ -38,6 +38,18 @@ namespace sudo { namespace sudo_system {
 		m_settingsSystem = SettingsSystem::Instance();
 	}
 
+	bool BatchRendererSystem::layerCompare(graphics::Renderable2D * _1, graphics::Renderable2D * _2)
+	{
+		return (_1->GetEntityTransform()->position.z > _2->GetEntityTransform()->position.z);
+	}
+
+	void BatchRendererSystem::preRenderConfig()
+	{
+		if (m_settingsSystem->GetRenderMode() == sudo_system::SudoRenderMode::WIRE_FRAME_MODE) {
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		}
+	}
+
 	void BatchRendererSystem::EnableBlend() const
 	{
 		glEnable(GL_BLEND);
@@ -110,24 +122,26 @@ namespace sudo { namespace sudo_system {
 		}
 		m_indexBuffer = new graphics::IndexBuffer(m_indices,  sizeof(m_indices));
 
-		//glBindVertexArray(0);
+		glBindVertexArray(0);
 
 		// Triangle VAO
-		//glGenVertexArrays(1, &m_triangleVAO);
-		//glBindVertexArray(m_triangleVAO);
-		//
-		//// Triangle VBO
-		//glGenBuffers(1, &m_triangleVBO);
-		//glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
-		//glBufferData(GL_ARRAY_BUFFER, TRIANGLE_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
-		//
-		//// Structure the quad buffer layout - bound to m_triangleVAO
-		//glEnableVertexAttribArray(1);
-		//glEnableVertexAttribArray(0);
-		////glEnableVertexAttribArray(2);
-		////glEnableVertexAttribArray(3);
-		//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(graphics::TriangleVertexData), nullptr); // Vertex position
-		//glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(graphics::TriangleVertexData), reinterpret_cast<GLvoid*>(offsetof(graphics::TriangleVertexData, color))); // Vertex color
+		glGenVertexArrays(1, &m_triangleVAO);
+		glBindVertexArray(m_triangleVAO);
+		
+		// Triangle VBO
+		glGenBuffers(1, &m_triangleVBO);
+		glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
+		glBufferData(GL_ARRAY_BUFFER, TRIANGLE_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
+		
+		// Structure the quad buffer layout - bound to m_triangleVAO
+		glEnableVertexAttribArray(1);
+		glEnableVertexAttribArray(0);
+		//glEnableVertexAttribArray(2);
+		//glEnableVertexAttribArray(3);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(graphics::TriangleVertexData), nullptr); // Vertex position
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(graphics::TriangleVertexData), reinterpret_cast<GLvoid*>(offsetof(graphics::TriangleVertexData, color))); // Vertex color
+
+		glBindVertexArray(0);
 	}
 
 	void BatchRendererSystem::Begin()
@@ -140,9 +154,10 @@ namespace sudo { namespace sudo_system {
 		// Only map the buffer if the renderer is active
 		if (m_isActive) {
 			// Bind and reset triangle buffer data
-			//glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
-			//glBufferData(GL_ARRAY_BUFFER, TRIANGLE_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
-
+			glBindVertexArray(m_triangleVAO);
+			glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
+			glBufferData(GL_ARRAY_BUFFER, TRIANGLE_BUFFER_SIZE, nullptr, GL_DYNAMIC_DRAW);
+			 
 			// Bind and reset quad buffer data
 			glBindVertexArray(m_quadVAO);
 			glBindBuffer(GL_ARRAY_BUFFER, m_quadVBO);
@@ -175,15 +190,13 @@ namespace sudo { namespace sudo_system {
 		}
 	}
 
-	static bool layerCompare(graphics::Renderable2D *_1, graphics::Renderable2D *_2) {
-		return (_1->GetEntityTransform()->position.z > _2->GetEntityTransform()->position.z);
-	}
-
 	void BatchRendererSystem::PrepareQuad()
 	{
+		// Sort the list based on the Z position, done inside layerCompare
 		if(m_quadsToRender.size() > 1)
 			std::sort(m_quadsToRender.begin(), m_quadsToRender.end(), layerCompare);
 
+		// OpenGL buffer binding
 		glBindVertexArray(m_quadVAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_quadVBO);
 		// Rectangles and sprites
@@ -232,12 +245,16 @@ namespace sudo { namespace sudo_system {
 			m_quadsToRender.pop_back();
 			m_quadCount++;
 		}
+		// OpenGL buffer unbind
+		glBindVertexArray(0);
 	}
 
 	void BatchRendererSystem::PrepareTriangle()
 	{
+		// OpenGL buffer bind
 		glBindVertexArray(m_triangleVAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_triangleVBO);
+		// Triangles
 		while (!m_trianglesToRender.empty())
 		{
 			// Get the primitive to be rendered
@@ -256,13 +273,13 @@ namespace sudo { namespace sudo_system {
 			m_trianglesToRender.pop_front();
 			m_triangleCount++;
 		}
+		// OpenGL unbind
+		glBindVertexArray(0);
 	}
 
 	void BatchRendererSystem::Flush()
 	{
-		if (m_settingsSystem->GetRenderMode() == sudo_system::SudoRenderMode::WIRE_FRAME_MODE) {
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		}
+		preRenderConfig();
 
 		// Enable shader
 		m_shader->enable();
