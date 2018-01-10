@@ -2,6 +2,9 @@
 
 #include"../include/debug.h"
 
+#include<al.h>
+#include<alc.h>
+
 namespace sudo { namespace sound { 
 
 	SoundBuffer::SoundBuffer()

@@ -1,10 +1,15 @@
 #include "../include/systems/input_system.h"
 
+// GLFW include guards
+#include"GLFW\glfw3.h"
+
 #include"../include/math/vector2.h"
 #include"../include/utility/sudo_random.h"
 
 #include"../include/ImGui/imgui.h"
 #include"../include/ImGui/imgui_glfw.h"
+
+#include"../include/systems/settings_system.h"
 
 namespace sudo { namespace sudo_system {
 
@@ -19,7 +24,12 @@ namespace sudo { namespace sudo_system {
 
 	void InputSystem::Update(float deltaTime)
 	{
-
+		if (this->GetKey("f1")) {
+			SettingsSystem::Instance()->ShowDebugOverlay(true);
+		}
+		if (this->GetKey("f2")) {
+			SettingsSystem::Instance()->ShowDebugOverlay(false);
+		}
 	}
 
 	void InputSystem::Enable()

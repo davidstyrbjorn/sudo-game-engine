@@ -1,6 +1,6 @@
 #pragma once
 
-#include"../../gl_include.h"
+
 
 namespace sudo { namespace graphics { 
 
@@ -21,9 +21,11 @@ namespace sudo { namespace graphics {
 		{
 			m_type = a_type;
 
+			/*
 			glGenBuffers(1, &m_id);
 			glBindBuffer(a_type, m_id);
 			glBufferData(a_type, a_size, a_data, GL_STATIC_DRAW);
+			*/
 		}
 
 		/* Binds the buffer */

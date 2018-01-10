@@ -1,4 +1,9 @@
-#include"../include/gl_include.h"
+#include<ft2build.h>
+#include FT_FREETYPE_H
+
+// Glew include guards
+#define GLEW_STATIC
+#include"GL\glew.h"
 
 #include"../include/systems/text_system.h"
 #include"../include/systems/settings_system.h"

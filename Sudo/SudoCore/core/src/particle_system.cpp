@@ -1,5 +1,7 @@
 #include"../include/systems/particle_system.h"
-#include"../include/gl_include.h"
+
+#define GLEW_STATIC
+#include"GL\glew.h"
 
 #include"../include/math/mat4.h"
 #include"../include/math/vector3.h"

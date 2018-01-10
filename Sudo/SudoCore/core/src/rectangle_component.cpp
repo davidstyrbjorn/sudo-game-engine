@@ -1,6 +1,5 @@
 #include"../include/ecs/rectangle_component.h"
 
-#include"../include/gl_include.h"
 #include"../include/definitions.h"
 #include"../include/math/math.h"
 

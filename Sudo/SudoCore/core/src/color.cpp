@@ -20,6 +20,11 @@ namespace sudo {
 			return Color(this->r / rhs, this->g / rhs, this->b / rhs, this->a / rhs);
 		}
 
+		Color Color::operator/(const int rhs)
+		{
+			return Color(this->r / rhs, this->g / rhs, this->b / rhs, this->a / rhs);
+		}
+
 		Color Color::operator*(const float scalar)
 		{
 			return Color(this->r*scalar, this->g*scalar, this->b*scalar, this->a*scalar);

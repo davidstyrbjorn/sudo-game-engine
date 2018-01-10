@@ -1,7 +1,7 @@
 #pragma once
 
-#include<al.h>
-#include<alc.h>
+/** unsigned 32-bit integer */
+typedef unsigned int ALuint;
 
 namespace sudo {
 	namespace math {

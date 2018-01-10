@@ -1,6 +1,7 @@
 #include"../include/systems/window_system.h"
 
-#include"../include/gl_include.h"
+// GLFW inclde guards
+#include"GLFW\glfw3.h"
 
 #include"../include/systems/settings_system.h"
 #include"../include/debug.h"
@@ -31,9 +32,11 @@ namespace sudo { namespace sudo_system {
 		glfwMakeContextCurrent(m_window);
 		glfwSetWindowUserPointer(m_window, this);
 
+#ifdef _DEBUG
 		// Dear ImGui init
 		ImGui_ImplGlfwGL3_Init(m_window, false);
 		m_debugObject = new debug::SudoImGui();
+#endif
 
 		int w, h;
 		glfwGetFramebufferSize(m_window, &w, &h);
@@ -52,15 +55,19 @@ namespace sudo { namespace sudo_system {
 		glClear(GL_COLOR_BUFFER_BIT);
 		glfwPollEvents();
 
+#ifdef _DEBUG
 		// Updat debug layer
 		ImGui_ImplGlfwGL3_NewFrame();
-		//ImGui::ShowTestWindow();
-		m_debugObject->ShowMetricsWindow();
-		m_debugObject->ShowEntityInspector();
-		m_debugObject->ShowSystemsWindow();
-		m_debugObject->ShowSystemWidgets();
-		m_debugObject->ShowEntitiesWindow();
-		m_debugObject->ShowAddEntityWidget();
+		if (SettingsSystem::Instance()->ShowDebugOverlay()) 
+		{
+			m_debugObject->ShowMetricsWindow();
+			m_debugObject->ShowEntityInspector();
+			m_debugObject->ShowSystemsWindow();
+			m_debugObject->ShowSystemWidgets();
+			m_debugObject->ShowEntitiesWindow();
+			m_debugObject->ShowAddEntityWidget();
+		}
+#endif
 	}
 
 	void WindowSystem::WindowShake(float a_length, int a_intensity)
@@ -92,7 +99,9 @@ namespace sudo { namespace sudo_system {
 
 	void WindowSystem::Display()
 	{
+#ifdef _DEBUG
 		ImGui::Render();
+#endif
 
 		glfwSwapBuffers(m_window);
 	}
@@ -122,7 +131,6 @@ namespace sudo { namespace sudo_system {
 	{
 		glfwDestroyWindow(m_window);
 	}
-
 
 	/* GLFW Callback Functions */
 	void window_size_callback(GLFWwindow * window, int width, int height)

@@ -45,6 +45,7 @@ namespace sudo { namespace sudo_system {
 		double GetMS() const;
 		const math::Color& GetBackgroundColor();
 		const bool DoAutoRender();
+		const bool ShowDebugOverlay();
 		unsigned int GetCurrentFPS() const;
 		double GetCurrentMS() const;
 		SudoRenderMode GetRenderMode() const;
@@ -59,6 +60,7 @@ namespace sudo { namespace sudo_system {
 		void SetCurrentFPS(const unsigned int a_currentNewFps);
 		void SetCurrentMS(const double a_newMS);
 		void SetRenderMode(SudoRenderMode a_mode);
+		void ShowDebugOverlay(bool a_show);
 
 		// Game class 
 		template<typename GameClass>
@@ -87,6 +89,6 @@ namespace sudo { namespace sudo_system {
 		unsigned int m_fps;
 		double m_msPerFrame;
 		bool m_autoRender; // If enabled auto render all the entities with renderable2D components
-
+		bool m_showDebugOverlay;
 	};
 } } 

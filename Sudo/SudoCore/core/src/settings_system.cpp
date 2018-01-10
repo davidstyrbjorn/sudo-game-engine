@@ -1,5 +1,6 @@
 #include "../include/systems/settings_system.h"
-#include"../include/gl_include.h"
+
+#include<GLFW\glfw3.h>
 
 namespace sudo { namespace sudo_system {
 
@@ -25,6 +26,11 @@ namespace sudo { namespace sudo_system {
 	const bool SettingsSystem::DoAutoRender()
 	{
 		return m_autoRender;
+	}
+
+	const bool SettingsSystem::ShowDebugOverlay()
+	{
+		return m_showDebugOverlay;
 	}
 
 	unsigned int SettingsSystem::GetCurrentFPS() const
@@ -55,16 +61,6 @@ namespace sudo { namespace sudo_system {
 	void SettingsSystem::SetWindowSize(math::Vector2& a_newWindowSize) 
 	{
 		m_windowSize = a_newWindowSize;
-
-		// Audio Listener should be in the middle of the screen
-		/*
-		This throws unresolved external error, why the fuck does it do that!?
-		SoundSystem *temp = SoundSystem::Instance();
-		temp->SetListenerPosition(math::Vector3(a_newWindowSize.x / 2, a_newWindowSize.y / 2, 0));
-		*/
-
-		// This is not what I want to do 
-		alListener3f(AL_POSITION, a_newWindowSize.x/2, a_newWindowSize.y/2, -1);
 	}
 
 	void SettingsSystem::SetBackgroundColor(const math::Color& a_newBackgroundColor)
@@ -101,6 +97,15 @@ namespace sudo { namespace sudo_system {
 	void SettingsSystem::SetRenderMode(SudoRenderMode a_mode)
 	{
 		m_renderMode = a_mode;
+	}
+
+	void SettingsSystem::ShowDebugOverlay(bool a_show)
+	{
+#ifdef _DEBUG
+		m_showDebugOverlay = a_show;
+#else
+		m_showDebugOverlay = false;
+#endif
 	}
 
 	void SettingsSystem::NewFpsValue()

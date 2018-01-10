@@ -6,9 +6,6 @@
 #include<vector>
 #include<map>
 
-#include<ft2build.h>
-#include FT_FREETYPE_H
-
 #include"../graphics/text_label.h"
 #include"../graphics/text_character.h"
 #include"../graphics/renderer_base.h"

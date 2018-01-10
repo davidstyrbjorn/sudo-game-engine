@@ -1,8 +1,20 @@
 #include "../include/sudo_core.h"
 
 #include"../include/sudo.h"
-#include"../include/gl_include.h"
 #include"../include/definitions.h"
+
+#pragma once
+
+// OpenAL include guards
+#include<al.h>
+#include<alc.h>
+
+// Glew include guards
+#define GLEW_STATIC
+#include"GL\glew.h"
+
+// GLFW inclde guards
+#include"GLFW\glfw3.h"
 
 namespace sudo { 
 
@@ -43,6 +55,7 @@ void SudoCore::init(const math::Vector2 a_windowSize, char* a_windowCaption, Sud
 	m_settingsSystem->SetAutoRender(false);
 	m_settingsSystem->instancePtr = m_engineInstance;
 	m_settingsSystem->SetRenderMode(sudo_system::SudoRenderMode::NORMAL);
+	m_settingsSystem->ShowDebugOverlay(false);
 
 	/* Input system */
 	m_inputSystem = sudo_system::InputSystem::Instance();
@@ -137,15 +150,16 @@ void SudoCore::game_loop()
 		// Call the user-end Update methods
 		m_engineInstance->Update(_deltaTime);
 
-		// Update the window 
+		// Update the internal window system
 		m_windowSystem->Update(_deltaTime);
-		// Update the WorldSystem holding all game entities 
+		// Update the internal WorldSystem holding all game entities 
 		m_worldSystem->Update(_deltaTime);
 		// Update particle system
 		m_particleSystem->Update(_deltaTime);
-		// Update input | Currently only does window shake effect 
+		// Update input internal system
 		m_inputSystem->Update(_deltaTime);
 
+		// Render loop 
 		if (timer->GetTicks() >= m_settingsSystem->GetMS()) 
 		{
 			// Clear the screen 

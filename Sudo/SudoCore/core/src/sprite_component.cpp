@@ -1,8 +1,6 @@
 #include "../include/ecs/sprite_component.h"
 #include"../include/ecs/transform_component.h"
 
-#include"../include/gl_include.h"
-
 #include"../include/graphics/texture.h"
 #include"../include/ecs/entity.h"
 #include"../include/math/vector3.h"

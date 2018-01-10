@@ -1,7 +1,5 @@
 #include"../include/ecs/triangle_component.h"
 
-#include"../include/gl_include.h"
-
 #include"../include/ecs/transform_component.h"
 #include"../include/ecs/entity.h"
 

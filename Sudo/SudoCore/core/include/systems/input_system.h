@@ -1,6 +1,5 @@
 #pragma once
 
-#include"../gl_include.h"
 #include"sudo_system.h"
 #include"../sudo_behaviour.h"
 
@@ -12,6 +11,9 @@ namespace sudo {
 		struct Vector2;
 	}
 }
+
+// GLFW forward declaration
+struct GLFWwindow;
 
 namespace sudo { namespace sudo_system {
 

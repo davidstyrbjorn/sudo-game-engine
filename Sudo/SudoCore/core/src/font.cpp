@@ -1,6 +1,10 @@
 #include "../include/graphics/font.h"
 
-#include"../include/gl_include.h"
+#define GLEW_STATIC
+#include"GL\glew.h"
+
+#include<ft2build.h>
+#include FT_FREETYPE_H
 
 #include"../include/debug.h"
 
@@ -13,6 +17,8 @@ namespace sudo { namespace graphics {
 		// Glew
 		glewInit();
 		glewExperimental = true;
+
+		m_lib = new FT_Library();
 
 		// Init lib and face
 		if (FT_Init_FreeType(&m_lib))

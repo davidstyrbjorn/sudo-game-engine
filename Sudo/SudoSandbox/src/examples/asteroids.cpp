@@ -64,7 +64,7 @@ private:
 	ecs::Transform *transform;
 	float angleVelocity, linearVelocity;
 	const float maxAngleVelocity = 0.35f;
-	const float maxVelocity = 0.25f;
+	const float maxVelocity = 0.35f;
 
 public:
 	void Start() override {
@@ -86,15 +86,13 @@ public:
 
 		// Moving forward and cool stuff
 		if (input->GetKey("up")) {
-			if (linearVelocity < maxVelocity) {
-				linearVelocity += 0.05f * deltaTime;
-			}
+			linearVelocity = maxVelocity;
 		}
 		else {
 			if (linearVelocity > 0) {
 				linearVelocity -= 0.0005f * deltaTime;
 			}
-			else {
+			else if (linearVelocity < 0) {
 				linearVelocity = 0;
 			}
 		}

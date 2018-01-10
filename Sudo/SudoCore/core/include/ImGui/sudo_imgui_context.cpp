@@ -38,7 +38,7 @@
 
 namespace sudo { namespace debug { 
 
-SudoImGui::SudoImGui() 
+	SudoImGui::SudoImGui()
 {
 	m_windowSystem = sudo_system::WindowSystem::Instance();
 	m_settingsSystem = sudo_system::SettingsSystem::Instance();
@@ -181,7 +181,6 @@ void SudoImGui::ShowSystemWidgets()
 
 		ImGui::Text("Metrics");
 
-		ImGui::Text("MS: 0.0"); // @
 		std::string vertexCount = "No. Vertices: " + std::to_string(m_renderSystem->GetVertexCount());
 		ImGui::Text(vertexCount.c_str());
 
@@ -315,7 +314,43 @@ void SudoImGui::ShowSystemWidgets()
 	{
 		ImGui::Begin("Window", &m_showWindoWidget, ImVec2(250, 300), 0.9f);
 
-		// Yet to implement @
+		ImGui::Text("Window Shake");
+		ImGui::Spacing();
+		
+		static int length = 250;
+		static int intensity = 5;
+
+		// ImGui elements
+		ImGui::DragInt("Length", &length);
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("Length is in milliseconds (1000 = 1 second)");
+			ImGui::EndTooltip();
+		}
+		ImGui::SliderInt("Strength", &intensity, 0, 50);
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("5 = used in example sudo games");
+			ImGui::EndTooltip();
+		}
+
+		ImGui::Spacing();
+
+		if (ImGui::Button("Shake")) {
+			m_windowSystem->WindowShake(length, intensity);
+		}
+
+		ImGui::Separator();
+
+		ImGui::Text("Background Color");
+		ImGui::Spacing();
+
+		math::Color backgroundColor = m_settingsSystem->GetBackgroundColor();
+		backgroundColor = backgroundColor / 255;
+		ImGui::ColorEdit3("Background Color", (float*)&backgroundColor);
+		m_settingsSystem->SetBackgroundColor(backgroundColor*255);
+
+		ImGui::Separator();
 
 		ImGui::End();
 	}

@@ -26,13 +26,13 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -75,7 +75,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>.\Builds</OutDir>
-    <TargetName>SudoCore</TargetName>
+    <TargetName>SudoCore_release</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -114,7 +114,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;$(SolutionDir)SudoCore\Libraries\OpenAL\include;$(SolutionDir)SudoCore\Libraries\freetype\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;$(SolutionDir)SudoCore\Libraries\OpenAL\include;$(SolutionDir)SudoCore\Libraries\freetype\include;$(SolutionDir)SudoCore\Libraries\glm</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -128,8 +128,11 @@
     </Link>
     <Lib>
       <AdditionalDependencies>openal32.lib;glfw3.lib;glew32s.lib;opengl32.lib;freetype281.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)SudoCore\Libraries\freetype\lib;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;$(SolutionDir)SudoCore\Libraries\OpenAL\libs\Win32;$(SolutionDir)SudoCore\Libraries\SOIL2\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)SudoCore\Libraries\freetype\lib;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;$(SolutionDir)SudoCore\Libraries\OpenAL\libs\Win32</AdditionalLibraryDirectories>
     </Lib>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -246,7 +249,6 @@
     <ClInclude Include="core\include\math\mat4.h" />
     <ClInclude Include="core\include\utility\timer.h" />
     <ClInclude Include="core\include\utility\utility.h" />
-    <ClInclude Include="core\include\gl_include.h" />
     <ClInclude Include="core\include\sudo.h" />
     <ClInclude Include="core\include\graphics\graphics_framework.h" />
     <ClInclude Include="src\core\math\math.h" />
