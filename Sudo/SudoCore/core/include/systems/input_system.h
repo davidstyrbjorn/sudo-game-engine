@@ -49,6 +49,9 @@ namespace sudo { namespace sudo_system {
 		bool GetKey(const char* a_key);
 		bool IsMouseButtonPressed(int a_mouse_button);
 
+		// Getters
+		const math::Vector2 &GetMousePosition();
+
 		// Populates keyCodeToiteral map
 		void populateKeyList();
 

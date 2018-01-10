@@ -31,6 +31,8 @@ namespace sudo {
 			void ShowSystemWidgets();
 			void ShowAddEntityWidget();
 
+			void ClickedOnEntity();
+
 		private:
 			sudo_system::WindowSystem *m_windowSystem;
 			sudo_system::SettingsSystem *m_settingsSystem;

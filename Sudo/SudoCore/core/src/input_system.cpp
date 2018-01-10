@@ -43,7 +43,7 @@ namespace sudo { namespace sudo_system {
 
 		/* Set the GLFW callbacks */
 		glfwSetKeyCallback(glfwGetCurrentContext(), nullptr);
-		glfwSetMouseButtonCallback(glfwGetCurrentContext(), nullptr);
+		//glfwSetMouseButtonCallback(glfwGetCurrentContext(), nullptr);
 		// ImGui needs these so don't disable!
 		//glfwSetCursorPosCallback(glfwGetCurrentContext(), nullptr);
 		//glfwSetCharCallback(glfwGetCurrentContext(), nullptr);
@@ -87,6 +87,11 @@ namespace sudo { namespace sudo_system {
 		if (m_mouseKeys[a_mouse_button] == GLFW_PRESS || m_mouseKeys[a_mouse_button] == GLFW_REPEAT)
 			return true;
 		return false;
+	}
+
+	const math::Vector2 & InputSystem::GetMousePosition()
+	{
+		return *m_mousePos;
 	}
 
 	void key_callback(GLFWwindow * window, int key, int scancode, int action, int mods)

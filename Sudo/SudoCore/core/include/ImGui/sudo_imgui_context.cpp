@@ -101,8 +101,36 @@ void SudoImGui::ShowAddEntityWidget()
 	}
 }
 
+void SudoImGui::ClickedOnEntity()
+{
+	if (m_inputSystem->IsMouseButtonPressed(0)) 
+	{
+		// Get mouse position
+		math::Vector2 mousePos = m_inputSystem->GetMousePosition();
+		
+		// Get every entity that's supposed to be rendered
+		std::vector<ecs::Entity*> rendererList = m_worldSystem->GetRenderableEntities();
+
+		// Loop through and check if we clicked any of the entities inside the renderableList
+		for (ecs::Entity* i : rendererList) {
+			math::Vector3 origin = i->transform->position;
+			math::Vector2 size = i->GetRenderableComponent()->GetSize();
+
+			if (mousePos.x > origin.x && mousePos.y > origin.y) {
+				if (mousePos.x < (origin.x + size.x) && mousePos.y < (origin.y + size.y)) {
+					m_clickedEntity = i;
+					m_showEntityInspector = true;
+				}
+			}
+		}
+	}
+}
+
 void SudoImGui::ShowEntitiesWindow() 
 {
+	// Get the clicked entity if there was any first
+	ClickedOnEntity();
+
 	ImGui::SetNextWindowPos(ImVec2(5, 160));
 	ImGui::Begin("Sudo Entities", false, ImVec2(200, 150), 0.7f,
 		ImGuiWindowFlags_::ImGuiWindowFlags_NoResize |
@@ -385,7 +413,7 @@ void SudoImGui::ShowSystemsWindow()
 }
 
 void SudoImGui::ShowEntityInspector()
-{
+{	
 	if (m_showEntityInspector && !m_clickedEntity->DestroyMe()) 
 	{
 		ImGui::Begin("Entity Inspector", &m_showEntityInspector, ImVec2(300,450), 0.8f);

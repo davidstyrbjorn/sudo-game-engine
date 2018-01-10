@@ -37,6 +37,18 @@ namespace sudo { namespace sudo_system {
 		return m_entityList;
 	}
 
+	const std::vector<ecs::Entity*> WorldSystem::GetRenderableEntities()
+	{
+		std::vector<ecs::Entity*> returnVector;
+		// Get every valid entity with a renderable component pushed into the local return vector
+		for (int i = 0; i < m_entityList.size(); i++) {
+			if (m_entityList[i]->GetRenderableComponent() != nullptr && m_entityList[i]->IsActive() && !m_entityList[i]->DestroyMe()) {
+				returnVector.push_back(m_entityList[i]);
+			}
+		}
+		return returnVector;
+	}
+
 	void WorldSystem::Update(float deltaTime)
 	{
 		if (m_isActive) {

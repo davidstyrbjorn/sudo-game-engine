@@ -40,6 +40,7 @@ namespace sudo { namespace sudo_system {
 
 		// Entity handling
 		const std::vector<ecs::Entity*> GetEntityList();
+		const std::vector<ecs::Entity*> GetRenderableEntities();
 		void AddEntity(ecs::Entity *a_entityToAdd);
 		void RemoveEntity(ecs::Entity *a_entityToRemove);
 		void RemoveAllEntitiesWithID(const char* a_id);

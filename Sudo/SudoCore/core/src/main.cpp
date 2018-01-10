@@ -18,7 +18,7 @@ public:
 		entity = new ecs::Entity("entity");
 		sprite = new ecs::Entity("sprite");
 		shape = new ecs::Entity("shape");
-		triangle = new ecs::Entity("triangle");
+		//triangle = new ecs::Entity("triangle");
 
 		// Add components and move them around
 		entity->AddComponent(new ecs::RectangleComponent(math::Vector2(80, 80), math::Color::GetRandomColor()));
@@ -27,14 +27,14 @@ public:
 		entity->AddComponent(new ecs::BoxCollider2D());
 		entity->AddComponent(new ecs::FourWayMoveComponent(math::Vector2(0.5,0.5), "w", "s", "d", "a"));
 
-		sprite->AddComponent(new ecs::SpriteComponent("D:\\temp\\cat.png"));
+		sprite->AddComponent(new ecs::SpriteComponent("C:\\temp\\sample.jpg"));
 		sprite->transform->Move(math::Vector3(350, 0, 0));
 
 		shape->AddComponent(new ecs::RectangleComponent(math::Vector2(10, 220), math::Color::GetRandomColor()));
 		shape->transform->Move(math::Vector3(700, 110, 0));
 
 		//triangle->AddComponent(new ecs::TriangleComponent(math::Vector2(70, 70), math::Color::GetRandomColor()));
-		triangle->transform->Move(math::Vector2(300, 700));
+		//triangle->transform->Move(math::Vector2(300, 700));
 
 		textRenderer->LoadFont("C:\\Windows\\Fonts\\arial.ttf", "arial", 50);
 		textRenderer->SetFont("arial");
@@ -44,12 +44,12 @@ public:
 	}
 
 	void Update(float deltaTime) {
-		//renderer->Submit(triangle->GetComponent<ecs::TriangleComponent>());
+
 	}
 
 	void Render() override
 	{
-		textRenderer->DrawText("Fjarnskag thanks!", math::Vector2(10, 15), math::Color(0, 255, 150));
+		textRenderer->DrawText("Debug Reeest!", math::Vector2(10, 15), math::Color(0, 255, 150));
 	}
 };
 
