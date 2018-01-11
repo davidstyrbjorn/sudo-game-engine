@@ -1,5 +1,7 @@
 #include"../include/systems/batch_render_system.h"
-#include"../include/gl_include.h"
+
+#define GLEW_STATIC
+#include"GL\glew.h"
 
 #include"../include/graphics/shader.h"
 #include"../include/graphics/buffers/index_buffer.h"

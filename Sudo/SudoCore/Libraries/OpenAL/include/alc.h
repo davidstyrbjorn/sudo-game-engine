@@ -38,7 +38,6 @@ extern "C" {
 #define ALCAPIENTRY ALC_APIENTRY
 #define ALC_INVALID 0
 
-
 #define ALC_VERSION_0_1         1
 
 typedef struct ALCdevice_struct ALCdevice;

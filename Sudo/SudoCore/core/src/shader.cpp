@@ -1,6 +1,7 @@
 #include "../include/graphics/shader.h"
 
-#include"../include/gl_include.h"
+#define GLEW_STATIC
+#include"GL\glew.h"
 
 #include"../include/utility/utility.h"
 

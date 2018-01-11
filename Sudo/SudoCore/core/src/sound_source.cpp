@@ -3,6 +3,9 @@
 #include"../include/debug.h"
 #include"../include/math/vector3.h"
 
+#include<al.h>
+#include<alc.h>
+
 #include<fstream>
 
 namespace sudo { namespace sound { 

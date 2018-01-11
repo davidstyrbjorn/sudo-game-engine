@@ -5,8 +5,8 @@
 #include"text_character.h"
 #include"../definitions.h"
 
-struct FT_Face;
-struct FT_Library;
+#include<ft2build.h>
+#include FT_FREETYPE_H
 
 namespace sudo { namespace graphics {
 
@@ -15,8 +15,8 @@ namespace sudo { namespace graphics {
 	struct Font 
 	{
 		// Members
-		FT_Face *m_face;
-		FT_Library *m_lib;
+		FT_Face m_face;
+		FT_Library m_lib;
 		std::map<char, graphics::GlyphCharacter> m_characters;
 		uint m_fontSize;
 

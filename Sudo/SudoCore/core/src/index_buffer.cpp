@@ -1,6 +1,7 @@
 #include"../include/graphics/buffers/index_buffer.h"
 
-#include"../include/gl_include.h"
+#define GLEW_STATIC
+#include"GL\glew.h"
 
 namespace sudo { namespace graphics { 
 

@@ -4,6 +4,9 @@
 #include"../include/math/vector2.h"
 #include"../include/math/vector3.h"
 
+#include<al.h>
+#include<alc.h>
+
 #include<Windows.h>
 
 namespace sudo { namespace sudo_system {

@@ -26,6 +26,13 @@ typedef float GLclampf;
 typedef double GLdouble;
 typedef double GLclampd;
 
+// OPENAL
+
+/** Sound samples: format specifier. */
+#define AL_FORMAT_MONO8                           0x1100
+#define AL_FORMAT_MONO16                          0x1101
+#define AL_FORMAT_STEREO8                         0x1102
+#define AL_FORMAT_STEREO16                        0x1103
 
 /* ===================================================== */
 /* ===================================================== */

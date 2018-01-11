@@ -6,6 +6,9 @@
 #include<fstream>
 #include<iostream>
 
+#include<al.h>
+#include<alc.h>
+
 bool isBigEndian()
 {
 	int a = 1;

@@ -3,14 +3,14 @@
 #include"sudo_system.h"
 #include"../sudo_behaviour.h"
 
-#include<al.h>
-#include<alc.h>
-
 namespace sudo {
 	namespace math {
 		class Vector3;
 		class Vector2;
 } }
+
+typedef struct ALCdevice_struct ALCdevice;
+typedef struct ALCcontext_struct ALCcontext;
 
 namespace sudo { namespace sudo_system {
 

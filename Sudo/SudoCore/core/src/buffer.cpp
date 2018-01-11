@@ -1,5 +1,8 @@
 #include "../include/graphics/buffers/buffer.h"
 
+#define GLEW_STATIC
+#include"GL\glew.h"
+
 namespace sudo { namespace graphics { 
 
 	Buffer::Buffer()
