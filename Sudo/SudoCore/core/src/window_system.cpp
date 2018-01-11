@@ -1,7 +1,7 @@
 #include"../include/systems/window_system.h"
 
 // GLFW inclde guards
-#include"GLFW\glfw3.h"
+#include<GLFW\glfw3.h>
 
 #include"../include/systems/settings_system.h"
 #include"../include/debug.h"

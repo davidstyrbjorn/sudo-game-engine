@@ -6,8 +6,7 @@
 #include<fstream>
 #include<iostream>
 
-#include<al.h>
-#include<alc.h>
+#include"../definitions.h"
 
 bool isBigEndian()
 {

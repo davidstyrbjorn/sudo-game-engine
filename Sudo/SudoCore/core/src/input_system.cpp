@@ -1,7 +1,7 @@
 #include "../include/systems/input_system.h"
 
 // GLFW include guards
-#include"GLFW\glfw3.h"
+#include<GLFW\glfw3.h>
 
 #include"../include/math/vector2.h"
 #include"../include/utility/sudo_random.h"

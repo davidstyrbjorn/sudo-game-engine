@@ -2,10 +2,6 @@
 
 #include<ctime>
 
-/*
-* Timer class used for limiting FPS in engine core loop
-*/
-
 namespace sudo { namespace utility { 
 
 	class Timer {
@@ -15,18 +11,21 @@ namespace sudo { namespace utility {
 
 	public:
 		Timer();
+
+		// Getters
 		bool IsStarted();
 		bool IsStopped();
 		bool IsPaused();
 		bool IsActive();
+		clock_t GetTicks(); // typedef long
 
+		// State modifications
 		void Pause();
 		void Resume();
 		void Stop();
 		void Start();
 		void Reset();
 
-		clock_t GetTicks();
 	};
 
 }}
