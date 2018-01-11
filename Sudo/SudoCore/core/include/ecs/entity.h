@@ -40,7 +40,6 @@ namespace sudo { namespace ecs {
 		void LateUpdate(float deltaTime);
 		void Render();
 		void Start();
-		void Awake();
 
 		// Component methods
 		Component* AddComponent(Component *a_component);

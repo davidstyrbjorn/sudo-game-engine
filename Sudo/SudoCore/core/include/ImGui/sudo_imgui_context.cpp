@@ -84,11 +84,10 @@ void SudoImGui::ShowAddEntityWidget()
 			ImGuiWindowFlags_::ImGuiWindowFlags_NoMove
 		);
 
-		static char entityName[128] = "new entity";
-		ImGui::InputText("ID", entityName, 128);
+		ImGui::InputText("ID", m_entityToAddName, 128);
 		if (ImGui::Button("Create")) 
 		{
-			ecs::Entity *newEntity = new ecs::Entity(entityName);
+			ecs::Entity *newEntity = new ecs::Entity(m_entityToAddName);
 			newEntity->Start();
 
 			m_showAddEntityWidget = false;

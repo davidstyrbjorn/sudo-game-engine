@@ -40,14 +40,14 @@ namespace sudo { namespace ecs {
 	void Entity::Update(float deltaTime)
 	{
 		/* Update the transform component */
-		if (transform->GetComponentState() == ComponentState::ACTIVE) {
+		if (transform->IsActive()) {
 			transform->Update(deltaTime);
 		}
 
 		for (unsigned int i = 0; i < m_components.size(); i++) {
 
 			// Check if component is up for being updated
-			if (m_components[i]->GetComponentState() == ComponentState::ACTIVE) { // Check if the component is active
+			if (m_components[i]->IsActive()) { // Check if the component is active
 				m_components[i]->Update(deltaTime);
 			}
 		}
@@ -58,7 +58,7 @@ namespace sudo { namespace ecs {
 		for (unsigned int i = 0; i < m_components.size(); i++) {
 
 			// Check if component is up for being updated
-			if (m_components[i]->GetComponentState() == ComponentState::ACTIVE) { // Check if the component is active
+			if (m_components[i]->IsActive()) { // Check if the component is active
 				m_components[i]->LateUpdate(deltaTime);
 			}
 		}
@@ -69,31 +69,21 @@ namespace sudo { namespace ecs {
 		for (unsigned int i = 0; i < m_components.size(); i++) {
 
 			// Check if component is up for being updated
-			if (m_components[i]->GetComponentState() == ComponentState::ACTIVE) { // Check if the component is active
+			if (m_components[i]->IsActive()) { // Check if the component is active
 				m_components[i]->Render();
 			}
 		}
 	}
 
-	void Entity::Start() 
+	void Entity::Start()
 	{
 		transform->Start();
 
-		/* Call start on all the components */
+		// Call start on all the components 
 		for (unsigned int i = 0; i < m_components.size(); i++) {
-			if (m_components[i]->GetComponentState() == ComponentState::ACTIVE) { // Check if the component is active
+			if (m_components[i]->IsActive()) { // Check if the component is active
 				m_components[i]->Start();
 			}
-		}
-	}
-
-	void Entity::Awake()
-	{
-		transform->Awake();
-
-		/* Call awake on all the components */
-		for (unsigned int i = 0; i < m_components.size(); i++) {
-			m_components[i]->Awake();
 		}
 	}
 

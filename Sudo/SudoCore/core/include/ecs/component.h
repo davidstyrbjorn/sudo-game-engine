@@ -5,11 +5,6 @@
 
 namespace sudo { namespace ecs {
 
-	typedef enum {
-		ACTIVE,
-		DISABLED,
-	} ComponentState;
-
 	class Entity;
 
 	class Component : public SudoBehaviour
@@ -20,23 +15,20 @@ namespace sudo { namespace ecs {
 			//std::cout << "Component Removed" << std::endl;
 		}
 
-		/* Gets called at start */
-		virtual void Awake() { } 
-
-		/* Sets the component state */
-		void SetComponentState(ComponentState a_newState) { m_componentState = a_newState; }
-
-		/* Returns the state of the component */
-		const ComponentState GetComponentState() { return m_componentState; }
-
-		/* Sets the entity holder */
+		// Getters
+		const bool IsActive() { return m_isActive; }
+		Entity* GetEntityHolder() { return m_entityHolder; }
+		
+		// Setters
 		void SetEntityHolder(Entity *a_newHolder) { m_entityHolder = a_newHolder; }
 
-		/* Gets entity holder */
-		Entity* GetEntityHolder() { return m_entityHolder; }
+		// State modification methods
+		void Enable() { m_isActive = true; }
+		void Disable() { m_isActive = false; }
+		void Toggle() { m_isActive = !m_isActive; }
 
 	protected:
-		ComponentState m_componentState = ComponentState::ACTIVE; // Active by default
+		bool m_isActive = true; 
 		Entity *m_entityHolder; // Pointer to the holder of this component
 	};
 

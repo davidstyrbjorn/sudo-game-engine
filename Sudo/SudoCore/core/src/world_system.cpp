@@ -98,7 +98,6 @@ namespace sudo { namespace sudo_system {
 		for (unsigned int i = 0; i < m_entityList.size(); i++) {
 			if(m_entityList[i]->IsActive())
 				m_entityList[i]->Start();
-			m_entityList[i]->Awake();
 		}
 	}
 

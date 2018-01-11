@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\examples\asteroids.cpp" />
+    <ClCompile Include="src\examples\empty.cpp" />
     <ClCompile Include="src\examples\pong.cpp" />
     <ClCompile Include="src\examples\shapes.cpp" />
   </ItemGroup>
@@ -85,7 +86,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>D:\SudoGameEngine\Sudo\SudoCore\Libraries\freetype\include;D:\SudoGameEngine\Sudo\SudoCore\Libraries\GLEW\glew-2.1.0\include;D:\SudoGameEngine\Sudo\SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;D:\SudoGameEngine\Sudo\SudoCore\Libraries\OpenAL\include;$(SolutionDir)SudoCore\core\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\core\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)SudoCore\Builds;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

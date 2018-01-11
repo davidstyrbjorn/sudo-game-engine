@@ -31,7 +31,7 @@ namespace sudo { namespace sudo_system {
 		void CleanUp() override;
 		bool IsActive() override { return m_isActive; }
 		void Toggle() override { m_isActive = !m_isActive; }
-
+		
 		// SudoBehaviour methods
 		void Start() override;
 		void Update(float deltaTime) override;

@@ -232,7 +232,7 @@ public:
 					particles->Submit(
 						transform->position,  // position
 						math::Vector2(3, 3),  // size
-						math::Color::GetRandomColor(),
+						rectangleComponent->GetColor(),
 						// color
 						1000,		          // lifetime
 											  // velocity
@@ -431,7 +431,7 @@ AsteroidsGame::AsteroidsGame()
 	engine.init(math::Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), "ASSteroids", this);
 }
 
-int main()
+int ldwdlmdain()
 {
 	AsteroidsGame *game = new AsteroidsGame();
 

@@ -52,5 +52,7 @@ namespace sudo {
 			bool m_showAddRenderableWidget = false;
 			bool m_showAddEntityWidget = false;
 			ecs::Entity* m_clickedEntity;
+
+			char m_entityToAddName[128];
 		};
 } }
