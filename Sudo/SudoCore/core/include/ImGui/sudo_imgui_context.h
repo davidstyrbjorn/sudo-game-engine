@@ -51,6 +51,7 @@ namespace sudo {
 			bool m_showWindoWidget = false;
 			bool m_showAddRenderableWidget = false;
 			bool m_showAddEntityWidget = false;
+			bool m_entityInspectorFirstPassThrough = true;
 			ecs::Entity* m_clickedEntity;
 
 			char m_entityToAddName[128];

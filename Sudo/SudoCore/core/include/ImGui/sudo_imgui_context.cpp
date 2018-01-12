@@ -87,6 +87,7 @@ void SudoImGui::ShowAddEntityWidget()
 		ImGui::InputText("ID", m_entityToAddName, 128);
 		if (ImGui::Button("Create")) 
 		{
+			std::string _string = m_entityToAddName;
 			ecs::Entity *newEntity = new ecs::Entity(m_entityToAddName);
 			newEntity->Start();
 
@@ -151,11 +152,12 @@ void SudoImGui::ShowEntitiesWindow()
 	{
 		if (!entityList[i]->DestroyMe()) 
 		{
-			std::string button = std::string(entityList[i]->GetID()) + "##" + std::to_string(i);
+			std::string button = entityList[i]->GetID() + "##" + std::to_string(i);
 			if (ImGui::Selectable(button.c_str()))
 			{
 				m_clickedEntity = entityList[i];
 				m_showEntityInspector = true;
+				m_entityInspectorFirstPassThrough = true;
 			}
 			ImGui::NextColumn();
 		}
@@ -451,7 +453,7 @@ void SudoImGui::ShowEntityInspector()
 	if (m_showEntityInspector && !m_clickedEntity->DestroyMe()) 
 	{
 		ImGui::Begin("Entity Inspector", &m_showEntityInspector, ImVec2(300,450), 0.8f);
-
+		
 		// Core value
 		std::string id = "ID: " + std::string(m_clickedEntity->GetID());
 		ImGui::Text(id.c_str());
@@ -472,6 +474,7 @@ void SudoImGui::ShowEntityInspector()
 		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 
 		// Transform Component 
+		if(m_entityInspectorFirstPassThrough) ImGui::SetNextTreeNodeOpen(false);
 		if (ImGui::CollapsingHeader("Transform")) {
 			ImGui::Text("Position");
 			ImGui::PushItemWidth(70);
@@ -486,6 +489,7 @@ void SudoImGui::ShowEntityInspector()
 		}
 
 		// Renderable Component
+		if (m_entityInspectorFirstPassThrough) ImGui::SetNextTreeNodeOpen(false);
 		auto renderable = m_clickedEntity->GetRenderableComponent();
 		bool hasRenderable = renderable == nullptr ? false : true;
 		if (hasRenderable && ImGui::CollapsingHeader("Renderable"))
@@ -549,6 +553,7 @@ void SudoImGui::ShowEntityInspector()
 
 		// BoxCollider2D component
 		// Check if entity has boxcollider2d component
+		if (m_entityInspectorFirstPassThrough) ImGui::SetNextTreeNodeOpen(false);
 		auto _bc2d = m_clickedEntity->GetComponent<ecs::BoxCollider2D>();
 		bool hasBC2D = (_bc2d == nullptr) ? false : true;
 		if (hasBC2D && ImGui::CollapsingHeader("BoxCollider2D")) {
@@ -563,6 +568,8 @@ void SudoImGui::ShowEntityInspector()
 			ImGui::InputFloat2("Bounds", (float*)&bc_bounds, 1);
 		}
 
+		// Sound Component
+		if (m_entityInspectorFirstPassThrough) ImGui::SetNextTreeNodeOpen(false);
 		auto _sc = m_clickedEntity->GetComponent<ecs::SoundComponent>();
 		bool hasSC = (_sc == nullptr) ? false : true;
 		// Sound Component
@@ -617,6 +624,7 @@ void SudoImGui::ShowEntityInspector()
 		}
 
 		// Four-way move component
+		if (m_entityInspectorFirstPassThrough) ImGui::SetNextTreeNodeOpen(false);
 		ecs::FourWayMoveComponent* _fwm = m_clickedEntity->GetComponent<ecs::FourWayMoveComponent>();
 		bool hasMove = (_fwm == nullptr) ? false : true;
 		if (hasMove && ImGui::CollapsingHeader("Four-way Move")) {
@@ -738,6 +746,7 @@ void SudoImGui::ShowEntityInspector()
 			ImGui::EndChild();
 		}
 
+		m_entityInspectorFirstPassThrough = false;
 		ImGui::End();
 	}
 }

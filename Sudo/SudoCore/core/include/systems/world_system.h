@@ -43,9 +43,9 @@ namespace sudo { namespace sudo_system {
 		const std::vector<ecs::Entity*> GetRenderableEntities();
 		void AddEntity(ecs::Entity *a_entityToAdd);
 		void RemoveEntity(ecs::Entity *a_entityToRemove);
-		void RemoveAllEntitiesWithID(const char* a_id);
+		void RemoveAllEntitiesWithID(const std::string& a_id);
 			
-		std::vector<ecs::Entity*> GetEntitiesWithID(const char* a_id);
+		std::vector<ecs::Entity*> GetEntitiesWithID(const std::string& a_id);
 	};
 
 } } 
