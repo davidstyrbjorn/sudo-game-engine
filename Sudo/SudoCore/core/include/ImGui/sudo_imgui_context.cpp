@@ -120,6 +120,7 @@ void SudoImGui::ClickedOnEntity()
 				if (mousePos.x < (origin.x + size.x) && mousePos.y < (origin.y + size.y)) {
 					m_clickedEntity = i;
 					m_showEntityInspector = true;
+					m_entityInspectorFirstPassThrough = true;
 				}
 			}
 		}
