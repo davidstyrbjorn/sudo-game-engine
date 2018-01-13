@@ -471,6 +471,10 @@ void SudoImGui::ShowEntityInspector()
 			m_clickedEntity->Destroy();
 			m_showEntityInspector = false;
 		}
+		// Copy action
+		if (ImGui::Button("Copy")) {
+			m_worldSystem->CopyEntity(m_clickedEntity);
+		}
 
 		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 

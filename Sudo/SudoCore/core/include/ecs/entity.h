@@ -21,7 +21,6 @@ namespace sudo { namespace ecs {
 
 		bool m_isActive;
 		bool m_removeMe;
-		//const char* m_id;
 		std::string m_id;
 
 	public:
@@ -33,7 +32,7 @@ namespace sudo { namespace ecs {
 		//Entity(const char* a_id) : m_id(a_id) { init(); }
 		Entity(const std::string &a_id) : m_id(a_id) { init(); }
 		void init();
-
+		
 		// Destructor 
 		~Entity();
 
@@ -74,7 +73,6 @@ namespace sudo { namespace ecs {
 
 		// Getters 
 		const std::string& GetID() { return m_id; }
-		//const char* GetID() { return m_id; }
 	};
 	
 } }

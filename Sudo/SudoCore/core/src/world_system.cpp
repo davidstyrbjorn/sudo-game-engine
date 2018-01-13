@@ -2,6 +2,16 @@
 
 #include"../include/ecs/entity.h"
 
+#include"../include/math/vector2.h"
+#include"../include/math/vector3.h"
+
+#include"../include/ecs/transform_component.h"
+#include"../include/ecs/four_way_move_component.h"
+#include"../include/ecs/box_collider2D.h"
+#include"../include/ecs/sound_component.h"
+#include"../include/ecs/sprite_component.h"
+#include"../include/ecs/rectangle_component.h"
+
 namespace sudo { namespace sudo_system { 
 
 	WorldSystem* WorldSystem::_instance = nullptr;
@@ -118,6 +128,67 @@ namespace sudo { namespace sudo_system {
 				m_entityList[i]->Destroy();
 			}
 		}
+	}
+
+	ecs::Entity & WorldSystem::CopyEntity(ecs::Entity * a_entityToCopy)
+	{
+		// Create and name the component
+		std::string dick = a_entityToCopy->GetID() + "(copy)";
+		ecs::Entity *newEntity = new ecs::Entity(dick);
+
+		// Get the list of components to immitate
+		std::vector<ecs::Component*> componentsToCopy = a_entityToCopy->GetComponentList();
+
+		// Transform component
+		newEntity->transform->position = a_entityToCopy->transform->position;
+		newEntity->transform->angle = a_entityToCopy->transform->angle;
+
+		// Renderable Component
+		if (a_entityToCopy->GetRenderableComponent() != nullptr)
+		{
+			if (a_entityToCopy->GetRenderableComponent()->getTID() == 0) {
+				// Rectangle Component
+				ecs::RectangleComponent* rectangleToCopy = static_cast<ecs::RectangleComponent*>(a_entityToCopy->GetRenderableComponent());
+				if (rectangleToCopy != nullptr)
+				{
+					newEntity->AddComponent(new ecs::RectangleComponent((math::Vector2)rectangleToCopy->GetSize(), rectangleToCopy->GetColor()))->Start();
+				}
+			}
+			else {
+				// Sprite Component
+				ecs::SpriteComponent* spriteToCopy = static_cast<ecs::SpriteComponent*>(a_entityToCopy->GetRenderableComponent());
+				if (spriteToCopy != nullptr)
+				{
+					char* imagePath = spriteToCopy->GetSpriteImagePath();
+					newEntity->AddComponent(new ecs::SpriteComponent(imagePath))->Start();
+				}
+			}
+		}
+
+		for (int i = 0; i < componentsToCopy.size(); i++)
+		{
+			bool _alreadyAddedComponent = false;
+
+			ecs::BoxCollider2D* colliderToCopy = static_cast<ecs::BoxCollider2D*>(componentsToCopy[i]);
+			if (colliderToCopy != nullptr) 
+			{
+				newEntity->AddComponent(new ecs::BoxCollider2D());
+			}
+
+			ecs::FourWayMoveComponent *fwmToCopy = static_cast<ecs::FourWayMoveComponent*>(componentsToCopy[i]);
+			if (fwmToCopy != nullptr) 
+			{
+				newEntity->AddComponent(new ecs::FourWayMoveComponent(fwmToCopy->GetVelocity(), fwmToCopy->GetKeys("up"), fwmToCopy->GetKeys("down"), fwmToCopy->GetKeys("right"), fwmToCopy->GetKeys("left")));
+			}
+
+			ecs::SoundComponent *soundToCopy = static_cast<ecs::SoundComponent*>(componentsToCopy[i]);
+			if (soundToCopy != nullptr)
+			{
+
+			}
+		}
+
+		return *newEntity;
 	}
 
 	std::vector<ecs::Entity*> WorldSystem::GetEntitiesWithID(const std::string& a_id)
