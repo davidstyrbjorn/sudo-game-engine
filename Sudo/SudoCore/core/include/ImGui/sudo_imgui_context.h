@@ -31,6 +31,7 @@ namespace sudo {
 			void ShowSystemWidgets();
 			void ShowAddEntityWidget();
 
+			void CtrlInput();
 			void ClickedOnEntity();
 
 		private:
@@ -53,6 +54,7 @@ namespace sudo {
 			bool m_showAddEntityWidget = false;
 			bool m_entityInspectorFirstPassThrough = true;
 			ecs::Entity* m_clickedEntity;
+			bool m_canPerformCtrlCommand = true;
 
 			char m_entityToAddName[128];
 		};

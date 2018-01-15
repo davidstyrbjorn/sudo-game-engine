@@ -66,6 +66,8 @@ namespace sudo { namespace sudo_system {
 			m_debugObject->ShowSystemWidgets();
 			m_debugObject->ShowEntitiesWindow();
 			m_debugObject->ShowAddEntityWidget();
+			
+			m_debugObject->CtrlInput();
 		}
 #endif
 	}

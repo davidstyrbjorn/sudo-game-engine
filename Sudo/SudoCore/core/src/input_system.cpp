@@ -219,6 +219,9 @@ namespace sudo { namespace sudo_system {
 		keyCodeToLiteral["num_lock"] = 282;
 		keyCodeToLiteral["print_screen"] = 283;
 		keyCodeToLiteral["pause"] = 284;
+		keyCodeToLiteral["ctrl"] = GLFW_KEY_LEFT_CONTROL,
+
+		//GLFW_KEY_LEFT_CONTROL 34
 
 		// f keys
 		keyCodeToLiteral["f1"] = 290;

@@ -127,6 +127,25 @@ void SudoImGui::ClickedOnEntity()
 	}
 }
 
+void SudoImGui::CtrlInput()
+{
+	if (m_inputSystem->GetKey("ctrl")) 
+	{
+		// Copy/paste command
+		if (m_inputSystem->GetKey("d") && m_canPerformCtrlCommand) 
+		{
+			if (m_clickedEntity != nullptr) 
+			{
+				m_worldSystem->CopyEntity(m_clickedEntity);
+				m_canPerformCtrlCommand = false;
+			}
+		}
+	}
+	else {
+		m_canPerformCtrlCommand = true;
+	}
+}
+
 void SudoImGui::ShowEntitiesWindow() 
 {
 	// Get the clicked entity if there was any first

@@ -12,6 +12,8 @@
 #include"../include/ecs/sprite_component.h"
 #include"../include/ecs/rectangle_component.h"
 
+#include<assert.h>
+
 namespace sudo { namespace sudo_system { 
 
 	WorldSystem* WorldSystem::_instance = nullptr;
@@ -132,6 +134,8 @@ namespace sudo { namespace sudo_system {
 
 	ecs::Entity & WorldSystem::CopyEntity(ecs::Entity * a_entityToCopy)
 	{
+		assert(a_entityToCopy != nullptr);
+
 		// Create and name the component
 		std::string dick = a_entityToCopy->GetID() + "(copy)";
 		ecs::Entity *newEntity = new ecs::Entity(dick);
@@ -169,22 +173,25 @@ namespace sudo { namespace sudo_system {
 		{
 			bool _alreadyAddedComponent = false;
 
-			ecs::BoxCollider2D* colliderToCopy = static_cast<ecs::BoxCollider2D*>(componentsToCopy[i]);
-			if (colliderToCopy != nullptr) 
+			ecs::BoxCollider2D* colliderToCopy = dynamic_cast<ecs::BoxCollider2D*>(componentsToCopy[i]);
+			if (colliderToCopy != nullptr && !_alreadyAddedComponent) 
 			{
-				newEntity->AddComponent(new ecs::BoxCollider2D());
+				newEntity->AddComponent(new ecs::BoxCollider2D())->Start();
+				_alreadyAddedComponent = true;
 			}
 
-			ecs::FourWayMoveComponent *fwmToCopy = static_cast<ecs::FourWayMoveComponent*>(componentsToCopy[i]);
-			if (fwmToCopy != nullptr) 
+			ecs::FourWayMoveComponent *fwmToCopy = dynamic_cast<ecs::FourWayMoveComponent*>(componentsToCopy[i]);
+			if (fwmToCopy != nullptr && !_alreadyAddedComponent) 
 			{
-				newEntity->AddComponent(new ecs::FourWayMoveComponent(fwmToCopy->GetVelocity(), fwmToCopy->GetKeys("up"), fwmToCopy->GetKeys("down"), fwmToCopy->GetKeys("right"), fwmToCopy->GetKeys("left")));
+				newEntity->AddComponent(new ecs::FourWayMoveComponent(fwmToCopy->GetVelocity(), fwmToCopy->GetKeys("up"), fwmToCopy->GetKeys("down"), fwmToCopy->GetKeys("right"), fwmToCopy->GetKeys("left")))->Start();
+				_alreadyAddedComponent = true;
 			}
 
-			ecs::SoundComponent *soundToCopy = static_cast<ecs::SoundComponent*>(componentsToCopy[i]);
-			if (soundToCopy != nullptr)
+			ecs::SoundComponent *soundToCopy = dynamic_cast<ecs::SoundComponent*>(componentsToCopy[i]);
+			if (soundToCopy != nullptr && !_alreadyAddedComponent)
 			{
-
+				printf("Copy of sound component not implemented");
+				_alreadyAddedComponent = true;
 			}
 		}
 

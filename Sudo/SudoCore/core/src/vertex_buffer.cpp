@@ -19,7 +19,7 @@ namespace sudo { namespace graphics {
 		// Create and bind buffer
 		glGenBuffers(1, &m_vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-
+		
 		// Structure the buffer layout
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(QuadVertexData), nullptr); // Vertex position
 		glEnableVertexAttribArray(0);
