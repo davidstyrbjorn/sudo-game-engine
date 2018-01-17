@@ -29,18 +29,90 @@ SudoCore::SudoCore()
 	nano::OpenInputFile("level.txt");
 	std::string levelString;
 	nano::GetAllFileContent(levelString);
+	nano::CloseInputFile();
 
 	std::istringstream levelStream(levelString);
-
 	std::string word;
-	while (std::getline(levelStream, word)) {
-		if (word == "[ ENTITY ]") {
+	while (std::getline(levelStream, word)) 
+	{
+		if (word == "[ ENTITY ]") 
+		{
+			// Get the entity name
 			std::string entityName;
 			std::getline(levelStream, entityName);
 			entityName = entityName.substr(7, entityName.length());
-			//std::cout << entityName << std::endl;
 
+			// Instantiate entity with entity name
 			ecs::Entity* entity = new ecs::Entity(entityName);
+
+			// Transform data of the entity
+			math::Vector2 pos;
+			float angle;
+			std::string posString, angleString;
+			std::vector<std::string> segmentedPosString;
+			
+			std::getline(levelStream, posString);
+			std::getline(levelStream, angleString);
+			posString = posString.substr(6, posString.length());
+			angleString = angleString.substr(8, angleString.length());
+			// angleString is good but posString looks like 0.00, 0.00 so we have to segment the string
+			std::stringstream _sps(posString);
+			std::string segment;
+			while (std::getline(_sps, segment, ',')) { segmentedPosString.push_back(segment); }
+			// [0] should be x pos and [1] should be y pos
+
+			// Now the string is setup for being converted
+			pos.x = std::stof(segmentedPosString[0]);
+			pos.y = std::stof(segmentedPosString[1]);
+			angle = std::stof(angleString);
+
+			// Apply the transform data to the instantiated entity
+			entity->transform->position = math::Vector3(pos.x, pos.y, 0);
+			entity->transform->angle = angle;
+
+			// Component time
+			std::string _componentHeader;
+			std::getline(levelStream, _componentHeader);
+			if(_componentHeader == "[ COMPONENTS ]")
+			{
+				std::string _componentName;
+				std::getline(levelStream, _componentName);
+				std::cout << _componentName << std::endl;
+
+				if (_componentName == "RectangleComponent") {
+					math::Vector2 size;
+					math::Color color;
+
+					// Size
+					std::string sizeString;
+					std::vector<std::string> segmentedSizeString;
+					std::getline(levelStream, sizeString);
+					sizeString = sizeString.substr(7, sizeString.length());
+					std::stringstream sizeStream(sizeString);
+						
+					std::string sizeSegment;
+					while(std::getline(sizeStream, sizeSegment, ',')) { segmentedSizeString.push_back(sizeSegment); }
+
+					// Color
+					std::string colorString;
+					std::vector<std::string> segmentedColorString;
+					std::getline(levelStream, colorString);
+					colorString = colorString.substr(8, colorString.length());
+					std::stringstream colorStream(colorString);
+
+					std::string colorSegment;
+					while (std::getline(colorStream, colorSegment, ',')) { segmentedColorString.push_back(colorSegment); }
+
+					// Apply the data and add component
+					size.x = std::stof(segmentedSizeString[0]);
+					size.y = std::stof(segmentedSizeString[1]);
+					color.r = std::stof(segmentedColorString[0]);
+					color.g = std::stof(segmentedColorString[1]);
+					color.b = std::stof(segmentedColorString[2]);
+					color.a = std::stof(segmentedColorString[3]);
+					entity->AddComponent(new ecs::RectangleComponent(size, color));
+				}
+			}
 		}
 	}
 }

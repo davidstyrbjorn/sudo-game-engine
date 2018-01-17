@@ -82,7 +82,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;$(SolutionDir)SudoCore\Libraries\OpenAL\include;$(SolutionDir)SudoCore\Libraries\freetype\include;$(SolutionDir)SudoCore\Libraries\glm;C:\Nano-SerializerAPI\Nano-SerializerAPI\Nano-SerializerAPI\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;$(SolutionDir)SudoCore\Libraries\OpenAL\include;$(SolutionDir)SudoCore\Libraries\freetype\include;$(SolutionDir)SudoCore\Libraries\glm;D:\NanoGameEngine\Nano-SerializerAPI\Nano-SerializerAPI\Nano-SerializerAPI\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
