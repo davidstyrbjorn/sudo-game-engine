@@ -1,10 +1,12 @@
+#pragma once
+
 #include "../include/sudo_core.h"
 
 #include"../include/sudo.h"
 #include"../include/definitions.h"
-#include"../include/serializer.h"
 
-#pragma once
+#include<SerializerAPI.h>
+#include<sstream>
 
 // OpenAL include guards
 #include<al.h>
@@ -17,11 +19,30 @@
 // GLFW inclde guards
 #include"GLFW\glfw3.h"
 
+#define STR(x) std::to_string(x)
+
 namespace sudo { 
 
 SudoCore::SudoCore()
 {
+	// Test read from a level text file
+	nano::OpenInputFile("level.txt");
+	std::string levelString;
+	nano::GetAllFileContent(levelString);
 
+	std::istringstream levelStream(levelString);
+
+	std::string word;
+	while (std::getline(levelStream, word)) {
+		if (word == "[ ENTITY ]") {
+			std::string entityName;
+			std::getline(levelStream, entityName);
+			entityName = entityName.substr(7, entityName.length());
+			//std::cout << entityName << std::endl;
+
+			ecs::Entity* entity = new ecs::Entity(entityName);
+		}
+	}
 }
 
 void SudoCore::init(const math::Vector2 a_windowSize, char* a_windowCaption, SudoClass *a_engineInstance)
@@ -98,15 +119,70 @@ void SudoCore::init(const math::Vector2 a_windowSize, char* a_windowCaption, Sud
 
 void SudoCore::clean_up()
 {
+	// Test for serializing all the data from the world_system singleton
+	//nano::OpenOutputFile("level.txt", nano::OpenMode::TRUNCATE);
+	//
+	//nano::WriteToFile("[ START ]", true);
+	//
+	//nano::WriteToFile("[ ENTITIES_START]\n", true);
+	//for (ecs::Entity* entity : m_worldSystem->GetEntityList()) 
+	//{
+	//	// Transform
+	//	float _x = std::floor(entity->transform->position.x * 100.) / 100.;
+	//	float _y = std::floor(entity->transform->position.y * 100.) / 100.;
+	//	float _angle = std::floor(entity->transform->angle * 100.) / 100.;
+	//
+	//	nano::WriteToFile("[ ENTITY ]", true);
+	//	nano::WriteToFile("name = " + entity->GetID(), true);
+	//	nano::WriteToFile("pos = (" + STR(_x) + ", " + STR(_y) + ")", true);
+	//	nano::WriteToFile("angle = " + std::to_string(_angle), true);
+	//
+	//	// Components
+	//	nano::WriteToFile("[ COMPONENTS ]", true);
+	//	// Serialize components
+	//	for (ecs::Component* component : entity->GetComponentList()) {
+	//		// Renderable2D Component
+	//		graphics::Renderable2D* renderableComponent = dynamic_cast<graphics::Renderable2D*>(component);
+	//		if (renderableComponent != nullptr) {
+	//			// Rectangle component
+	//			if (renderableComponent->GetTexture() == nullptr) {
+	//				nano::WriteToFile("RectangleComponent:", true);
+	//
+	//				// Rectangle data
+	//				math::Vector2 size = renderableComponent->GetSize();
+	//				math::Color color = renderableComponent->GetColor();
+	//				nano::WriteToFile("size = (" + STR(size.x) + "," + STR(size.y) + ")", true);
+	//				nano::WriteToFile("color = (" + STR(color.r) + "," + STR(color.g) + "," + STR(color.b) + "," + STR(color.a) + ")", true);
+	//			}
+	//			// Sprite Component
+	//			else {
+	//				nano::WriteToFile("SpriteComponent", true);
+	//				
+	//				// Sprite data
+	//				math::Vector2 size = renderableComponent->GetSize();
+	//				math::Color color = renderableComponent->GetColor();
+	//				nano::WriteToFile("size = (" + STR(size.x) + "," + STR(size.y) + ")", true);
+	//				nano::WriteToFile("color = (" + STR(color.r) + "," + STR(color.g) + "," + STR(color.b) + "," + STR(color.a) + ")", true);
+	//
+	//				std::string imagePath = renderableComponent->GetTexture()->getImagePath();
+	//				nano::WriteToFile("image = " + imagePath, true);
+	//			}
+	//		}
+	//	}
+	//
+	//	nano::InsertBlankLine();
+	//}
+	//nano::WriteToFile("\n[ ENTITIES_END ]", true);
+	//
+	//nano::WriteToFile("[ END ]", true);
+	//
+	//nano::CloseOutputFile();
+
 	/* Call it the instant the window is closed */
 	m_engineInstance->OnWindowClose();
 
-	/* This destroys  everything related to the GLFW library */
+	/* This destroys everything related to the GLFW library */
 	glfwTerminate();
-	
-	// Test for the serializer
-	Serializer s;
-	s.SerializeWorld(*m_worldSystem);
 
 	/* Call CleanUp() on all systems */
 	m_windowSystem->CleanUp();

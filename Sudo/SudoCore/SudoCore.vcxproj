@@ -82,7 +82,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;$(SolutionDir)SudoCore\Libraries\OpenAL\include;$(SolutionDir)SudoCore\Libraries\freetype\include;$(SolutionDir)SudoCore\Libraries\glm</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SudoCore\Libraries\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)SudoCore\Libraries\GLEW\glew-2.1.0\include;$(SolutionDir)SudoCore\Libraries\OpenAL\include;$(SolutionDir)SudoCore\Libraries\freetype\include;$(SolutionDir)SudoCore\Libraries\glm;C:\Nano-SerializerAPI\Nano-SerializerAPI\Nano-SerializerAPI\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -153,7 +153,6 @@
     <ClCompile Include="core\include\ImGui\imgui_draw.cpp" />
     <ClCompile Include="core\include\ImGui\imgui_glfw.cpp" />
     <ClCompile Include="core\include\ImGui\sudo_imgui_context.cpp" />
-    <ClCompile Include="core\include\serializer.cpp" />
     <ClCompile Include="core\src\box_collider2D.cpp" />
     <ClCompile Include="core\src\four_way_move_component.cpp" />
     <ClCompile Include="core\src\main.cpp" />
@@ -225,7 +224,6 @@
     <ClInclude Include="core\include\math\color.h" />
     <ClInclude Include="core\include\math\math.h" />
     <ClInclude Include="core\include\math\vector4.h" />
-    <ClInclude Include="core\include\serializer.h" />
     <ClInclude Include="core\include\sound\sound_buffer.h" />
     <ClInclude Include="core\include\sound\sound_include.h" />
     <ClInclude Include="core\include\sound\sound_source.h" />
