@@ -84,8 +84,7 @@ void SudoImGui::ShowAddEntityWidget()
 			ImGuiWindowFlags_::ImGuiWindowFlags_NoMove
 		);
 
-		ImGui::InputText("ID", m_entityToAddName, 128);
-		if (ImGui::Button("Create")) 
+		if (ImGui::InputText("ID", m_entityToAddName, 128, ImGuiInputTextFlags_::ImGuiInputTextFlags_EnterReturnsTrue) || ImGui::Button("Create"))
 		{
 			std::string _string = m_entityToAddName;
 			ecs::Entity *newEntity = new ecs::Entity(m_entityToAddName);
@@ -136,7 +135,8 @@ void SudoImGui::CtrlInput()
 		{
 			if (m_clickedEntity != nullptr) 
 			{
-				m_worldSystem->CopyEntity(m_clickedEntity);
+				m_clickedEntity = &m_worldSystem->CopyEntity(m_clickedEntity);
+				//m_worldSystem->CopyEntity(m_clickedEntity);
 				m_canPerformCtrlCommand = false;
 			}
 		}

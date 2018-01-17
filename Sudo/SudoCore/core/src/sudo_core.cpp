@@ -2,6 +2,7 @@
 
 #include"../include/sudo.h"
 #include"../include/definitions.h"
+#include"../include/serializer.h"
 
 #pragma once
 
@@ -102,6 +103,10 @@ void SudoCore::clean_up()
 
 	/* This destroys  everything related to the GLFW library */
 	glfwTerminate();
+	
+	// Test for the serializer
+	Serializer s;
+	s.SerializeWorld(*m_worldSystem);
 
 	/* Call CleanUp() on all systems */
 	m_windowSystem->CleanUp();
@@ -112,6 +117,7 @@ void SudoCore::clean_up()
 	m_soundSystem->CleanUp();
 	m_particleSystem->CleanUp();
 	m_textSystem->CleanUp();
+
 
 	/* After this point everything should be clear */
 	m_engineInstance->OnApplicationClose();
@@ -146,6 +152,7 @@ void SudoCore::game_loop()
 
 		// Set the time at the start of the frame
 		_frameStartTime = deltaTimer->GetTicks();
+		
 
 		// Call the user-end Update methods
 		m_engineInstance->Update(_deltaTime);

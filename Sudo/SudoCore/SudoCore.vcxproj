@@ -153,6 +153,7 @@
     <ClCompile Include="core\include\ImGui\imgui_draw.cpp" />
     <ClCompile Include="core\include\ImGui\imgui_glfw.cpp" />
     <ClCompile Include="core\include\ImGui\sudo_imgui_context.cpp" />
+    <ClCompile Include="core\include\serializer.cpp" />
     <ClCompile Include="core\src\box_collider2D.cpp" />
     <ClCompile Include="core\src\four_way_move_component.cpp" />
     <ClCompile Include="core\src\main.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="core\include\math\color.h" />
     <ClInclude Include="core\include\math\math.h" />
     <ClInclude Include="core\include\math\vector4.h" />
+    <ClInclude Include="core\include\serializer.h" />
     <ClInclude Include="core\include\sound\sound_buffer.h" />
     <ClInclude Include="core\include\sound\sound_include.h" />
     <ClInclude Include="core\include\sound\sound_source.h" />

@@ -17,6 +17,18 @@ public:
 		config->SetAutoRender(true);
 	}
 
+	void Update(float deltaTime)
+	{
+		if (input->GetKey("d")) {
+			printf("D down \n");
+		}
+		if (input->GetKeyDown("f")) {
+			printf("F pressed \n");
+		}
+
+		system("cls");
+	}
+
 	void Render() override
 	{
 

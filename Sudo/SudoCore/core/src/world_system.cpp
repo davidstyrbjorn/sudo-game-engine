@@ -136,8 +136,21 @@ namespace sudo { namespace sudo_system {
 	{
 		assert(a_entityToCopy != nullptr);
 
-		// Create and name the component
-		std::string dick = a_entityToCopy->GetID() + "(copy)";
+		bool _isFreshCopy = true;
+
+		// Create and name the entity
+		std::string dick = a_entityToCopy->GetID();
+		// Check if it's the first copy 
+		for (int i = 0; i < dick.length(); i++) {
+			if (dick.at(i) == '(') {
+				if (dick.at(i + 1) == 'c' && dick.at(i + 2) == 'o') {
+					_isFreshCopy = false;
+				}
+			}
+		}
+		if (_isFreshCopy)
+			dick = a_entityToCopy->GetID() + "(copy)";
+
 		ecs::Entity *newEntity = new ecs::Entity(dick);
 
 		// Get the list of components to immitate

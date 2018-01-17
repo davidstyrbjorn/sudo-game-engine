@@ -82,6 +82,8 @@ namespace sudo { namespace sudo_system {
 
 	void WindowSystem::Update(float deltaTime)
 	{
+		//glfwPollEvents();
+
 		if (m_doWindowShake && m_isActive) {
 			// Get the window's new position values for this frame
 			int _x = utility::SudoRandomNumber::GetRandomInteger(-m_windowShakeStrength, m_windowShakeStrength);
