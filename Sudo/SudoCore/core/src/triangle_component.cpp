@@ -22,6 +22,9 @@ namespace sudo { namespace ecs {
 	{
 		m_entityTransform = m_entityHolder->transform;
 	}
+	void TriangleComponent::OnStateChange()
+	{
+	}
 	std::array<math::Vector3, 4> TriangleComponent::GetPrimitivePoints()
 	{
 		std::array<math::Vector3, 4> points;

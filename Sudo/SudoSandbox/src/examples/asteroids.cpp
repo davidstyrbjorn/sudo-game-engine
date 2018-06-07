@@ -431,7 +431,7 @@ AsteroidsGame::AsteroidsGame()
 	engine.init(math::Vector2(WINDOW_WIDTH, WINDOW_HEIGHT), "ASSteroids", this);
 }
 
-int ldwdlmdain()
+int mdwdwdain()
 {
 	AsteroidsGame *game = new AsteroidsGame();
 

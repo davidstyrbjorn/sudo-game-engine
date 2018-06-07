@@ -69,7 +69,6 @@ namespace sudo { namespace sudo_system {
 
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		EnableBlend();
-		_ADDRESSOF(m_shader);
 		// Creating shader 
 		const char* vertex = "#version 330 core \n layout(location = 0) in vec3 in_pos; \n layout(location = 1) in vec4 in_color; \n layout(location = 2) in vec2 in_texCoords; \n layout(location = 3) in float tid;  \n uniform mat4 projection_matrix;  \n uniform mat4 view_matrix = mat4(1.0);  \n uniform mat4 model_matrix = mat4(1.0);  \n out vec4 out_color;  \n out vec2 out_texCoords;  \n out float out_tid;  \n void main()  \n {  \n gl_Position = projection_matrix * view_matrix * model_matrix * vec4(in_pos.x, in_pos.y, in_pos.z, 1.0);  \n out_texCoords = in_texCoords;  \n out_color = in_color;  \n out_tid = tid;  \n }  \n";
 		const char* fragment = "#version 330 core \n in vec4 out_color; \n in vec2 out_texCoords; \n in float out_tid; \n uniform sampler2D textures[32]; \n void main() \n { \n vec4 texColor = out_color; \n if (out_tid > 0.0) { \n int tid = int(out_tid - 0.5); \n texColor = texture(textures[tid], out_texCoords); \n } \n gl_FragColor = texColor; \n if (gl_FragColor.a < 0.1) { \n discard; \n } \n } \n";

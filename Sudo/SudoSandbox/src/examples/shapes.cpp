@@ -46,7 +46,7 @@ public:
 	}
 };
 
-int madwdwin() {
+int main() {
 	ShapesGame *game = new ShapesGame();
 
 	return 0;

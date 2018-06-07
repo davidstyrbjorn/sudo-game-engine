@@ -27,7 +27,7 @@ public:
 	}
 };
 
-int main() {
+int maiwdwdwn() {
 	ShapesGame *game = new ShapesGame();
 
 	return 0;

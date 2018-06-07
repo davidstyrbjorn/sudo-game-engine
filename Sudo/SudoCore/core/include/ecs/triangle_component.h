@@ -2,6 +2,7 @@
 
 #include"component.h"
 #include"../graphics/renderable2d.h"
+#include<array>
 
 namespace sudo {
 	namespace graphics {
@@ -25,6 +26,7 @@ namespace sudo {
 			/* Component virtual methods */
 			void Start()	override;
 			void Update(float deltaTime)	override { }
+			void OnStateChange();
 
 			// Returns the 3 vertex positions of the sprite
 			std::array<math::Vector3, 4> GetPrimitivePoints() override;

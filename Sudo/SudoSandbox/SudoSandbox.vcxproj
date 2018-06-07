@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\examples\asteroids.cpp" />
     <ClCompile Include="src\examples\empty.cpp" />
+    <ClCompile Include="src\examples\lib.cpp" />
     <ClCompile Include="src\examples\pong.cpp" />
     <ClCompile Include="src\examples\shapes.cpp" />
   </ItemGroup>
